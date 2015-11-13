@@ -5,4 +5,4 @@
 
 天气预报
 
-![](pics/01.png) 
+![](images/01.png) 
