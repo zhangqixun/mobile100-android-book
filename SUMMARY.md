@@ -1,9 +1,9 @@
 # Summary
 
-* [前言](README.md)
-* [基础实验](lab/README.md)
+* [前言](index.md)
+* [基础实验](lab/index.md)
    * [Android开发环境](mWeather/lib/lab01/index.md)
-* [综合项目:天气预报](mWeather/README.md)
+* [综合项目:天气预报](mWeather/index.md)
    * [创建工程](mWeather/doc/mWeather_01.md)
    * [制作今日天气界面](mWeather/doc/mWeather_02.md)
    * [网络状态检查](mWeather/doc/mWeather_03.md)
