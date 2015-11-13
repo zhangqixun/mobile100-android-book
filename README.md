@@ -1,4 +1,5 @@
-关于我们
+前言
 =======
 
-This file serves as your book's preface, a great place to describe your book's content and ideas.
+
+本教程适合零基础的小白们，高手请飞过。
