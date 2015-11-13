@@ -2,7 +2,7 @@
 
 * [前言](README.md)
 * [基础实验](lab/README.md)
-   * [Android开发环境](mWeather/lib/01.md)
+   * [Android开发环境](mWeather/lib/lab01/index.md)
 * [综合项目:天气预报](mWeather/README.md)
    * [创建工程](mWeather/doc/mWeather_01.md)
    * [制作今日天气界面](mWeather/doc/mWeather_02.md)
