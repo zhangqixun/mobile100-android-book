@@ -12,7 +12,7 @@
    * [SharedPreferences](lab/lab08/index.md)
    * [多线程](lab/lab09/index.md)
    * [HttpUrlConection](lab/lab10/index.md)
-   * [](lab/lab11/index.md)
+   * [HttpClient](lab/lab11/index.md)
 * [综合项目:天气预报](mWeather/index.md)
    * [创建工程](mWeather/doc/mWeather_01.md)
    * [制作今日天气界面](mWeather/doc/mWeather_02.md)
