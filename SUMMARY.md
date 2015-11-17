@@ -8,7 +8,7 @@
    * [Android应用程序调试](lab/lab04/index.md)
    * [线性布局](lab/lab05/index.md)
    * [相对布局](lab/lab06/index.md)
-   * [基本控件](lab/lab06/index.md)
+   * [基本控件](lab/lab07/index.md)
 * [综合项目:天气预报](mWeather/index.md)
    * [创建工程](mWeather/doc/mWeather_01.md)
    * [制作今日天气界面](mWeather/doc/mWeather_02.md)
