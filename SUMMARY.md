@@ -18,7 +18,7 @@
    * [搜索城市](mWeather/doc/mWeather_11.md)
    * [通过Service后台获取数据](mWeather/doc/mweather_12.md)
    * [制作未来6天天气界面](mWeather/doc/mWeather_13.md)
-   * [增加程序引导页面](mWeather/doc/mWeather_14.md)
+   * [增加程序引导页面](mWeather/doc/mweather_14.md)
    * [国际化处理](mWeather/doc/mweather_15.md)
    * [widget桌面插件](mWeather/doc/mweather_16.md)
    * [测试与优化](mWeather/doc/mweather_17.md)
