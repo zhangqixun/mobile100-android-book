@@ -5,6 +5,7 @@
    * [环境搭建](lab/lab01/index.md)
    * [Hello World应用程序](lab/lab02/index.md)
    * [Activity生命周期](lab/lab03/index.md)
+   * [Activity应用程序调试](lab/lab04/index.md)
 * [综合项目:天气预报](mWeather/index.md)
    * [创建工程](mWeather/doc/mWeather_01.md)
    * [制作今日天气界面](mWeather/doc/mWeather_02.md)
