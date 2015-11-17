@@ -3,7 +3,7 @@
 * [前言](index.md)
 * [基础实验](lab/index.md)
    * [环境搭建](lab/lab01/index.md)
-   * [开发环境搭建](lab/lab02/index.md)
+   * [Hello World应用程序](lab/lab02/index.md)
    * [开发环境搭建](lab/lab03/index.md)
 * [综合项目:天气预报](mWeather/index.md)
    * [创建工程](mWeather/doc/mWeather_01.md)
