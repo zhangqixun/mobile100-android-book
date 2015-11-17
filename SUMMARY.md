@@ -10,7 +10,7 @@
    * [网络状态检查](mWeather/doc/mWeather_03.md)
    * [获取网络数据](mWeather/doc/mweather04.md)
    * [解析网络数据](mWeather/doc/mweather_05.md)
-   * [更新今日天气数据](mWeather/doc/mWeather_06.md)
+   * [更新今日天气数据](mWeather/doc/mweather_06.md)
    * [制作选择城市界面](mWeather/doc/mWeather_07.md)
    * [从数据库中读取城市列表](mWeather/doc/mWeather_08.md)
    * [通过ListView展示城市列表](mWeather/doc/mWeather_09.md)
