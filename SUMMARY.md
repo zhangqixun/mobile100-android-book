@@ -54,7 +54,7 @@
    * [附加功能4：](mWeather/doc/mweather_22.md)
    * [附加功能5：](mWeather/doc/mweather_23.md)
    * [附加功能6：](mWeather/doc/mweather_24.md)
-* [技术杂谈](/paper/index.md)
+* [技术文章](/paper/index.md)
    * [文章标题(作者)]
    * [文章标题(作者)]
    * [文章标题(作者)]
