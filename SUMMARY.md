@@ -1,4 +1,6 @@
 # Summary
+
+* [Introduction](readmemd.md)
 * [前言](index.md)
 * [基础实验](lab/index.md)
    * [环境搭建](lab/lab01/index.md)
@@ -29,10 +31,11 @@
    * [附加功能4：](mWeather/doc/mweather_22.md)
    * [附加功能5：](mWeather/doc/mweather_23.md)
    * [附加功能6：](mWeather/doc/mweather_24.md)
-* [技术文章](/paper/index.md)
+* [技术文章](paper/index.md)
    * [文章标题(作者)]
    * [文章标题(作者)]
    * [文章标题(作者)]
    * [文章标题(作者)]
    * [文章标题(作者)]
    * [文章标题(作者)]
+
