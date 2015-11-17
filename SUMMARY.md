@@ -1,8 +1,9 @@
 # Summary
 
+* [Introduction](README.md)
 * [前言](index.md)
 * [基础实验](lab/index.md)
-   * [Android开发环境](mWeather/lab/lab01/index.md)
+   * [Android开发环境](/lab/lab01/index.md)
 * [综合项目:天气预报](mWeather/index.md)
    * [创建工程](mWeather/doc/mWeather_01.md)
    * [制作今日天气界面](mWeather/doc/mWeather_02.md)
@@ -28,5 +29,4 @@
    * [附加功能4：](mWeather/doc/mWeather_22.md)
    * [附加功能5：](mWeather/doc/mWeather_23.md)
    * [附加功能6：](mWeather/doc/mWeather_24.md)
-
 
