@@ -3,7 +3,7 @@
 * [Introduction](README.md)
 * [前言](index.md)
 * [基础实验](lab/index.md)
-   * [Android开发环境搭建](lab/lab01/index.md)
+   * [开发环境搭建](lab/lab01/index.md)
    * [Android](lab/lab01/index.md)
    * [Android开发环境搭建](lab/lab01/index.md)
    * [Android开发环境搭建](lab/lab01/index.md)
