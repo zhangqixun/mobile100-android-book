@@ -4,7 +4,7 @@
 * [前言](index.md)
 * [基础实验](lab/index.md)
    * [开发环境搭建](lab/lab01/index.md)
-   * [开发环境搭建](lab/lab01/index.md)
+   * [开发环境搭建]()
 * [综合项目:天气预报](mWeather/index.md)
    * [创建工程](mWeather/doc/mWeather_01.md)
    * [制作今日天气界面](mWeather/doc/mWeather_02.md)
