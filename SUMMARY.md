@@ -22,7 +22,7 @@
    * [国际化处理](mWeather/doc/mWeather_15.md)
    * [widget桌面插件](mWeather/doc/mWeather_16.md)
    * [测试与优化](mWeather/doc/mWeather_17.md)
-   * [应用程序发布](mWeather/doc/mWeather_18.md)
+   * [应用程序发布](mWeather/doc/mweather_18.md)
    * [附加功能1：](mWeather/doc/mweather_19.md)
    * [附加功能2：](mWeather/doc/mweather_20.md)
    * [附加功能3：](mWeather/doc/mweather_21.md)
