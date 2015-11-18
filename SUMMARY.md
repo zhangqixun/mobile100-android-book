@@ -56,7 +56,7 @@
    * [附加功能5：](mWeather/doc/mweather_23.md)
    * [附加功能6：](mWeather/doc/mweather_24.md)
 * [技术文章](paper/index.md)
-   * [文章标题(作者)](paper/2015/1501210724.md)
+   * [Material Design与移动应用界面设计(1501210724 魏钊旸)](paper/2015/1501210724.md)
    * [文章标题(作者)](paper/2015/002.md)
    * [文章标题(作者)](paper/2015/003.md)
    * [文章标题(作者)](paper/2015/004.md)
