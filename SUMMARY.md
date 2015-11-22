@@ -63,5 +63,5 @@
    * [文章标题(作者)](paper/2015/005.md)
    * [文章标题(作者)](paper/2015/006.md)
 * [常见面试题目](question/index.md)
-   * [界面布局相关)](question/01.md)
-   * [Activity相关)](question/02.md)
+   * [界面布局相关](question/01.md)
+   * [Activity相关](question/02.md)
