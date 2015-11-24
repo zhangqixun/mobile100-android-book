@@ -33,7 +33,10 @@
       发起⽅调用:startActivityForResult(Intent intent, int requestCode)；
       
       返回方在finish之前调用:setResut ( int resultCode, Intent intent)；
-
+      
+      发起⽅实现onActivityResult(int requestCode, int resultCode, Intent intent)⽅法；
+      
+![](屏幕快照 2015-11-24 下午9.35.30.png)
 
 * 知识点3：
 
