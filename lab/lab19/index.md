@@ -37,11 +37,20 @@
 
 **3.1 实验内容**
 
-*在MainActivity中启用一个新的Activity，并将name和age传给它。*
+*点击button，在MainActivity中启用一个新的Activity，并将name和age传给它。*
 
 **3.2 实验步骤**
 
-*详细描述本次实验的具体步骤*
+*1.在MainActivity中创建一个Button；*
+
+*2.为Button添加事件,并为Intent添加参数*
+
+![](屏幕快照 2015-11-24 下午8.57.00.png)
+
+*3.创建OtherActivity，并接收数据*
+
+**
+**
 
 **四、常见问题及注意事项**
 
