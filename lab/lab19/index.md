@@ -37,7 +37,7 @@
 
 **3.1 实验内容**
 
-*在MainActivity中启用一个新的Activity，并将name和age传给它*
+*在MainActivity中启用一个新的Activity，并将name和age传给它。*
 
 **3.2 实验步骤**
 
