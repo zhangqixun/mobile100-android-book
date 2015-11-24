@@ -28,7 +28,11 @@
 
 * 知识点2：
 
-      知识点介绍
+      需要回收数据时：
+      
+      发起⽅方调⽤用:startActivityForResult(Intent intent, int requestCode)；
+      
+      返回⽅方在finish之前调⽤用:setResut ( int resultCode, Intent intent)；
 
 
 * 知识点3：
