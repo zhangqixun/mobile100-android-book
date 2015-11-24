@@ -63,4 +63,6 @@
 
 *2.如果要传递⾃自定义的对象数据,需要要借助将对象序列化(Serializable)的⽅方式。*
 
+intent.getSerializableExtra(”name");
+
 
