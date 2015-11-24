@@ -19,8 +19,8 @@
    
 * 知识点1：
 
-      通过使⽤用Intent对象的putExtra()⽅方法来添加附加信息
-      通过使⽤用Intent对象的getXXXExtra()⽅方法可以获取附加信息
+      通过使用Intent对象的putExtra()⽅方法来添加附加信息
+      通过使用Intent对象的getXXXExtra()⽅方法可以获取附加信息
      
 
 * 知识点2：
