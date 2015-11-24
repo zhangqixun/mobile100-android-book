@@ -30,9 +30,9 @@
 
       需要回收数据时：
       
-      发起⽅方调⽤用:startActivityForResult(Intent intent, int requestCode)；
+      发起⽅调用:startActivityForResult(Intent intent, int requestCode)；
       
-      返回⽅方在finish之前调⽤用:setResut ( int resultCode, Intent intent)；
+      返回方在finish之前调用:setResut ( int resultCode, Intent intent)；
 
 
 * 知识点3：
