@@ -47,4 +47,13 @@
 
 每次运行程序检验对应语言环境下的效果时，切记先对android系统的语言环境进行切换。
 
+具体国家简写查询：
+
+各国语言缩写  http://www.loc.gov/standards/iso639-2/php/code_list.php
+
+国家和地区简写  
+http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/list-en1.html
+
+国家_地区语言速查表：http://www.cnblogs.com/Mien/archive/2008/08/22/1273950.html
+
 
