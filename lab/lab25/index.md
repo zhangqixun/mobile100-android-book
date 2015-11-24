@@ -19,11 +19,11 @@
    
 * 知识点1：
 
-      字符串国际化，只需创建对应的values文件夹即可，例如：中文为values-zh、美国引文为values-en-rUS。
+      字符串国际化，只需创建对应的values文件夹即可，例如：中文为values-zh、美国英文为values-en-rUS。
 
 * 知识点2：
 
-      图片国际化，只需创建对应的drawable文件夹即可，例如：中文为values-zh-hdpi、美国引文为values-en-rUS-hdpi（hdpi为高分辨率）。
+      图片国际化，只需创建对应的drawable文件夹即可，例如：中文为values-zh-hdpi、美国英文为values-en-rUS-hdpi（hdpi为高分辨率）。
 
 
 * 知识点3：
