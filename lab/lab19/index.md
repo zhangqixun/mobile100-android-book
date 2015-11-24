@@ -43,11 +43,13 @@
 
 *1.在MainActivity中创建一个Button；*
 
-*2.为Button添加事件,并为Intent添加参数*
+*2.为Button添加事件,并为Intent添加参数；*
 
 ![](屏幕快照 2015-11-24 下午8.57.00.png)
 
-*3.创建OtherActivity，并接收数据*
+*3.创建OtherActivity，接收数据并打印；*
+
+
 
 **
 **
