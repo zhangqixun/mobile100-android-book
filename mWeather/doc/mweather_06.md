@@ -37,11 +37,10 @@
 
 * 更新UI：
 
-      START_DOCUMENT：读取到XML的声明;
-      END_DOCUMENT：读取到XML的结束返回；
-      START_TAG : 读取到XML的开始标签；
-      END_TAG：读渠道XML的结束标签；
-      参照XML数据解析。
+      xxx.setText():
+      如果xxx是Text控件，那就是设置Text的控件中的文本内容
+      xxx.setImageResource()：
+      设置ImageView中的图片，setImageResource的参数是resId，必须是drawable目录下的资源。
    
 
 **三、主要思路及步骤**
