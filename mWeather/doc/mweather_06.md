@@ -18,9 +18,13 @@
       实现： get、set、toString方法
 
 
-* 知识点2：
+* toString方法：
 
-      知识点介绍
+      toString()源自Object类，重写并不是必须的，需要根据当前程序的
+      实际情况而定。在许多场合中,需要打印和比较出对象的内容,所以重写。
+      toString()
+      譬如一个JavaBean插入数据库时需要打印一段该JavaBean内容的日志
+      ，这时在JavaBean里重写toString()就显得很优美了。
 
 
 * 知识点3：
