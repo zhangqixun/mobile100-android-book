@@ -44,18 +44,17 @@
 *详细描述本次实验的具体步骤*
 
 
-**1，点击“Start a new Android Studio project”创建我的第一个Android程序Hello World：**
+*1，点击“Start a new Android Studio project”创建我的第一个Android程序Hello World：*
 
 
 
 ![](图片1.png)
 
-### 选择安卓设备和最小支持的SDK版本：
+*选择安卓设备和最小支持的SDK版本：*
 
 ![](图片2.png)
 
-### 选择一个activity：
-
+*选择一个activity：*
 ![](图片3.png)
 
 **四、常见问题及注意事项**
