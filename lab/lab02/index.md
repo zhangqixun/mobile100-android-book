@@ -43,7 +43,10 @@
 
 *详细描述本次实验的具体步骤*
 
-1，点击“Start a new Android Studio project”创建我的第一个Android程序Hello World：
+
+### 1，点击“Start a new Android Studio project”创建我的第一个Android程序Hello World：
+
+
 
 ![](图片1.png)
 
