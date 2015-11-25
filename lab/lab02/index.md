@@ -19,16 +19,17 @@
    
 * 知识点1：
 
-      *使用ADT创建Helloword应用，使用ADT我们能很方便的创建一个Android的Helloworld应用*
+    *使用ADT创建Helloword应用，使用ADT我们能很方便的创建一个Android的Helloworld应用*
 
 * 知识点2：
 
-      *创建AVD，一个Android要想运行起来必须要有一个环境，这个环境就是模拟器。使用 AVD manager可以轻松的创建一个AVD（配置好的模拟器）。*
+    *创建AVD，一个Android要想运行起来必须要有一个环境，这个环境就是模拟器。使用 AVD manager可以轻松的创建一个AVD（配置好的模拟器）。*
 
 
 * 知识点3：
 
-      知识点介绍
+   *运行Helloword应用
+有个AVD我们就可以运行Android应用了。找到我们的Helloword的项目，右击选择“Run”，选择Android Application 就可以运行Helloword应用了。*
 
 
    
@@ -37,7 +38,13 @@
 
 **3.1 实验内容**
 
-*简要介绍本次实验的主要内容*
+*1搭建好Android开发环境，编写一个Hello World应用程序*
+
+*2首先点击“Start a new Android Studio project”创建我的第一个Android程序Hello World，*
+
+*3然后创建一个AVD以运行程序，*
+
+*4最后启动后点击android studio中的运行按钮，选择一个可以利用的设备，点击“OK”*
 
 **3.2 实验步骤**
 
@@ -100,6 +107,6 @@
 
 **四、常见问题及注意事项**
 
-*详细描述本此实验的可能会遇到的问题以及相关的注意事项*
+*在进行X86模拟器搭建过程中，遇到了无法安装模拟器的提示，后查资料得知是因为电脑的主板未开启“Virtualization”选项，解决办法是：进入BIOS修改Virtualization选项。因为我的电脑是Thinkpad x250，开机后按F1进入BIOS，而后找到Virtualization选项，使Virtualization Technology由“Disabled”变为“Enabled”，保存后继续安装，一路点击“Next”，最后“finish”完成。*
 
 
