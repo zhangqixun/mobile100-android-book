@@ -27,7 +27,7 @@
       ，这时在JavaBean里重写toString()就显得很优美了。
 
 
-* 知识点3：
+* 解析xml数据（PULL）：
 
       知识点介绍
 
