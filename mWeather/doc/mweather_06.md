@@ -29,9 +29,19 @@
 
 * 解析xml数据（PULL）：
 
-      知识点介绍
+      START_DOCUMENT：读取到XML的声明;
+      END_DOCUMENT：读取到XML的结束返回；
+      START_TAG : 读取到XML的开始标签；
+      END_TAG：读渠道XML的结束标签；
+      参照XML数据解析。
 
+* 更新UI：
 
+      START_DOCUMENT：读取到XML的声明;
+      END_DOCUMENT：读取到XML的结束返回；
+      START_TAG : 读取到XML的开始标签；
+      END_TAG：读渠道XML的结束标签；
+      参照XML数据解析。
    
 
 **三、主要思路及步骤**
