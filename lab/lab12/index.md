@@ -37,7 +37,7 @@ pull解析器解析XML文件
 
 **3.1 实验内容**
 
-*简要介绍本次实验的主要内容*
+*简要介绍本次实验的主要内容*![](../../ji_yu_tian_qi_yu_bao_xiang_mu_ff0c_cong_tian_qi_wa.png)
 
 **3.2 实验步骤**
 
