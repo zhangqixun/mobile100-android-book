@@ -44,7 +44,7 @@
 *详细描述本次实验的具体步骤*
 
 
-*1，点击“Start a new Android Studio project”创建我的第一个Android程序Hello World：*
+**1，点击“Start a new Android Studio project”创建我的第一个Android程序Hello World：**
 
 
 
@@ -57,6 +57,46 @@
 *选择一个activity：*
 
 ![](图片3.png)
+
+*finish后，已经创建了一个“Hello World”工程。*
+
+![](图片4.png)
+
+
+**2, 创建一个AVD以运行程序**
+
+*我们可以利用AVD来做测试机来调试程序，在上图的工具栏中点击（AVD图标），这时可以“Create Virtual Device”来创
+建一个AVD*
+
+![](图片5.png)
+
+*选择合适的硬件后，点击“Next”。*
+
+![](图片6.png)
+
+*选择合适的安卓系统镜像，因为我们安装了Intel HAXM，所以我们选择一个X86的ABI：*
+
+![](图片7.png)
+
+*然后命名你的AVD，可以设置一些参数，然后“finish”完成。*
+
+![](图片8.png)
+
+*点击图标绿色三角形“Action”来运行AVD：*
+
+![](图片9.png)
+
+*启动后点击android studio中的运行按钮，选择一个可以利用的设备，点击“OK”：*
+
+![](图片10.png)
+
+*可见，我们的Hello Wworld可以运行在设备上了：*
+
+![](图片11.png)
+
+![](图片12.png)
+
+*至此，我们的第一个安卓程序就完成了。*
 
 **四、常见问题及注意事项**
 
