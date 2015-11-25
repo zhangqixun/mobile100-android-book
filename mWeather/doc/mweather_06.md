@@ -41,6 +41,13 @@
       如果xxx是Text控件，那就是设置Text的控件中的文本内容
       xxx.setImageResource()：
       设置ImageView中的图片，setImageResource的参数是resId，必须是drawable目录下的资源。
+      
+* 主线程与子线程间的消息传递：
+
+      xxx.setText():
+      如果xxx是Text控件，那就是设置Text的控件中的文本内容
+      xxx.setImageResource()：
+      设置ImageView中的图片，setImageResource的参数是resId，必须是drawable目录下的资源。
    
 
 **三、主要思路及步骤**
