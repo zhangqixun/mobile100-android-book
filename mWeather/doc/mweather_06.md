@@ -44,10 +44,15 @@
       
 * 主线程与子线程间的消息传递：
 
-      xxx.setText():
-      如果xxx是Text控件，那就是设置Text的控件中的文本内容
-      xxx.setImageResource()：
-      设置ImageView中的图片，setImageResource的参数是resId，必须是drawable目录下的资源。
+      handler是线程通讯工具类。用于传递消息。它有两个队列：
+      1.消息队列
+      2.线程队列
+      消息队列使用sendMessage和HandleMessage的组合来发送和处理消息。
+      handler是Message的主要处理者，负责Message的发送，Message内
+      容的执行处理。后台线程就是通过传进来的Handler对象引用来sendMessage(Message)。
+      而使用Handler，需要implement 该类的 handleMessage(Message) 
+      方法，它是处理这些Message的操作内容，例如Update UI。 
+      通常需要子类化Handler来实现handleMessage方法。
    
 
 **三、主要思路及步骤**
