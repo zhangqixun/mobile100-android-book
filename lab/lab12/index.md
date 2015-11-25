@@ -23,7 +23,7 @@
 
 * 知识点2：XML常用解析方法
 
-      在Android平台可以使用Simple API for XML(SAX) 、 Document Object Model(DOM) 和Android附带的Pull 解析器解析XML文件。XML文件基本的解析方式有两种,一种叫SAX，另一种叫DOM。SAX是基于事件流的解析,DOM是基于XML文档树结构的解析。本实验着重介绍Pull解析器解析XML文件。
+     在Android平台可以使用Simple API for XML(SAX) 、 Document Object Model(DOM) 和Android附带的Pull 解析器解析XML文件。XML文件基本的解析方式有两种,一种叫SAX，另一种叫DOM。SAX是基于事件流的解析,DOM是基于XML文档树结构的解析。本实验着重介绍Pull解析器解析XML文件。
 
 **三、实验内容及步骤**
 
