@@ -19,11 +19,11 @@
    
 * 知识点1：
 
-      知识点介绍
+      *使用ADT创建Helloword应用，使用ADT我们能很方便的创建一个Android的Helloworld应用*
 
 * 知识点2：
 
-      知识点介绍
+      *创建AVD，一个Android要想运行起来必须要有一个环境，这个环境就是模拟器。使用 AVD manager可以轻松的创建一个AVD（配置好的模拟器）。*
 
 
 * 知识点3：
