@@ -19,21 +19,37 @@
    
 * 知识点1：
 
-      TextWatcher是一个接口，里面有三个函数：
+      在Android里使用TextWatcher接口可以很方便的对EditText进行监听；
       
-public void beforeTextChanged(CharSequence s, int start, int count, int after);
-//s表示改变之前的内容，start表示开始的位置，count表示被改变的旧内容数，after表示改变后新的内容的数量
+注册监听：
 
-public void onTextChanged(CharSequence s, int start, int before, int count);
-//s表示改变之后的内容，start表示开始的位置，before表示改变前的内容数量，count表示新增数
+mEditText = (EditText)findViewById(R.id.edittext);
 
-public void afterTextChanged(Editable s);
-//表示最终内容
+mEditText.addTextChangedListener(mTextWatcher);
 
 * 知识点2：
 
-      知识点介绍
+      TextWatcher中有3个函数需要重载：
+    
+public void beforeTextChanged(CharSequence s, int start, int count, int after);
 
+//在s中，从start处开始的count个字符将要被长度为after的文本替代 
+* s 为变化前的内容； 
+* start 为开始变化位置的索引，从0开始计数； 
+* count 为将要发生变化的字符数 
+* after 为用来替换旧文本的长度，比如s由1变为12，after为1，由12变为1，after为0；
+
+public void onTextChanged(CharSequence s, int start, int before, int count);
+
+//在s中，从start处开始的count个字符刚刚替换了原来长度为before的文本 
+* s 为变化后的内容； 
+* start 为开始变化位置的索引，从0开始计数； 
+* before 为被取代的老文本的长度，比如s由1变为12，before为0，由12变为1，before为1； 
+* count 为将要发生变化的字符数 
+
+public void afterTextChanged(Editable s);
+
+//表示最终内容
 
 * 知识点3：
 
