@@ -14,7 +14,7 @@
    
 * Intent传递数据：
 
-      从天气预报的主界面（即天气情况显示界面）到城市列表界面是通过Intent来启动一个新的Activity的，现在，我们在点击城市列表的某个城市的时候，我们需要将所点击的城市信息作为参数传回主界面的Activity并进行相应的查询显示等处理。
+         从天气预报的主界面（即天气情况显示界面）到城市列表界面是通过Intent来启动一个新的Activity的，现在，我们在点击城市列表的某个城市的时候，我们需要将所点击的城市信息作为参数传回主界面的Activity并进行相应的查询显示等处理。
       这时，发起方（主界面）要调用startActivityForResult(Intent intent, int requestCode)
       ![startActivityForResult](faqifang.png)
       同时发起方要实现onActivityResult(int requestCode, int resultCode, Intent intent)来获取返回结果。
