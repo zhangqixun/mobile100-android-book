@@ -67,6 +67,7 @@ public void afterTextChanged(Editable s);
 ![](6.png)
 
 ![](7.png)
+
 ……
 
 ![](8.png)
