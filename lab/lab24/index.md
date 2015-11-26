@@ -11,38 +11,38 @@
 
 **一、实验目的**
 
-*简要介绍本次实验的主要目的。*
+Fragment的使用方式及生命周期
 
 **二、基础知识**
 
-*简要介绍本次实验所需掌握的基础知识*
+简要介绍本次实验所需掌握的基础知识
    
-* 知识点1：
+* 知识点1：Fragment的简介
 
-      知识点介绍
-
-* 知识点2：
-
-      知识点介绍
-
-
-* 知识点3：
-
-      知识点介绍
-
-
-   
+     Fragment是一种可以嵌入在活动当中的UI片段,它能让程序更加合理和充分地利用大屏幕的空间,因而在平板上应用的非常广泛。它和活动是很像,同样都能包含布局,同样都有自己的生命周期。你可以将碎片理解成一个迷你型的活动,虽然这个迷你型的活动有可能和普通的活动是一样大的。总的说来Fragment是嵌套在Activity上面的，多个Fragment可以嵌套在一个Activity上。
 
 **三、实验内容及步骤**
 
 **3.1 实验内容**
 
-*简要介绍本次实验的主要内容*
+通过xml布局⽂文件嵌套多个Fragments，在Activity中动态加⼊入Fragments
 
 **3.2 实验步骤**
 
 *详细描述本次实验的具体步骤*
+1．新建一个项目并命名为fragments。 在布局文件夹下建一个Fragment1.xml和Fragment2.xml文件。分别如下布局
+并在主布局文件中将两个fragment添加进去，如下
+2.增加两个java class文件，并命名为Fragment1.java和Fragment2 .java，分别在其onCreateView()做如下增加
+3.测试结果如下
+4.生命周期分析 a.当载入真机上时，依次运行方法onCreate()->onCreateView()-> onActivityCreated  ()->onStart()->onResume()，logcat如下图
+b.当点击home退出并重进时,依次运行方法onPause()->onStop()->onStart()->onResume()，logcat如下图
+c.当点击home键退出并在后台关闭该应用时，依次运行方法onPause()->onStop()->onDestroyView()->onDestroy()->onDetach()，logcat如下图
+➤ onAttached() — Called when the fragment has been associated with the activity ➤ onCreateView() — Called to create the view for the fragment ➤ onActivityCreated() — Called when the activity’s onCreate() method has been returned ➤ onDestroyView() — Called when the fragment’s view is being removed ➤ onDetach() — Called when the fragment is detached from the activity
 
 **四、常见问题及注意事项**
 
 *详细描述本此实验的可能会遇到的问题以及相关的注意事项*
+1.如何在活动中调用碎片里的方法？ 为了方便碎片和活动之间进行通信,FragmentManager 提供了一个类似于 findViewById() 的方法,专门用于从布局文件中获取碎片的实例,代码如下所示:  RightFragment rightFragment = (RightFragment) getFragmentManager().findFragmentById(R.id.right_fragment); 调用 FragmentManager 的 findFragmentById()方法,可以在活动中得到相应碎片的实例, 然后就能轻松地调用碎片里的方法了。
+2.如何在碎片中调用活动里的方法？ 在每个碎片中都可以通过调用 getActivity()方法来得到和当前碎片相关联 的活动实例,代码如下所示:  MainActivity activity = (MainActivity) getActivity(); 有了活动实例之后,在碎片中调用活动里的方法就变得轻而易举了。另外当碎片中需要使用 Context 对象时,也可以使用 getActivity()方法,因为获取到的活动本身就是一个 Context 对象了。
+3.如何碎片和碎片之间可不可以进行通信呢？ 首先在一个碎片中 可以得到与它相关联的活动,然后再通过这个活动去获取另外一个碎片的实例,这样也就实 现了不同碎片之间的通信功能
+
