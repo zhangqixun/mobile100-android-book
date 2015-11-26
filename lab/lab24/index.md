@@ -35,30 +35,20 @@ Fragment的使用方式及生命周期
 
 **3.2.3** 测试结果如下:![](图片 6.png)
 
-**3.2.4** 生命周期分析
+**3.2.4** 生命周期分析  
+&#160; &#160; &#160; &#160;**a.** 当载入真机上时，依次运行方法onCreate()->onCreateView()-> onActivityCreated  ()->onStart()->onResume()，logcat如下图:![](图片 7.png)  
+&#160; &#160; &#160; &#160;**b.** 当点击home退出并重进时,依次运行方法onPause()->onStop()->onStart()->onResume()，logcat如下图:![](图片 8.png)  
+&#160; &#160; &#160; &#160;**c.** 当点击home键退出并在后台关闭该应用时，依次运行方法onPause()->onStop()->onDestroyView()->onDestroy()->onDetach()，logcat如下图:![](9.png)  
+&#160; &#160; &#160; &#160;➤ onAttached() — Called when the fragment has been associated with the activity   
+&#160; &#160; &#160; &#160;➤ onCreateView() — Called to create the view for the fragment  
+&#160; &#160; &#160; &#160;➤ onActivityCreated() — Called when the activity’s onCreate() method has been returned   
+&#160; &#160; &#160; &#160;➤ onDestroyView() — Called when the fragment’s view is being removed   
+&#160; &#160; &#160; &#160;➤ onDetach() — Called when the fragment is detached from the activity
 
-**a.** 当载入真机上时，依次运行方法onCreate()->onCreateView()-> onActivityCreated  ()->onStart()->onResume()，logcat如下图:![](图片 7.png)
-
-**b.** 当点击home退出并重进时,依次运行方法onPause()->onStop()->onStart()->onResume()，logcat如下图:![](图片 8.png)
-
-**c.** 当点击home键退出并在后台关闭该应用时，依次运行方法onPause()->onStop()->onDestroyView()->onDestroy()->onDetach()，logcat如下图:![](9.png)
-
-➤ onAttached() — Called when the fragment has been associated with the activity   
-➤ onCreateView() — Called to create the view for the fragment  
-➤ onActivityCreated() — Called when the activity’s onCreate() method has been returned   
-➤ onDestroyView() — Called when the fragment’s view is being removed   
-➤ onDetach() — Called when the fragment is detached from the activity
-
-**四、常见问题及注意事项**
-
-**4.1** 如何在活动中调用碎片里的方法？
-
-为了方便碎片和活动之间进行通信,FragmentManager提供了一个类似于findViewById()的方法,专门用于从布局文件中获取碎片的实例,代码如下所示:  RightFragment rightFragment = (RightFragment)getFragmentManager().findFragmentById(R.id.right_fragment); 调用 FragmentManager 的 findFragmentById()方法,可以在活动中得到相应碎片的实例, 然后就能轻松地调用碎片里的方法了。
-
-**4.2** 如何在碎片中调用活动里的方法？ 
-
-在每个碎片中都可以通过调用getActivity()方法来得到和当前碎片相关联 的活动实例,代码如下所示:  MainActivity activity = (MainActivity) getActivity();有了活动实例之后,在碎片中调用活动里的方法就变得轻而易举了。另外当碎片中需要使用 Context 对象时,也可以使用getActivity()方法,因为获取到的活动本身就是一个 Context 对象了。
-
-**4.3** 如何碎片和碎片之间可不可以进行通信呢？ 
-
-首先在一个碎片中可以得到与它相关联的活动,然后再通过这个活动去获取另外一个碎片的实例,这样也就实现了不同碎片之间的通信功能。
+**四、常见问题及注意事项**  
+**4.1** 如何在活动中调用碎片里的方法？  
+&#160; &#160; &#160; &#160;为了方便碎片和活动之间进行通信,FragmentManager提供了一个类似于findViewById()的方法,专门用于从布局文件中获取碎片的实例,代码如下所示:  RightFragment rightFragment = (RightFragment)getFragmentManager().findFragmentById(R.id.right_fragment); 调用 FragmentManager 的 findFragmentById()方法,可以在活动中得到相应碎片的实例, 然后就能轻松地调用碎片里的方法了。  
+**4.2** 如何在碎片中调用活动里的方法？  
+&#160; &#160; &#160; &#160;在每个碎片中都可以通过调用getActivity()方法来得到和当前碎片相关联 的活动实例,代码如下所示:  MainActivity activity = (MainActivity) getActivity();有了活动实例之后,在碎片中调用活动里的方法就变得轻而易举了。另外当碎片中需要使用 Context 对象时,也可以使用getActivity()方法,因为获取到的活动本身就是一个 Context 对象了。  
+**4.3** 如何碎片和碎片之间可不可以进行通信呢？  
+&#160; &#160; &#160; &#160;首先在一个碎片中可以得到与它相关联的活动,然后再通过这个活动去获取另外一个碎片的实例,这样也就实现了不同碎片之间的通信功能。
