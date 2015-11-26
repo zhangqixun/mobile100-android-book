@@ -25,17 +25,14 @@ Fragment的使用方式及生命周期
 
 **3.1 实验内容**
 
-通过xml布局⽂文件嵌套多个Fragments，在Activity中动态加入Fragments
+&#160; &#160; &#160; &#160;通过xml布局⽂文件嵌套多个Fragments，在Activity中动态加入Fragments
 
 **3.2 实验步骤**
 
-**3.2.1** 新建一个项目并命名为fragments。在布局文件夹下建一个Fragment1.xml和Fragment2.xml文件。分别如下布局:![](图片 1.png)![](图片 2.png)并在主布局文件中将两个fragment添加进去，如下:![](图片 3.png)
-
-**3.2.2** 增加两个java class文件，并命名为Fragment1.java和Fragment2 .java，分别在其onCreateView()做如下增加:![](图片 4.png)![](图片 5.png)
-
-**3.2.3** 测试结果如下:![](图片 6.png)
-
-**3.2.4** 生命周期分析  
+&#160; &#160; &#160; &#160;**3.2.1** 新建一个项目并命名为fragments。在布局文件夹下建一个Fragment1.xml和Fragment2.xml文件。分别如下布局:![](图片 1.png)![](图片 2.png)&#160; &#160; &#160; &#160;并在主布局文件中将两个fragment添加进去，如下:![](图片 3.png)  
+&#160; &#160; &#160; &#160;**3.2.2** 增加两个java class文件，并命名为Fragment1.java和Fragment2 .java，分别在其onCreateView()做如下增加:![](图片 4.png)![](图片 5.png)  
+&#160; &#160; &#160; &#160;**3.2.3** 测试结果如下:![](图片 6.png)  
+&#160; &#160; &#160; &#160;**3.2.4** 生命周期分析  
 &#160; &#160; &#160; &#160;**a.** 当载入真机上时，依次运行方法onCreate()->onCreateView()-> onActivityCreated  ()->onStart()->onResume()，logcat如下图:![](图片 7.png)  
 &#160; &#160; &#160; &#160;**b.** 当点击home退出并重进时,依次运行方法onPause()->onStop()->onStart()->onResume()，logcat如下图:![](图片 8.png)  
 &#160; &#160; &#160; &#160;**c.** 当点击home键退出并在后台关闭该应用时，依次运行方法onPause()->onStop()->onDestroyView()->onDestroy()->onDetach()，logcat如下图:![](9.png)  
@@ -45,10 +42,11 @@ Fragment的使用方式及生命周期
 &#160; &#160; &#160; &#160;➤ onDestroyView() — Called when the fragment’s view is being removed   
 &#160; &#160; &#160; &#160;➤ onDetach() — Called when the fragment is detached from the activity
 
-**四、常见问题及注意事项**  
-**4.1** 如何在活动中调用碎片里的方法？  
+**四、常见问题及注意事项**
+
+&#160; &#160; &#160; &#160;**4.1** 如何在活动中调用碎片里的方法？  
 &#160; &#160; &#160; &#160;为了方便碎片和活动之间进行通信,FragmentManager提供了一个类似于findViewById()的方法,专门用于从布局文件中获取碎片的实例,代码如下所示:  RightFragment rightFragment = (RightFragment)getFragmentManager().findFragmentById(R.id.right_fragment); 调用 FragmentManager 的 findFragmentById()方法,可以在活动中得到相应碎片的实例, 然后就能轻松地调用碎片里的方法了。  
-**4.2** 如何在碎片中调用活动里的方法？  
+&#160; &#160; &#160; &#160;**4.2** 如何在碎片中调用活动里的方法？  
 &#160; &#160; &#160; &#160;在每个碎片中都可以通过调用getActivity()方法来得到和当前碎片相关联 的活动实例,代码如下所示:  MainActivity activity = (MainActivity) getActivity();有了活动实例之后,在碎片中调用活动里的方法就变得轻而易举了。另外当碎片中需要使用 Context 对象时,也可以使用getActivity()方法,因为获取到的活动本身就是一个 Context 对象了。  
-**4.3** 如何碎片和碎片之间可不可以进行通信呢？  
+&#160; &#160; &#160; &#160;**4.3** 如何碎片和碎片之间可不可以进行通信呢？  
 &#160; &#160; &#160; &#160;首先在一个碎片中可以得到与它相关联的活动,然后再通过这个活动去获取另外一个碎片的实例,这样也就实现了不同碎片之间的通信功能。
