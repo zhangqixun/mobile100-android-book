@@ -43,14 +43,10 @@ Fragment的使用方式及生命周期
 
 **c.** 当点击home键退出并在后台关闭该应用时，依次运行方法onPause()->onStop()->onDestroyView()->onDestroy()->onDetach()，logcat如下图:![](9.png)
 
-➤ onAttached() — Called when the fragment has been associated with the activity 
-
-➤ onCreateView() — Called to create the view for the fragment
-
-➤ onActivityCreated() — Called when the activity’s onCreate() method has been returned 
-
-➤ onDestroyView() — Called when the fragment’s view is being removed 
-
+➤ onAttached() — Called when the fragment has been associated with the activity   
+➤ onCreateView() — Called to create the view for the fragment  
+➤ onActivityCreated() — Called when the activity’s onCreate() method has been returned   
+➤ onDestroyView() — Called when the fragment’s view is being removed   
 ➤ onDetach() — Called when the fragment is detached from the activity
 
 **四、常见问题及注意事项**
