@@ -33,9 +33,12 @@ pull解析器解析XML文件
 
 **3.2 实验步骤**
 
-&#160; &#160; &#160; &#160;从address为"http://wthrcdn.etouch.cn/WeatherApi?citykey=" + cityCode的服务器上下载数据，并进行预处理为string型数据，将string型数据传给解析函数parseXML()进行解析。![](1.png)  
-&#160; &#160; &#160; &#160;下面就来仔细看下parseXML()方法中的代码吧。这里首先要获取到一个XmlPullParserFactory的实例,并借助这个实例得到 XmlPullParser对象,然后调用XmlPullParser的setInput()方法将服务器返回的XML数据设置进去就可以开始解析了。解析的过程也是非常简单,通过getEventType()可以得到当前的解析事件,然后在一个while循环中不断地进行解析,如果当前的解析事件不等于XmlPullParser.END_DOCUMENT,说明解析工作还没完成,调用next()方法后可以获取下一个解析事件。在while循环中,我们通过getName()方法得到当前结点的名字,如果发现结点名等于city,就调用nextText()方法来获取结点内具体的内容,每当解析完一个app结点后就将获取到的内容打印出来。![](2.png)![](3.png)  
-&#160; &#160; &#160; &#160;现在我们看一下打印日志![](4.png)  
+&#160; &#160; &#160; &#160;从address为"http://wthrcdn.etouch.cn/WeatherApi?citykey=" + cityCode的服务器上下载数据，并进行预处理为string型数据，将string型数据传给解析函数parseXML()进行解析。  
+![](1.png)  
+&#160; &#160; &#160; &#160;下面就来仔细看下parseXML()方法中的代码吧。这里首先要获取到一个XmlPullParserFactory的实例,并借助这个实例得到 XmlPullParser对象,然后调用XmlPullParser的setInput()方法将服务器返回的XML数据设置进去就可以开始解析了。解析的过程也是非常简单,通过getEventType()可以得到当前的解析事件,然后在一个while循环中不断地进行解析,如果当前的解析事件不等于XmlPullParser.END_DOCUMENT,说明解析工作还没完成,调用next()方法后可以获取下一个解析事件。在while循环中,我们通过getName()方法得到当前结点的名字,如果发现结点名等于city,就调用nextText()方法来获取结点内具体的内容,每当解析完一个app结点后就将获取到的内容打印出来。  
+![](2.png)![](3.png)  
+&#160; &#160; &#160; &#160;现在我们看一下打印日志  
+![](4.png)  
 &#160; &#160; &#160; &#160;可以看到,我们已经将 XML 数据中的指定内容成功解析出来了。
 
 **四、常见问题及注意事项**
