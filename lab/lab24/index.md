@@ -29,19 +29,19 @@ Fragment的使用方式及生命周期
 
 **3.2 实验步骤**
 
-**3.2.1** 新建一个项目并命名为fragments。在布局文件夹下建一个Fragment1.xml和Fragment2.xml文件。分别如下布局![](图片 1.png)![](图片 2.png)并在主布局文件中将两个fragment添加进去，如下![](图片 3.png)
+**3.2.1** 新建一个项目并命名为fragments。在布局文件夹下建一个Fragment1.xml和Fragment2.xml文件。分别如下布局:![](图片 1.png)![](图片 2.png)并在主布局文件中将两个fragment添加进去，如下:![](图片 3.png)
 
-**3.2.2** 增加两个java class文件，并命名为Fragment1.java和Fragment2 .java，分别在其onCreateView()做如下增加![](图片 4.png)![](图片 5.png)
+**3.2.2** 增加两个java class文件，并命名为Fragment1.java和Fragment2 .java，分别在其onCreateView()做如下增加:![](图片 4.png)![](图片 5.png)
 
-**3.2.3** 测试结果如下![](图片 6.png)
+**3.2.3** 测试结果如下:![](图片 6.png)
 
 **3.2.4** 生命周期分析
 
-**a.** 当载入真机上时，依次运行方法onCreate()->onCreateView()-> onActivityCreated  ()->onStart()->onResume()，logcat如下图![](图片 7.png)
+**a.** 当载入真机上时，依次运行方法onCreate()->onCreateView()-> onActivityCreated  ()->onStart()->onResume()，logcat如下图:![](图片 7.png)
 
-**b.** 当点击home退出并重进时,依次运行方法onPause()->onStop()->onStart()->onResume()，logcat如下图![](图片 8.png)
+**b.** 当点击home退出并重进时,依次运行方法onPause()->onStop()->onStart()->onResume()，logcat如下图:![](图片 8.png)
 
-**c.** 当点击home键退出并在后台关闭该应用时，依次运行方法onPause()->onStop()->onDestroyView()->onDestroy()->onDetach()，logcat如下图![](9.png)
+**c.** 当点击home键退出并在后台关闭该应用时，依次运行方法onPause()->onStop()->onDestroyView()->onDestroy()->onDetach()，logcat如下图:![](9.png)
 
 ➤ onAttached() — Called when the fragment has been associated with the activity 
 
