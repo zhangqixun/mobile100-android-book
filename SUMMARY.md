@@ -67,7 +67,7 @@
    * [Android应用开发内存性能分析与优化（宁旭冉）](paper/2015/1501210966md.md)
    * [Android代码混淆(1501210963 马熠东)](paper/2015/1501210963.md)
    * Android数据库的使用和分析（1501210770 于昌和）
-   * Android的消息机制（1501210956 刘艺霞）
+   * [Android的消息机制（1501210956 刘艺霞）](paper/2015/androidde_xiao_xi_ji_zhi_ff08_1501210956_liu_yi_xi.md)
 * [常见面试题目](question/index.md)
    * [界面布局相关](question/01.md)
    * [Activity相关](question/02.md)
