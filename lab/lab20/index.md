@@ -74,7 +74,7 @@ public void afterTextChanged(Editable s);
 
 **四、常见问题及注意事项**
 
-1、对EditText添加监听事件：
+1、注意要对EditText添加监听事件，如下：
 mEditText.addTextChangedListener(mTextWatcher);
 
 
