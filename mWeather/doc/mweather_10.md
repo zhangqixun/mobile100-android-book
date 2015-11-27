@@ -67,6 +67,7 @@
 
 &#160; &#160; &#160; &#160;
 在上一节中，已经通过ListView展示出城市列表，如下图所示：
+
 ![](ListViewone.png)
 
 &#160; &#160; &#160; &#160;这些城市列表是通过SelectCity活动中的ListView来展示的，在SelectCity类中，我们可以定义每个ListView中的Item被单击时的行为。例如本程序在单击某个城市后，返回主页面进行显示天气。
@@ -155,10 +156,15 @@ public class SelectCity extends Activity implements View.OnClickListener{
 &#160; &#160; &#160; &#160;我们在SelectCity活动中通过mlistView.setOnItemClickListener()方法来定以定义单击item后的活动，我们先通过Toast.makeText弹出提示框，提示我们选择了第几个城市，然后再通过Intent把选择的城市传到主活动（tianqiActivity.class）中。
 
 &#160; &#160; &#160; &#160;下图是单击item后的效果。这里我们选择“海淀”。
+
 ![](ListViewTwo.png)
+
 因为item是从0开始计数的，所以海淀序号为1。
+
 ![](ListViewThree.png)
-&#160; &#160; &#160; &#160;把选择的城市通过Intent的方法setResult(RESULT_OK,intent)发送到主活动以后，主活动通过onActivityResult()方法接受Intent。
+
+&#160; &#160; &#160; &#160;
+把选择的城市通过Intent的方法setResult(RESULT_OK,intent)发送到主活动以后，主活动通过onActivityResult()方法接受Intent。
 &#160; &#160; &#160; &#160;
 因为之前查询某个城市的天气是通过城市编码，这里改成了城市名称，所以我们在查询城市天气的方法也稍作修改，具体如下：
 ```
