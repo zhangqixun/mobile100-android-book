@@ -70,7 +70,6 @@
    * [Android的消息机制（1501210956 刘艺霞）](.paper/2015/1501210956md.md)
 * [常见面试题目](question/index.md)
    * [UI相关](question/01.md)
-   * [Activity相关](question/02.md)
    * [Service相关](question/service_question.md)
    * [线程相关](question/xian_cheng_xiang_guan.md)
    * [Test](question/test.md)
