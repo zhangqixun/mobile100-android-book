@@ -22,9 +22,23 @@
       这样MainActivity才可以根据获得的cityCode更新城市天气。
       那么同时在城市列表的Activity中，则要在finish()之前，将数据放入intent中，并调用setResult(int resultCode, Intent intent)方法，设置返回结果。
 
-* 知识点2：
+* ListView中Item单击和长按事件：
 
-      知识点介绍
+        单击事件：
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(listview.this,"你单击的是第"+(position+1)+"条数据",Toast.LENGTH_SHORT).show();
+            }
+        });
+        长按事件：
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(listview.this,"你长按的是第"+(position+1)+"条数据",Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
 
 
 * 知识点3：
