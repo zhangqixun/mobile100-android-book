@@ -51,6 +51,6 @@ startActivityForResult在关闭子Activity后父Activity可以接受到子Activi
 
 **四、常见问题及注意事项**
 
-*详细描述本此实验的可能会遇到的问题以及相关的注意事项*
+*注意startActivityForResul调用的请求码要对应好*
 
 
