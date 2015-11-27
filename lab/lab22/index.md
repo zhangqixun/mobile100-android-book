@@ -29,7 +29,10 @@
 
 * Service的一个子类IntentService：
 
-      知识点介绍
+      IntentService使用队列的方式将请求的Intent加入队列，然后开启一个worker thread(线程)来处理队列中的Intent。
+      对于异步的startService请求，IntentService会处理完成一个之后再处理第二个，每一个请求都会在一个单独的worker thread中处理，不会阻塞应用程序的主线程。
+      这里就给我们提供了一个思路，如果有耗时的操作与其在Service里面开启新线程还不如使用IntentService来处理耗时操作。
+      而在一般的继承Service里面如果要进行耗时操作就必须另开线程，但是使用IntentService就可以直接在里面进行耗时操作，因为默认实现了一个worker thread。对于异步的startService请求，IntentService会处理完成一个之后再处理第二个。
 
 
    
