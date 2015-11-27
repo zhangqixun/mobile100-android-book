@@ -46,6 +46,7 @@
 3、MainActivity中、startActivity()跳转到MainActivity2Activit和和startActivityForResult()跳转到Activity3
 ![](4.png)
 startActivityForResult在关闭子Activity后父Activity可以接受到子Activity返回值,而startActivity，当你的Activity嵌套在另一个Activity中时就不能能它了回报android.content.ActivityNotFoundException错误，哪怕你AndroidManifest.xml中配置了这个Activity。
+4、没有明确指定目标组件的名称，那么就要通过一定的条件过滤筛选。在MainActivity中尝试隐试跳转![](5.png)
 *
 
 **四、常见问题及注意事项**
