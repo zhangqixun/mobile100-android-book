@@ -47,7 +47,7 @@
 
 **3.1 实验内容**
 
-*简要介绍本次实验的主要内容*
+*本实验主要介绍如何使用Service及如何将Service用到天气预报项目中，实现天气预报的后台更新*
 
 **3.2 实验步骤**
 
@@ -115,6 +115,8 @@
     <activity android:name=".ServicesActivity"/>
     <service android:name=".my_service" />
 *下面介绍如何将Service用到天气预报项目中，实现后台更新天气*
+     
+     .....
 
 **四、常见问题及注意事项**
 
