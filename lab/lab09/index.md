@@ -67,6 +67,31 @@
         }
         }).start();
         
+* 知识点4：异步消息处理机制
+
+    
+        和许多其他的GUI库一样，Android的UI也是线程不安全的，也就是说，如果想要更新应用程序里的UI元素，则必须
+        在主线程中运行，否则就会出现异常，这就要提到android异步消息处理机制
+    
+        Android中的异步消息处理主要由四个部分组成，Message、Handler、MessageQueue和Looper。
+        
+        1）Message
+        Message是在线程之间传递的消息，它可以在内部携带少量信息，用于在不同的线程之间交换数据。比如Message的w
+        hat字段、arg1和arg2字段（携带一些整形数据）、使用obj字段携带一个Object对象。
+        
+        2）Handler
+        主要用于发送和处理消息，发送消息一般是使用Handler的sendMessage()方法，而发出的消息经过一系列的处理后
+        ，最终会传到Handler的handlerMessage()方法中。
+        
+        3）MessageQueue
+        MessageQueue是消息队列的意思，它主要用于存放所有通过Handler发送的消息。这部分消息会一直存在于消息队列
+        中，等待被处理，每个线程中只会有一个MessageQueue对象。
+        
+        4）Looper
+        Looper是每个线程中的MessageQueue的管家，调用Looper的loop()方法后，就会进入到一个无线循环当中，然后每
+        当发现MessageQueue中存在一条消息，就会将a它提出来，并传递到Handler的handlerMessage()方法中。每个线程
+        中也只会有一个Looper对象。
+
 
     
 
