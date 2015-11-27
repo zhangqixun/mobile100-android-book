@@ -95,6 +95,7 @@
         当发现MessageQueue中存在一条消息，就会将a它提出来，并传递到Handler的handlerMessage()方法中。每个线程
         中也只会有一个Looper对象。
        ![](thread.jpg)
+ thread.jpg
         
 * AsyncTask工具类
     
