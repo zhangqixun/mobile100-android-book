@@ -42,7 +42,7 @@
 **3.2 实验步骤**
 
 *1、新建一个工程，在里面建3个Activity![](1.png)
-2\
+2、MainActivity中尝试传递数据到MainActivity2Activity中，并显示
 *
 
 **四、常见问题及注意事项**
