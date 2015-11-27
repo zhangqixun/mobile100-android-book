@@ -23,7 +23,7 @@
 
 * 知识点2：
 
-      知识点介绍
+      startActivity()和startActivityForResult()的区别
 
 
 * 知识点3：
