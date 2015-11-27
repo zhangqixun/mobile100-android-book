@@ -25,6 +25,12 @@ pull解析器解析XML文件
 
 &#160; &#160; &#160; &#160;在Android平台可以使用Simple API for XML(SAX) 、 Document Object Model(DOM) 和Android附带的Pull 解析器解析XML文件。XML文件基本的解析方式有两种,一种叫SAX，另一种叫DOM。SAX是基于事件流的解析,DOM是基于XML文档树结构的解析。本实验着重介绍Pull解析器解析XML文件。
 
+* 知识点3：XML基础知识
+
+&#160; &#160; &#160; &#160;在解析XML过程中，一般用到五个变量，分别是：START_DOCUMENT（文件开始），END_DOCUMENT（文件结束），START_TAG（开始标签），END_TAG（结束标签），TEXT（文本内容）。
+
+&#160; &#160; &#160; &#160;在遇到开始标签，可以通过xmlPullParser.getName()获取标签的名称。xmlPullParser.next()可以移动到该名称对应的TEXT部分，再通过xmlPullParser.getText()可以获取TEXT部分的内容。再使用一次xmlPullParser.next()可以移动到相应的结束标签。
+
 **三、实验内容及步骤**
 
 **3.1 实验内容**
