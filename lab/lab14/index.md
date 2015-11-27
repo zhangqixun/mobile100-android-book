@@ -42,7 +42,7 @@
 **3.2 实验步骤**
 
 *1、新建一个工程，在里面建3个Activity![](1.png)
-2、MainActivity中尝试传递数据到MainActivity2Activity中，并显示![](2.png)![](3.png)
+    2、MainActivity中尝试传递数据到MainActivity2Activity中，并显示![](3.png)![](2.png)
 3、、MainActivity中、startActivity()跳转到MainActivity2Activit和和startActivityForResult()跳转到Activity3
 *
 
