@@ -35,7 +35,6 @@
       关于停止Service，如果service是非绑定的，最终当任务完成时，为了节省系统资源，一定要停止service，可以通过stopSelf()来停止，也可以在其他组件中通过stopService()来停止，绑定的service可以通过onUnBind()来停止service。
 
 * Service的一个子类IntentService：
-
       IntentService使用队列的方式将请求的Intent加入队列，然后开启一个worker thread(线程)来处理队列中的Intent。
       对于异步的startService请求，IntentService会处理完成一个之后再处理第二个，每一个请求都会在一个单独的worker thread中处理，不会阻塞应用程序的主线程。
       这里就给我们提供了一个思路，如果有耗时的操作与其在Service里面开启新线程还不如使用IntentService来处理耗时操作。
@@ -52,7 +51,70 @@
 
 **3.2 实验步骤**
 
-*详细描述本次实验的具体步骤*
+*首先用一个教材上的小例子简单介绍一下Service的用法，及使用的主要步骤*
+     
+    首先创建一个类继承自Service，实现以下方法
+    public class my_service extends Service {
+        @Override
+        public IBinder onBind(Intent intent) {
+            return null;
+        }
+
+        @Override
+        public int onStartCommand(Intent intent, int flags, int startId) {
+            Toast.makeText(this,"Service Start",Toast.LENGTH_SHORT).show();
+            return START_STICKY;
+        }
+
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+            Toast.makeText(this,"Service Destroyed",Toast.LENGTH_SHORT).show();
+        }
+    }
+    然后是一个布局文件：
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".service">
+
+    <Button
+        android:id="@+id/btnStartService"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Start Service"
+        android:onClick="startService"
+        />
+    <Button
+        android:id="@+id/btnStopService"
+        android:layout_below="@+id/btnStartService"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Stop Service"
+        android:onClick="stopService"/>
+    </RelativeLayout>
+    创建一个类继承自Activity：
+    public class ServicesActivity extends Activity {
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_service);
+        }
+
+        public void startService(View view){
+            startService(new Intent(getBaseContext(),my_service.class));
+        }
+
+        public void stopService(View view) {
+            stopService(new Intent(getBaseContext(),my_service.class));
+        }
+    }
+    最后，不要忘记在AndroidManifest.xml文件中声明：
+    <activity android:name=".ServicesActivity"/>
+    <service android:name=".my_service" />
+*下面介绍如何将Service用到天气预报项目中，实现后台更新天气*
 
 **四、常见问题及注意事项**
 
