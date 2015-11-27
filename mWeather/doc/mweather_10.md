@@ -24,14 +24,14 @@
 
 * ListView中Item单击和长按事件：
 
-        单击事件：
+        单击事件注册监听事件示例：
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(listview.this,"你单击的是第"+(position+1)+"条数据",Toast.LENGTH_SHORT).show();
             }
         });
-        长按事件：
+        长按事件注册监听事件示例：
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -39,6 +39,7 @@
                 return false;
             }
         });
+        我们可以通过以上方法注册不同的监听事件，响应不同的操作，比如我们可以在单击事件里面跳转到其他页面，也可以在长按事件里面弹出一个小窗口。操作是比较灵活的。
 
 
 * 知识点3：
