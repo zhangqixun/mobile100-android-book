@@ -151,19 +151,23 @@
 **3.2 实验步骤**
 
 *UI界面初始化*
+![](ui.png)
 
 
 
 *主线程初始化*
 
+![](mainthread.png)
 *定义handle类*
+![](handle.png)
 
 *定义子线程*
-
+![](sonthread.png)
 
 **四、常见问题及注意事项**
 
-*详细描述本此实验的可能会遇到的问题以及相关的注意事项*
+*1)对ui的操作一定要在主线程中*
+*2）创建一个Handler时一定要关联一个Looper实例，默认构造方法Handler()，它是关联当前Thread的Looper。*
 
 
 
