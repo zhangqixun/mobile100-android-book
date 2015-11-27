@@ -94,8 +94,7 @@
         Looper是每个线程中的MessageQueue的管家，调用Looper的loop()方法后，就会进入到一个无线循环当中，然后每
         当发现MessageQueue中存在一条消息，就会将a它提出来，并传递到Handler的handlerMessage()方法中。每个线程
         中也只会有一个Looper对象。
-       ![](thread.jpg)
- thread.jpg
+       ![](thread.jpg)![](../thread.png)
         
 * AsyncTask工具类
     
