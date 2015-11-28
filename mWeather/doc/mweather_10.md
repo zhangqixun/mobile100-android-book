@@ -64,9 +64,7 @@
 	        } else {
 	        	view = convertView;
 	        }			
-	        TextView tv1 = (TextView)view.findViewById(R.id.call_and_sms_text);
-	        String str = getItem(position);
-	        tv1.setText(str);
+	        ...
 		    //从当前view中选择需要添加监听函数的控件
 	    	View icon = view.findViewById(R.id.imageView1);
             //为自定义ListViewItem中控件添加点击监听函数
