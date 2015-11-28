@@ -15,15 +15,16 @@
    
 * 知识点1：
 
-      android:orientation 属性
+      android:orientation 属性：排列方向
       1.排列方向是vertical,控件就会在垂直方向上排列；如果指定的是horizontal,控件就会在水平方向上排列
       2.如果 LinearLayout 的排列方向是 horizontal,内部的控件就绝对不能将 宽度指定为 match_parent,因为这样的话单独一个控件就会将整个水平方向占满,其他的控件就没有可放置的位置了。同样的道理,如果 LinearLayout 的排列方向是 vertical,内部的控 件就不能将高度指定为 match_parent
       
 
 * 知识点2：
 
-      android:layout_gravity 属性
-      1.
+      android:layout_gravity 属性：对齐方式
+      1.用于指定控件在布局中的对齐方式
+      2.当 LinearLayout 的排列方向是 horizontal 时,只有垂直方向上的对齐方式才会生效,因为此时水平方向上的长度是不固定的,每添加一个控件,水平方向上的长度都会改变,因而无法指定该方向上的对齐方式。同样的道理,当 LinearLayout 的排列方向是 vertical 时,只有水平方 向上的对齐方式才会生效。
 
 
 * 知识点3：
