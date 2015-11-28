@@ -15,7 +15,9 @@
    
 * 知识点1：
 
-      相对于父布局定位
+相对于父布局定位
+
+      
       android:layout_alignParentLeft     父布局的左边
       android:layout_alignParentTop      父布局的顶边
       android:layout_alignParentRight    父布局的右边
@@ -24,12 +26,10 @@
 
 * 知识点2：
 
-      知识点介绍
+相对于控件button3进行定位：例如
 
-
-* 知识点3：
-
-      知识点介绍
+      android:layout_above="@id/button3"
+      android:layout_toLeftOf="@id/button3"
 
 
    
@@ -38,11 +38,84 @@
 
 **3.1 实验内容**
 
-*简要介绍本次实验的主要内容*
+*理解相对布局*
 
 **3.2 实验步骤**
 
-*详细描述本次实验的具体步骤*
+*1.相对于父布局*
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"         android:layout_height="match_parent" >
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="Button 1" />
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="Button 2" />
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Button 3" />
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:text="Button 4" />
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="Button 5" />
+            
+
+我们让 Button 1 和父布局的左上角对齐,Button 2 和父布局的右上角对齐,Button 3 居中显示,Button 4 和父 布局的左下角对齐,Button 5 和父布局的右下角对齐。运行程序,效果如图
+![](QQ20151128-4@2x.png)
+
+*2.相对于控件进行布局*
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" >
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Button 3" />
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/button3"
+            android:layout_toLeftOf="@id/button3"
+            android:text="Button 1" />
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/button3"
+            android:layout_toRightOf="@id/button3"
+            android:text="Button 2" />
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/button3"
+            android:layout_toLeftOf="@id/button3"
+            android:text="Button 4" />
+        <Button
+            android:id="@+id/button5"
 
 **四、常见问题及注意事项**
 
