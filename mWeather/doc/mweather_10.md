@@ -50,12 +50,34 @@
         ......
 
 
-* 自定义ListItem单击
+* 自定义ListItem单击事件
 
         ListItem点击事件可以分为，单击ListItem事件和长按ListItem事件。但是这两个功能并非全能的，例如在手机通讯录中，某一时间可能打电话给甲，另一时间则是发短信，或者长按删除联系人甲。这是单击事件和长按事件就无法满足实际需求。
         不过ListView提供了SimpleAdapter用来绑定用户自定义控件和数据。通过调用getView()方法，为List中每个Item返回一个自定义View，此时可以对View中相关控件添加监听函数。
-
-
+        具体实现：
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+	        // TODO Auto-generated method stub
+	        View view;
+	        if(convertView == null){
+	        	view = mInflater.inflate(R.layout.layout_list_click2, null);
+	        } else {
+	        	view = convertView;
+	        }			
+	        TextView tv1 = (TextView)view.findViewById(R.id.call_and_sms_text);
+	        String str = getItem(position);
+	        tv1.setText(str);
+		    //从当前view中选择需要添加监听函数的控件
+	    	View icon = view.findViewById(R.id.imageView1);
+            //为自定义ListViewItem中控件添加点击监听函数
+        	icon.setOnClickListener(new View.OnClickListener() {
+        	public void onClick(View v) {
+	            // TODO Auto-generated method stub
+	        	//添加事件处理流程
+	        	}
+        	});
+        	return view;
+        }
    
 
 **三、主要思路及步骤**
