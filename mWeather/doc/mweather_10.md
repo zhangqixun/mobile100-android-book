@@ -21,8 +21,6 @@
       
       同时发起方要实现onActivityResult(int requestCode, int resultCode, Intent intent)来获取返回结果。
       
-      ![](getResult.png)
-      
       这样MainActivity才可以根据获得的cityCode更新城市天气。
       那么同时在城市列表的Activity中，则要在finish()之前，将数据放入intent中，并调用setResult(int resultCode, Intent intent)方法，设置返回结果。
 
