@@ -21,14 +21,6 @@
       void onDeleted(Context context, int[] appWidgetIds)  
       // 在小控件被删除时调用该方法 
 
-* 知识点2：
-
-      知识点介绍
-
-
-* 知识点3：
-
-      知识点介绍
 
 
    
