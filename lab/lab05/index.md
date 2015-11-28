@@ -48,7 +48,7 @@
     android:orientation="vertical"
     设计三个button
     ![](QQ20151128-0@2x.png)
-
+    ![PNG](lab05/QQ20151128-0@2x.png)
 
 **四、常见问题及注意事项**
 
