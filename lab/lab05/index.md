@@ -43,10 +43,9 @@
 
 **3.2 实验步骤**
 
-*1.orientation 属性
+*1.orientation 属性*
+    android:orientation="vertical"
 
-android:orientation="vertical"
-*
 
 **四、常见问题及注意事项**
 
