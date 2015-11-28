@@ -11,7 +11,7 @@
 
 **二、基础知识**
 
-*RelativeLayout 又称作相对布局,也是一种非常常用的布局。和 LinearLayout 的排列规 则不同,RelativeLayout 显得更加随意一些,它可以通过相对定位的方式让控件出现在布局 的任何位置。也正因为如此,RelativeLayout 中的属性非常多,不过这些属性都是有规律可 循的,其实并不难理解和记忆。*
+*RelativeLayout 又称作相对布局,也是一种非常常用的布局。和 LinearLayout 的排列规则不同,RelativeLayout 显得更加随意一些,它可以通过相对定位的方式让控件出现在布局 的任何位置。也正因为如此,RelativeLayout 中的属性非常多,不过这些属性都是有规律可 循的,其实并不难理解和记忆。*
    
 * 知识点1：
 
