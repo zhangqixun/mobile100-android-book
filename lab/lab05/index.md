@@ -44,7 +44,10 @@
 **3.2 实验步骤**
 
 *1.orientation 属性*
+   
     android:orientation="vertical"
+    设计三个button
+    
 
 
 **四、常见问题及注意事项**
