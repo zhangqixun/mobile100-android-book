@@ -16,7 +16,9 @@
 * 知识点1：
 
       android:orientation 属性
-      排列方向是vertical,控件就会在垂直方向上排列；如果指定的是horizontal,控件就会在水平方向上排列
+      1.排列方向是vertical,控件就会在垂直方向上排列；如果指定的是horizontal,控件就会在水平方向上排列
+      2.
+      
 
 * 知识点2：
 
