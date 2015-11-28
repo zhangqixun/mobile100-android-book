@@ -15,7 +15,12 @@
    
 * 知识点1：
 
-      知识点介绍
+      相对于父布局定位
+      android:layout_alignParentLeft     父布局的左边
+      android:layout_alignParentTop      父布局的顶边
+      android:layout_alignParentRight    父布局的右边
+      android:layout_alignParentBottom   父布局的底边
+      android:layout_centerInParent      父布局的中间
 
 * 知识点2：
 
