@@ -14,11 +14,12 @@
    
 * Intent传递数据：
 
-      从天气预报的主界面（即天气情况显示界面）到城市列表界面是通过Intent来启动一个新的Activity的，现在，我们在点击城市列表的某个城市的时候，我们需要将所点击的城市信息作为参数传回主界面的Activity并进行相应的查询显示等处理。
-      这时，发起方（主界面）要调用startActivityForResult(Intent intent, int requestCode)
-      同时发起方要实现onActivityResult(int requestCode, int resultCode, Intent intent)来获取返回结果。
-      这样MainActivity才可以根据获得的cityCode更新城市天气。
-      那么同时在城市列表的Activity中，则要在finish()之前，将数据放入intent中，并调用setResult(int resultCode, Intent intent)方法，设置返回结果。
+    &#160;&#160;&#160;&#160;&#160;&#160;&#160;从天气预报的主界面（即天气情况显示界面）到城市列表界面是通过Intent来启动一个新的Activity的，现在，我们在点击城市列表的某个城市的时候，我们需要将所点击的城市信息作为参数传回主界面的Activity并进行相应的查询显示等处理。
+    这时，发起方（主界面）要调用startActivityForResult(Intent intent, int requestCode)
+    ![](faqifang.png)  
+    &#160;&#160;&#160;&#160;&#160;&#160;&#160;同时发起方要实现onActivityResult(int requestCode, int resultCode, Intent intent)来获取返回结果。
+    ![](getResult.png)
+    &#160;&#160;&#160;&#160;&#160;&#160;&#160;这样MainActivity才可以根据获得的cityCode更新城市天气。那么同时在城市列表的Activity中，则要在finish()之前，将数据放入intent中，并调用setResult(int resultCode, Intent intent)方法，设置返回结果。
 
 * ListView中Item单击和长按事件：
 
