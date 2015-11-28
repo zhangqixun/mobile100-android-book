@@ -82,7 +82,16 @@
 
 **3.1 主要思路**
 
-*简要介绍主要思路*
+    当响应单击事件时：
+        首先设置监听函数，即调用OnItemClickListener()函数；
+        接着，在处理函数内部，设置处理流程，OnItemClick().
+    响应长按事件:
+        首先触发的是onItemLongClick函数，执行onItemLongClick操作；
+        其次，然后根据onItemLongClick的返回值判断是不是执行OnCreateContextMenuListener函数；
+        如果onItemLongClick返回false，则会继续执行OnCreateContextMenuListener函数。
+    响应自定义控件事件：
+        首先调用getView()函数，在其中绑定控件；
+        其次设置该空间监听函数，并处理事件。
 
 **3.2 实践步骤**
 
