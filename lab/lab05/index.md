@@ -46,8 +46,41 @@
 *1.orientation 属性*
    
     android:orientation="vertical"
-    设计三个button
+    设计三个button,效果如下
   ![](QQ20151128-0@2x.png)
+  
+    android:orientation="horizontal"
+    
+    
+button水平排开，效果图略。
+    
+    
+  
+*2.android:layout_gravity* 
+
+    android:orientation="horizontal"
+    <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:text="Button 1" />
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Button 2" />
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="Button 3" />
+
+
+运行结果
+
 
 **四、常见问题及注意事项**
 
