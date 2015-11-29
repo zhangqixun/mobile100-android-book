@@ -52,7 +52,7 @@
         * 
     onEnabled(Context context)  
         * 
-    onReceive(Context context, Intent intent)   
+    onReceive(Context context, Intent intent)  
   Tip:因为 AppWidgetProvider 是继承自BroadcastReceiver  所以可以重写onRecevie 方法，当然必须在后台注册Receiver
 5、onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
 
