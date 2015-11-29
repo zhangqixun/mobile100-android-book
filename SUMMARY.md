@@ -1,7 +1,7 @@
 # Summary
 
 * [Introduction](README.md)
-* [前言](index.md)
+* [前  言](index.md)
 * [基础实验](lab/index.md)
    * [环境搭建](lab/lab01/index.md)
    * [Hello World应用程序](lab/lab02/index.md)
