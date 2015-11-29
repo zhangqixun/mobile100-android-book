@@ -76,13 +76,13 @@
     letters = toList(new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T','U', 'V', 'W', 'X', 'Y', 'Z', '#' });
     2.3： 注册ontouch事件，获取点击位置的字母（获取方式不再详述），定位到对应首字母的province
         char sindex = letters.get(currentItem) ;
-            for (int i = 0 ; i < adapter.getCount() ;i ++) {
+        for (int i = 0 ; i < adapter.getCount() ;i ++) {
                 City c = adapter.getItem(i) ;
                 if (c.getProvincepy()!=null && c.getProvincepy().length() >0 &&c.getProvincepy().charAt(0)==sindex ){
                     listView.setSelection(i);
                     break ;
                 }
-            }
+        }
 	    
 **四、常见问题及注意事项**
     功能1效果图 ：
