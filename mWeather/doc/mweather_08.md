@@ -33,8 +33,9 @@
       AssetManager类提供对应用程序的原始资源文件进行访问的接口；此类提供了一个低级别的API，
       它允许你以简单的字节流的形式打开和读取和应用程序绑定在一起的原始资源文件。我们可以通过
       getAssets()方法获取AssetManager对象。
-      
-      AssetManager类常用方法：
+    
+    
+**AssetManager类常用方法：**
 
 **Public Methods**
 
