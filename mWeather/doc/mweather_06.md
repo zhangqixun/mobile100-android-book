@@ -436,6 +436,41 @@ initView()当然是在Activity创建的时候就调用了
 
         return pmtype;
     }
+    
+***4.定义主线程的 Handler。***
+
+    
+    private static final int UPDATE_TODAY_WEATHER = 1;
+    // 定义主线程的 handler
+    private Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            switch(msg.what){
+                case UPDATE_TODAY_WEATHER:
+                    updateTodayWeather((TodayWeather) msg.obj);
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    };
+***5.在子线程中发送更新 UI 的消息。***
+    
+            if (todayWeather != null) {
+                        Log.d("myapp", todayWeather.toString());
+
+                        // 发送消息，由主线程更新UI
+                        Message msg =new Message();
+                        msg.what = UPDATE_TODAY_WEATHER;
+                        msg.obj = todayWeather;
+                        mHandler.sendMessage(msg);
+                    }
+
+
+
+
 
 **四、常见问题及注意事项**
 
