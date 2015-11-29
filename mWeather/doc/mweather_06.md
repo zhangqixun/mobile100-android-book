@@ -355,7 +355,7 @@ todayweather类有如下属性：
 initView()当然是在Activity创建的时候就调用了
 ![](QQ20151129-2@2x.png)
 
-编写 updateTodayWeather 函数
+编写 updateTodayWeather 函数，为我们的控件填写内容
     
     // 更新天气
     void updateTodayWeather (TodayWeather todayWeather){
@@ -366,11 +366,7 @@ initView()当然是在Activity创建的时候就调用了
         humidityTv.setText("湿度:" + todayWeather.getShidu());
         weekTv.setText(todayWeather.getDate());
         pmDataTv.setText(todayWeather.getPm25());
-
-
-
         pmQualityTv.setText(todayWeather.getQuality());
-
         pmImg.setImageResource(getpmImage(todayWeather.getQuality()));
         tempertureTv.setText(todayWeather.getLow() + "~" + todayWeather.getHigh());
         climateTv.setText(todayWeather.getType());
@@ -379,6 +375,41 @@ initView()当然是在Activity创建的时候就调用了
         Toast.makeText(MainActivity.this, "更新成功！", Toast.LENGTH_LONG).show();
         //Log.d("到底更新几次!!!!!!!!!!!!", todayWeather.toString());
     }
+其中，要是先根据天气状况更新不同的图片，效果图如下：
+
+
+![](图片 1.png)
+![](图片 2.png)
+
+    private int getImage(String type) {
+        int imagetype=0;
+        switch(type) {
+            case "阴" : imagetype=R.drawable.biz_plugin_weather_yin;
+                break;
+            case "暴雪" : imagetype=R.drawable.biz_plugin_weather_baoxue;
+                break;
+            case "晴" : imagetype=R.drawable.biz_plugin_weather_qing;
+                break;
+            case "暴雨" : imagetype=R.drawable.biz_plugin_weather_baoyu;
+                break;
+            case "大暴雨" : imagetype=R.drawable.biz_plugin_weather_dabaoyu;
+                break;
+            case "大雪" : imagetype=R.drawable.biz_plugin_weather_daxue;
+                break;
+            case "大雨" : imagetype=R.drawable.biz_plugin_weather_dayu;
+                break;
+            case "多云" : imagetype=R.drawable.biz_plugin_weather_duoyun;
+                break;
+            case "雷阵雨冰雹" : imagetype=R.drawable.biz_plugin_weather_leizhenyubingbao;
+                break;
+            case "雷阵雨" : imagetype=R.drawable.biz_plugin_weather_leizhenyu;
+                break;
+            default:
+                imagetype=R.drawable.biz_plugin_weather_qing;
+        }
+        return imagetype;
+    }
+
 
 **四、常见问题及注意事项**
 
