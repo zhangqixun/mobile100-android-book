@@ -378,8 +378,8 @@ initView()当然是在Activity创建的时候就调用了
 其中，要是先根据天气状况更新不同的图片，效果图如下：
 
 
-![](图片 1.png)
-![](图片 2.png)
+![](QQ20151129-5@2x.png)
+![](QQ20151129-4@2x.png)
 
 
 写一个根据获得天气情况，更新对应图标的函数
@@ -412,7 +412,30 @@ initView()当然是在Activity创建的时候就调用了
         }
         return imagetype;
     }
+同样对于空气质量图标的显示的函数
 
+    private int getpmImage(String pm) {
+        System.out.println(pm);
+        int pmtype=0;
+        switch(pm) {
+            case "重度污染" : pmtype=R.drawable.biz_plugin_weather_201_300;
+                break;
+            case "中度污染" : pmtype=R.drawable.biz_plugin_weather_151_200;
+                break;
+            case "轻度污染" : pmtype=R.drawable.biz_plugin_weather_101_150;
+                break;
+            case "?还有什么等级" : pmtype=R.drawable.biz_plugin_weather_51_100;
+                break;
+            case "良" : pmtype=R.drawable.biz_plugin_weather_0_50;
+                break;
+            default:
+                pmtype=R.drawable.biz_plugin_weather_0_50;
+                System.out.println("pmnull  打印的default");
+                break;
+        }
+
+        return pmtype;
+    }
 
 **四、常见问题及注意事项**
 
