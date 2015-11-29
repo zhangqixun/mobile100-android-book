@@ -62,7 +62,7 @@
 
 **3.2 实践步骤**
 
-*1.建立新的package，建立新的bean包--todayweather类*
+***1.建立新的package，建立新的bean包--todayweather类***
 ![](QQ20151129-0@2x.png)
 
 ![](QQ20151129-1@2x.png)
@@ -177,6 +177,141 @@ todayweather类有如下属性：
     public void setLow(String low) {
         this.low = low;
     }
+
+写toString方法
+
+    public String toString() {
+        return "TodayWeather{" +
+                "city='" + city + '\'' +
+                ", updatetime='" + updatetime + '\'' +
+                ", wendu='" + wendu + '\'' +
+                ", fengli='" + fengli + '\'' +
+                ", shidu='" + shidu + '\'' +
+                ", fengxiang='" + fengxiang + '\'' +
+                ", pm25='" + pm25 + '\'' +
+                ", quality='" + quality + '\'' +
+                ", date='" + date + '\'' +
+                ", high='" + high + '\'' +
+                ", low='" + low + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
+***2.将解析的数据存入 TodayWeather对象中。在MainAcitivity中写parseXML方法***
+
+    
+    private TodayWeather parseXML(String xmldata) {
+
+        TodayWeather todayWeather = null;
+
+        try{
+            int fengxiangCount = 0;
+            int fengliCount = 0;
+            int dateCount = 0;
+            int highCount = 0;
+            int lowCount = 0;
+            int typeCount = 0;
+
+            XmlPullParserFactory fac = XmlPullParserFactory.newInstance();
+            XmlPullParser xmlPullParser = fac.newPullParser();
+            xmlPullParser.setInput(new StringReader(xmldata));
+
+            int eventType =xmlPullParser.getEventType();
+            Log.d("myapp", "parseXML");
+
+            while(eventType != XmlPullParser.END_DOCUMENT){
+                switch(eventType) {
+
+                    // 判断当前事件是否为文档开始事件
+                    case XmlPullParser.START_DOCUMENT:
+                        break;
+
+                    // 判断是否为标签元素开始事件
+                    case XmlPullParser.START_TAG:
+                        if(xmlPullParser.getName().equals("resp")){
+                            todayWeather = new TodayWeather();
+                            todayWeather.setQuality("null");
+                        }
+                        if (todayWeather != null){
+                            if(xmlPullParser.getName().equals("city")){
+                                eventType = xmlPullParser.next();
+                                todayWeather.setCity(xmlPullParser.getText());
+                                Log.d("myapp", "city" + xmlPullParser.getText());
+                            }else if(xmlPullParser.getName().equals("updatetime")){
+                                eventType = xmlPullParser.next();
+                                todayWeather.setUpdatetime(xmlPullParser.getText());
+                                Log.d("myapp", "updatetime" + xmlPullParser.getText());
+                            }else if(xmlPullParser.getName().equals("shidu")){
+                                eventType = xmlPullParser.next();
+                                todayWeather.setShidu(xmlPullParser.getText());
+                                Log.d("myapp", "shidu" + xmlPullParser.getText());
+                            }else if(xmlPullParser.getName().equals("wendu")){
+                                eventType = xmlPullParser.next();
+                                todayWeather.setWendu(xmlPullParser.getText());
+                                Log.d("myapp", "wendu" + xmlPullParser.getText());
+                            }else if(xmlPullParser.getName().equals("pm25")){
+                                eventType = xmlPullParser.next();
+                                todayWeather.setPm25(xmlPullParser.getText());
+                                Log.d("myapp", "pm2.5" + xmlPullParser.getText());
+                            }else if(xmlPullParser.getName().equals("quality")){//顺义的时候根本没执行这里啊
+                                eventType = xmlPullParser.next();
+                                todayWeather.setQuality(xmlPullParser.getText());
+                                Log.d("myapp", "quality" + xmlPullParser.getText());
+                            }
+                            else if(xmlPullParser.getName().equals("fengxiang") && fengxiangCount == 0){
+                                eventType = xmlPullParser.next();
+                                todayWeather.setFengxiang(xmlPullParser.getText());
+                                Log.d("myapp", "fengxiang" + xmlPullParser.getText());
+                                fengxiangCount++;
+                            }else if(xmlPullParser.getName().equals("fengli") && fengliCount == 0){
+                                eventType = xmlPullParser.next();
+                                todayWeather.setFengli(xmlPullParser.getText());
+                                Log.d("myapp", "fengli" + xmlPullParser.getText());
+                                fengliCount++;
+                            }else if(xmlPullParser.getName().equals("date") && dateCount == 0){
+                                eventType = xmlPullParser.next();
+                                todayWeather.setDate(xmlPullParser.getText());
+                                Log.d("myapp", "date" + xmlPullParser.getText());
+                                dateCount++;
+                            }else if(xmlPullParser.getName().equals("high") && highCount == 0){
+                                eventType = xmlPullParser.next();
+                                todayWeather.setHigh(xmlPullParser.getText().substring(2).trim());
+                                Log.d("myapp", "high" + xmlPullParser.getText().substring(2).trim());
+                                highCount++;
+                            }else if(xmlPullParser.getName().equals("low") && lowCount == 0){
+                                eventType = xmlPullParser.next();
+                                todayWeather.setLow(xmlPullParser.getText().substring(2).trim());
+                                Log.d("myapp", "low" + xmlPullParser.getText());
+                                lowCount++;
+                            }else if(xmlPullParser.getName().equals("type") && typeCount == 0){
+                                eventType = xmlPullParser.next();
+                                todayWeather.setType(xmlPullParser.getText());
+                                Log.d("myapp", "type" + xmlPullParser.getText());
+                                typeCount++;
+                            }
+                        }
+
+                        break;
+
+                    // 判断是否为标签元素结尾事件
+                    case XmlPullParser.END_TAG:
+                        break;
+                }
+
+                // 进入下一个元素并触发相应事件
+                eventType = xmlPullParser.next();
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return todayWeather;
+    }
+
+
+
+
 
 
 **四、常见问题及注意事项**
