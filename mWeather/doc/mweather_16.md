@@ -11,7 +11,10 @@
 **二、基础知识**
 
 *桌面插件的开发主要使用的Android中的AppWidget框架*
-    *1*
+1. AppWidget框架
+
+2. AppWidget 框架的主要类介绍
+
 
 
 
