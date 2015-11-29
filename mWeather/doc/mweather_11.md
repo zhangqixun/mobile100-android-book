@@ -68,7 +68,7 @@
         }
         
     });
-    ![](chaxun.png)
+   
     功能2:通过侧栏的首字母A-Z（类似通讯录侧栏检索）快速检索省市**
     2.1: 自定义侧栏视图SideBar
     public class SideBar extends View implements OnTouchListener 
@@ -83,7 +83,9 @@
                     break ;
                 }
             }
-	    效果图（详看右侧栏A-Z）：
+	    功能1效果图 ：
+	    ![](chaxun.png)
+	    功能2效果图（详看右侧栏A-Z）：
 		![](shouzimu.png)
 **四、常见问题及注意事项**
 
