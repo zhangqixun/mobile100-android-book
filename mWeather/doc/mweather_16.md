@@ -11,15 +11,8 @@
 **二、基础知识**
 
 *桌面插件的实现是基于Broadcast的形式实现的；每一个桌面插件都对应于一个BroadcastReceiver类。Android系统提供了一个AppWidgetProvider类（它就是BroadcastReceiver的子类），这个类很关键，你在写桌面小控件时只需继承这个类就行。继承了AppWidgetProvider类之后，你可以根据自己的需要覆盖它的不同的生命周期的方法，来达到自己的目的。*
-   
-* AppWidgetProvider类的生命周期：
+1. AppWidget框架类
 
-      AppWidgetProvider类的主要提供如下不同生命周期的方法：
-      void onUpdate(Context context, AppWidgetManager appWidgetManager,int[] appWidgetIds) { }
-      //这个方法字面意思是负责更新桌面小控件，但貌似只有在小控件被用户放到桌面上时被调用了一次，读者可以自己通过输出Log来测试  
-      // 实现桌面控件是通常都会考虑重写该方法
-      void onDeleted(Context context, int[] appWidgetIds)  
-      // 在小控件被删除时调用该方法 
 
 
 
