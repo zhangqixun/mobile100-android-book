@@ -68,8 +68,8 @@
         }
         
     });
-    
-    功能2:![](chaxun.png)
+    ![](chaxun.png)
+    功能2:
 
     public class SideBar extends View implements OnTouchListener 
      
