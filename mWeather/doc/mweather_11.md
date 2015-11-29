@@ -36,10 +36,43 @@
 
 **3.2 实践步骤**
 
-    功能1：
+
+    功能1：通过输入拼音或汉字查找城市
+        1.1添加控件：
+    <EditText
+        android:id="@+id/search_edit"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="搜索全国城市（中⽂文）"
+        android:layout_margin="10.0dip"
+        android:drawableLeft=
+            "@drawable/magnifying_glass"
+        android:drawablePadding="8.0dip"
+        android:paddingBottom="8.0dip"
+        android:paddingLeft="10.0dip"
+        android:paddingRight="30.0dip"
+        android:paddingTop="8.0dip"
+        android:singleLine="true"
+        android:background
+            ="@drawable/contact_search_box_edittext_keyword_background"
+    android:textColor="#ff000000"
+    android:textColorHint="#ffcccccc"
+    android:textSize="15.0sp"
+    />
+        1.2注册函数响应ontextchange事件：
+    edit_search.addTextChangedListener(new TextWatcher() {
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {//根据输入模糊查询
+            mCityList=((MyApplication) MyApplication.getInstance()).getmCityDB().getAllCity(s.toString());  //查询获取当前条件下的城市
+            dispalyList(); //展示结果
+        }
+        
+    });
     
+    功能2:![](chaxun.png)
 
-
+    public class SideBar extends View implements OnTouchListener 
+     
 **四、常见问题及注意事项**
 
     无
