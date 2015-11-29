@@ -196,9 +196,9 @@ todayweather类有如下属性：
                 ", type='" + type + '\'' +
                 '}';
     }
-***2.将解析的数据存入TodayWeather对象中。在MainAcitivity中写parseXML方法***
+***2.将解析的数据存入TodayWeather对象中。***
 
-    
+在MainAcitivity中写parseXML方法
     
     private TodayWeather parseXML(String xmldata) {
 
@@ -310,7 +310,11 @@ todayweather类有如下属性：
         return todayWeather;
     }
 
+利用刚写的方法，接收解析结果,并通过 Log打印是否接收正确queryWeatherCode方法里写如下代码
 
+    TodayWeather todayWeather = parseXML(responseStr);//调用parseXML
+                    if (todayWeather != null) {
+                        Log.d("myapp", todayWeather.toString());
 
 
 
