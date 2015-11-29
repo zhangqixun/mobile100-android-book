@@ -37,8 +37,8 @@
 **3.2 实践步骤**
 
 
-    功能1：通过输入拼音或汉字查找城市
-        1.1添加控件：
+    **功能1：通过输入拼音或汉字查找城市**
+       ** 1.1**添加控件：
     <EditText
         android:id="@+id/search_edit"
         android:layout_width="fill_parent"
@@ -59,7 +59,7 @@
     android:textColorHint="#ffcccccc"
     android:textSize="15.0sp"
     />
-        1.2注册函数响应ontextchange事件：
+        **1.2**注册函数响应ontextchange事件：
     edit_search.addTextChangedListener(new TextWatcher() {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {//根据输入模糊查询
@@ -69,10 +69,24 @@
         
     });
     ![](chaxun.png)
-    功能2:
-
+   ** 功能2:通过侧栏的首字母A-Z（类似通讯录侧栏检索）快速检索省市**
+    **2.1**: 自定义侧栏视图SideBar
     public class SideBar extends View implements OnTouchListener 
-     
+    **2.2**：通过ondraw函数在视图对应位置上填上字母
+    letters = toList(new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+				'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+				'U', 'V', 'W', 'X', 'Y', 'Z', '#' });
+	**2.3**： 注册ontouch事件，获取点击位置的字母（获取方式不再详述），定位到对应首字母的province
+	        char sindex = letters.get(currentItem) ;
+			for (int i = 0 ; i < adapter.getCount() ;i ++) {
+				City c = adapter.getItem(i) ;
+				if (c.getProvincepy()!=null && c.getProvincepy().length() >0 &&c.getProvincepy().charAt(0)==sindex ){
+					listView.setSelection(i);
+					break ;
+				}
+			}
+		效果图（详看右侧栏A-Z）：
+		
 **四、常见问题及注意事项**
 
     无
