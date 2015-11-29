@@ -27,10 +27,15 @@
 * 知识点2：获取工程中asset里的资源
 
       Android除了提供/res目录存放资源文件外，在/assets目录也会提供存放资源文件，在assets目录
+      
       下面不会在R.java里面自动生成ID，所以读取assets目录下面的资源文件需要提供路径，我们可以
+      
       通过AssetManager类来访问这些文件。
+      
       AssetManager类提供对应用程序的原始资源文件进行访问的接口；此类提供了一个低级别的API，
+      
       它允许你以简单的字节流的形式打开和读取和应用程序绑定在一起的原始资源文件。我们可以通过
+      
       getAssets()方法获取AssetManager对象。
     
     
@@ -70,7 +75,10 @@
     
          db.insert(String table, String nullColumnHack, ContentValues values);  
          db.update(String table, Contentvalues values, String whereClause, String whereArgs);  
-         db.delete(String table, String whereClause, String whereArgs);  
+         db.delete(String table, String whereClause, String whereArgs); 
+         
+         上面几种都是常用的查询方法，第一种最为简单，将所有的SQL语句都组织到一个字符串中，使用占位符代替实际参数，selectionArgs就是占位符实际参数集；下面的几种参数都很类似，colums表示要查询的列所有名称集，selection表示WHERE之后的条件语句，可以使用占位符，groupBy指定分组的列名，having指定分组条件，配合groupBy使用，orderBy指定排序的列名，limit指定分页参数，distinct可以指定“true”或“false”表示要不要过滤重复值。需要注意的是，selection、groupBy、having、orderBy、limit这几个参数中不包括“WHERE”、“GROUP BY”、“HAVING”、“ORDER BY”、“LIMIT”等SQL关键字。
+         最后，他们同时返回一个Cursor对象，代表数据集的游标，有点类似于JavaSE中的ResultSet。
      
     在本实验中，主要使用sql语句进行操作，其他详情可见http://blog.csdn.net/liuhe688/article/details/6715983/
     
