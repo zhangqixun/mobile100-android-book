@@ -130,18 +130,13 @@ import android.content.ComponentName;
 import android.content.Context;     
 import android.widget.RemoteViews;     
 public class WidetDemo extends AppWidgetProvider {     
-    /** Called when the activity is first created. */    
-       
     @Override    
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,     
             int[] appWidgetIds) {     
-             
         Timer timer = new Timer();     
         timer.scheduleAtFixedRate(new MyTime(context,appWidgetManager), 1, 60000);     
-        super.onUpdate(context, appWidgetManager, appWidgetIds);     
-    }     
-         
-         
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
+    }
     private class MyTime extends TimerTask{     
         RemoteViews remoteViews;     
         AppWidgetManager appWidgetManager;     
@@ -149,24 +144,19 @@ public class WidetDemo extends AppWidgetProvider {
              
         public MyTime(Context context,AppWidgetManager appWidgetManager){     
             this.appWidgetManager = appWidgetManager;     
-            remoteViews = new RemoteViews(context.getPackageName(),R.layout.main);     
-                 
-            thisWidget = new ComponentName(context,WidetDemo.class);     
+            remoteViews = new RemoteViews(context.getPackageName(),R.layout.main);
+            thisWidget = new ComponentName(context,WidetDemo.class)
         }     
         public void run() {     
-                 
             Date date = new Date();     
-            Calendar calendar = new GregorianCalendar(2010,06,11);     
+            Calendar calendar = new GregorianCalendar(2010,06,11);
             long days = (((calendar.getTimeInMillis()-date.getTime())/1000))/86400;     
             remoteViews.setTextViewText(R.id.wordcup, "距离南非世界杯还有" + days+"天");     
             appWidgetManager.updateAppWidget(thisWidget, remoteViews);     
-                 
-        }     
-             
-    }     
-       
+        }
+    }
 }    
-```
+```   
 **四、常见问题及注意事项**
 
 *详细描述本部分的常遇到的问题以及开发过程中的注意事项*
