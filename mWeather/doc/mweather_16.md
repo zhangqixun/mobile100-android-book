@@ -11,13 +11,38 @@
 **二、基础知识**
 
 *桌面插件的开发主要使用的Android中的AppWidget框架*
-1. AppWidget框架
-
-2. AppWidget 框架的主要类介绍
-
-
-
-
+1. AppWidget框架      
+    1）AppWidgetProvider ：继承自 BroadcastRecevier ， 在AppWidget 应用 update、enable、disable 和 delete 时接收通知。其中，onUpdate、onReceive 是最常用到的方法，它们接收更新通知。      
+    2） AppWidgetProvderInfo：描述 AppWidget 的大小、更新频率和初始界面等信息，以XML 文件形式存在于应用的 res/xml/目录下。   
+    3）AppWidgetManger ：负责管理 AppWidget ，向 AppwidgetProvider 发送通知。  
+    4）RemoteViews ：一个可以在其他应用进程中运行的类，向 AppWidgetProvider 发送通知。
+2. AppWidget 框架的主要类介绍        
+    1) AppWidgetManger类     
+    * 
+    bindAppWidgetId(int appWidgetId, ComponentName provider)  
+    *通过给定的ComponentName 绑定appWidgetId  * 
+    * 
+    getAppWidgetIds(ComponentName provider)  
+    *通过给定的ComponentName 获取AppWidgetId    *
+    * 
+    getAppWidgetInfo(int appWidgetId)  
+    *通过AppWidgetId 获取 AppWidget 信息  *
+    * 
+    getInstalledProviders()  
+    *返回一个List<AppWidgetProviderInfo>的信息  *
+    * 
+    getInstance(Context context)   
+    *获取 AppWidgetManger 实例使用的上下文对象   *
+    * 
+    updateAppWidget(int[] appWidgetIds, RemoteViews views)   
+    *通过appWidgetId 对传进来的 RemoteView 进行修改，并重新刷新AppWidget 组件   *
+    * 
+    updateAppWidget(ComponentName provider, RemoteViews views)  
+    *通过 ComponentName 对传进来的 RemoeteView 进行修改，并重新刷新AppWidget 组件   *
+    * 
+    updateAppWidget(int appWidgetId, RemoteViews views)  
+    *通过appWidgetId 对传进来的 RemoteView 进行修改，并重新刷新AppWidget 组件   *
+3. 
 
    
 
