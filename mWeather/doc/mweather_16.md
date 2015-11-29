@@ -10,8 +10,7 @@
 
 **二、基础知识**
 
-*桌面插件的实现是基于Broadcast的形式实现的；每一个桌面插件都对应于一个BroadcastReceiver类。Android系统提供了一个AppWidgetProvider类（它就是BroadcastReceiver的子类），这个类很关键，你在写桌面小控件时只需继承这个类就行。继承了AppWidgetProvider类之后，你可以根据自己的需要覆盖它的不同的生命周期的方法，来达到自己的目的。*
-1. AppWidget框架类
+*桌面插件的开发主要使用的Android中的AppWidget框架*
 
 
 
