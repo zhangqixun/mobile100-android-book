@@ -95,16 +95,54 @@
 
 **3.1 主要思路**
 
-*第一，将所给的数据库文件导入*
+*第一，新建一个application*
 
-*第二，对导入的数据库文件进行读取*
+*第二，新建city类*
 
-*第三，对读取出的数据进行显示*
+*第三，将所给的数据库文件导入*
+
+*第四，对导入的数据库文件进行读取*
+
+*第五，对读取出的数据进行显示*
 
 **3.2 实践步骤**
 
-*详细描述开发的具体步骤*
+*将数据库文件 city.db 放置到 assets 目录*
+![](db.png)
+
+*建立 City 的 Bean*
+
+*![](bean.png)*
+*建立 MyApplication 类*
+![](myapplication.png)
+MyApplication 类继承自 Application 类，代码如下所示：
+
+![](application_test.png)
+分别在 MyApplication 和 MainActivity 的 onCreate 方法中打印信息，观察函数的先后调用情
+况。
+![](concrete.png)
+由于是自定义的 Application，需要在 AndroidManifest.xml 文件中进行注册，代码如下图所示：
+![](result.png)
+*在 MyApplication 类中创建 getInstance 方法*
+![](instance.png)
+*创建 CityDB 操作类*
+![](citydb.png)
+*创建初始化数据库的方法*
+![](opencitydb1.png)
+![](opencitydb2.png)
+*初始化城市信息列表*
+![](initcitylist.png)
+![](preparecitylist.png)
+
+*在程序运行时调用数据库访问方法*
+![](testdb.png)
+程序运行结果如下，可以在程序运行时，在 Application 对象中打开数据库，并取出城市列
+表信息数据。
+![](final.png)
 
 **四、常见问题及注意事项**
 
-*详细描述本部分的常遇到的问题以及开发过程中的注意事项*
+一、将city.db导入工程中时直接复制到asset目录下,没有的话自己建这个目录
+二、自定义的 Application，需要在 AndroidManifest.xml 文件中进行注册
+三、理解android中的目录体系
+
