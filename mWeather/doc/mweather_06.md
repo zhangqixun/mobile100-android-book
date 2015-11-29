@@ -318,6 +318,67 @@ todayweather类有如下属性：
 
 
 
+***3.将数据在 UI 上进行更新。***
+
+定义控件对象
+    
+    private TextView cityTv, timeTv, humidityTv,weekTv,pmDataTv, pmQualityTv, tempertureTv, climateTv, windTv;
+    private ImageView weatherImg, pmImg;
+
+
+初始化控件
+
+    void initView(){
+        t= (TextView) findViewById(R.id.title_city_name);
+        cityTv = (TextView) findViewById(R.id.city);
+        timeTv = (TextView) findViewById(R.id.time);
+        humidityTv = (TextView) findViewById(R.id.humidity);
+        weekTv = (TextView) findViewById(R.id.week_today);
+        pmDataTv = (TextView) findViewById(R.id.pm_data);
+        pmQualityTv = (TextView) findViewById(R.id.pm2_5_quality);
+        pmImg = (ImageView) findViewById(R.id.pm2_5_img);
+        tempertureTv = (TextView) findViewById(R.id.temperature);
+        climateTv = (TextView) findViewById(R.id.climate);
+        windTv = (TextView) findViewById(R.id.wind);
+        weatherImg = (ImageView) findViewById(R.id.weather_img);
+
+        cityTv.setText("N/A");
+        timeTv.setText("N/A");
+        humidityTv.setText("N/A");
+        weekTv.setText("N/A");
+        pmDataTv.setText("N/A");
+        pmQualityTv.setText("N/A");
+        tempertureTv.setText("N/A");
+        climateTv.setText("N/A");
+        windTv.setText("N/A");
+    }
+initView()当然是在Activity创建的时候就调用了
+![](QQ20151129-2@2x.png)
+
+编写 updateTodayWeather 函数
+    
+    // 更新天气
+    void updateTodayWeather (TodayWeather todayWeather){
+        //Log.d("myapp3", todayWeather.toString());
+        t.setText(todayWeather.getCity()+"天气");
+        cityTv.setText(todayWeather.getCity());
+        timeTv.setText(todayWeather.getUpdatetime() + "发布");
+        humidityTv.setText("湿度:" + todayWeather.getShidu());
+        weekTv.setText(todayWeather.getDate());
+        pmDataTv.setText(todayWeather.getPm25());
+
+
+
+        pmQualityTv.setText(todayWeather.getQuality());
+
+        pmImg.setImageResource(getpmImage(todayWeather.getQuality()));
+        tempertureTv.setText(todayWeather.getLow() + "~" + todayWeather.getHigh());
+        climateTv.setText(todayWeather.getType());
+        windTv.setText("风力:" + todayWeather.getFengli());
+        weatherImg.setImageResource(getImage(todayWeather.getType()));
+        Toast.makeText(MainActivity.this, "更新成功！", Toast.LENGTH_LONG).show();
+        //Log.d("到底更新几次!!!!!!!!!!!!", todayWeather.toString());
+    }
 
 **四、常见问题及注意事项**
 
