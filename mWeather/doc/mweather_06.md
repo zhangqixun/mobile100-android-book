@@ -196,8 +196,9 @@ todayweather类有如下属性：
                 ", type='" + type + '\'' +
                 '}';
     }
-***2.将解析的数据存入 TodayWeather对象中。在MainAcitivity中写parseXML方法***
+***2.将解析的数据存入TodayWeather对象中。在MainAcitivity中写parseXML方法***
 
+    
     
     private TodayWeather parseXML(String xmldata) {
 
