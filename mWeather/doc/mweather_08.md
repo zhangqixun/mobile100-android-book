@@ -35,27 +35,26 @@
       getAssets()方法获取AssetManager对象。
     
     
-**AssetManager类常用方法：**
+        **AssetManager类常用方法：**
 
-**Public Methods**
+        **Public Methods**
+
+        final String[] list(Stringpath)
+
+        返回指定路径下的所有文件及目录名。
+
+        final InputStream open(String fileName)
+
+        使用ACCESS_STREAMING模式打开assets下的指定文件。.
+
+        final InputStream open(String fileName, int accessMode)
+
+        使用显示的访问模式打开assets下的指定文件.
 
 
-final String[] list(Stringpath)
+* 知识点3：android中如何使用SQLite
 
-返回指定路径下的所有文件及目录名。
-
-final InputStream open(String fileName)
-
-使用ACCESS_STREAMING模式打开assets下的指定文件。.
-
-final InputStream open(String fileName, int accessMode)
-
-使用显示的访问模式打开assets下的指定文件.
-
-
-* 知识点3：
-
-      知识点介绍
+      
 
 
    
