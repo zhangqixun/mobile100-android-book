@@ -64,7 +64,7 @@ AppWidget 框架的主要类介绍
 
 **3.2 实践步骤**
 * 
-main.xml  
+main.xml布局，代码如下:  
 ```<?xml version="1.0" encoding="utf-8"?> 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" 
     android:layout_height="fill_parent"> 
