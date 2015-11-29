@@ -8,8 +8,6 @@
 
 *简要介绍本模块所要完成的功能。*
 
-列表视图是android中最常用的一种视图组件，它以垂直列表的形式列出需要显示的列表项。例如，显示系统设置项或功能内容列表。为了在单机ListView的各个表项时触发事件，需要重写列表项的setOnItemClickListener（）等方法。
-
 **二、基础知识**
 
 *简要介绍本模块所需掌握的基础知识*
@@ -41,15 +39,14 @@
             }
         });
         我们可以通过以上方法注册不同的监听事件，响应不同的操作，比如我们可以在单击事件里面跳转到其他页面，也可以在长按事件里面弹出一个小窗口。操作是比较灵活的。
+        
         下面介绍一下单击和长按事件个参数的意义：
-        ......
-        ......
-        ......
-        下面介绍一下给Item中的子控件 （按钮、图标、文字等）添加点击事件，来进行点击后的不同处理：
-        ......
-        ......
-        ......
-
+        parent相当于listview适配器的一个指针，通俗一点讲就是可以通过它来获得listview里装着的一切东西。
+        View view, view是你点击item的view的句柄，就是你可以用这个view，来获得item里的控件的id后操作控件。
+        int position, position是item在适配器里的位置。
+        long id，id是item在listview 里的第几行的位置，大部分时候position和id的值是一样的。
+        
+     
 
 * 自定义ListItem单击事件
 
@@ -276,16 +273,5 @@ protected void onActivityResult(int requestCode,int resultCode,Intent intent){
 
 
 **四、常见问题及注意事项**
-
-1.ListView 和 其它能触发点击事件的widget无法一起正常工作的原因是加入其它widget后，ListView的itemclick事件将无法触发，被其它widget的click事件屏蔽。
-
-2.一个ListView的创建需要3个元素缺一不可。
-
-（1）ListView中的每一列的View。
-
-（2）填入View的数据或者图片等。
-
-（3）连接数据与ListView的适配器。
-
 
 *详细描述本部分的常遇到的问题以及开发过程中的注意事项*
