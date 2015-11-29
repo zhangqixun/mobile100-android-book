@@ -44,10 +44,12 @@
 
 1.新建一个MyApplication类
 2.继承Application类，重写onCreate方法，在里面进行一些初始化的操作，如打开数据库，启动后台的service
+![](2.png)
 
 **四、常见问题及注意事项**
 
 修改AndroidManifest.xml的android:name为对应自定义类的名称
+![](1.png)
 
 
 
