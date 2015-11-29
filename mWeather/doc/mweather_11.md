@@ -70,6 +70,7 @@
     });
    
     **功能2:通过侧栏的首字母A-Z（类似通讯录侧栏检索）快速检索省市**
+    
     2.1: 自定义侧栏视图SideBar
     public class SideBar extends View implements OnTouchListener 
     **2.2**：通过ondraw函数在视图对应位置上填上字母
