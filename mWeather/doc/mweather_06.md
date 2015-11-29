@@ -58,11 +58,126 @@
 
 **3.1 主要思路**
 
-*简要介绍主要思路*
+*完成更新今日天气的功能，需要前序工作：获取网络数据和解析网路数据，见本教程前面的模块*
 
 **3.2 实践步骤**
 
-*详细描述开发的具体步骤*
+*1.建立新的package，建立新的bean包--todayweather类*
+![](QQ20151129-0@2x.png)
+
+![](QQ20151129-1@2x.png)
+todayweather类有如下属性：
+    
+    private String city;
+    private String updatetime;
+    private String wendu;
+    private String fengli;
+    private String shidu;
+    private String fengxiang;
+    private String pm25;
+    private String quality;
+    private String date;
+    private String high;
+    private String low;
+    private String type;
+为每个属性写get set方法
+    
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(String updatetime) {
+        this.updatetime = updatetime;
+    }
+
+    public String getWendu() {
+        return wendu;
+    }
+
+    public void setWendu(String wendu) {
+        this.wendu = wendu;
+    }
+
+    public String getFengli() {
+        return fengli;
+    }
+
+    public void setFengli(String fengli) {
+        this.fengli = fengli;
+    }
+
+    public String getShidu() {
+        return shidu;
+    }
+
+    public void setShidu(String shidu) {
+        this.shidu = shidu;
+    }
+
+    public String getFengxiang() {
+        return fengxiang;
+    }
+
+    public void setFengxiang(String fengxiang) {
+        this.fengxiang = fengxiang;
+    }
+
+    public String getPm25() {
+        return pm25;
+    }
+
+    public void setPm25(String pm25) {
+        this.pm25 = pm25;
+    }
+
+    public String getQuality() {
+        return quality;
+    }
+
+    public void setQuality(String quality) {
+        this.quality = quality;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getHigh() {
+        return high;
+    }
+
+    public void setHigh(String high) {
+        this.high = high;
+    }
+
+    public String getLow() {
+        return low;
+    }
+
+    public void setLow(String low) {
+        this.low = low;
+    }
+
 
 **四、常见问题及注意事项**
 
