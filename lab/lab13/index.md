@@ -18,14 +18,42 @@
       json格式是javascript对象与数组相结合形成的一种数据组织方式，主要优势在于体积小，
       如：{success: 0, result:{ a:z, b:y, c: [{name:jack, id:12}, {name:Tom, id:13}]}
 
-* 知识点2：
+* Json解析：
 
-      知识点介绍
+      在Android中解析JSON数据解析有多种：
+      官方提供的JSONObject
+      谷歌开源的GSON
+      第三方开源库Jackson, FastJSON
 
 
-* 知识点3：
+* Json封装：
 
-      知识点介绍
+      使用JSONObject进行对象的封装，使用JSONArray进行数组的封装。
+      如：public JSONObject makJsonObject(int id[], String name[], String year[],
+            String curriculum[], String birthday[], int numberof_students)
+            throws JSONException {
+            JSONObject obj = null;
+            JSONArray jsonArray = new JSONArray();
+            for (int i = 0; i < numberof_students; i++) {
+                obj = new JSONObject();
+                try {
+                    obj.put("id", id[i]);
+                    obj.put("name", name[i]);
+                    obj.put("year", year[i]);
+                    obj.put("curriculum", curriculum[i]);
+                    obj.put("birthday", birthday[i]);
+    
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                jsonArray.put(obj);
+            }
+    
+            JSONObject finalobject = new JSONObject();
+            finalobject.put("student", jsonArray);
+            return finalobject;
+    }
 
 
    
