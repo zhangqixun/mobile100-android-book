@@ -29,7 +29,6 @@
       Android除了提供/res目录存放资源文件外，在/assets目录也会提供存放资源文件，在assets目录
       下面不会在R.java里面自动生成ID，所以读取assets目录下面的资源文件需要提供路径，我们可以
       通过AssetManager类来访问这些文件。
-      
       AssetManager类提供对应用程序的原始资源文件进行访问的接口；此类提供了一个低级别的API，
       它允许你以简单的字节流的形式打开和读取和应用程序绑定在一起的原始资源文件。我们可以通过
       getAssets()方法获取AssetManager对象。
@@ -54,8 +53,27 @@
 
 * 知识点3：android中如何使用SQLite
 
+      现在的主流移动设备像Android、iPhone等都使用SQLite作为复杂数据的存储引擎，
       
+      在我们为移动设备开发应用程序时，也许就要使用到SQLite来存储我们大量的数据，所以我们就需要掌握移动设备上的SQLite开发技巧。
+      
+      对于Android平台来说，系统内置了丰富的API来供开发人员操作SQLite，我们可以轻松的完成对数据的存取。
+      
+    打开或创建数据库  
+        SQLiteDatabase db = openOrCreateDatabase("test.db", Context.MODE_PRIVATE, null);  
 
+    对于sql语句的使用是十分方便的,对于已经创建好的数据库db，以下语句就能够执行sql语句完成增删改查
+    
+        db.execSQL(*sql语句*)
+        
+    除了统一的形式之外，他们还有各自的操作方法：
+    
+         db.insert(String table, String nullColumnHack, ContentValues values);  
+         db.update(String table, Contentvalues values, String whereClause, String whereArgs);  
+         db.delete(String table, String whereClause, String whereArgs);  
+     
+    在本实验中，主要使用sql语句进行操作，其他详情可见http://blog.csdn.net/liuhe688/article/details/6715983/
+    
 
    
 
