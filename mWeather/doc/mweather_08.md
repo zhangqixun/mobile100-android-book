@@ -78,6 +78,7 @@
          db.delete(String table, String whereClause, String whereArgs); 
          
          以上三个方法的第一个参数都是表示要操作的表名；
+         
          insert中的第二个参数表示如果插入的数据每一列都为空的话，需要指定此行中某一列的名称，系统将此列设置为NULL，不至于出现错误；
          
          insert中的第三个参数是ContentValues类型的变量，是键值对组成的Map，key代表列名，value代表该列要插入的值；
