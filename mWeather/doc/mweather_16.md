@@ -17,32 +17,45 @@
     3）AppWidgetManger ：负责管理 AppWidget ，向 AppwidgetProvider 发送通知。  
     4）RemoteViews ：一个可以在其他应用进程中运行的类，向 AppWidgetProvider 发送通知。
 2. AppWidget 框架的主要类介绍        
-    1) AppWidgetManger类     
-    * 
-    bindAppWidgetId(int appWidgetId, ComponentName provider)  
-    *通过给定的ComponentName 绑定appWidgetId  * 
-    * 
-    getAppWidgetIds(ComponentName provider)  
-    *通过给定的ComponentName 获取AppWidgetId    *
-    * 
+    1) AppWidgetManger类  
+        * 
     getAppWidgetInfo(int appWidgetId)  
     *通过AppWidgetId 获取 AppWidget 信息  *
     * 
+    bindAppWidgetId(int appWidgetId, ComponentName provider)  
+    *通过给定的ComponentName 绑定appWidgetId  * 
+        * 
+    getAppWidgetIds(ComponentName provider)  
+    *通过给定的ComponentName 获取AppWidgetId    *
+        * 
+    getAppWidgetInfo(int appWidgetId)  
+    *通过AppWidgetId 获取 AppWidget 信息  *
+        * 
     getInstalledProviders()  
     *返回一个List<AppWidgetProviderInfo>的信息  *
-    * 
+        * 
     getInstance(Context context)   
     *获取 AppWidgetManger 实例使用的上下文对象   *
-    * 
+        * 
     updateAppWidget(int[] appWidgetIds, RemoteViews views)   
     *通过appWidgetId 对传进来的 RemoteView 进行修改，并重新刷新AppWidget 组件   *
-    * 
-    updateAppWidget(ComponentName provider, RemoteViews views)  
+        * 
+    updateAppWidget(ComponentName provider, RemoteViews views)   
     *通过 ComponentName 对传进来的 RemoeteView 进行修改，并重新刷新AppWidget 组件   *
-    * 
     updateAppWidget(int appWidgetId, RemoteViews views)  
     *通过appWidgetId 对传进来的 RemoteView 进行修改，并重新刷新AppWidget 组件   *
-3. 
+
+     2) 继承自 AppWidgetProvider 可实现的方法为如下：
+        * 
+    onDeleted(Context context, int[] appWidgetIds)  
+        * 
+    onDisabled(Context context)   
+        * 
+    onEnabled(Context context)  
+        * 
+    onReceive(Context context, Intent intent)   
+  Tip:因为 AppWidgetProvider 是继承自BroadcastReceiver  所以可以重写onRecevie 方法，当然必须在后台注册Receiver
+5、onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
 
    
 
