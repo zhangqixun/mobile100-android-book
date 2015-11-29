@@ -113,7 +113,8 @@
     <service android:name=".my_service" />
 *下面介绍如何将Service用到天气预报项目中，实现后台更新天气*
      
-     .....
+    service里面更新UI可以用广播
+    
 
 **四、常见问题及注意事项**
 
