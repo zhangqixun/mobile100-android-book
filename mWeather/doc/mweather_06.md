@@ -381,6 +381,9 @@ initView()当然是在Activity创建的时候就调用了
 ![](图片 1.png)
 ![](图片 2.png)
 
+
+写一个根据获得天气情况，更新对应图标的函数
+
     private int getImage(String type) {
         int imagetype=0;
         switch(type) {
