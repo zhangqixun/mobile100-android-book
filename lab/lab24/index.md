@@ -32,7 +32,7 @@ Fragment的使用方式及生命周期
 ![](图片 3.png)  
 &#160; &#160; &#160; &#160;增加两个java class文件，并命名为Fragment1.java和Fragment2 .java，分别在其onCreateView()做如下增加:  
 ![](图片 4.png)![](图片 5.png)  
-在Fragment1类当中加入如下的函数，便于追踪Fragment生命周期中函数的调用情况。
+&#160; &#160; &#160; &#160;在Fragment1类当中加入如下的函数，便于追踪Fragment生命周期中函数的调用情况。
 ```
 @Override
 public void onAttach(Activity activity) {
