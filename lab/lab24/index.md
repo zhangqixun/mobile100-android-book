@@ -43,7 +43,7 @@ Fragment的使用方式及生命周期
 ![](9.png)  
 &#160; &#160; &#160; &#160;➤ onAttached() —此函数在fragment和activity建立关联的时候调用；  
 &#160; &#160; &#160; &#160;➤ onCreateView() — 函数在fragment加载布局时调用；
-&#160; &#160; &#160; &#160;➤ onActivityCreated() — Called when the activity’s onCreate() method has been returned   
+&#160; &#160; &#160; &#160;➤ onActivityCreated() — 函数在activity中的onCreate函数执行完后调用； 
 &#160; &#160; &#160; &#160;➤ onDestroyView() — Called when the fragment’s view is being removed   
 &#160; &#160; &#160; &#160;➤ onDetach() — Called when the fragment is detached from the activity
 
