@@ -108,7 +108,9 @@
 
 在onCreate()中调用InitViews方法
 
+![](QQ截图20151130161805.png)
 
+现在可以用模拟器或者Android系统来看一下实现的ViewPager滑动效果了
 
 **四、常见问题及注意事项**
 
