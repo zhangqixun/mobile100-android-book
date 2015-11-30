@@ -52,6 +52,11 @@
 新建一个空项目ViewPagerTest
 
 
+![](QQ截图20151130121247.png)
+
+![](QQ截图20151130121357.png)
+
+
 创建一个用于程序引导页面的Activity，类名为Guide，继承Activity，重写onCreate()方法
 
 
