@@ -34,6 +34,7 @@ ListView的基本功能，Adapter的使用
 
       适配器是一个连接数据和AdapterView的桥梁，通过它能有效地实现数据与AdapterView的分离设置，使AdapterView与数据的绑定更加简便，修改更加方便
       Android中提供了很多的Adapter，下表列出了常用的几个。
+
 | Adapter | 含义 |
 | -- | -- |
 | ArrayAdapter<T> | 用来绑定一个数组，支持泛型操作 |
