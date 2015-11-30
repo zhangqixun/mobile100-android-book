@@ -241,7 +241,179 @@
         5、运行程序，如下所示：
         
     第三步：根据XML数据更新ViewPager中的天气信息
-
+    注意：由于本块的代码对未来六天的处理方式较为类似，所以我们只给出部分关键代码。
+        1、在TodayWeather.java中添加如下属性，并添加其set和get方法
+            private String fdate1;
+            private String fhigh1;
+            private String flow1;
+            private String ftype1;
+            private String ffengxiang1;
+            private String fdate2;
+            private String fhigh2;
+            private String flow2;
+            private String ftype2;
+            private String ffengxiang2;
+            private String fdate3;
+            private String fhigh3;
+            private String flow3;
+            private String ftype3;
+            private String ffengxiang3;
+            private String fdate0;
+            private String fhigh0;
+            private String flow0;
+            private String ftype0;
+            private String ffengxiang0;
+            
+        2、在MainActivity.java中parseXML()方法中添加如下语句：
+            case XmlPullParser.START_TAG:
+                if(xmlPullParser.getName().equals("resp")) {
+                    todayWeather = new TodayWeather();
+                }
+                if (todayWeather != null) {
+                    if (xmlPullParser.getName().equals("city")) {
+                        ……
+                    } else if (xmlPullParser.getName().equals("date") && dateCount==1) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFdate1(xmlPullParser.getText());                            dateCount++;
+                    } else if (xmlPullParser.getName().equals("high") && highCount==1) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFhigh1(xmlPullParser.getText().substring(2).trim());
+                        highCount++;
+                    } else if (xmlPullParser.getName().equals("low") && lowCount==1) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFlow1(xmlPullParser.getText().substring(2).trim());
+                        lowCount++;
+                    }else if (xmlPullParser.getName().equals("type") && typeCount==1) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFtype1(xmlPullParser.getText());
+                        typeCount++;
+                    } else if (xmlPullParser.getName().equals("fengxiang") && fengxiangCount==1) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFfengxiang1(xmlPullParser.getText());
+                        fengxiangCount++;
+                    } else if (xmlPullParser.getName().equals("date") && dateCount==2) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFdate2(xmlPullParser.getText());
+                        dateCount++;
+                    } else if (xmlPullParser.getName().equals("high") && highCount==2) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFhigh2(xmlPullParser.getText().substring(2).trim());
+                        highCount++;
+                    } else if (xmlPullParser.getName().equals("low") && lowCount==2) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFlow2(xmlPullParser.getText().substring(2).trim());
+                        lowCount++;
+                    }else if (xmlPullParser.getName().equals("type") && typeCount==2) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFtype2(xmlPullParser.getText());
+                        typeCount++;
+                    } else if (xmlPullParser.getName().equals("fengxiang") && fengxiangCount==2) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFfengxiang2(xmlPullParser.getText());
+                        fengxiangCount++;
+                    } else if (xmlPullParser.getName().equals("date") && dateCount==3) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFdate3(xmlPullParser.getText());
+                        dateCount++;
+                    } else if (xmlPullParser.getName().equals("high") && highCount==3) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFhigh3(xmlPullParser.getText().substring(2).trim());
+                        highCount++;
+                    } else if (xmlPullParser.getName().equals("low") && lowCount==3) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFlow3(xmlPullParser.getText().substring(2).trim());
+                        lowCount++;
+                    }else if (xmlPullParser.getName().equals("type") && typeCount==3) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFtype3(xmlPullParser.getText());
+                        typeCount++;
+                    } else if (xmlPullParser.getName().equals("fengxiang") && fengxiangCount==3) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFfengxiang3(xmlPullParser.getText());
+                        fengxiangCount++;
+                    } else if (xmlPullParser.getName().equals("date_1")) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFdate0(xmlPullParser.getText());
+                    }  else if (xmlPullParser.getName().equals("high_1")) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFhigh0(xmlPullParser.getText().substring(2).trim());
+                    } else if (xmlPullParser.getName().equals("low_1")) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFlow0(xmlPullParser.getText().substring(2).trim());
+                    }else if (xmlPullParser.getName().equals("type_1")) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFtype0(xmlPullParser.getText());
+                    } else if (xmlPullParser.getName().equals("fx_1")) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFfengxiang0(xmlPullParser.getText());
+                    }
+                }
+                break;
+                
+        3、在MainActivity.java中添加changeFurureWeatherImg()方法，用于动态修改天气图片
+            void changeFurureWeatherImg(ImageView view, String str) {
+                if(str.equals("暴雪")) {
+                    view.setImageResource(R.mipmap.biz_plugin_baoxue);
+                } else if (str.equals("暴雨")) {
+                    view.setImageResource(R.mipmap.biz_plugin_baoyu);
+                } else if (str.equals("大暴雨")) {
+                    view.setImageResource(R.mipmap.biz_plugin_dabaoyu);
+                } else if (str.equals("大雪")) {
+                    view.setImageResource(R.mipmap.biz_plugin_daxue);
+                } else if (str.equals("大雨")) {
+                    view.setImageResource(R.mipmap.biz_plugin_dayu);
+                } else if (str.equals("多云")) {
+                    view.setImageResource(R.mipmap.biz_plugin_duoyun);
+                } else if (str.equals("雷阵雨")) {
+                    view.setImageResource(R.mipmap.biz_plugin_leizhenyu);
+                } else if (str.equals("雷阵雨冰雹")) {
+                    view.setImageResource(R.mipmap.biz_plugin_leizhenyubingbao);
+                } else if (str.equals("晴")) {
+                    view.setImageResource(R.mipmap.biz_plugin_qing);
+                } else if (str.equals("沙尘暴")) {
+                    view.setImageResource(R.mipmap.biz_plugin_shachenbao);
+                } else if (str.equals("特大暴雨")) {
+                    view.setImageResource(R.mipmap.biz_plugin_tedabaoyu);
+                } else if (str.equals("雾")) {
+                    view.setImageResource(R.mipmap.biz_plugin_wu);
+                } else if (str.equals("小雪")) {
+                    view.setImageResource(R.mipmap.biz_plugin_xiaoxue);
+                } else if (str.equals("小雨")) {
+                    view.setImageResource(R.mipmap.biz_plugin_xiaoyu);
+                } else if (str.equals("阴")) {
+                    view.setImageResource(R.mipmap.biz_plugin_yin);
+                } else if (str.equals("雨夹雪")) {
+                    view.setImageResource(R.mipmap.biz_plugin_yujiaxue);
+                } else if (str.equals("阵雪")) {
+                    view.setImageResource(R.mipmap.biz_plugin_zhenxue);
+                } else if (str.equals("阵雨")) {
+                    view.setImageResource(R.mipmap.biz_plugin_zhenyu);
+                } else if (str.equals("中雪")) {
+                    view.setImageResource(R.mipmap.biz_plugin_zhongxue);
+                } else if (str.equals("中雨")) {
+                    view.setImageResource(R.mipmap.biz_plugin_zhongyu);
+                }
+            }
+        
+        4、在initview()中添加如下语句，对page1.xml和page2.xml中的控件进行监控
+        ————只列部分代码，其余类似
+            weekD1 = (TextView)one_page.findViewById(R.id.weekDay1);
+            temperatureD1 = (TextView)one_page.findViewById(R.id.temperatureDay1);
+            climateD1 = (TextView)one_page.findViewById(R.id.climateDay1);
+            windD1 = (TextView)one_page.findViewById(R.id.windDay1);
+            imageD1 = (ImageView)one_page.findViewById(R.id.imageDay1);
+            
+        5、在updateTodayWeather()方法中添加如下语句：
+        ————只列部分代码，其余类似
+            weekD1.setText(todayWeather.getFdate0());
+            temperatureD1.setText(todayWeather.getFhigh0() + "~" + todayWeather.getFlow0());
+            climateD1.setText(todayWeather.getFtype0());
+            windD1.setText(todayWeather.getFfengxiang0());
+            if (todayWeather.getFtype0()!=null) {
+                changeFurureWeatherImg(imageD1, todayWeather.getFtype0());
+            }
+            
+        6、运行结果如下：
 **四、常见问题及注意事项**
 
     1、添加ViewPager控件的时候，是使用android.support.v4.view.ViewPager。
