@@ -14,13 +14,12 @@
    
 * Intent传递数据：
 
-      从天气预报的主界面（即天气情况显示界面）到城市列表界面是通过Intent来启动一个新的Activity的，现在，我们在点击城市列表的某个城市的时候，我们需要将所点击的城市信息作为参数传回主界面的Activity并进行相应的查询显示等处理。
-      这时，发起方（主界面）要调用startActivityForResult(Intent intent, int requestCode)
-      ![](faqifang.png)
-      同时发起方要实现onActivityResult(int requestCode, int resultCode, Intent intent)来获取返回结果。
-      ![](getResult.png)
-      这样MainActivity才可以根据获得的cityCode更新城市天气。
-      那么同时在城市列表的Activity中，则要在finish()之前，将数据放入intent中，并调用setResult(int resultCode, Intent intent)方法，设置返回结果。
+    &#160;&#160;&#160;&#160;&#160;&#160;&#160;从天气预报的主界面（即天气情况显示界面）到城市列表界面是通过Intent来启动一个新的Activity的，现在，我们在点击城市列表的某个城市的时候，我们需要将所点击的城市信息作为参数传回主界面的Activity并进行相应的查询显示等处理。
+    这时，发起方（主界面）要调用startActivityForResult(Intent intent, int requestCode)
+    ![](faqifang.png)  
+    &#160;&#160;&#160;&#160;&#160;&#160;&#160;同时发起方要实现onActivityResult(int requestCode, int resultCode, Intent intent)来获取返回结果。
+    ![](getResult.png)
+    &#160;&#160;&#160;&#160;&#160;&#160;&#160;这样MainActivity才可以根据获得的cityCode更新城市天气。那么同时在城市列表的Activity中，则要在finish()之前，将数据放入intent中，并调用setResult(int resultCode, Intent intent)方法，设置返回结果。
 
 * ListView中Item单击和长按事件：
 
@@ -40,28 +39,57 @@
             }
         });
         我们可以通过以上方法注册不同的监听事件，响应不同的操作，比如我们可以在单击事件里面跳转到其他页面，也可以在长按事件里面弹出一个小窗口。操作是比较灵活的。
+        
         下面介绍一下单击和长按事件个参数的意义：
-        ......
-        ......
-        ......
-        下面介绍一下给Item中的子控件 （按钮、图标、文字等）添加点击事件，来进行点击后的不同处理：
-        ......
-        ......
-        ......
+        parent相当于listview适配器的一个指针，通俗一点讲就是可以通过它来获得listview里装着的一切东西。
+        View view, view是你点击item的view的句柄，就是你可以用这个view，来获得item里的控件的id后操作控件。
+        int position, position是item在适配器里的位置。
+        long id，id是item在listview 里的第几行的位置，大部分时候position和id的值是一样的。
+        
+     
 
+* 自定义ListItem单击事件
 
-* 知识点3：
-
-      知识点介绍
-
-
+        ListItem点击事件可以分为，单击ListItem事件和长按ListItem事件。但是这两个功能并非全能的，例如在手机通讯录中，某一时间可能打电话给甲，另一时间则是发短信，或者长按删除联系人甲。这是单击事件和长按事件就无法满足实际需求。
+        不过ListView提供了SimpleAdapter用来绑定用户自定义控件和数据。通过调用getView()方法，为List中每个Item返回一个自定义View，此时可以对View中相关控件添加监听函数。
+        具体实现：
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+	        // TODO Auto-generated method stub
+	        View view;
+	        if(convertView == null){
+	        	view = mInflater.inflate(R.layout.layout_list_click2, null);
+	        } else {
+	        	view = convertView;
+	        }			
+	        ...
+		    //从当前view中选择需要添加监听函数的控件
+	    	View icon = view.findViewById(R.id.imageView1);
+            //为自定义ListViewItem中控件添加点击监听函数
+        	icon.setOnClickListener(new View.OnClickListener() {
+        	public void onClick(View v) {
+	            // TODO Auto-generated method stub
+	        	//添加事件处理流程
+	        	}
+        	});
+        	return view;
+        }
    
 
 **三、主要思路及步骤**
 
 **3.1 主要思路**
 
-*简要介绍主要思路*
+    当响应单击事件时：
+        首先设置监听函数，即调用OnItemClickListener()函数；
+        接着，在处理函数内部，设置处理流程，OnItemClick().
+    响应长按事件:
+        首先触发的是onItemLongClick函数，执行onItemLongClick操作；
+        其次，然后根据onItemLongClick的返回值判断是不是执行OnCreateContextMenuListener函数；
+        如果onItemLongClick返回false，则会继续执行OnCreateContextMenuListener函数。
+    响应自定义控件事件：
+        首先调用getView()函数，在其中绑定控件；
+        其次设置该空间监听函数，并处理事件。
 
 **3.2 实践步骤**
 

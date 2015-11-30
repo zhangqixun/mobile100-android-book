@@ -23,10 +23,6 @@
       图片国际化，只需创建对应的drawable文件夹即可，例如：中文为values-zh-hdpi、美国英文为values-en-rUS-hdpi（hdpi为高分辨率）。
 
 
-* 知识点3：
-
-      知识点介绍
-
 
    
 
@@ -34,11 +30,26 @@
 
 **3.1 实验内容**
 
-*简要介绍本次实验的主要内容*
+安卓字符串国际化，实现对美国的国际化
 
 **3.2 实验步骤**
 
-*详细描述本次实验的具体步骤*
+1 在res目录下新建一个values-en-rUS，en-rUS是美国的代号
+2 将values里面的文件拷进values-en-rUS，然后修改xml文件，将value修改为英文：
+    
+
+---
+
+    <string name="cityList">citys</string>
+    <string name="today">today</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+3 运行程序，在设置中选择地区为美国，查看效果
 
 **四、常见问题及注意事项**
 
