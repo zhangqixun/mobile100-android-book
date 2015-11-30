@@ -32,6 +32,69 @@ Fragment的使用方式及生命周期
 ![](图片 3.png)  
 &#160; &#160; &#160; &#160;增加两个java class文件，并命名为Fragment1.java和Fragment2 .java，分别在其onCreateView()做如下增加:  
 ![](图片 4.png)![](图片 5.png)  
+在Fragment1当中加入如下的函数，便于追踪函数的调用情况。
+```
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        Log.e("Fragment1", "onAttach");
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d("Fragment1", "onCreate");
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.e("Fragment1", "onActivityCreated");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.e("Fragment1", "onStart");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("Fragment1", "onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e("Fragment1", "onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.e("Fragment1", "onStop");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.e("Fragment1", "onDestroyView");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.e("Fragment1", "onDestroy");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.e("Fragment1", "onDetach");
+    }
+
+```
 &#160; &#160; &#160; &#160;测试结果如下:  
 ![](图片 6.png)  
 &#160; &#160; &#160; &#160;生命周期分析  
