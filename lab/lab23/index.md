@@ -79,6 +79,7 @@
 
 新建ViewPagerAdapter类
 
+![](QQ截图.png)
 
 
 **四、常见问题及注意事项**
