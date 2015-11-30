@@ -102,7 +102,9 @@
 
 ![](QQ截图20151130161034.png)
 
-实例化ViewPagerAdapter对象
+实例化ViewPagerAdapter对象,设置ViewPager的适配器
+
+
 
 **四、常见问题及注意事项**
 
