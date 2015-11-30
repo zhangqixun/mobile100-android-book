@@ -120,11 +120,14 @@ HTTP标准包含get和post这两种方法是为了达到不同的目的。POST�
 在使用HttpClient类时，出现Cannot resolve symbol ‘HttpClient’的错误
 ![](2.png)
 出现这个问题是因为Android6.0取消了对Apache HTTP客户端的支持，在官方文档中可以看到如下说明：
-![](3.png)
-第一种解决方案：  
+![](8.png)      
+
+ 第一种解决方案：  
 在sdk文件夹下的/platforms/ansdroid-23/optional中找到org.apache.http.legacy.jar，将jar包复制到项目的libs文件夹中，并修改build.gradle文件，添加一句useLirary ‘org.apache.http.legacy’。
 ![](4.png)
 ![](5.png)  
 第二种解决方案：   
 将HttpClient所需的依赖包如httpclient-4.1.1.jar、httpcore-4.1.jar等添加到项目中，具体操作为：将依赖包复制到app/libs文件夹下，并右键点击“Add as Library”。依赖包可以从网络上下载，也可以直接在sdk文件夹下的/tools/lib文件夹中找到，如图所示：
-![](6.png)![](7.png)
+![](6.png)
+
+![](7.png)
