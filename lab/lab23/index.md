@@ -49,7 +49,8 @@
 
 *详细描述本次实验的具体步骤*
 
-新建一个空项目ViewPager01
+新建一个空项目ViewPagerTest
+
 
 创建一个用于程序引导页面的Activity，类名为Guide，继承Activity，重写onCreate()方法
 
