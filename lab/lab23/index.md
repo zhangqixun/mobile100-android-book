@@ -73,6 +73,11 @@
 
 在Activity中绑定布局，并在AndroidManifest.xml中注册Activity，设置为程序的入口
 
+![](QQ截图20151130125204.png)
+
+![](QQ截图20151130125313.png)
+
+
 
 **四、常见问题及注意事项**
 
