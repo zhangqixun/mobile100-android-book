@@ -76,7 +76,7 @@
 
 ![](QQ截图20151130125313.png)
 
-新建ViewPagerAdapter类,继承PagerAdapter类，重写相应的方法,定义构造函数对List<View>和Context进行初始化
+新建ViewPagerAdapter类,继承PagerAdapter类，重写相应的方法,定义构造函数对List和Context进行初始化
 
 ![](QQ截图.png)
 
