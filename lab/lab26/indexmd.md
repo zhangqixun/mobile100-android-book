@@ -28,7 +28,21 @@ String provider = LocationManager.NETWORK_PROVIDER;
 Location location = locationManager.getLastKnownLocation(provider);
 这个 Location 对象中包含了经度、纬度、海拔等一系列的位置信息，然后从中取出需要的那部分数据即可。如果想让定位的精度尽量高一些，但又不确定GPS定位的功能是否已经启用，此时就可以先判断一下有哪些位置提供器可用，如下所示：
 List<String> providerList = locationManager.getProviders(true);
-3.LocationManager 提供了一个requestLocationUpdates()方法，只要传入一个LocationListener的实例，并简单配置几个参数就可以实现随时随地获取当前设备的位置信息。
+3.LocationManager 提供了一个requestLocationUpdates()方法，只要传入一个LocationListener的实例，并简单配置几个参数就可以实现随时随地获取当前设备的位置信息，写法如下：
+locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10,new LocationListener() {
+        @Override
+         public void onStatusChanged(String provider, int status, Bundle extras) {
+         }
+        @Override
+        public void onProviderEnabled(String provider) {
+        }
+        @Override
+        public void onProviderDisabled(String provider) {
+        }
+        @Override
+        public void onLocationChanged(Location location) {
+        }
+    });
 
 
 * 知识点2：
