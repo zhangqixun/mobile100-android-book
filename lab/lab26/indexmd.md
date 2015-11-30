@@ -43,6 +43,7 @@ List<String> providerList = locationManager.getProviders(true);
         public void onLocationChanged(Location location) {
         }
     });
+4. 
 
 
 * 知识点2：
