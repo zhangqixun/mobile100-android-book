@@ -277,6 +277,11 @@
             private String flow3;
             private String ftype3;
             private String ffengxiang3;
+            private String fdate4;
+            private String fhigh4;
+            private String flow4;
+            private String ftype4;
+            private String ffengxiang4;
             private String fdate0;
             private String fhigh0;
             private String flow0;
@@ -351,6 +356,26 @@
                     } else if (xmlPullParser.getName().equals("fengxiang") && fengxiangCount==3) {
                         eventType = xmlPullParser.next();
                         todayWeather.setFfengxiang3(xmlPullParser.getText());
+                        fengxiangCount++;
+                    } else if (xmlPullParser.getName().equals("date") && dateCount==4) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFdate4(xmlPullParser.getText());
+                        dateCount++;
+                    } else if (xmlPullParser.getName().equals("high") && highCount==4) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFhigh4(xmlPullParser.getText().substring(2).trim());
+                        highCount++;
+                    } else if (xmlPullParser.getName().equals("low") && lowCount==4) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFlow4(xmlPullParser.getText().substring(2).trim());
+                        lowCount++;
+                    }else if (xmlPullParser.getName().equals("type") && typeCount==4) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFtype4(xmlPullParser.getText());
+                        typeCount++;
+                    } else if (xmlPullParser.getName().equals("fengxiang") && fengxiangCount==4) {
+                        eventType = xmlPullParser.next();
+                        todayWeather.setFfengxiang4(xmlPullParser.getText());
                         fengxiangCount++;
                     } else if (xmlPullParser.getName().equals("date_1")) {
                         eventType = xmlPullParser.next();
@@ -439,7 +464,6 @@
             
 6、运行结果如下：
         
-![](111.png)
 
 **四、常见问题及注意事项**
 
