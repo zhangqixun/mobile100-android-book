@@ -151,6 +151,78 @@ android:versionName="1.0" >
 4.运行程序就可以看到手机当前位置的经纬度信息了，如下图所示：
 
 
+5.为了获得一般用户能够看得懂的中文位置信息，修改 MainActivity 中的代码，如下所示：
+public class MainActivity extends Activity {
+public static final int SHOW_LOCATION = 0;
+……
+private void showLocation(final Location location) {
+new Thread(new Runnable() {
+@Override
+public void run() {
+try {
+//  组装反向地理编码的接口地址
+StringBuilder url = new StringBuilder();
+url.append("http://maps.googleapis.com/maps/api/geocode/json?latlng=");
+url.append(location.getLatitude()).append(",")
+url.append(location.getLongitude());
+url.append("&sensor=false");
+HttpClient httpClient = new DefaultHttpClient();
+HttpGet httpGet = new HttpGet(url.toString());
+//  在请求消息头中指定语言，保证服务器会返回中文数据
+httpGet.addHeader("Accept-Language", "zh-CN");
+HttpResponse httpResponse = httpClient.execute(httpGet);
+if (httpResponse.getStatusLine().getStatusCode() == 200) {
+HttpEntity entity = httpResponse.getEntity();
+String response = EntityUtils.toString(entity,
+"utf-8");
+JSONObject jsonObject = new JSONObject(response);
+//  获取results 节点下的位置信息
+JSONArray resultArray = jsonObject.getJSONArray
+("results");
+if (resultArray.length() > 0) {
+JSONObject subObject = resultArray.
+getJSONObject(0);
+//  取出格式化后的位置信息
+String address = subObject.getString
+("formatted_address");
+Message message = new Message();
+message.what = SHOW_LOCATION;
+message.obj = address;
+handler.sendMessage(message);
+}
+}
+} catch (Exception e) {
+e.printStackTrace();
+}
+}
+}).start();
+}
+private Handler handler = new Handler() {
+public void handleMessage(Message msg) {
+switch (msg.what) {
+case SHOW_LOCATION:
+String currentPosition = (String) msg.obj;
+positionTextView.setText(currentPosition);
+break;
+default:
+break;
+}
+}
+};
+}
+
+6.由于在这里使用到了网络功能，因此还需要在 AndroidManifest.xml 中添加权限声明，如下所示：
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+package="com.example.locationtest"
+android:versionCode="1"
+android:versionName="1.0" >
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.INTERNET" />
+</manifest>
+7.运行程序结果如下，就可以获得一般用户能够看得懂的中文位置信息，效果如下：
+
+
+
 **四、常见问题及注意事项**
 
 *详细描述本此实验的可能会遇到的问题以及相关的注意事项*
