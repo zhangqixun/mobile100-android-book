@@ -69,6 +69,9 @@
 
 添加ViewPager控件
 
+![](QQ截图20151130123540.png)
+
+在Activity中绑定布局，并在AndroidManifest.xml中注册Activity，设置为程序的入口
 
 
 **四、常见问题及注意事项**
