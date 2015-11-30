@@ -104,6 +104,10 @@
 
 实例化ViewPagerAdapter对象,设置ViewPager的适配器
 
+![](QQ截图20151130161654.png)
+
+在onCreate()中调用InitViews方法
+
 
 
 **四、常见问题及注意事项**
