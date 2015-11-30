@@ -33,7 +33,7 @@
     
     isViewFromobject(View view, object object)用来判断instantiateItem(ViewGroup container,int position)返回的object与页面视图是否是对应的，在创建页面和滑动过程中都会调用
   
-  destroyItem(ViewGroup container, int position, object object)是从container中删除给定位置的视图,在创建页面和滑动过程中都会调用
+    destroyItem(ViewGroup container, int position, object object)是从container中删除给定位置的视图,在创建页面和滑动过程中都会调用
 
 
 
