@@ -59,7 +59,9 @@
 
 创建一个用于程序引导页面的Activity，类名为Guide，继承Activity，重写onCreate()方法
 
+![](QQ截图20151130121754.png)
 
+![](QQ截图20151130122334.png)
 
 
 
