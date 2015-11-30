@@ -77,10 +77,11 @@
 
 ![](QQ截图20151130125313.png)
 
-新建ViewPagerAdapter类
+新建ViewPagerAdapter类,继承PagerAdapter类，重写相应的方法,定义构造函数对List<View>和Context进行初始化
 
 ![](QQ截图.png)
 
+![](QQ截图20151130130610.png)
 
 **四、常见问题及注意事项**
 
