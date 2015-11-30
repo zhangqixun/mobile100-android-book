@@ -87,7 +87,9 @@
 
 ![](QQ截图20151130131715.png)
 
-在引导页中初始化ViewPager
+在引导页中初始化ViewPager,并用LayoutInflater设置动态加载视图
+
+
 
 
 
