@@ -25,8 +25,8 @@
 3、URL类提供了多个方法来访问URL对应的资源：
 openConnection()返回一个URLConnection对象，它表示到URL所引用的远程对象的连接； 
 openStream()：打开此URL的连接，并返回一个用于读取该URL资源的InputStream。  
-4、支持File、FTP、HTTP、HTTPS、Jar协议等，根据url的协议不同，要将openConnection()返回的结果转换成对应的实例对象。如果是http协议，返回HttpURLConnection对象，如果是一个jar文件，就返回JarURLConnection对象。 
-5、在天气预报项目中，我们使用的是通过给定的url字符串创建url。
+4、支持File、FTP、HTTP、HTTPS、Jar协议等，根据url的协议不同，要将openConnection()返回的结果转换成对应的实例对象。如果是http协议，返回HttpURLConnection对象，如果是一个jar文件，就返回JarURLConnection对象。   
+  5、在天气预报项目中，我们使用的是通过给定的url字符串创建url。
 URL url = new URL("http://wthrcdn.etouch.cn/WeatherApi?citykey=101010100");
 
 
@@ -128,6 +128,7 @@ HTTP标准包含get和post这两种方法是为了达到不同的目的。POST�
 ![](5.png)  
 第二种解决方案：   
 将HttpClient所需的依赖包如httpclient-4.1.1.jar、httpcore-4.1.jar等添加到项目中，具体操作为：将依赖包复制到app/libs文件夹下，并右键点击“Add as Library”。依赖包可以从网络上下载，也可以直接在sdk文件夹下的/tools/lib文件夹中找到，如图所示：
+
 ![](6.png)
 
 ![](7.png)
