@@ -41,7 +41,7 @@ Fragment的使用方式及生命周期
 ![](图片 8.png)  
 &#160; &#160; &#160; &#160;**c.** 当点击home键退出并在后台关闭该应用时，依次运行方法onPause()->onStop()->onDestroyView()->onDestroy()->onDetach()，logcat如下图:  
 ![](9.png)  
-&#160; &#160; &#160; &#160;➤ onAttached() — C函数在fragment和activity建立关联的时候调用；  
+&#160; &#160; &#160; &#160;➤ onAttached() —此函数在fragment和activity建立关联的时候调用；  
 &#160; &#160; &#160; &#160;➤ onCreateView() — Called to create the view for the fragment  
 &#160; &#160; &#160; &#160;➤ onActivityCreated() — Called when the activity’s onCreate() method has been returned   
 &#160; &#160; &#160; &#160;➤ onDestroyView() — Called when the fragment’s view is being removed   
