@@ -176,6 +176,12 @@
 
 **四、常见问题及注意事项**
 
-*详细描述本此实验的可能会遇到的问题以及相关的注意事项*
+     
+     1.一定不要忘记在AndroidManifest.xml文件中声明：<service android:name=".my_service" />
+     
+     2.更新UI可以用其他方法实现。
+     
+     
+*
 
 
