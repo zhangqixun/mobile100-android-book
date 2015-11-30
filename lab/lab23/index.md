@@ -20,7 +20,7 @@
 
 * 知识点2：
 
-      知识点介绍
+      ViewPager的适配器是PageerAdapter。它来填充页面ViewPager内部
 
 
 * 知识点3：
