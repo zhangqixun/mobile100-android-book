@@ -30,6 +30,7 @@
    * [国际化](lab/lab25/index.md)
    * [位置服务](lab/lab26/indexmd.md)
    * [签名](lab/lab27/index.md)
+   * Android加速度传感器编程
 * [综合项目:天气预报](mWeather/index.md)
    * [创建工程](mWeather/doc/mWeather_01.md)
    * [制作今日天气界面](mWeather/doc/mWeather_02.md)
