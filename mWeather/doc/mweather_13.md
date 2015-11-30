@@ -414,6 +414,7 @@
             }
             
         6、运行结果如下：
+        ![](111.png)
 **四、常见问题及注意事项**
 
     1、添加ViewPager控件的时候，是使用android.support.v4.view.ViewPager。
