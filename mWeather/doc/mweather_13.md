@@ -52,9 +52,194 @@
 
     我们主要分为三个步骤来进行：
     第一步：在主布局中通过ViewPager来添加一周天气信息的布局
-    
+        1、在主布局中添加一周天气信息布局以及ViewPager控件
+        <!--七日天气信息-->
+        <RelativeLayout
+            android:id="@+id/future_info"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10.0dip">
+
+            <android.support.v4.view.ViewPager
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/viewpager">
+
+            </android.support.v4.view.ViewPager>
+
+        </RelativeLayout>
+        
+        2、创建两个布局文件page1.xml和page2.xml，用于加载到ViewPager中的视图
+        在page1.xml添加3个线性布局：
+        ![](12.png)
+        其中每个LinearLayout中添加的控件如下：
+        <LinearLayout
+            android:id="@+id/one_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/weekDay1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:singleLine="true"
+                android:text="星期五"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"/>
+            <ImageView
+                android:id="@+id/imageDay1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/biz_plugin_qing"/>
+            <TextView
+                android:id="@+id/temperatureDay1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:singleLine="true"
+                android:text="-2℃~-7℃"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"/>
+            <TextView
+                android:id="@+id/climateDay1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:singleLine="true"
+                android:text="多云转晴"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"/>
+            <TextView
+                android:id="@+id/windDay1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:singleLine="true"
+                android:text="微风"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"/>
+        </LinearLayout>
+        其余的LinearLayout以及page2.xml都与上面类似，不再赘述。
+        
+        3、创建一个ViewPagerAdapter类，继承自基类PagerAdapter
+        public class ViewPagerAdapter extends PagerAdapter {
+            private List<View> views;
+            private Context context;
+        
+            public ViewPagerAdapter(List<View> views, Context context) {
+                this.views = views;
+                this.context = context;
+            }
+        
+            @Override
+            public int getCount() {
+                return views.size();
+            }
+        
+            @Override
+            public Object instantiateItem(ViewGroup container, int position) {
+                container.addView(views.get(position));
+                return views.get(position);
+            }
+        
+            @Override
+            public void destroyItem(ViewGroup container, int position, Object object) {
+                container.removeView(views.get(position));
+            }
+        
+            @Override
+            public boolean isViewFromObject(View view, Object o) {
+                return (view == o);
+            }
+        }
+        
+        4、在MainActivity.java中声明ViewPagerAdapter对象、ViewPager对象、List<View>集合
+            private ViewPagerAdapter vpAdapter;
+            private ViewPager vp;
+            private List<View> views;
+            
+        5、在initView()函数中添加如下语句，用于动态加载page1.xml和page2.xml
+            LayoutInflater inflater = LayoutInflater.from(this);
+            View one_page = inflater.inflate(R.layout.page1, null);
+            View two_page = inflater.inflate(R.layout.page2, null);
+            views = new ArrayList<View>();
+            views.add(one_page);
+            views.add(two_page);
+            vpAdapter = new ViewPagerAdapter(views, this);
+            vp = (ViewPager)findViewById(R.id.viewpager);
+            vp.setAdapter(vpAdapter);
+            
+        6、运行结果如下所示：
+
     第二步：添加导航小圆点
-    
+        1、在一周天气信息布局中添加ImageView控件（将图片资源复制到drawable目录下）
+            <LinearLayout
+                android:id="@+id/indicator"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_horizontal">
+                <ImageView
+                    android:id="@+id/iv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:src="@drawable/page_indicator_focused"/>
+
+                <ImageView
+                    android:id="@+id/iv2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:src="@drawable/page_indicator_unfocused"/>
+            </LinearLayout>
+            
+        2、在MainActivity.java中，增加页面变化的监听事件，动态修改导航小圆点的属性
+        添加如下属性：
+            private ImageView[] dots;
+            private int[] ids = {R.id.iv1, R.id.iv2};
+        添加如下方法：
+            private void initDots() {
+                dots = new ImageView[views.size()];
+                for (int i=0; i<views.size(); i++) {
+                    dots[i] = (ImageView)findViewById(ids[i]);
+                }
+            }
+        
+        3、在onCreate()方法中调用initDots()方法
+        
+        4、实现OnPageChangeListener接口，并重写相应的方法
+        ![](13.png)
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        
+            }
+        
+            @Override
+            public void onPageSelected(int position) {
+                for (int a=0; a<ids.length; a++) {
+                    if (a==position) {
+                        dots[a].setImageResource(R.drawable.page_indicator_focused);
+                    } else {
+                        dots[a].setImageResource(R.drawable.page_indicator_unfocused);
+                    }
+                }
+            }
+        
+            @Override
+            public void onPageScrollStateChanged(int state) {
+        
+            }
+        在initView()中添加如下语句：
+        ![](14.png)
+        
+        5、运行程序，如下所示：
+        
     第三步：根据XML数据更新ViewPager中的天气信息
 
 **四、常见问题及注意事项**
