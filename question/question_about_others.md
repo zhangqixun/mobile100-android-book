@@ -16,15 +16,17 @@
 ---
 **1、简述Android系统架构**
 
-Android系统架构可以大致分为四层架构：linux内核层、系统运行库层、应用框架层、应用层。
+Android系统架构可以大致分为四层架构：**linux内核层、系统运行库层、应用框架层、应用层**。
 
-*linux内核层*为Android设备的各种硬件提供了底层驱动，如显示驱动、音频驱动、蓝牙驱动等。
+**linux内核层**为Android设备的各种硬件提供了底层驱动，如显示驱动、音频驱动、蓝牙驱动等。
 
-*系统运行库层*（C/C++库和Android运行环境RunTime）主要通过一些C/C++库来为Android系统提供了主要的特性支持。如SGL：2D图形引擎库 。SSL：即Secure Socket Layer位于TCP/IP协议与各种应用层协议之间，为数据通信提供安全支持。同在这一层的还有Android运行时库，主要提供一些核心库，能够允许开发者使用Java语言来编写Android应用。另外Android运行时库还包括Dalvik虚拟机。Android中的所有Java程序都是运行在Dalvik VM上的。Android上的每个程序都有自己的线程，DVM只执行.dex的Dalvik executable 文件。每个Android应用在底层都对应有一个独立的DVM实例并在其解释下执行。
+**系统运行库层**（C/C++库和Android运行环境RunTime）主要通过一些C/C++库来为Android系统提供了主要的特性支持。如SGL：2D图形引擎库 。SSL：即Secure Socket Layer位于TCP/IP协议与各种应用层协议之间，为数据通信提供安全支持。同在这一层的还有Android运行时库，主要提供一些核心库，能够允许开发者使用Java语言来编写Android应用。
 
-*应用框架层*为应用程序层，这一层是程序员开发自己程序（包括Google发布的应用）的开发者提供API框架，它实际上是一个应用程序的框架。我们在开发应用程序时都是通过框架与Android底层进行交互的。可以简化程序开发的架构设计，但是必须遵守其框架的开发原则。
+另外Android运行时库还包括Dalvik虚拟机。Android中的所有Java程序都是运行在Dalvik VM上的。Android上的每个程序都有自己的线程，DVM只执行.dex的Dalvik executable 文件。每个Android应用在底层都对应有一个独立的DVM实例并在其解释下执行。
 
-*应用层*使用 Java 语言编写运行在虚拟机上的程序。这些程序主要是UI方面的，还包含各种资源文件（res目录中），Java程序及其相关资源经过编译后，生成一个.apk包。
+**应用框架层**为应用程序层，这一层是程序员开发自己程序（包括Google发布的应用）的开发者提供API框架，它实际上是一个应用程序的框架。我们在开发应用程序时都是通过框架与Android底层进行交互的。可以简化程序开发的架构设计，但是必须遵守其框架的开发原则。
+
+**应用层**使用 Java 语言编写运行在虚拟机上的程序。这些程序主要是UI方面的，还包含各种资源文件（res目录中），Java程序及其相关资源经过编译后，生成一个.apk包。
 Google在Android中内置了一些必要的应用程序，如联系人，主屏幕（Home），日历，地图，浏览器，SMS短消息程序。 应用程序的开发者还可以使用应用程序框架层的API 实现自己的程序。这也是Android 开源的巨大潜力的体现。
 
 **2、Android的四大组件：活动（Activity）、服务（Service）、广播接收器（Broadcast）、内容提供器（Content Provider）**。
