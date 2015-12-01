@@ -29,6 +29,10 @@ bundle.putString(“data” , somedata) ;
 intent.putExtras(bundle)。
 ```
 
+
+---
+
+
 **2、若一个Android系统里安装了多种浏览器，能否指定某浏览器访问指定页面？请说明理由**
 
 通过直接发送Uri把参数带过去，或者通过manifest离得intentfilter里的data属性。代码如下：
@@ -42,14 +46,28 @@ Intent.setData(uriBrowsers);
 intent.setClassName(“com.android.browser”,”com.android.browser.BrowserActivity”);
 startActivity(intent);
 ```
+
+
+---
+
+
+
 **3、IntentService有何优点**
 
 
 IntentService使用队列的方式将请求的Intent加入队列，然后开启一个workerthread(线程)来处理队列中的Intent，对于异步的startService请求，IntentService会处理完成一个之后再处理第二个，每一个请求都会在一个单独的workerthread中处理，不会阻塞应用程序的主线程，这里就给我们提供了一个思路，如果有耗时的操作与其在Service里面开启新线程还不如使用IntentService来处理耗时操作。
 
+
+---
+
+
 **4、Activity间通过Intent传递数据大小有没有限制**
 
 Intent在传递数据时是有大小限制的，这里官方并未详细说明，不过通过实验的方法可以测出数据应该被限制在1MB之内（1024KB），可以采用传递Bitmap的方法，你会发现当图片大小超过1024kB（准确地说是1020KB左右）的时候，程序就会出现闪退、停止运行等异常(不同的手机反应不同)，因此可以判断Intent的传输容量在1MB之内。
+
+
+
+---
 
 
 **5、现有两个Activity，分别是FstActivity和SecActivity，FstActivity有一个Button为Button1，当点击Button1的时候，FstActivity会通过Intent方式跳转到SecActivity，那么请简述如何从SecActivity返回一些数据给FstActivity？（如果你认为必要，可以写下相应代码）**
@@ -109,6 +127,11 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 onActivityResult()方法带有三个参数，第一个参数requestCode，即我们在启动活动时传入的请求码。第二个参数resultCode，即我们在返回数据时传入的处理结果。第三个参数data，即携带着返回数据的Intent。由于在一个活动中有可能调用startActivityForResult()方法去启动很多不同的活动，每一个活动返回的数据都会回调到onActivityResult()这个方法中，因此我们首先要做的就是通过检查requestCode的值来判断数据来源。确定数据是从SecondActivity返回的之后，我们再通过resultCode的值来判断处理结果是否成功。最后从data中取值并打印出来，这样就完成了向上一个活动返回数据的工作。
 
+
+
+---
+
+
 **6、请简述Intent中putExtras(Bundle data)、Bundle getExtras()、putExtra(String name,xxxvalue)、getxxxExtra(String name)各有什么作用。**
 
 **putExtras(Bundle data):**向Intent中放入需要的数据包
@@ -118,6 +141,10 @@ onActivityResult()方法带有三个参数，第一个参数requestCode，即我
 **putExtras(String name, Xxx value):**向Intent中按照key-value形式传值
 
 **getXxxExtra(String name):**从Intent中按key取值
+
+
+
+---
 
 
 **7、使用Intent来传递对象有几种方法？分别介绍这些方法（如果你认为必要，可以写下相应代码）**
@@ -130,6 +157,10 @@ Intent intent = new Intent(FirstActivity.this, SecondActivity.class);
 startActivity(intent);
 ```
 隐式Intent则含蓄很多，它并不明确指出我们想要启动哪一个活动，而是指定了一系列更为抽象的action和category等信息，然后交由系统去分析这个Intent，并帮我们找出合适的活动去启动。
+
+
+---
+
 
 **8、Intent传递数据时，哪些数据类型可以被传递？（腾讯2015春招移动客户端开发练习卷）**
 
