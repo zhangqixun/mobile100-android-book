@@ -224,66 +224,100 @@ nextActivity.class);
 ```
 
 
-21、Android中MVC模式 C层指的是  Activity  
+**21、Android中MVC模式 C层指的是？ **
+
+Activity  
+
 Android控制层的任务一般就是Activity来完成。视图层对应了Android中的View，也可以理解为布局或者控件。
 
 
-22、android中如何处理耗时操作， asyncTask有什么不足之处
+**22、android中如何处理耗时操作， asyncTask有什么不足之处**
+
 android系统推荐是用asyncTask来处理异步，它包括了准备运行：onPreExecute()，正在后台运行：doInBackground(Params...)，进度更新：onProgressUpdate(Progress...)，完成后台任务：onPostExecute(Result)取消任务：onCancelled ()，AsyncTask的构造函数有三个模板参数： 
+
 1.Params，传递给后台任务的参数类型。 
+
 2.Progress，后台计算执行过程中，进步单位（progress　units）的类型。（就是后台程序已经执行了百分之几了。） 
+
 3.Result， 后台执行返回的结果的类型。 
+
 AsyncTask并不总是需要使用上面的全部3种类型。标识不使用的类型很简单，只需要使用Void类型即可。 
+
 不足之处： 1，线程池有限，太多内容同时异步会超时，甚至出现ARN效果。 
            2，AsyncTask可能存在新开大量线程消耗系统资源和导致应用FC的风险
 
-23、『卡顿』（特指不流畅的动画）是App开发中最为常见的性能问题表现。请结合你所熟悉的移动操作系统（Android、iOS 或 Windows Phone），解释一下App中卡顿的发生机理，并分别针对『界面切换卡顿』和『屏幕滑动卡顿』提出典型的优化思路。（面试题）
+**23、『卡顿』（特指不流畅的动画）是App开发中最为常见的性能问题表现。请结合你所熟悉的移动操作系统（Android、iOS 或 Windows Phone），解释一下App中卡顿的发生机理，并分别针对『界面切换卡顿』和『屏幕滑动卡顿』提出典型的优化思路。（面试题）**
+
 大概可以归置两方面问题：1、程序本身：需要网络的情况下加载一些东西，网络不畅通可以导致暂时或长久的卡顿。算法需优化，内存消耗过于庞大。线程的阻塞，一些耗时的要放在子线程进行操作。主线程尽量只放些UI控件，网络请求放到子线程完成等。  2、硬件原因 。
 
-24、请简述Android中style.xml和Theme.xml有什么区别。
+**24、请简述Android中style.xml和Theme.xml有什么区别。**
+
 一、使用的地方不同
+
 1.theme.xml：对整个应用或某个Activity存在全局性影响。
+
 AndroidManifest.xml中：
-<application android:theme="@android:style/theme">，
-<activity android:theme="@android:style/theme">，
+```
+<application android:theme="@android:style/theme">
+<activity android:theme="@android:style/theme">
+```
 application 和  activity  java中：setTheme(R.style.theme);  
+
 2 style.xml：用在单独的View。
+
+```
 <EditText 
 android:layout_height="wrap_content"
 android:text="EditText"
 android:style="@style/Title"
 android:layout_width="fill_parent"
 android:id="@+id/editText1"></EditText>
+```
+
 二、 在R.attr定义中以window开头的一些属性只对theme有效。
+
 三、如果一个应用使用了theme，同时应用下的view也使用了style，那么当theme与样式style发生冲突时，style的优先级高于主题。
 
-25、请简述ViewFlipper 和 ViewPager 的区别
+**25、请简述ViewFlipper 和 ViewPager 的区别**
+
 ViewFlipper继承ViewAnimator，切换view的时候是有动画效果的，适合做ppt，多界面的程序欢迎引导界面，算是个轻量级的组件，适合展示静态数据，少量数据。
+
 ViewPager继承ViewGroup。看官网描述，它和Fragment是好搭档，Fragment有自己的生命周期。也就是说ViewPager更适用复杂的视图切换，而且Viewpager有自己的adapter，这也让其适应复杂对象，实现数据的动态加载。使用时候需要加入相应的jar包。
 
-26、PopupWindow可以创建类似对话框风格的窗口，请简述PoupupWindow的使用步骤。
+**26、PopupWindow可以创建类似对话框风格的窗口，请简述PoupupWindow的使用步骤。**
+
 1、为PopupWindow的view布局，通过LayoutInflator获取布局的view.如:
+```
 LayoutInflater inflater =(LayoutInflater) 
 this.anchor.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 View textEntryView =  inflater.inflate(R.layout.paopao_alert_dialog, null);
+```
 2、显示位置，可以有很多方式设置显示方式
+```
 pop.showAtLocation(findViewById(R.id.ll2), Gravity.LEFT, 0, -90);
+```
 或者
+```
 pop.showAsDropDown(View anchor, int xoff, int yoff)
+```
 3、进出场动画
+```
 pop.setAnimationStyle(R.style.PopupAnimation);
+```
 4、点击PopupWindow区域外部,PopupWindow消失
+```
 this.window = new PopupWindow(anchor.getContext());
 this.window.setTouchInterceptor(new OnTouchListener() {
-@Override
-public boolean onTouch(View v, MotionEvent event) {
-if(event.getAction() ==MotionEvent.ACTION_OUTSIDE) {              
-BetterPopupWindow.this.window.dismiss();
-return true;
-}
-return false;
-}
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if(event.getAction() ==MotionEvent.ACTION_OUTSIDE) {              
+            BetterPopupWindow.this.window.dismiss();
+            return true;
+        }
+        return false;
+    }
 });
+```
 
 27、我们常常会用到“findViewByid()”来加载一个布局文件，或是一个控件。例如：findViewByid(R.id.xxx);那么，findViewByid()方法需要传进什么类型的数值，他的结果又是什么类型呢？
 输入为int类型，输出为View类型。
