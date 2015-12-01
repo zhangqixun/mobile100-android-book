@@ -72,7 +72,6 @@
    * [Android中Fregment解析(1501210962 罗霄)](paper/1501210962.md)
    * [Android的图形与图像处理（1501210918 黄凯凯）](paper/2015/1501210918.md)
 * [常见面试题目](question/index.md)
-   * [Test](question/test.md)
    * [Question_About_Others](question/question_about_others.md)
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
