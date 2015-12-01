@@ -21,6 +21,9 @@
 如何通过一套标准及统一的接口获取其他应用程序暴露的数据？
 Android提供了ContentResolver，外界的程序可以通过ContentResolver接口访问ContentProvider提供的数据。
 
+---
+
+
 **2、Context类中提供了一个openFileOutput()方法，请简述这个方法以及它的用法。**
 
 openFileOutput()方法的第一参数用于指定文件名称，不能包含路径分隔符“/” ，如果文件不存在，Android 会自动创建它。创建的文件保存在/data/data/<package name>/files目录，如：/data/data/edu.pku.ss.zhangxitao.action/files/zhangxitao.txt。
@@ -46,11 +49,16 @@ MODE_WORLD_READABLE：表示当前文件可以被其他应用读取；MODE_WORLD
 如果希望文件被其他应用读和写，可以传入：
 openFileOutput(“zhangxitao.txt”, Context.MODE_WORLD_READABLE + Context.MODE_WORLD_WRITEABLE);
 
-**2、Android中如何实现跨程序共享数据的功能。**
+---
+
+
+**3、Android中如何实现跨程序共享数据的功能。**
 
 内容提供器（Content Provider）主要用于在不同的应用程序之间实现数据共享的功能，它提供了一套完整的机制，允许一个程序访问另一个程序中的数据，同时还能保证被访数据的安全性。目前，使用内容提供器是Android实现跨程序共享数据的标准方式。
 
-**3、ContentProvider类中几个抽象方法，简单介绍这几种方法。**
+---
+
+**4、ContentProvider类中几个抽象方法，简单介绍这几种方法。**
 
 ContentProvider类中有六个抽象方法，分别是：onCreate()、query()、insert()、update()、delete()、getType
 
