@@ -14,17 +14,23 @@
 
 
 ---
-1、请简述Android中的Intent作用
-Android中的Intent有两大作用。
+**1、请简述Android中的Intent作用**
+
 一：用来启动其他新的Activity。
+
 二：作为传递数据和事件的桥梁。传递数据时的代码有两种：
+
 第一种是：
+```
 Intent intent = new  Intent(CurrentActivity.this , OtherActivity.class); 
-intent.putExtra(“data” , somedata); 
+intent.putExtra(“data” , somedata);
+```
 第二种是新建一个Bundle，再把该Bundle加入intent,如：
+```
 Bundle bundle = new Bundle() ; 
 bundle.putString(“data” , somedata) ; 
 intent.putExtras(bundle)。
+```
 
 2、若一个Android系统里安装了多种浏览器，能否指定某浏览器访问指定页面？请说明理由
 通过直接发送Uri把参数带过去，或者通过manifest离得intentfilter里的data属性。代码如下：
