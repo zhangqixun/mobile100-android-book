@@ -363,11 +363,16 @@ BroadcastReceiver用于监听被广播的事件必须被注册，注册的方式
 
 2)第二种是常驻型，也就是说当应用程序关闭后，如果有信息广播来，程序也会被系统调用自动运行。使用这样的方法注册弊端：它会始终处于活动状态，毕竟是手机开发，cpu和电源资源比较少，一直处于活动耗费大，不利。
 
-31、在android中使用Menu时可能需要重写的方法有? （腾讯2015春招移动客户端开发练习卷）
+**31、在android中使用Menu时可能需要重写的方法有? （腾讯2015春招移动客户端开发练习卷）**
+
 需要重写的方法为：onCreateOptionsMenu()、onOptionsItemSelected()
-32、创建联系人使用的函数有哪些（腾讯2015春招移动客户端开发练习卷）
+
+**32、创建联系人使用的函数有哪些（腾讯2015春招移动客户端开发练习卷）**
+
 需要使用ABPersonCreate()、ABRecordSetValue()、ABMultiValueCreateMutable()
 
-33、修改联系人使用的函数有哪些？（腾讯2015春招移动客户端开发练习卷）
+**33、修改联系人使用的函数有哪些？（腾讯2015春招移动客户端开发练习卷）**
+
+
 ABPersonCreate()、ABRecordSetValue()、ABAddressBookGetPersonWithRecordID()
 
