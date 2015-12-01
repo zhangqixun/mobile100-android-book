@@ -48,9 +48,41 @@
 
 
 
-* 知识点3：
+* 知识点3：Service的调用    
+使用context.startService() 启动Service      
+        // 启动一个 Activity
+        startActivity(new Intent(this, LocalService1.class));
+        
+        // 停止一个 Activity
+        stopService(new Intent(this, LocalService1.class)); 
+bindService()启动Service时，需先定义一个ServiceConnection实例   
+        private ServiceConnection connection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                System.out.println("Service Connected");
+                try {
+                    myService = ((MyService.MyBinder)service).getMyservice();
+                    startService(serviceIntent);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
 
-      知识点介绍
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                System.out.println("Service Disconnected");
+                myService = null;
+            }
+        };
+        protected void serviceStart(){//启动服务
+            serviceIntent = new Intent(MainActivity.this,MyService.class);
+            bindService(serviceIntent,connection, Context.BIND_AUTO_CREATE);
+        }
+
+        protected void serviceStop(){//解除绑定
+            myService.onUnbind(new Intent());
+        }
 
 
    
