@@ -194,10 +194,10 @@ BaiDuWeather baiduWather = JSON.parseObject(date, BaiDuWeather.class);
 
    1)	SAX解析XML时候会自动忽略注释。
 
-2)	SAX解析XML时候遇到CDATA类型的节点，会调用characters方法，传递的内容就是CDATA节点内的文本。
+ 2)	SAX解析XML时候遇到CDATA类型的节点，会调用characters方法，传递的内容就是CDATA节点内的文本。
 
-3)	json字符串中，null也是作为字符串，不是空。
+ 3)	json字符串中，null也是作为字符串，不是空。
 
-4)	json字符串中可能有的对象是null的，用fastjson解析的话，就可能出现空指针异常，所以在输出的时候注意先判断是否为空。
+ 4)	json字符串中可能有的对象是null的，用fastjson解析的话，就可能出现空指针异常，所以在输出的时候注意先判断是否为空。
 
-5)	json的key里面有一些特殊字符，例如"-"":"等，而Java命名规则不允许这些字符出现在属性名称的情况下，使用JSONField 注解，因为fastjson的key是根据javabean里面的getter和setter方法来的，不是根据属性名的，所以会出现这个问题，你在属性的get和set方法上面写上标注，说明转成什么就行了比如 @JSONField(name=“z-index”)。
+ 5)	json的key里面有一些特殊字符，例如"-"":"等，而Java命名规则不允许这些字符出现在属性名称的情况下，使用JSONField 注解，因为fastjson的key是根据javabean里面的getter和setter方法来的，不是根据属性名的，所以会出现这个问题，你在属性的get和set方法上面写上标注，说明转成什么就行了比如 @JSONField(name=“z-index”)。
