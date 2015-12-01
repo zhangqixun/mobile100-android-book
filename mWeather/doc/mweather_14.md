@@ -44,6 +44,7 @@
 setContentView(R.layout.guide);
 创建三个page文件page1.xml,page2.xml,page3.xml;
 在guide.java中增加显示三个page文件的方法initView():
+
 ```private void initViews(){
     LayoutInflater inflater = LayoutInflater.from(this);
     views =new ArrayList<View>();
@@ -55,8 +56,10 @@ setContentView(R.layout.guide);
     vp.setAdapter(vpAdapter);
     vp.setOnPageChangeListener(this);
 }```
+
 然后在onCreate()方法中调用initView()，这样就可以实现在guide.xml中显示三个page。
 最后，在AndroidManifest中将guide.java设置为主activity:
+
 ```<activity android:name=".Guide">
     <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -64,19 +67,23 @@ setContentView(R.layout.guide);
         <category android:name="android.intent.category.LAUNCHER" />
     </intent-filter>
 </activity>```
+
 此时，就可以在打开应用时显示pageView:
  
 （2）为布局文件添加组件
 A、添加切换到主界面的Button
 在page3.xml中添加一个button按钮：
+
 ```<Button
     android:id="@+id/guide_btn"
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
     android:text="开始体验"/>```
+
 为该按钮设置监听事件：
 
 ```guide_btn = (Button)views.get(2).findViewById(R.id.guide_btn);```
+
 其中，由于该button设置在第//三个视图中，所以实例化该button时需要先指定到对应的视图。
 
 ```guide_btn.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +109,7 @@ B、添加图片和textView等组件以增加美观性：
 
 在onCreate()方法中调用该方法；
 重写onPageSelected()方法以实现当选中某个页面时该页面对应的小圆点变为实心：
+
 ```@Override
 public void onPageSelected(int position) {
     for(int a=0;a<ids.length;a++){
@@ -112,11 +120,13 @@ public void onPageSelected(int position) {
         }
     }
 }```
+
 完成后就可以实现小圆点滑动效果：
  
 （4）记录首次启动
 想要实现只在第一次打开app时才启动guide，需要对应用的启动进行记录，在这里我们选用sharedPreference来进行记录。关于sharedPreference的介绍和使用在前面的章节已经介绍过，在这里不再重复。
 在Guide活动的onCreate方法中，实例化一个sharedPreference判断其isFirst是否为true，若为true，则继续执行下面的代码，若为false，则直接用intent跳转到mainActivity:
+
 ```super.onCreate(savedInstanceState);
 SharedPreferences first = (SharedPreferences)getSharedPreferences("first",MODE_PRIVATE);
 Boolean isFirst = first.getBoolean("isFirst", true);
