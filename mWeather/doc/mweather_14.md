@@ -44,7 +44,7 @@
 setContentView(R.layout.guide);
 创建三个page文件page1.xml,page2.xml,page3.xml;
 在guide.java中增加显示三个page文件的方法initView():
-private void initViews(){
+```private void initViews(){
     LayoutInflater inflater = LayoutInflater.from(this);
     views =new ArrayList<View>();
     views.add(inflater.inflate(R.layout.page1,null));
@@ -54,28 +54,31 @@ private void initViews(){
     vp = (ViewPager)findViewById(R.id.viewpager_guide);
     vp.setAdapter(vpAdapter);
     vp.setOnPageChangeListener(this);
-}
+}```
 然后在onCreate()方法中调用initView()，这样就可以实现在guide.xml中显示三个page。
 最后，在AndroidManifest中将guide.java设置为主activity:
-<activity android:name=".Guide">
+```<activity android:name=".Guide">
     <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 
         <category android:name="android.intent.category.LAUNCHER" />
     </intent-filter>
-</activity>
+</activity>```
 此时，就可以在打开应用时显示pageView:
  
 （2）为布局文件添加组件
 A、添加切换到主界面的Button
 在page3.xml中添加一个button按钮：
-<Button
+```<Button
     android:id="@+id/guide_btn"
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
-    android:text="开始体验"/>
+    android:text="开始体验"/>```
 为该按钮设置监听事件：
-guide_btn = (Button)views.get(2).findViewById(R.id.guide_btn);// 其中，由于该button设置在第//三个视图中，所以实例化该button时需要先指定到对应的视图。
+
+```guide_btn = (Button)views.get(2).findViewById(R.id.guide_btn);```
+其中，由于该button设置在第//三个视图中，所以实例化该button时需要先指定到对应的视图。
+
 ```guide_btn.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -84,16 +87,19 @@ guide_btn = (Button)views.get(2).findViewById(R.id.guide_btn);// 其中，由于
         finish();
     }
 });```
+
 B、添加图片和textView等组件以增加美观性：
 该部分与在普通activity的布局文件中添加组件的方式相同，只是需要注意指定该组件所在的视图。
 （3）动态变化小圆点
 首先，实现initDots()方法：
+
 ```void initDots(){
     dots = new ImageView[views.size()];
     for(int i=0;i<views.size();i++){
         dots[i]=(ImageView)findViewById(ids[i]);
     }
 }```
+
 在onCreate()方法中调用该方法；
 重写onPageSelected()方法以实现当选中某个页面时该页面对应的小圆点变为实心：
 ```@Override
