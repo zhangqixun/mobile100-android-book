@@ -4,11 +4,11 @@
 
 ###**声明**
 
-本册面试题及答案大部分摘自网络，版权归原创者所有，如有侵权请您及时联系：
-
-邮箱：1596888285@qq.com
-
-参考用书：《第一行代码》（Android）、《疯狂Android讲义》、《Android4编程入门经典》
+    本册面试题及答案大部分摘自网络，版权归原创者所有，如有侵权请您及时联系：
+    
+    邮箱：1596888285@qq.com
+    
+    参考用书：《第一行代码》（Android）、《疯狂Android讲义》、《Android4编程入门经典》
 
 *本答案仅供参考，如有错误，请您指正*
 
@@ -18,39 +18,38 @@
 
 **1、Activity一般会重载哪些方法来维护其生命周期，并简述在什么情况下会调用这些方法。**
 
-重载的方法有：onCreate(), onStart(), onDestory(), onrestart(), onresume(), onpause(), onstop()。
-
-Activity实例是由系统自动创建，并在不同的状态期间回调相应的方法。一个最简单的完整的Activity生命周期会按照如下顺序回调：onCreate -> onStart -> onResume ->onPause -> onStop -> onDestroy。称之为entire lifetime。
-
-当执行onStart回调方法时，Activity开始被用户所见（也就是说，onCreate时用户是看不到此Activity的，那用户看到的是哪个？当然是此Activity之前的那个Activity），一直到onStop之前，此阶段Activity都是被用户可见，称之为visible lifetime。
-当执行到onResume回调方法时，Activity可以响应用户交互，一直到onPause方法之前，此阶段Activity称之为foreground lifetime。
-
-在实际应用场景中，假设A Activity位于栈顶，此时用户操作，从A Activity跳转到B Activity。那么对AB来说，具体会回调哪些生命周期中的方法呢？回调方法的具体回调顺序又是怎么样的呢？
-
-开始时，A被实例化，执行的回调有A:onCreate -> A:onStart -> A:onResume。
-
-当用户点击A中按钮来到B时，假设B全部遮挡住了A，将依次执行A:onPause -> B:onCreate -> B:onStart -> B:onResume -> A:onStop。
-
-此时如果点击Back键，将依次执行B:onPause -> A:onRestart -> A:onStart -> A:onResume -> B:onStop -> B:onDestroy。
-
-至此，Activity栈中只有A。在Android中，有两个按键在影响Activity生命周期这块需要格外区分下，即Back键和Home键。
-
-我们先直接看下实验结果：
-
-此时如果按下Back键，系统返回到桌面，并依次执行A:onPause -> A:onStop -> A:onDestroy。
-
-此时如果按下Home键（非长按），系统返回到桌面，并依次执行A:onPause -> A:onStop。由此可见，Back键和Home键主要区别在于是否会执行onDestroy。
-
-此时如果长按Home键，不同手机可能弹出不同内容，Activity生命周期未发生变化（此处不同手机可能不同）。
+    重载的方法有：onCreate(), onStart(), onDestory(), onrestart(), onresume(), onpause(), onstop()。
+    
+    Activity实例是由系统自动创建，并在不同的状态期间回调相应的方法。一个最简单的完整的Activity生命周期会按照如下顺序回调：onCreate -> onStart -> onResume ->onPause -> onStop -> onDestroy。称之为entire lifetime。
+    
+    当执行onStart回调方法时，Activity开始被用户所见（也就是说，onCreate时用户是看不到此Activity的，那用户看到的是哪个？当然是此Activity之前的那个Activity），一直到onStop之前，此阶段Activity都是被用户可见，称之为visible lifetime。
+    当执行到onResume回调方法时，Activity可以响应用户交互，一直到onPause方法之前，此阶段Activity称之为foreground lifetime。
+    
+    在实际应用场景中，假设A Activity位于栈顶，此时用户操作，从A Activity跳转到B Activity。那么对AB来说，具体会回调哪些生命周期中的方法呢？回调方法的具体回调顺序又是怎么样的呢？
+    
+    开始时，A被实例化，执行的回调有A:onCreate -> A:onStart -> A:onResume。
+    
+    当用户点击A中按钮来到B时，假设B全部遮挡住了A，将依次执行A:onPause -> B:onCreate -> B:onStart -> B:onResume -> A:onStop。
+    
+    此时如果点击Back键，将依次执行B:onPause -> A:onRestart -> A:onStart -> A:onResume -> B:onStop -> B:onDestroy。
+    
+    至此，Activity栈中只有A。在Android中，有两个按键在影响Activity生命周期这块需要格外区分下，即Back键和Home键。
+    
+    我们先直接看下实验结果：
+    
+    此时如果按下Back键，系统返回到桌面，并依次执行A:onPause -> A:onStop -> A:onDestroy。
+    
+    此时如果按下Home键（非长按），系统返回到桌面，并依次执行A:onPause -> A:onStop。由此可见，Back键和Home键主要区别在于是否会执行onDestroy。
+    
+    此时如果长按Home键，不同手机可能弹出不同内容，Activity生命周期未发生变化（此处不同手机可能不同）。
 
 **2、当启动一个Activity并且新的Activity执行完后需要返回到启动它的Activity来执行的回调函数是：**startActivityResult()  。
 
 
 **3、请简述如果后台Activity由于某原因被系统回收了，如何在被系统回收之前保存当前状态？**
 
-利用onSaveInstanceState()函数来解决Activity被系统意外回收的数据保存问题。
-当Android程序中某一个Activity A在运行时，主动或被动地运行另一个新的Activity B，这个时候A会执行onSaveInstanceState()。B完成以后会出栈，需要运行Activity A，这个时候就有两种情况：一是A被回收，二是A没有被回收，被回收的A就要重新调用onCreate()方法，不同于直接启动的是这回onCreate()里是带上了参数savedInstanceState；而没被收回的就直接执行onResume()，跳过onCreate()了。
-
+    利用onSaveInstanceState()函数来解决Activity被系统意外回收的数据保存问题。
+    当Android程序中某一个Activity A在运行时,主动或被动地运行另一个新的Activity B, 这个时候A会执行onSaveInstanceState()。B完成以后会出栈，需要运行Activity A, 这个时候就有两种情况：一是A被回收,二是A没有被回收，被回收的A就要重新调用onCreate()方法，不同于直接启动的是这回onCreate()里是带上了参数savedInstanceState；而没被收回的就直接执行onResume()，跳过onCreate()了。
 
 **4、请简述Android系统横竖屏切换时候Activity的生命周期**
 
