@@ -31,11 +31,14 @@ Android中数据存储的方式总共有5种：文件存储方式、使用Shared
 **2、请简述如何将打开res aw目录中的数据库文件**
 
 在Android中不能直接打开res aw目录中的数据库文件，而需要在程序第一次启动时将该文件复制到手机内存或SD卡的某个目录中，然后再打开该数据库文件。复制的基本方法是使用getResources().openRawResource方法获得res aw目录中资源的 InputStream对象，然后将该InputStream对象中的数据写入其他的目录中相应文件中。在Android SDK中可以使用SQLiteDatabase.openOrCreateDatabase方法来打开任 意目录中的SQLite数据库文件。
-3、请简述Android开发过程中，SQLiteOpenHelper类的使用方法
-SQLiteOpenHelper是一个辅助类来管理数据库的创建和版本。 
-可以通过继承这个类，实现它的一些方法来对数据库进行一些操作。 
-所有继承了这个类的类都必须实现下面这样的一个构造方法： 
-public DatabaseHelper(Context context, String name, CursorFactory factory, int version) 
+
+**3、请简述Android开发过程中，SQLiteOpenHelper类的使用方法**
+
+SQLiteOpenHelper是一个辅助类来管理数据库的创建和版本。可以通过继承这个类，实现它的一些方法来对数据库进行一些操作。所有继承了这个类的类都必须实现下面这样的一个构造方法： 
+
+public DatabaseHelper(Context context, String name, CursorFactory factory, int version){
+    ……
+} 
 第一个参数：Context类型，上下文对象。 
 第二个参数：String类型，数据库的名称 
 第三个参数：CursorFactory类型 
