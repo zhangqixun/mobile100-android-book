@@ -1,6 +1,6 @@
 #移动平台软件开发（Android）面试题汇总参考答案
 
-## Question About Storage
+## Question About Stroage
 
 ###**声明**
 
@@ -14,53 +14,26 @@
 
 
 ---
-**1、请介绍几种Android常用的数据存储方式**
-
+1、请介绍几种Android常用的数据存储方式
 Android中数据存储的方式总共有5种：文件存储方式、使用SharedPreferences进行数据存储、SQLite数据库存储数据、ContentProvider存储数据、网络存储。
-
 （1）文件数据存储：在Android中读取、写入文件的方法，与Java中实现I/O的程序是完全一样的，提供了openFileInput()、openFileOutput()来读取与写入设备中的文件。
-
 （2）使用SharedPreferences进行数据存储：Android用来存储一些简单配置信息的一种机制，采用XML格式将数据存储到设备中，通过getSharedPreferences()来获得SharedPreferences接口，再通过编辑器进行提交保存，通过getString()来读取文件中的内容；采用了Map数据结构来存储数据，已键值的方式进行存储。
-
 （3）SQLite数据库存储数据：SQLite是Android自带的一种标准数据库，支持大部分标准SQL语句，是一种嵌入式的关系型数据库。通过SQLiteOpenHelper来获得数据库操作实例，从而进行增删改查以及分页来读取存储查询数据。
-
 （4）ContentProvider存储数据：主要是用于对外共享数据，而且使其他应用能够访问ContentProvider中的数据，利用继承ContentProvider类来共享数据，使用ContentResolver操作ContentProvider中的数据。使用ContentProvider共享数据的好处是统一了数据访问方式。
-
 （5）网络数据存储：通过网络上给我们提供的存储空间来上传（存储）、下载（获取）我们存储在网络空间中的数据信息。
 
-**2、请简述如何将打开res aw目录中的数据库文件**
-
+2、请简述如何将打开res aw目录中的数据库文件
 在Android中不能直接打开res aw目录中的数据库文件，而需要在程序第一次启动时将该文件复制到手机内存或SD卡的某个目录中，然后再打开该数据库文件。复制的基本方法是使用getResources().openRawResource方法获得res aw目录中资源的 InputStream对象，然后将该InputStream对象中的数据写入其他的目录中相应文件中。在Android SDK中可以使用SQLiteDatabase.openOrCreateDatabase方法来打开任 意目录中的SQLite数据库文件。
-
 3、请简述Android开发过程中，SQLiteOpenHelper类的使用方法
-
-SQLiteOpenHelper是一个辅助类来管理数据库的创建和版本。可以通过继承这个类，实现它的一些方法来对数据库进行一些操作。 所有继承了这个类的类都必须实现下面这样的一个构造方法：
-
-```
-public DatabaseHelper(Context context, String name, CursorFactory factory, int version) {
-    ……
-}
-```
-
+SQLiteOpenHelper是一个辅助类来管理数据库的创建和版本。 
+可以通过继承这个类，实现它的一些方法来对数据库进行一些操作。 
+所有继承了这个类的类都必须实现下面这样的一个构造方法： 
+public DatabaseHelper(Context context, String name, CursorFactory factory, int version) 
 第一个参数：Context类型，上下文对象。 
-
 第二个参数：String类型，数据库的名称 
-
 第三个参数：CursorFactory类型 
-
 第四个参数：int类型，数据库版本 
-
 下面是这个类的几个方法：
-
-| 方法名| 返回值类型| 描述 | 备注 |
-| -- | -- | -- | -- |
-|getReadableDatabase() |synchronized SQLiteDatabase| 2:2 | 3:2 |
-| 0:3 | 1:3 | 2:3 | 3:3 |
-| 0:4 | 1:4 | 2:4 | 3:4 |
-| 0:5 | 1:5 | 2:5 | 3:5 |
-| 0:6 | 1:6 | 2:6 | 3:6 |
-| 0:7 | 1:7 | 2:7 | 3:7 |
-
 方法名	返回值类型	描述	备注
 getReadableDatabase()	synchronized SQLiteDatabase	创建或打开一个数据库	可以通过这两个方法返回的SQLiteDatabase对象对数据库进行一系列的操作，如新建一个表，插入一条数据等
 getWritableDatabase()	synchronized SQLiteDatabase	创建或打开一个可以读写的数据库	
