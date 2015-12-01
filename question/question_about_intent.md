@@ -120,14 +120,18 @@ onActivityResult()方法带有三个参数，第一个参数requestCode，即我
 **getXxxExtra(String name):**从Intent中按key取值
 
 
-7、使用Intent来传递对象有几种方法？分别介绍这些方法（如果你认为必要，可以写下相应代码）
+**7、使用Intent来传递对象有几种方法？分别介绍这些方法（如果你认为必要，可以写下相应代码）**
+
 有两种方法：显式Intent和隐式Intent
+
 显式Intent使用以下代码实现：
+```
 Intent intent = new Intent(FirstActivity.this, SecondActivity.class);
 startActivity(intent);
+```
 隐式Intent则含蓄很多，它并不明确指出我们想要启动哪一个活动，而是指定了一系列更为抽象的action和category等信息，然后交由系统去分析这个Intent，并帮我们找出合适的活动去启动。
 
+**8、Intent传递数据时，哪些数据类型可以被传递？（腾讯2015春招移动客户端开发练习卷）**
 
-8、Intent传递数据时，哪些数据类型可以被传递？（腾讯2015春招移动客户端开发练习卷）
 可以传递以下内容：简单或基本数据类型、传递一个Bundle、传递Serializable对象、Parcelable对象、Intent
 
