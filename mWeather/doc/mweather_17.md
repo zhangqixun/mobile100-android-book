@@ -44,10 +44,10 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
                 btnLogin = mActivity.findViewById(R.id.btnLogin);
     }
 
-        public void testGetActivity(){
-           assertNotNull("can't get LoginActivity" , mActivity);
-           assertNotNull("can't get loginButton" , btnLogin);
-        }
+    public void testGetActivity(){
+       assertNotNull("can't get LoginActivity" , mActivity);
+       assertNotNull("can't get loginButton" , btnLogin);
+    }
 }
 ```
 
