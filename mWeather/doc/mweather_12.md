@@ -91,12 +91,78 @@ bindService()启动Service时，需先定义一个ServiceConnection实例
 
 **3.1 主要思路**
 
-*简要介绍主要思路*
+1：新建WeatherService类，继承android.app.Service类  
+2：重写 OnBind ()、onStartCommand()、onDestory()函数    
+3：MainActivity中检查网络是否连接，若已连接，启动服务    
+
 
 **3.2 实践步骤**
 
-*详细描述开发的具体步骤*
+1：新建WeatherService类，继承android.app.Service类      
+
+         public class WeatherService extends Service 
+2：重写 OnBind ()、onStartCommand()、onDestory()函数    
+    声明了两个变量--计时器和时间间隔，在Weather类的构造函数中内置了获取数据的函数，也可以有其他的实现方法
+
+        static final int UPDATE_INTERVAL = 2*60*60*1000;//更新时间间隔
+        private Timer timer = new Timer();//计时器
+
+        @Nullable
+        @Override
+        public IBinder onBind(Intent intent) {
+            System.out.println("onBind Service");
+            return null;
+        }
+        @Override
+        public int onStartCommand(final Intent intent, int flags, int startId) {
+            System.out.println("Service Start");
+
+                timer.scheduleAtFixedRate(new TimerTask() {
+                    @Override
+                    public void run() {
+                       //获取天气数据
+                       SharedPreferences sp = getSharedPreferences("positionData", Context.MODE_PRIVATE);
+                       String current_position = sp.getString("current_position", "北京");
+                       String supCity = sp.getString("supCity", "北京");
+                       Weather weather = new Weather(current_position, supCity);
+                       if (weather.getStatus().equals("ok")) {
+                           weatherNotify(weather);
+                       }
+                    }
+                }, UPDATE_INTERVAL, UPDATE_INTERVAL);
+            return START_STICKY;
+        }
+        @Override
+        public void onDestroy() {
+            System.out.println("Service Destroy");
+            super.onDestroy();
+        }
+3：MainActivity中检查网络是否连接，若已连接，启动服务   
+
+        if(NetUtil.getNetWorkState(this)==NetUtil.NETWORK_NONE){
+            Toast.makeText(MainActivity.this,"无网络，请检查网络连通性",Toast.LENGTH_SHORT).show();
+        }else {
+            updateWeather();//更新天气数据
+            startService(new Intent(MainActivity.this, WeatherService.class));//启动后台数据更新服务
+        }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
 
 **四、常见问题及注意事项**
 
-*详细描述本部分的常遇到的问题以及开发过程中的注意事项*
+1：startService 和bindService 的区别     
+
+| 类别 |  区别  |
+| -- | -- |
+| startService 启动的服务| 主要用于启动一个服务执行后台任务，不进行通信。停止服务使用stopService |
+| bindService 启动的服务 | 该方法启动的服务要进行通信。停止服务使用unbindService |
+| startService 同时也 bindService 启动的服务 | 停止服务应同时使用stepService与unbindService |   
+2：Service 与 Thread 的区别
+
+1). Thread：Thread 是程序执行的最小单元，它是分配CPU的基本单位。可以用 Thread 来执行一些异步的操作。
+
+2). Service：Service 是android的一种机制，当它运行的时候如果是Local Service，那么对应的 Service 是运行在主进程的 main 线程上的。如：onCreate，onStart 这些函数在被系统调用的时候都是在主进程的 main 线程上运行的。如果是Remote Service，那么对应的 Service 则是运行在独立进程的 main 线程上。  
+Thread 的运行是独立于 Activity 的，也就是说当一个 Activity 被 finish 之后，如果你没有主动停止 Thread 或者 Thread 里的 run 方法没有执行完毕的话，Thread 也会一直执行。因此这里会出现一个问题：当 Activity 被 finish 之后，你不再持有该 Thread 的引用。另一方面，你没有办法在不同的 Activity 中对同一 Thread 进行控制。
+
