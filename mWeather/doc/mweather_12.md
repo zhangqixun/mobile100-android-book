@@ -15,9 +15,7 @@
 * 知识点1：Service的生命周期解析 
 
     1：使用context.startService() 启动Service   
-    其生命周期为context.startService() -->onCreate()-->onStartCommand()-->Service is running-->context.stopService()-->onDestroy() ->Service shut down,生命周期如图  
-
-
+    其生命周期为context.startService() -->onCreate()-->onStartCommand()-->Service is running-->context.stopService()-->onDestroy() ->Service shut down,生命周期如图 
 * 知识点2：
 
       知识点介绍
