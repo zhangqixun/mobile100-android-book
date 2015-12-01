@@ -78,5 +78,12 @@
    * [Question_About_Intent](question/question_about_intent.md)
    * [Question_About_Service](question/question_about_service.md)
    * [Question_About_Broadcast_Receiver](question/question_about_broadcast_receiver.md)
-   * Question_About_Content_Provider
+   * [Question_About_Content_Provider](question/question_about_content_provider.md)
+   * [Question_About_UIdesign](question/question_about_uidesign.md)
+   * [Question_About_Storage](question/question_about_storage.md)
+   * [Question_About_IO](question/question_about_io.md)
+   * [Question_About_Commication](question/question_about_commication.md)
+   * [Question_About_Internet](question/question_about_internet.md)
+   * [Question_About_Thread](question/question_about_thread.md)
+   * [Question_About_NDK](question/question_about_ndk.md)
 
