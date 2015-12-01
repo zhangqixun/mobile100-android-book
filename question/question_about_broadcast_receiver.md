@@ -26,6 +26,9 @@ BroadcastReceiver用于监听被广播的事件必须被注册，注册的方式
 
 当BroadcastReceiver更新UI，通常会使用这样的方法注册。启动Activity时候注册BroadcastReceiver，Activity不可见时候，取消注册。
 
+---
+
+
 2、在androidmanifest.xml当中注册
 ```
 <receiver>
@@ -46,6 +49,9 @@ b：程序间互通消息(例如在自己的应用程序内监听系统来电)
 c：效率上(参考UDP的广播协议在局域网的方便性)
 
 d：设计模式上(反转控制的一种应用，类似监听者模式)
+
+---
+
 
 **3、android有序广播和无序广播的区别**
 
