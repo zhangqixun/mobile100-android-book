@@ -194,15 +194,15 @@ protected void onCreate(Bundle savedInstanceState) {
 ```
 其中requestWindowFeature(Window.FEATURE_NO_TITLE)的意思就是不在活动中显示标题栏，注意这句代码一定要在setContentView()之前执行，不然会报错。
 
-19、如果在android应用程序中需要发送短信,那么需要在AndroidManifest.xml文件中增加什么样的权限
+**19、如果在android应用程序中需要发送短信,那么需要在AndroidManifest.xml文件中增加什么样的权限**
+
 增加“android.permission.SEND_SMS”权限
 
 
 
 
-
-
-20、以下代码中的“this”是指   ActivityTest   
+**20、以下代码中的“this”是指？**  （指：ActivityTest  ） 
+```
 Public class ActivityTest extends Activity{
     Private Button button1；
     /**Called when the activity is first created、*/
@@ -220,7 +220,8 @@ nextActivity.class);
                  startActivity(intent);             
              }
          }
-} }); …… 
+} }); ……
+```
 
 
 21、Android中MVC模式 C层指的是  Activity  
