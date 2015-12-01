@@ -16,6 +16,10 @@
 ---
 **1、android中service的实现（启动）方法有：  startservice  、  bindservice  。**
 
+
+---
+
+
 **2、请简述如何启用Service，如何停用Service**
 
 Android中的服务和windows中的服务是类似的东西，服务一般没有用户操作界面，它运行于系统中不容易被用户发觉，可以使用它开发如监控之类的程序。服务的开发比较简单，如下：
@@ -34,6 +38,10 @@ public class SMSService extends Service {
 如果打算采用Context.startService()方法启动服务，在服务未被创建时，系统会先调用服务的onCreate()方 法，接着调用onStart()方法。如果调用startService()方法前服务已经被创建，多次调用startService()方法并不会导致多次创建服务，但会导致多次调 用onStart()方法。采用startService()方法启动的服务，只能调用Context.stopService()方法结束服务，服务结束时会调 用onDestroy()方法。
 
 如果打算采用Context.bindService()方法启动服务，在服务未被创建时，系统会先调用服务的onCreate()方 法，接着调用onBind()方法。这个时候调用者和服务绑定在一起，调用者退出了，系统就会先调用服务的onUnbind()方法，接着调用onDestroy()方法。如果调用bindService()方法前服务已经被绑定，多次调用bindService()方法并不会导致多次创建服务及绑定(也就是说onCreate()和onBind()方 法并不会被多次调用)。如果调用者希望与正在绑定的服务解除绑定，可以调用unbindService()方法，调用该方法 也会导致系统调用服务的onUnbind()-->onDestroy()方 法。
+
+
+---
+
 
 **3、请回答AIDL的全称是什么？如何工作？能处理哪些类型的数据？**
 
@@ -59,6 +67,10 @@ B工程：
 说明：如果我们单独将RemoteService.aidl文件放在一个包里，那个在我们将gen目录下的该包拷贝到B工程中。如果我们将RemoteService.aidl文件和我们的其他类存放在一起，那么我们在B工程中就要建立相应的包，以保证RmoteService.java文件的报名正确，我们不能修改RemoteService.java文件
 bindService(newInten("net.blogjava.mobile.aidlservice.RemoteService"),serviceConnection, Context.BIND_AUTO_CREATE);
 ServiceConnection的onServiceConnected(ComponentName name,IBinderservice)方法中的service参数就是A工程中MyService类中继承了RemoteService.stub类的内部类的对象。
+
+
+---
+
 
 **4、请简述Context.startService() 、Context.bindService()这两个方法**
 
