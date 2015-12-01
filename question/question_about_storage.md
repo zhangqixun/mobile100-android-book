@@ -28,9 +28,15 @@ Android中数据存储的方式总共有5种：文件存储方式、使用Shared
 
 （5）网络数据存储：通过网络上给我们提供的存储空间来上传（存储）、下载（获取）我们存储在网络空间中的数据信息。
 
+---
+
+
 **2、请简述如何将打开res aw目录中的数据库文件**
 
 在Android中不能直接打开res aw目录中的数据库文件，而需要在程序第一次启动时将该文件复制到手机内存或SD卡的某个目录中，然后再打开该数据库文件。复制的基本方法是使用getResources().openRawResource方法获得res aw目录中资源的 InputStream对象，然后将该InputStream对象中的数据写入其他的目录中相应文件中。在Android SDK中可以使用SQLiteDatabase.openOrCreateDatabase方法来打开任 意目录中的SQLite数据库文件。
+
+---
+
 
 **3、请简述Android开发过程中，SQLiteOpenHelper类的使用方法**
 
@@ -52,11 +58,17 @@ onOpen(SQLiteDatabase db)	void	打开数据库
 onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion)	abstract void	升级数据库	
 close()	synchronized void	关闭所有打开的数据库对象	
 
+---
+
+
 **4、assest文件夹里放文件，对于文件的大小有没有限制**
 
 assets目录更像一个附录类型的目录，Android不会为这个目录中的文件生成ID并保存在R类当中，因此它与Android中的一些类和方法兼容度更低。同时，由于你需要一个字符串路径来获取这个目录下的文件描述符，访问的速度会更慢。但是把一些文件放在这个目录下会使一些操作更加方便，比方说拷贝一个数据库文件到系统内存中。要注意的是，你无法在Android XML文件中引用到assets目录下的文件，只能通过AssetManager来访问这些文件。数据库文件和游戏数据等放在这个目录下是比较合适的。另外，网上关于assets和raw的资料都千篇一律了，因此关于这两者中单个文件大小不能超过1M的**错误**描述也在传播，即如果读取超过1M的文件会报"Data exceeds UNCOMPRESS_DATA_MAX (1314625 vs 1048576)"的IOException，还引申出种种解决方案。个人认为不应该有这样的限制，为了验证这个说法写了个Demo，发现将近5M的压缩包在assets和raw中都能正常访问，因此在这里纠正一下，理论上只要打包不超过Android APK 50M大小的限制都是没有问题的。当然了，不排除是Android很早期的时候因为设备硬件原因aapt在编译的时候对这两个文件夹大小做出了限制，如果是这样，较新版的ADT应该不会出现这。
 
 来自：http://my.eoe.cn/futurexiong/archive/5350.html
+
+---
+
 
 
 **5、对于一个已经存在的SharedPreferences对象setting,想向其中存入一个字符串"person",setting应该先调用什么方法.**
@@ -76,11 +88,20 @@ editor.putString("habit", "sleep");
 editor.commit();
 ```
 
+---
+
+
 **6、SharedPreferences保存文件的路径和扩展名是 ？**
 /data/data/package name/shared_prefs/ *.xml    
 
+---
+
+
 **7、Android用什么充当数据库来存取数据？**
 SQLite
+
+---
+
 
 **8、要想使用SharePreferences来存储数据，首先需要获取到SharePreferences对象。Android中主要提供三种方法用于得到SharePreferences对象，请简述这三种方法。**
 
@@ -95,6 +116,9 @@ SQLite
 1. 调用SharedPreferences对象的edit()方法来获取一个SharedPreferences.Editor对象。
 2. 向SharedPreferences.Editor对象中添加数据，比如添加一个布尔型数据就使用putBoolean方法，添加一个字符串则使用putString()方法，以此类推。
 3. 调用commit()方法将添加的数据提交，从而完成数据存储操作。
+
+---
+
 
 **9、SQLiteDataase中提供了一个query()方法用于对数据进行查询。这个方法最少需要几个参数，分别说明这几个参数的含义。**
 
@@ -123,6 +147,9 @@ by操作。
 |groupBy |	group by column |	指定需要group by的列 |
 |having |	having column = value |	对group by后的结果进一步约束 |
 |orderBy |	order by column1, column2 |	指定查询结果的排序方式 |
+
+---
+
 
 **10、android中使用SQLiteOpenHelper这个辅助类时，可以生成一个数据库，并可以对数据库版本进行管理的方法可以是什么？（腾讯2015春招移动客户端开发练习卷）**
 
