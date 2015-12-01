@@ -73,7 +73,7 @@ main.xml布局，代码如下:
     android:layout_height="fill_parent"    
     >     
     <TextView       
-        android:id="@+id/wordcup"    
+        android:id="@+id/wether"    
         android:layout_width="fill_parent"      
         android:layout_height="wrap_content"      
         android:text="@string/hello"    
@@ -129,7 +129,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;     
 import android.content.Context;     
 import android.widget.RemoteViews;     
-public class WidetDemo extends AppWidgetProvider {     
+public class MyWidet extends AppWidgetProvider {     
     @Override    
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,     
             int[] appWidgetIds) {     
@@ -145,13 +145,12 @@ public class WidetDemo extends AppWidgetProvider {
         public MyTime(Context context,AppWidgetManager appWidgetManager){     
             this.appWidgetManager = appWidgetManager;     
             remoteViews = new RemoteViews(context.getPackageName(),R.layout.main);
-            thisWidget = new ComponentName(context,WidetDemo.class)
+            thisWidget = new ComponentName(context,MyWidet.class)
         }     
         public void run() {     
-            Date date = new Date();     
-            Calendar calendar = new GregorianCalendar(2010,06,11);
-            long days = (((calendar.getTimeInMillis()-date.getTime())/1000))/86400;     
-            remoteViews.setTextViewText(R.id.wordcup, "距离南非世界杯还有" + days+"天");     
+            //获取天气预报信息
+            String weather="";
+            remoteViews.setTextViewText(R.id.wordcup, "今天天气："+weather);     
             appWidgetManager.updateAppWidget(thisWidget, remoteViews);     
         }
     }
