@@ -62,6 +62,8 @@ assets目录更像一个附录类型的目录，Android不会为这个目录中�
 **5、对于一个已经存在的SharedPreferences对象setting,想向其中存入一个字符串"person",setting应该先调用什么方法.**
 
 调用edit()方法
+
+```
 //实例化SharedPreferences对象（第一步） 
 SharedPreferences mySharedPreferences= getSharedPreferences("test", 
 Activity.MODE_PRIVATE); 
@@ -72,8 +74,10 @@ editor.putString("name", "Karl");
 editor.putString("habit", "sleep"); 
 //提交当前数据 
 editor.commit();
+```
 
-6、SharedPreferences保存文件的路径和扩展名是  /data/data/package name/shared_prefs/ *.xml    
+**6、SharedPreferences保存文件的路径和扩展名是 ？**
+/data/data/package name/shared_prefs/ *.xml    
 
 **7、Android用什么充当数据库来存取数据？**
 SQLite
@@ -82,7 +86,7 @@ SQLite
 
 要想使用SharedPreferences来存储数据，首先需要获取到SharedPreferences对象。Android中主要提供了三种方法用于得到SharedPreferences对象。
 1. Context类中的getSharedPreferences()方法
-此方法接收两个参数，第一个参数用于指定SharedPreferences文件的名称，如果指定的文件不存在则会创建一个，SharedPreferences文件都是存放在/data/data/<package name>/shared_prefs/目录下的。第二个参数用于指定操作模式，主要有两种模式可以选择，MODE_PRIVATE和MODE_MULTI_PROCESS。MODE_PRIVATE仍然是默认的操作模式，和直接传入0效果是相同的，表示只有当前的应用程序才可以对这个SharedPreferences文件进行读写。MODE_MULTI_PROCESS则一般是用于会有多个进程中对同一个SharedPreferences文件进行读写的情况。类似地，MODE_WORLD_READABLE和MODE_WORLD_WRITEABLE这两种模式已在Android 4.2版本中被废弃。
+此方法接收两个参数，第一个参数用于指定SharedPreferences文件的名称，如果指定的文件不存在则会创建一个，SharedPreferences文件都是存放在/data/data/<packagename>/shared_prefs/目录下的。第二个参数用于指定操作模式，主要有两种模式可以选择，MODE_PRIVATE和MODE_MULTI_PROCESS。MODE_PRIVATE仍然是默认的操作模式，和直接传入0效果是相同的，表示只有当前的应用程序才可以对这个SharedPreferences文件进行读写。MODE_MULTI_PROCESS则一般是用于会有多个进程中对同一个SharedPreferences文件进行读写的情况。类似地，MODE_WORLD_READABLE和MODE_WORLD_WRITEABLE这两种模式已在Android 4.2版本中被废弃。
 2. Activity类中的getPreferences()方法
 这个方法和Context中的getSharedPreferences()方法很相似，不过它只接收一个操作模式参数，因为使用这个方法时会自动将当前活动的类名作为SharedPreferences的文件名。
 3. PreferenceManager类中的getDefaultSharedPreferences()方法
@@ -92,18 +96,35 @@ SQLite
 2. 向SharedPreferences.Editor对象中添加数据，比如添加一个布尔型数据就使用putBoolean方法，添加一个字符串则使用putString()方法，以此类推。
 3. 调用commit()方法将添加的数据提交，从而完成数据存储操作。
 
-9、SQLiteDataase中提供了一个query()方法用于对数据进行查询。这个方法最少需要几个参数，分别说明这几个参数的含义。
-这个方法的参数非常复杂，最短的一个方法重载也需要传入七个参数。
-第一个参数指表名，表示我们希望从哪张表中查询数据。第二个参数用于指定去查询哪几列，如果不指定则默认查询所有列。第三、第四个参数用于去约束查询某一行或某几行的数据，不指定则默认是查询所有行的数据。第五个参数用于指定需要去group by的列，不指定则表示不对查询结果进行group by操作。第六个参数用于对group by之后的数据进行进一步的过滤，不指定则表示不进行过滤。第七个参数用于指定查询结果的排序方式，不指定则表示使用默认的排序方式。详情请查看下表：
-query()方法参数 	对应SQL部分 	描述 
-table 	from table_name 	指定查询的表名 
-columns 	select column1, column2 	指定查询的列名 
-selection 	where column = value 	指定where的约束条件 
-selectionArgs 	- 	为where中的占位符提供具体的值 
-groupBy 	group by column 	指定需要group by的列 
-having 	having column = value 	对group by后的结果进一步约束 
-orderBy 	order by column1, column2 	指定查询结果的排序方式 
+**9、SQLiteDataase中提供了一个query()方法用于对数据进行查询。这个方法最少需要几个参数，分别说明这几个参数的含义。**
 
-10、android中使用SQLiteOpenHelper这个辅助类时，可以生成一个数据库，并可以对数据库版本进行管理的方法可以是什么？（腾讯2015春招移动客户端开发练习卷）
+这个方法的参数非常复杂，最短的一个方法重载也需要传入七个参数。
+
+第一个参数指表名，表示我们希望从哪张表中查询数据。
+
+第二个参数用于指定去查询哪几列，如果不指定则默认查询所有列。
+
+第三、第四个参数用于去约束查询某一行或某几行的数据，不指定则默认是查询所有行的数据
+。
+
+第五个参数用于指定需要去group by的列，不指定则表示不对查询结果进行group
+by操作。
+
+第六个参数用于对group by之后的数据进行进一步的过滤，不指定则表示不进行过滤。
+
+第七个参数用于指定查询结果的排序方式，不指定则表示使用默认的排序方式。详情请查看下表：
+
+|query()方法参数 | 对应SQL部分 | 描述|
+| -- | -- | -- |
+|table |	from table_name |	指定查询的表名 |
+|columns |	select column1, column2 |	指定查询的列名 |
+|selection |	where column = value |	指定where的约束条件 |
+|selectionArgs |	- |	为where中的占位符提供具体的值 |
+|groupBy |	group by column |	指定需要group by的列 |
+|having |	having column = value |	对group by后的结果进一步约束 |
+|orderBy |	order by column1, column2 |	指定查询结果的排序方式 |
+
+**10、android中使用SQLiteOpenHelper这个辅助类时，可以生成一个数据库，并可以对数据库版本进行管理的方法可以是什么？（腾讯2015春招移动客户端开发练习卷）**
+
 方法为：getWriteableDatabase()、getReadableDatabase()
 
