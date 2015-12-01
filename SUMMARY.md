@@ -76,5 +76,5 @@
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
    * [Question_About_Service](question/question_about_service.md)
-   * Question_About_Broadcast_Receiver
+   * [Question_About_Broadcast_Receiver](question/question_about_broadcast_receiver.md)
 
