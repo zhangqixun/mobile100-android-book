@@ -15,7 +15,12 @@
 * 知识点1：Service的生命周期解析 
 
     1：使用context.startService() 启动Service   
-    其生命周期为context.startService() -->onCreate()-->onStartCommand()-->Service is running-->context.stopService()-->onDestroy() ->Service shut down,生命周期如图 
+    其生命周期为context.startService() -->onCreate()-->onStartCommand()-->Service is running-->context.stopService()-->onDestroy() ->Service shut down,生命周期如图  
+    ![](life1.PNG)      
+    如果Service还没有运行，则android先调用onCreate()然后调用onStart()；     
+    如果Service已经运行，则只调用onStart()，所以一个Service的onStart方法可能会重复调用多次。    
+    程序验证结果如图    
+    
 * 知识点2：
 
       知识点介绍
