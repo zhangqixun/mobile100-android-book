@@ -29,8 +29,11 @@ bundle.putString(“data” , somedata) ;
 intent.putExtras(bundle)。
 ```
 
-2、若一个Android系统里安装了多种浏览器，能否指定某浏览器访问指定页面？请说明理由
+**2、若一个Android系统里安装了多种浏览器，能否指定某浏览器访问指定页面？请说明理由**
+
 通过直接发送Uri把参数带过去，或者通过manifest离得intentfilter里的data属性。代码如下：
+
+```
 Intent intent = new Intent();
 Intent.setAction(“android.intent.action.View”);
 Uri uriBrowsers = Uri.parse(“http://www.ss.pku.edu.cn/”);
@@ -38,12 +41,11 @@ Intent.setData(uriBrowsers);
 //包名、要打开的activity
 intent.setClassName(“com.android.browser”,”com.android.browser.BrowserActivity”);
 startActivity(intent);
+```
+**3、IntentService有何优点**
 
-3、IntentService有何优点
-IntentService 的好处
-Acitivity的进程，当处理Intent的时候，会产生一个对应的Service
-Android的进程处理器现在会尽可能的不kill掉你。
-非常容易使用
+
+IntentService使用队列的方式将请求的Intent加入队列，然后开启一个workerthread(线程)来处理队列中的Intent，对于异步的startService请求，IntentService会处理完成一个之后再处理第二个，每一个请求都会在一个单独的workerthread中处理，不会阻塞应用程序的主线程，这里就给我们提供了一个思路，如果有耗时的操作与其在Service里面开启新线程还不如使用IntentService来处理耗时操作。
 
 4、Activity间通过Intent传递数据大小有没有限制
 Intent在传递数据时是有大小限制的，这里官方并未详细说明，不过通过实验的方法可以测出数据应该被限制在1MB之内（1024KB），可以采用传递Bitmap的方法，你会发现当图片大小超过1024kB（准确地说是1020KB左右）的时候，程序就会出现闪退、停止运行等异常(不同的手机反应不同)，因此可以判断Intent的传输容量在1MB之内。
