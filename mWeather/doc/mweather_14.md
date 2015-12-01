@@ -147,4 +147,13 @@ else{
 
 **四、常见问题及注意事项**
 
-*详细描述本部分的常遇到的问题以及开发过程中的注意事项*
+*A、	完成guide活动后，要在androidManifest中将默认活动改为guide，否则无法显示。
+B、	在向pageview中添加组建组件时，要注意指定组建所在的view，否则会报空指针异常
+
+```guide_btn = (Button)views.get(2)findViewById(R.id.guide_btn);```
+
+假设去掉这句中的views.get(2)，再次运行的时候会无法运行：
+ 
+还要注意的是，视图的计数从0开始，因而在调用第三个page中添加的button时，指定的位置为2。
+C、	在模拟器中运行时，由于设置了第一次运行才显示guide界面，如果修改guide之后想要查看显示效果，需要先在模拟器中将该应用程序卸载，这样才能够看到引导界面。也可以使用Android Device Monitor找到使用的SharedPreferences位置（文件位于“/data/data/你的应用程序包/shared_prefs”目录下），将该文件删除即可。
+*
