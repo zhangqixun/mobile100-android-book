@@ -18,6 +18,9 @@
 
 IPC是内部进程通信的简称，是共享“命名管道”的资源。Android中的IPC机制是为了让Activity和Service之间可以随时的进行交互，故在Android中该机制只适用于Activity和Service之间的通信，类似于远程方法调用，类似于C/S模式的访问。通过定义AIDL接口文件来定义IPC接口。Servicer端实现IPC接口，Client端调用IPC接口本地代理。
 
+---
+
+
 **2、Android中Looper的实现原理，为什么调用Looper.prepare()就在当前线程关联了一个Looper对象，它是如何实现的。(腾讯2015春招移动客户端开发练习卷)**
 
 1）线程间通信机制：首先，Looper，Handler，MessageQueue三者共同实现了Android系统里线程间通信机制。如在A，B两个子线程之间需要传递消息，首先给每个子线程绑定一套Handler,Looper,MessageQueue机制，然后这三个对象都与各自的线程对应。然后A线程通过调用B线程的Handler对象，发送消息。这个消息会被Handler发送到B线程的MessageQueue中， 而属于B线程的Looper对象一直在循环无限遍历MessageQueue，一旦发现该消息队列里收到新的消息，就会去对消息进行处理，处理过程中会回调自身Handler，HandleMessage方法。从而实现了不同线程间通信。
