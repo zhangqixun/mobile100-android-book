@@ -196,7 +196,7 @@ protected void onCreate(Bundle savedInstanceState) {
 
 **19、如果在android应用程序中需要发送短信,那么需要在AndroidManifest.xml文件中增加什么样的权限**
 
-增加“android.permission.SEND_SMS”权限
+增加```android.permission.SEND_SMS```权限
 
 
 
