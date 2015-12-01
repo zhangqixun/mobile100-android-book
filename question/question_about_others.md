@@ -29,7 +29,11 @@ Android系统架构可以大致分为四层架构：**linux内核层、系统运
 **应用层**使用 Java 语言编写运行在虚拟机上的程序。这些程序主要是UI方面的，还包含各种资源文件（res目录中），Java程序及其相关资源经过编译后，生成一个.apk包。
 Google在Android中内置了一些必要的应用程序，如联系人，主屏幕（Home），日历，地图，浏览器，SMS短消息程序。 应用程序的开发者还可以使用应用程序框架层的API 实现自己的程序。这也是Android 开源的巨大潜力的体现。
 
+---
+
 **2、Android的四大组件：活动（Activity）、服务（Service）、广播接收器（Broadcast）、内容提供器（Content Provider）**。
+
+---
 
 **3、Android日志工具Log有几种方法？分别介绍这些不同的方法。**
 
@@ -44,6 +48,10 @@ Log.i()对应级别information，这个方法会打印一些相对比较重要�
 Log.w()对应级别warning，这个方法会打印一些我们在程序编写过程中代码可能会出现问题的警告信息，用来提示程序员这样的代码可能会存在风险，如有需要应该修复。级别相对debug较高。
 
 Log.e()对应级别error，这个方法会打印程序的错误信息，错误信息指代码已经出现了严重的问题，当我们看到错误信息时候，应该尽快修复。级别相对warning较高，是Android日志级别里面最高的一种。
+
+
+---
+
 
 **4、简述Androidmanifest.xml在一个android程序中的作用，并且说明Androidmanifest.xml中一般包含哪些信息。**
 
@@ -61,6 +69,10 @@ Androidmanifest.xml清单文件通常可以包含如下信息：
 *其它程序访问该程序所需的权限声明。
 
 
+---
+
+
+
 **5、请简述一下Android中的Activity、Intent、Content Provider、Service等关键词**
 
 **Activity：** 活动，是最基本的android应用程序组件。一个活动就是一个单独的屏幕，每一个活动都被实现为一个独立的类，并且从活动基类继承而来。
@@ -70,6 +82,10 @@ Androidmanifest.xml清单文件通常可以包含如下信息：
 **Service：**服务，具有一段较长生命周期且没有用户界面的程序。例如媒体播放器，用户在导航到其他屏幕的时候，音乐应该还是继续播放的，媒体播放器就会使用一个StartService()来启动一个服务，保证播放
 
 **Content Provider：**内容提供器，android应用程序能够将它们的数据保存到文件、SQLite数据库中，甚至是任何有效的设备中。当你想将你的应用数据和其他应用共享时，内容提供器就可以发挥作用了。
+
+
+---
+
 
 **6、请简述何为“ANR”,我们如何避免ANR问题**
 
@@ -89,6 +105,10 @@ IntentReceiver执行时间的特殊限制意味着它应该做：在后台里做
 
 如果你的应用程序为响应用户输入正在后台工作的话，可以显示工作的进度（ProgressBar和ProgressDialog对这种情况来说很有用。特别是游戏，在子线程里做移动的计算。如果你的应用程序有一个耗时的初始化过程的话，考虑可以显示一个SplashScreen或者快速显示主画面并异步来填充这些信息。在这两种情况下，你都应该显示正在进行的进度，以免用户认为应用程序被冻结了。
 
+
+---
+
+
 **7、请简述Android系统中，返回键与Home键的区别**
 
 **Home键**
@@ -99,6 +119,10 @@ IntentReceiver执行时间的特殊限制意味着它应该做：在后台里做
 
 而当按下back键则不同，back键默认finish前台的activity，即activity的状态为onDestory为止，再次启动该activity则从onCreate开始，不会调用onSavedInstanceState方法。
 
+
+---
+
+
 **8、什么情况会导致Foce Close？如何避免？能够捕获导致其的异常？**
 
 抛出运行时异常时就会导致Force Close，比如空指针、数组越界、类型转换异常等等。
@@ -106,6 +130,10 @@ IntentReceiver执行时间的特殊限制意味着它应该做：在后台里做
 捕获：可以通过logcat查看抛出异常的代码出现的位置，然后到程序对应代码中进行修改。
 
 避免：编写程序时，要思维缜密，在可能出现异常的地方都作相应的处理，增强程序的健壮性。
+
+
+---
+
 
 **9、请简述MVC模式的原理和它在android中的运用。**
 
@@ -125,15 +153,27 @@ android鼓励弱耦合和组件的重用，在android中mvc的具体体现如下
 
 **3)模型层（model）**：对数据库的操作、对网络等的操作都应该在model里面处理，当然对业务计算等操作也是必须放在的该层的。
 
+
+---
+
+
 **10、请简述DDMS和TraceView的区别**
 
 DDMS是一个程序执行查看器，在里面可以看见线程和堆栈等信息，Trace是程序性能分析器
+
+
+---
+
 
 **11、将解释下Android程序运行时权限与文件系统权限的区别**
 
 运行时权限Dalvik（android授权）
 
 文件系统Linux内核授权
+
+
+---
+
 
 **12、请简述一下Activity、Service、Broadcase、BroadcaseReceiver、intent、intent filter等相关概念**
 
@@ -149,9 +189,17 @@ activity, service和broadcast receiver是被称为intents的异步消息激活�
 
 intent是一个Intent对象，它保存了消息的内容。对于activity和service来说，它指定了请求的操作名称和待操作数据的URI。Intent对象可以显式的指定一个目标component。如果这样的话，android会找到这个component(基于manifest文件中的声明)并激活它。但如果它不是一个显示指定的目标，android必须找到响应intent的最佳component。它通过将Intent对象和目标的intent filter相比较来完成这一工作。component的intentfilter告诉android该component能处理的intent。intent-filter也是在manifest文件中声明的。
 
+
+---
+
+
 **13、请回答android dvm的进程和Linux的进程，应用程序的进程是否为同一个概念？**
 
 DVM指dalivk的虚拟机。每一个Android应用程序都在它自己的进程中运行，都拥有一个独立的Dalvik虚拟机实例。而每一个DVM都是在Linux 中的一个进程，所以说可以认为是同一个概念。
+
+
+---
+
 
 **14、请简述Android的国际化与本地化两个概念**
 
@@ -169,17 +217,33 @@ config.locale = Locale.SIMPLIFIED_CHINESE; //简体中文
 resources.updateConfiguration(config, dm);
 ```
 
+
+---
+
+
 **15、sim卡的EF 文件有何作用**
 
 sim卡的文件系统有自己的规范，主要是为了和手机通讯，sim本身可以有自己的操作系统，EF就是做存储并和手机通讯用的。
+
+
+---
+
 
 **16、嵌入式操作系统内存管理有哪几种， 各有何特性**
 
 嵌入式操作系统的内存管理有页式、段式、段页。用到了MMU，虚拟空间等技术。
 
+
+---
+
+
 **17、一条最长的短信息约占多少byte?**
 
 中文70 byte（包括标点），引文160 byte
+
+
+---
+
 
 **18、Android开发过程中，去除顶部标题栏除设置主题方法外，还有什么方法？需要注意什么？**
 
@@ -194,10 +258,17 @@ protected void onCreate(Bundle savedInstanceState) {
 ```
 其中requestWindowFeature(Window.FEATURE_NO_TITLE)的意思就是不在活动中显示标题栏，注意这句代码一定要在setContentView()之前执行，不然会报错。
 
+
+---
+
+
 **19、如果在android应用程序中需要发送短信,那么需要在AndroidManifest.xml文件中增加什么样的权限**
 
 增加```android.permission.SEND_SMS```权限
 
+
+
+---
 
 
 
@@ -224,11 +295,19 @@ nextActivity.class);
 ```
 
 
+
+---
+
+
 **21、Android中MVC模式 C层指的是？ **
 
 Activity  
 
 Android控制层的任务一般就是Activity来完成。视图层对应了Android中的View，也可以理解为布局或者控件。
+
+
+
+---
 
 
 **22、android中如何处理耗时操作， asyncTask有什么不足之处**
@@ -246,9 +325,17 @@ AsyncTask并不总是需要使用上面的全部3种类型。标识不使用的�
 不足之处： 1，线程池有限，太多内容同时异步会超时，甚至出现ARN效果。 
            2，AsyncTask可能存在新开大量线程消耗系统资源和导致应用FC的风险
 
+
+---
+
+
 **23、『卡顿』（特指不流畅的动画）是App开发中最为常见的性能问题表现。请结合你所熟悉的移动操作系统（Android、iOS 或 Windows Phone），解释一下App中卡顿的发生机理，并分别针对『界面切换卡顿』和『屏幕滑动卡顿』提出典型的优化思路。（面试题）**
 
 大概可以归置两方面问题：1、程序本身：需要网络的情况下加载一些东西，网络不畅通可以导致暂时或长久的卡顿。算法需优化，内存消耗过于庞大。线程的阻塞，一些耗时的要放在子线程进行操作。主线程尽量只放些UI控件，网络请求放到子线程完成等。  2、硬件原因 。
+
+
+---
+
 
 **24、请简述Android中style.xml和Theme.xml有什么区别。**
 
@@ -278,11 +365,19 @@ android:id="@+id/editText1"></EditText>
 
 三、如果一个应用使用了theme，同时应用下的view也使用了style，那么当theme与样式style发生冲突时，style的优先级高于主题。
 
+
+---
+
+
 **25、请简述ViewFlipper 和 ViewPager 的区别**
 
 ViewFlipper继承ViewAnimator，切换view的时候是有动画效果的，适合做ppt，多界面的程序欢迎引导界面，算是个轻量级的组件，适合展示静态数据，少量数据。
 
 ViewPager继承ViewGroup。看官网描述，它和Fragment是好搭档，Fragment有自己的生命周期。也就是说ViewPager更适用复杂的视图切换，而且Viewpager有自己的adapter，这也让其适应复杂对象，实现数据的动态加载。使用时候需要加入相应的jar包。
+
+
+---
+
 
 **26、PopupWindow可以创建类似对话框风格的窗口，请简述PoupupWindow的使用步骤。**
 
@@ -319,9 +414,17 @@ this.window.setTouchInterceptor(new OnTouchListener() {
 });
 ```
 
+
+---
+
+
 **27、我们常常会用到“findViewByid()”来加载一个布局文件，或是一个控件。例如：findViewByid(R.id.xxx);那么，findViewByid()方法需要传进什么类型的数值，他的结果又是什么类型呢？**
 
 输入为int类型，输出为View类型。
+
+
+---
+
 
 **28、Java国际化主要通过哪几个类进行，请简述这个类有什么作用。**
 
@@ -336,9 +439,17 @@ Java程序的国际化主要通过如下三个类完成：
  java.text.MessageFormat：用于格式化带占位符的字符串。
 
 
+
+---
+
+
 **29、如果在android应用程序中需要发送短信,那么需要如何修改AndroidManifest.xml文件来获得权限。**
 
 增加“android.permission.SEND_SMS”权限
+
+
+---
+
 
 **30、广播可以通过几种方法来注册，分别是如何实现的。（如果你认为必要，可以写下相应代码）**
 BroadcastReceiver用于监听被广播的事件必须被注册，注册的方式有两种方法：
@@ -363,13 +474,25 @@ BroadcastReceiver用于监听被广播的事件必须被注册，注册的方式
 
 2)第二种是常驻型，也就是说当应用程序关闭后，如果有信息广播来，程序也会被系统调用自动运行。使用这样的方法注册弊端：它会始终处于活动状态，毕竟是手机开发，cpu和电源资源比较少，一直处于活动耗费大，不利。
 
+
+---
+
+
 **31、在android中使用Menu时可能需要重写的方法有? （腾讯2015春招移动客户端开发练习卷）**
 
 需要重写的方法为：onCreateOptionsMenu()、onOptionsItemSelected()
 
+
+---
+
+
 **32、创建联系人使用的函数有哪些（腾讯2015春招移动客户端开发练习卷）**
 
 需要使用ABPersonCreate()、ABRecordSetValue()、ABMultiValueCreateMutable()
+
+
+---
+
 
 **33、修改联系人使用的函数有哪些？（腾讯2015春招移动客户端开发练习卷）**
 
