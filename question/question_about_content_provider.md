@@ -46,29 +46,39 @@ MODE_WORLD_READABLE：表示当前文件可以被其他应用读取；MODE_WORLD
 如果希望文件被其他应用读和写，可以传入：
 openFileOutput(“zhangxitao.txt”, Context.MODE_WORLD_READABLE + Context.MODE_WORLD_WRITEABLE);
 
-。
-2. Activity还提供了getCacheDir()和getFilesDir()方法：
-getCacheDir()方法用于获取/data/data/<package name>/cache目录
-getFilesDir()方法用于获取/data/data/<package name>/files目录
+**2、Android中如何实现跨程序共享数据的功能。**
 
-
-3、Android中如何实现跨程序共享数据的功能。
 内容提供器（Content Provider）主要用于在不同的应用程序之间实现数据共享的功能，它提供了一套完整的机制，允许一个程序访问另一个程序中的数据，同时还能保证被访数据的安全性。目前，使用内容提供器是Android实现跨程序共享数据的标准方式。
 
-4、ContentProvider类中几个抽象方法，简单介绍这几种方法。
-ContentProvider类中有六个抽象方法，分别是：onCreate()、query()、insert()、update()、delete()、（6）getType()我们在使用子类继承它的时候，需要将这六个方法全部重写。
+**3、ContentProvider类中几个抽象方法，简单介绍这几种方法。**
+
+ContentProvider类中有六个抽象方法，分别是：onCreate()、query()、insert()、update()、delete()、getType
+
+我们在使用子类继承它的时候，需要将这六个方法全部重写。
+
 （1） onCreate()
+
 初始化内容提供器的时候调用。通常会在这里完成对数据库的创建和升级等操作，返回true表示内容提供器初始化成功，返回false则表示失败。注意，只有当存在ContentResolver尝试访问我们程序中的数据时，内容提供器才会被初始化。
+
 （2）query()
+
 从内容提供器中查询数据。使用uri参数来确定查询哪张表，projection参数用于确定查询哪些列，selection和selectionArgs参数用于约束查询哪些行，sortOrder参数用于对结果进行排序，查询的结果存放在Cursor对象中返回。
+
 （3） insert()
+
 向内容提供器中添加一条数据。使用uri参数来确定要添加到的表，待添加的数据保存在values参数中。添加完成后，返回一个用于表示这条新记录的URI。
+
 （4）update()
+
 更新内容提供器中已有的数据。使用uri参数来确定更新哪一张表中的数据，新数据保存在values参数中，selection和selectionArgs参数用于约束更新哪些行，受影响的行数将作为返回值返回。
+
 （5） delete()
+
 从内容提供器中删除数据。使用uri参数来确定删除哪一张表中的数据，selection
 第 7 章 跨程序共享数据，探究内容提供器和selectionArgs参数用于约束删除哪些行，被删除的行数将作为返回值返回。
+
 （6）getType()
+
 根据传入的内容URI来返回相应的MIME类型。
 
 
