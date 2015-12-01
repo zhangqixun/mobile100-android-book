@@ -1,4 +1,19 @@
+#移动平台软件开发（Android）面试题汇总参考答案
 
+## Question About Commnication
+
+###**声明**
+
+本册面试题及答案大部分摘自网络，版权归原创者所有，如有侵权请您及时联系：
+
+邮箱：1596888285@qq.com
+
+参考用书：《第一行代码》（Android）、《疯狂Android讲义》、《Android4编程入门经典》
+
+*本答案仅供参考，如有错误，请您指正*
+
+
+---
 1、请尝试简述Android的IPC（进程间通信）机制
 IPC是内部进程通信的简称，是共享“命名管道”的资源。Android中的IPC机制是为了让Activity和Service之间可以随时的进行交互，故在Android中该机制只适用于Activity和Service之间的通信，类似于远程方法调用，类似于C/S模式的访问。通过定义AIDL接口文件来定义IPC接口。Servicer端实现IPC接口，Client端调用IPC接口本地代理。
 2、Android中Looper的实现原理，为什么调用Looper.prepare()就在当前线程关联了一个Looper对象，它是如何实现的。(腾讯2015春招移动客户端开发练习卷)
