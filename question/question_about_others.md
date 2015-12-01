@@ -345,9 +345,9 @@ BroadcastReceiver用于监听被广播的事件必须被注册，注册的方式
 
 1、在应用程序的代码中注册
 
-注册BroadcastReceiver：registerReceiver（receiver，filter）；
+注册BroadcastReceiver：```registerReceiver（receiver,filter）```；
 
-取消注册BroadcastReceiver：unregisterReceiver（receiver）；
+取消注册BroadcastReceiver：```unregisterReceiver（receiver）```；
 
 当BroadcastReceiver更新UI，通常会使用这样的方法注册。启动Activity时候注册BroadcastReceiver，Activity不可见时候，取消注册。
 
