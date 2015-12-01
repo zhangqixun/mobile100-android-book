@@ -1,18 +1,19 @@
+#移动平台软件开发（Android）面试题汇总参考答案
 
+## Question About UIdesign
 
-移动平台软件开发（Android）
-面试题汇总参考答案
+###**声明**
 
+本册面试题及答案大部分摘自网络，版权归原创者所有，如有侵权请您及时联系：
 
-声明
-本册面试题及答案大部分摘自网络，版权归原创者所有，如有侵权请及时联系
+邮箱：1596888285@qq.com
 
 参考用书：《第一行代码》（Android）、《疯狂Android讲义》、《Android4编程入门经典》
 
-（本答案仅供参考，如有错误，请您指正）
-邮箱：1596888285@qq.com
+*本答案仅供参考，如有错误，请您指正*
 
- 
+
+---
 1、请简述Android开发中经常用到几种布局
 Android 布局是应用界面开发的重要一环，在Android中，共有五种布局方式，分别是：LinearLayout(线性布局)， RelativeLayout(相对布局)，FrameLayout(单帧布局)，TableLayout(表格布局) ，AbsoluteLayout(绝对布局)，。
 LinearLayout：线性布局，是一种非常常用的布局。它会将它所包含的控件在吸纳性方向上一次排列。按照排列方向可分为垂直布局（android:orientation="vertical"）和水平布局（android:orientation="horizontal" ），在LinearLayout里面可以放多个控件，但是一行（列）只能放一个控件。
