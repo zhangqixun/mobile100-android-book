@@ -149,26 +149,36 @@ activity, service和broadcast receiver是被称为intents的异步消息激活�
 
 intent是一个Intent对象，它保存了消息的内容。对于activity和service来说，它指定了请求的操作名称和待操作数据的URI。Intent对象可以显式的指定一个目标component。如果这样的话，android会找到这个component(基于manifest文件中的声明)并激活它。但如果它不是一个显示指定的目标，android必须找到响应intent的最佳component。它通过将Intent对象和目标的intent filter相比较来完成这一工作。component的intentfilter告诉android该component能处理的intent。intent-filter也是在manifest文件中声明的。
 
-13、请回答android dvm的进程和Linux的进程，应用程序的进程是否为同一个概念？
+**13、请回答android dvm的进程和Linux的进程，应用程序的进程是否为同一个概念？**
+
 DVM指dalivk的虚拟机。每一个Android应用程序都在它自己的进程中运行，都拥有一个独立的Dalvik虚拟机实例。而每一个DVM都是在Linux 中的一个进程，所以说可以认为是同一个概念。
 
-14、请简述Android的国际化与本地化两个概念
-nternationalization （国际化）简称 i18n,因为在i和n之间还有18个字符，localization（本地化 ），简称L10n。一般用 语言_地区的形式表示一种语言，如 zh_CN, zh_TW.
-在Android工程的res目录下，通过定义特殊的文件夹名称就可以实现多语言支持。比如我们的程序兼容简体中文、日文、英文、法文和德文，在values文件夹中建立默认strings.xml，再建立 values-zh-rCN（zh表示中文rCN表示简体，类似还有美式英语，奥式英语）、values-ja、values、values-fr和 values-de文件夹。在每个文件夹里放置一个strings.xml，strings.xml里是各种语言字符串。如果涉及到参 数配置类xml文件夹也要改成xml-zh、xml-ja、xml、xml-fr和xml-de。这样在android的系统中进行语言切换，所开发的程 序也会跟着切换语言。
+**14、请简述Android的国际化与本地化两个概念**
+
+nternationalization （国际化）简称i18n,因为在i和n之间还有18个字符，localization（本地化 ），简称L10n。一般用 语言地区的形式表示一种语言，如 zh_CN, zh_TW.
+
+在Android工程的res目录下，通过定义特殊的文件夹名称就可以实现多语言支持。比如我们的程序兼容简体中文、日文、英文、法文和德文，在values文件夹中建立默认strings.xml，再建立 values-zh-rCN（zh表示中文rCN表示简体，类似还有美式英语，奥式英语）、values-ja、values、values-fr和 values-de文件夹。在每个文件夹里放置一个strings.xml，strings.xml里是各种语言字符串。如果涉及到参数配置类xml文件夹也要改成xml-zh、xml-ja、xml、xml-fr和xml-de。这样在android的系统中进行语言切换，所开发的程 序也会跟着切换语言。
+
 在代码中切换语言：
+
+```
 Resources resources = getResources();//获得res资源对象
 Configuration config = resources.getConfiguration();//获得设置对象
 DisplayMetrics dm = resources .getDisplayMetrics();//获得屏幕参数：主要是分辨率，像素等。
 config.locale = Locale.SIMPLIFIED_CHINESE; //简体中文
 resources.updateConfiguration(config, dm);
+```
 
-15、sim卡的EF 文件有何作用
+**15、sim卡的EF 文件有何作用**
+
 sim卡的文件系统有自己的规范，主要是为了和手机通讯，sim本身可以有自己的操作系统，EF就是做存储并和手机通讯用的。
 
-16、嵌入式操作系统内存管理有哪几种， 各有何特性
+**16、嵌入式操作系统内存管理有哪几种， 各有何特性**
+
 嵌入式操作系统的内存管理有页式、段式、段页。用到了MMU，虚拟空间等技术。
 
-17、一条最长的短信息约占多少byte?
+**17、一条最长的短信息约占多少byte?**
+
 中文70 byte（包括标点），引文160 byte
 
 18、Android开发过程中，去除顶部标题栏除设置主题方法外，还有什么方法？需要注意什么？
