@@ -35,3 +35,26 @@ Android 布局是应用界面开发的重要一环，在Android中，共有五�
 **SurfaceView：**基于view视图进行拓展的视图类，更适合2D游戏的开发；是view的子类，类似使用双缓机制，在新的线程中更新画面所以刷新界面速度比view快。
 
 **GLSurfaceView：**基于SurfaceView视图再次进行拓展的视图类，专用于3D游戏开发的视图；是SurfaceView的子类，openGL专用。
+
+**3、请简述Adapter有什么作用？常见的Adapter有哪些？**
+
+Adapter是连接后端数据和前端显示的适配器接口，是数据和UI（View）之间一个重要的纽带。在常见的View(ListView,GridView)等地方都需要用到Adapter。常见的Adapter有ArrayAdapter，BaseAdapter，CursorAdapter，HeaderViewListAdapter，ListAdapter，ResourceCursorAdapter，SimpleAdapter，SimpleCursorAdapter，SpinnerAdapter，WrapperListAdapter等。
+
+**4、请简述android中的动画有哪几类，它们的特点和区别是什么？**
+
+android动画有两类：
+一种是tweened animation(渐变动画) ；一种是frame by frame(逐帧动画) 
+
+特点：
+
+渐变动画是通过改变view的大小、旋转的角度、透明度、位置来产生动画，可以控制动画的播放快慢以及加速度。
+
+逐帧动画是用一组图片轮流绘制，产生动画的感觉。类似于gif图片。
+
+区别：
+
+渐变动画的所有操作是通过矩阵变换对同一个物体（绘制的一个view或者图片）进行操作产生动画。
+
+而逐帧动画是多个物体（多张图片）进行绘制，可以说这多张图片是不相关的（从播放的角度来看只能说是内容相关）。
+
+
