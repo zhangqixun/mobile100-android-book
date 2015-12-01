@@ -1,6 +1,6 @@
 #移动平台软件开发（Android）面试题汇总参考答案
 
-## Question About Commnication
+## Question About Internet
 
 ###**声明**
 
