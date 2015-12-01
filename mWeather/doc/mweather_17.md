@@ -30,12 +30,12 @@
 &#160; &#160; &#160; &#160;其中最为常用的就是针对Activity的测试，即ActivityInstrumentationTestCase2类。继承该类后可通过getActivity（）方法获取Activity的一个mock对象，从而实现各种界面元素的测试。代码如下：
 ```
 public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginActivity> {
-        LoginActivityTest mActivity;
-        Button btnLogin;
+    LoginActivityTest mActivity;
+    Button btnLogin;
 
-        public LoginActivityTest(){
-      super(LoginActivity.class);//必须实现super(testclass)
-        }
+    public LoginActivityTest(){
+  super(LoginActivity.class);//必须实现super(testclass)
+    }
     
     @Override
     protected void setUp() throws Exception {
