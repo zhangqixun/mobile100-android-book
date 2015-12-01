@@ -80,5 +80,5 @@
    * [Question_About_Broadcast_Receiver](question/question_about_broadcast_receiver.md)
    * [Question_About_Content_Provider](question/question_about_content_provider.md)
    * [Question_About_UIdesign](question/question_about_uidesign.md)
-   * Question_About_Storage
+   * [Question_About_Storage](question/question_about_storage.md)
 
