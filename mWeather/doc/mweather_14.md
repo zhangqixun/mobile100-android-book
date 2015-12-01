@@ -39,7 +39,7 @@
 
 **3.2 实践步骤**
 
-*（1）添加布局文件：
+（1）添加布局文件：
 创建新的活动和布局文件guide，在guide.java中将guide.xml设为可见：
 setContentView(R.layout.guide);
 创建三个page文件page1.xml,page2.xml,page3.xml;
@@ -143,7 +143,7 @@ else{
     finish();
 }```
 
-*
+
 
 **四、常见问题及注意事项**
 
