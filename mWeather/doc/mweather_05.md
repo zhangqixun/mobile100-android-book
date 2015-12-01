@@ -161,6 +161,7 @@ BaiDuWeather baiduWather = JSON.parseObject(date, BaiDuWeather.class);
 
  然后在startDocument方法中将parsed数字初始化：
 ![](sfh6.png)
+ 
  在startElement方法中要记录当前解析的元素的名称，因为数据都会被characters方法处理，所以需要记录当前元素名称。
 ![](sfh4.png)
  在characters方法中解析需要的数据，并赋值给todayWeatherData相应的属性中，同时更新parsed数组中相应记录的值。下图只给出两个数据的处理方法，其他十个相同。
