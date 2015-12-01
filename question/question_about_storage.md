@@ -36,31 +36,29 @@ Android中数据存储的方式总共有5种：文件存储方式、使用Shared
 
 SQLiteOpenHelper是一个辅助类来管理数据库的创建和版本。可以通过继承这个类，实现它的一些方法来对数据库进行一些操作。所有继承了这个类的类都必须实现下面这样的一个构造方法： 
 
-```
 public DatabaseHelper(Context context, String name, CursorFactory factory, int version){
     ……
 } 
-```
 第一个参数：Context类型，上下文对象。 
-
 第二个参数：String类型，数据库的名称 
-
-第三个参数：CursorFactory类型
-
+第三个参数：CursorFactory类型 
 第四个参数：int类型，数据库版本 
+下面是这个类的几个方法：
+方法名	返回值类型	描述	备注
+getReadableDatabase()	synchronized SQLiteDatabase	创建或打开一个数据库	可以通过这两个方法返回的SQLiteDatabase对象对数据库进行一系列的操作，如新建一个表，插入一条数据等
+getWritableDatabase()	synchronized SQLiteDatabase	创建或打开一个可以读写的数据库	
+onCreate(SQLiteDatabase db)	abstract void	第一次创建的时候调用	
+onOpen(SQLiteDatabase db)	void	打开数据库	
+onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion)	abstract void	升级数据库	
+close()	synchronized void	关闭所有打开的数据库对象	
 
-**4、assest文件夹里放文件，对于文件的大小有没有限制**
-
-assets目录更像一个附录类型的目录，Android不会为这个目录中的文件生成ID并保存在R类当中，因此它与Android中的一些类和方法兼容度更低。同时，由于你需要一个字符串路径来获取这个目录下的文件描述符，访问的速度会更慢。但是把一些文件放在这个目录下会使一些操作更加方便，比方说拷贝一个数据库文件到系统内存中。要注意的是，你无法在Android XML文件中引用到assets目录下的文件，只能通过AssetManager来访问这些文件。数据库文件和游戏数据等放在这个目录下是比较合适的。另外，网上关于assets和raw的资料都千篇一律了，因此关于这两者中单个文件大小不能超过1M的错误描述也在传播，即如果读取超过1M的文件会报"Data exceeds UNCOMPRESS_DATA_MAX (1314625 vs 1048576)"的IOException，还引申出种种解决方案。个人认为不应该有这样的限制，为了验证这个说法写了个Demo，发现将近5M的压缩包在assets和raw中都能正常访问，因此在这里纠正一下，理论上只要打包不超过Android APK 50M大小的限制都是没有问题的。当然了，不排除是Android很早期的时候因为设备硬件原因aapt在编译的时候对这两个文件夹大小做出了限制，如果是这样，较新版的ADT应该不会出现这。
-
+4、assest文件夹里放文件，对于文件的大小有没有限制
+assets目录更像一个附录类型的目录，Android不会为这个目录中的文件生成ID并保存在R类当中，因此它与Android中的一些类和方法兼容度更低。同时，由于你需要一个字符串路径来获取这个目录下的文件描述符，访问的速度会更慢。但是把一些文件放在这个目录下会使一些操作更加方便，比方说拷贝一个数据库文件到系统内存中。要注意的是，你无法在Android XML文件中引用到assets目录下的文件，只能通过AssetManager来访问这些文件。数据库文件和游戏数据等放在这个目录下是比较合适的。另外，网上关于assets和raw的资料都千篇一律了，因此关于这两者中单个文件大小不能超过1M的**错误**描述也在传播，即如果读取超过1M的文件会报"Data exceeds UNCOMPRESS_DATA_MAX (1314625 vs 1048576)"的IOException，还引申出种种解决方案。个人认为不应该有这样的限制，为了验证这个说法写了个Demo，发现将近5M的压缩包在assets和raw中都能正常访问，因此在这里纠正一下，理论上只要打包不超过Android APK 50M大小的限制都是没有问题的。当然了，不排除是Android很早期的时候因为设备硬件原因aapt在编译的时候对这两个文件夹大小做出了限制，如果是这样，较新版的ADT应该不会出现这。
 来自：http://my.eoe.cn/futurexiong/archive/5350.html
 
 
-**5、对于一个已经存在的SharedPreferences对象setting,想向其中存入一个字符串"person",setting应该先调用什么方法.**
-
+5、对于一个已经存在的SharedPreferences对象setting,想向其中存入一个字符串"person",setting应该先调用什么方法.
 调用edit()方法
-
-```
 //实例化SharedPreferences对象（第一步） 
 SharedPreferences mySharedPreferences= getSharedPreferences("test", 
 Activity.MODE_PRIVATE); 
@@ -71,14 +69,13 @@ editor.putString("name", "Karl");
 editor.putString("habit", "sleep"); 
 //提交当前数据 
 editor.commit();
-```
-**6、SharedPreferences保存文件的路径和扩展名是 ？**
 
-/data/data/package name/shared_prefs/ *.xml    
+6、SharedPreferences保存文件的路径和扩展名是  /data/data/package name/shared_prefs/ *.xml    
 
-7、Android用以存储数据的数据库
+**7、Android用什么充当数据库来存取数据？**
+SQLite
 
-8、要想使用SharePreferences来存储数据，首先需要获取到SharePreferences对象。Android中主要提供三种方法用于得到SharePreferences对象，请简述这三种方法。
+**8、要想使用SharePreferences来存储数据，首先需要获取到SharePreferences对象。Android中主要提供三种方法用于得到SharePreferences对象，请简述这三种方法。**
 
 要想使用SharedPreferences来存储数据，首先需要获取到SharedPreferences对象。Android中主要提供了三种方法用于得到SharedPreferences对象。
 1. Context类中的getSharedPreferences()方法
