@@ -181,13 +181,17 @@ sim卡的文件系统有自己的规范，主要是为了和手机通讯，sim�
 
 中文70 byte（包括标点），引文160 byte
 
-18、Android开发过程中，去除顶部标题栏除设置主题方法外，还有什么方法？需要注意什么？
+**18、Android开发过程中，去除顶部标题栏除设置主题方法外，还有什么方法？需要注意什么？**
+
 隐藏的方法非常简单，打开FirstActivity，在onCreate()方法中添加如下代码：
+
+```
 protected void onCreate(Bundle savedInstanceState) {
-super.onCreate(savedInstanceState);
-requestWindowFeature(Window.FEATURE_NO_TITLE);
-setContentView(R.layout.first_layout);
+    super.onCreate(savedInstanceState);
+    requestWindowFeature(Window.FEATURE_NO_TITLE); //去除窗口标题栏
+    setContentView(R.layout.first_layout);
 }
+```
 其中requestWindowFeature(Window.FEATURE_NO_TITLE)的意思就是不在活动中显示标题栏，注意这句代码一定要在setContentView()之前执行，不然会报错。
 
 19、如果在android应用程序中需要发送短信,那么需要在AndroidManifest.xml文件中增加什么样的权限
