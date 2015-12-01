@@ -2,7 +2,7 @@
 
 起草人: 高参 1501210527   日期：15年00月00日
 
-修改完善：OOOO   日期：15年00月00日
+修改完善：李智博 1501210942   日期：15年00月00日
 
 # 
 
@@ -32,6 +32,69 @@ Fragment的使用方式及生命周期
 ![](图片 3.png)  
 &#160; &#160; &#160; &#160;增加两个java class文件，并命名为Fragment1.java和Fragment2 .java，分别在其onCreateView()做如下增加:  
 ![](图片 4.png)![](图片 5.png)  
+&#160; &#160; &#160; &#160;在Fragment1类当中加入如下的函数，便于追踪Fragment生命周期中函数的调用情况。
+```
+@Override
+public void onAttach(Activity activity) {
+    super.onAttach(activity);
+    Log.e("Fragment1", "onAttach");
+}
+
+@Override
+public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    Log.d("Fragment1", "onCreate");
+}
+
+@Override
+public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    Log.e("Fragment1", "onActivityCreated");
+}
+
+@Override
+public void onStart() {
+    super.onStart();
+    Log.e("Fragment1", "onStart");
+}
+
+@Override
+public void onResume() {
+    super.onResume();
+    Log.e("Fragment1", "onResume");
+}
+
+@Override
+public void onPause() {
+    super.onPause();
+    Log.e("Fragment1", "onPause");
+}
+
+@Override
+public void onStop() {
+    super.onStop();
+    Log.e("Fragment1", "onStop");
+}
+
+@Override
+public void onDestroyView() {
+    super.onDestroyView();
+    Log.e("Fragment1", "onDestroyView");
+}
+
+@Override
+public void onDestroy() {
+    super.onDestroy();
+    Log.e("Fragment1", "onDestroy");
+}
+
+@Override
+public void onDetach() {
+    super.onDetach();
+    Log.e("Fragment1", "onDetach");
+}
+
+```
 &#160; &#160; &#160; &#160;测试结果如下:  
 ![](图片 6.png)  
 &#160; &#160; &#160; &#160;生命周期分析  
@@ -41,11 +104,11 @@ Fragment的使用方式及生命周期
 ![](图片 8.png)  
 &#160; &#160; &#160; &#160;**c.** 当点击home键退出并在后台关闭该应用时，依次运行方法onPause()->onStop()->onDestroyView()->onDestroy()->onDetach()，logcat如下图:  
 ![](9.png)  
-&#160; &#160; &#160; &#160;➤ onAttached() — Called when the fragment has been associated with the activity   
-&#160; &#160; &#160; &#160;➤ onCreateView() — Called to create the view for the fragment  
-&#160; &#160; &#160; &#160;➤ onActivityCreated() — Called when the activity’s onCreate() method has been returned   
-&#160; &#160; &#160; &#160;➤ onDestroyView() — Called when the fragment’s view is being removed   
-&#160; &#160; &#160; &#160;➤ onDetach() — Called when the fragment is detached from the activity
+&#160; &#160; &#160; &#160;➤ onAttached() —函数在fragment和activity建立关联的时候调用；  
+&#160; &#160; &#160; &#160;➤ onCreateView() — 函数在fragment加载布局时调用；  
+&#160; &#160; &#160; &#160;➤ onActivityCreated() — 函数在activity中的onCreate函数执行完后调用；   
+&#160; &#160; &#160; &#160;➤ onDestroyView() — 函数在fragment中的布局被移除时调用；  
+&#160; &#160; &#160; &#160;➤ onDetach() — 函数在fragment和activity解除关联时调用。
 
 **四、常见问题及注意事项**
 

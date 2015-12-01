@@ -114,10 +114,74 @@
 *下面介绍如何将Service用到天气预报项目中，实现后台更新天气*
      
     service里面更新UI可以用广播
+    Service里面核心代码：
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Toast.makeText(this,"正在后台更新天气......",Toast.LENGTH_SHORT).show();
+        if(NetUtil.getNetworkState(this)!=NetUtil.NETWORK_NONE){
+            Log.d("myWeather","网络OK");
+            updateTodayWeather("101010100");
+        }
+        else {
+            Log.d("myWeather","网络挂了");
+        }
+        return super.onStartCommand(intent, flags, startId);
+    }
+    public void updateTodayWeather(String cityCode){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Intent intent=new Intent();
+                    intent.setAction("com.example.asus.weather.MainActivity");
+                    TodayWeather todayWeather=new TodayWeatherDao().queryWeatherCode("101010100");
+                    Log.d("后台更新天气1：", todayWeather.toString());
+                    intent.setAction("com.example.asus.weather.MainActivity");
+                    intent.putExtra("todayweather",todayWeather);
+                    sendBroadcast(intent);
+                }
+                catch (Exception e){
+                    Log.d("updateTodayWeather","更新天气失败！");
+                }
+            }
+        }).start();
+    }
+    
+    MainActivity里面核心代码：
+     
+    private class DataReceiver extends BroadcastReceiver {//继承自BroadcastReceiver的子类
+        @Override
+        public void onReceive(Context context, Intent intent) {//重写onReceive方法
+            TodayWeather todayWeather= (TodayWeather) intent.getSerializableExtra("todayweather");
+            setWeather(todayWeather);//以todayWeather的值更新UI
+            Log.d("hjy","Service后台更新数据成功！");
+        }
+    }
+    @Override
+    protected void onStart() {
+        dataReceiver = new DataReceiver();
+        IntentFilter filter = new IntentFilter();//创建IntentFilter对象
+        //filter.addAction("com.roy.MyActivity");
+        filter.addAction("com.example.asus.weather.MainActivity");
+        registerReceiver(dataReceiver, filter);//注册Broadcast Receiver
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(dataReceiver);//取消注册Broadcast Receiver
+        super.onStop();
+    }
+
     
 
 **四、常见问题及注意事项**
 
-*详细描述本此实验的可能会遇到的问题以及相关的注意事项*
+     
+     1.一定不要忘记在AndroidManifest.xml文件中声明：<service android:name=".my_service" />
+     
+     2.更新UI可以用其他方法实现。
+     
+     
+*
 
 
