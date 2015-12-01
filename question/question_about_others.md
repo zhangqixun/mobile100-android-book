@@ -319,33 +319,48 @@ this.window.setTouchInterceptor(new OnTouchListener() {
 });
 ```
 
-27、我们常常会用到“findViewByid()”来加载一个布局文件，或是一个控件。例如：findViewByid(R.id.xxx);那么，findViewByid()方法需要传进什么类型的数值，他的结果又是什么类型呢？
+**27、我们常常会用到“findViewByid()”来加载一个布局文件，或是一个控件。例如：findViewByid(R.id.xxx);那么，findViewByid()方法需要传进什么类型的数值，他的结果又是什么类型呢？**
+
 输入为int类型，输出为View类型。
 
-28、Java国际化主要通过哪几个类进行，请简述这个类有什么作用。
+**28、Java国际化主要通过哪几个类进行，请简述这个类有什么作用。**
+
 Java程序的国际化的思路是将程序中的标签、提示等信息放在资源文件中，程序需要支持哪些国家、语言环境，就对应提供相应的资源文件。资源文件是key-value对，每个资源文件中的key是不变的，但value则随不同国家、语言改变。
+
 Java程序的国际化主要通过如下三个类完成：
+
  java.util.ResourceBundle：用于加载一个国家、语言资源包。
+ 
  java.util.Locale：用于封装一个特定的国家/区域、语言环境。
+ 
  java.text.MessageFormat：用于格式化带占位符的字符串。
 
 
-29、如果在android应用程序中需要发送短信,那么需要如何修改AndroidManifest.xml文件来获得权限。
+**29、如果在android应用程序中需要发送短信,那么需要如何修改AndroidManifest.xml文件来获得权限。**
+
 增加“android.permission.SEND_SMS”权限
 
-30、广播可以通过几种方法来注册，分别是如何实现的。（如果你认为必要，可以写下相应代码）
+**30、广播可以通过几种方法来注册，分别是如何实现的。（如果你认为必要，可以写下相应代码）**
 BroadcastReceiver用于监听被广播的事件必须被注册，注册的方式有两种方法：
+
 1、在应用程序的代码中注册
+
 注册BroadcastReceiver：registerReceiver（receiver，filter）；
+
 取消注册BroadcastReceiver：unregisterReceiver（receiver）；
+
 当BroadcastReceiver更新UI，通常会使用这样的方法注册。启动Activity时候注册BroadcastReceiver，Activity不可见时候，取消注册。
+
 2、在androidmanifest.xml当中注册
+```
 <receiver>
     <intent-filter>
      <action android:name = "android.intent.action.PICK"/>
     </intent-filter>
 </receiver>
+```
 1)第一种不是常驻型广播，也就是说广播跟随程序的生命周期。
+
 2)第二种是常驻型，也就是说当应用程序关闭后，如果有信息广播来，程序也会被系统调用自动运行。使用这样的方法注册弊端：它会始终处于活动状态，毕竟是手机开发，cpu和电源资源比较少，一直处于活动耗费大，不利。
 
 31、在android中使用Menu时可能需要重写的方法有? （腾讯2015春招移动客户端开发练习卷）
