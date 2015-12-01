@@ -470,7 +470,11 @@
 
 **四、常见问题及注意事项**
 
-    1、添加ViewPager控件的时候，是使用android.support.v4.view.ViewPager。
+    1、添加ViewPager控件的时候，是使用android.support.v4.view.ViewPager。viewpager不识别。
+        主要是因为需要用到android-support-v4 jar里面的类和函数，但又没有自动加载，导致报错
+        解决办法一:添加依赖项，Click on File--> Project Structure--->Dependencies----> "+"----->choose Library DependenciesSelect support-v4 
+        解决方法二：在安装目录下 AppData\Local\Android\sdk\extras\android\support\v4 拷贝 android-support-v4.jar，然后复制到项目目录下app\libs下面就可以啦。
+            
     2、如何在主Activity中获取ViewPager中增加的布局页面的控件，并修改其值？
         由于在ViewPager中加载的布局文件是未来六天的天气信息，所以需要在MainActivity.java中对其控件进行监听，但是直接通过findViewById()方法是不能绑定该控件的，因为在MainActivity.java中只通过setContentView(R.layout.weather_info)绑定了主布局，所以其他.xml中的控件是不能直接操作的。
         解决办法：
