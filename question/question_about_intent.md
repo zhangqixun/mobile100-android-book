@@ -47,7 +47,8 @@ startActivity(intent);
 
 IntentService使用队列的方式将请求的Intent加入队列，然后开启一个workerthread(线程)来处理队列中的Intent，对于异步的startService请求，IntentService会处理完成一个之后再处理第二个，每一个请求都会在一个单独的workerthread中处理，不会阻塞应用程序的主线程，这里就给我们提供了一个思路，如果有耗时的操作与其在Service里面开启新线程还不如使用IntentService来处理耗时操作。
 
-4、Activity间通过Intent传递数据大小有没有限制
+**4、Activity间通过Intent传递数据大小有没有限制**
+
 Intent在传递数据时是有大小限制的，这里官方并未详细说明，不过通过实验的方法可以测出数据应该被限制在1MB之内（1024KB），可以采用传递Bitmap的方法，你会发现当图片大小超过1024kB（准确地说是1020KB左右）的时候，程序就会出现闪退、停止运行等异常(不同的手机反应不同)，因此可以判断Intent的传输容量在1MB之内。
 
 
