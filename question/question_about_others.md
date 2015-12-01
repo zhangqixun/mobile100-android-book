@@ -125,22 +125,29 @@ android鼓励弱耦合和组件的重用，在android中mvc的具体体现如下
 
 **3)模型层（model）**：对数据库的操作、对网络等的操作都应该在model里面处理，当然对业务计算等操作也是必须放在的该层的。
 
-10、请简述DDMS和TraceView的区别
+**10、请简述DDMS和TraceView的区别**
+
 DDMS是一个程序执行查看器，在里面可以看见线程和堆栈等信息，Trace是程序性能分析器
 
-11、将解释下Android程序运行时权限与文件系统权限的区别
+**11、将解释下Android程序运行时权限与文件系统权限的区别**
+
 运行时权限Dalvik（android授权）
+
 文件系统Linux内核授权
 
-12、请简述一下Activity、Service、Broadcase、BroadcaseReceiver、intent、intent filter等相关概念
+**12、请简述一下Activity、Service、Broadcase、BroadcaseReceiver、intent、intent filter等相关概念**
+
 activity呈现了一个用户可以操作的可视化用户界面
-service不包含可见的用户界面，而是在后台无限地运行
-可以连接到一个正在运行的服务中，连接后，可以通过服务中暴露出来的借口与其进行通信
-一个broadcast receiver是一个接收广播消息并作出回应的component，broadcast receiver没有界面
+
+service不包含可见的用户界面，而是在后台无限地运行。可以连接到一个正在运行的服务中，连接后，可以通过服务中暴露出来的借口与其进行通信
+
+broadcast receiver是一个接收广播消息并作出回应的component，broadcast receiver没有界面
+
 intent:content provider在接收到ContentResolver的请求时被激活。
+
 activity, service和broadcast receiver是被称为intents的异步消息激活的。
-intent是一个Intent对象，它保存了消息的内容。对于activity和service来说，它指定了请求的操作名称和待操作数据的URI
-Intent对象可以显式的指定一个目标component。如果这样的话，android会找到这个component(基于manifest文件中的声明)并激活它。但如果一个目标不是显式指定的，android必须找到响应intent的最佳component。它是通过将Intent对象和目标的intent filter相比较来完成这一工作的。component的intent filter告诉android该component能处理的intent。intent filter也是在manifest文件中声明的。
+
+intent是一个Intent对象，它保存了消息的内容。对于activity和service来说，它指定了请求的操作名称和待操作数据的URI。Intent对象可以显式的指定一个目标component。如果这样的话，android会找到这个component(基于manifest文件中的声明)并激活它。但如果它不是一个显示指定的目标，android必须找到响应intent的最佳component。它通过将Intent对象和目标的intent filter相比较来完成这一工作。component的intentfilter告诉android该component能处理的intent。intent-filter也是在manifest文件中声明的。
 
 13、请回答android dvm的进程和Linux的进程，应用程序的进程是否为同一个概念？
 DVM指dalivk的虚拟机。每一个Android应用程序都在它自己的进程中运行，都拥有一个独立的Dalvik虚拟机实例。而每一个DVM都是在Linux 中的一个进程，所以说可以认为是同一个概念。
