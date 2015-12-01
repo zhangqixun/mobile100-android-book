@@ -52,12 +52,15 @@ onOpen(SQLiteDatabase db)	void	打开数据库
 onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion)	abstract void	升级数据库	
 close()	synchronized void	关闭所有打开的数据库对象	
 
-4、assest文件夹里放文件，对于文件的大小有没有限制
+**4、assest文件夹里放文件，对于文件的大小有没有限制**
+
 assets目录更像一个附录类型的目录，Android不会为这个目录中的文件生成ID并保存在R类当中，因此它与Android中的一些类和方法兼容度更低。同时，由于你需要一个字符串路径来获取这个目录下的文件描述符，访问的速度会更慢。但是把一些文件放在这个目录下会使一些操作更加方便，比方说拷贝一个数据库文件到系统内存中。要注意的是，你无法在Android XML文件中引用到assets目录下的文件，只能通过AssetManager来访问这些文件。数据库文件和游戏数据等放在这个目录下是比较合适的。另外，网上关于assets和raw的资料都千篇一律了，因此关于这两者中单个文件大小不能超过1M的**错误**描述也在传播，即如果读取超过1M的文件会报"Data exceeds UNCOMPRESS_DATA_MAX (1314625 vs 1048576)"的IOException，还引申出种种解决方案。个人认为不应该有这样的限制，为了验证这个说法写了个Demo，发现将近5M的压缩包在assets和raw中都能正常访问，因此在这里纠正一下，理论上只要打包不超过Android APK 50M大小的限制都是没有问题的。当然了，不排除是Android很早期的时候因为设备硬件原因aapt在编译的时候对这两个文件夹大小做出了限制，如果是这样，较新版的ADT应该不会出现这。
+
 来自：http://my.eoe.cn/futurexiong/archive/5350.html
 
 
-5、对于一个已经存在的SharedPreferences对象setting,想向其中存入一个字符串"person",setting应该先调用什么方法.
+**5、对于一个已经存在的SharedPreferences对象setting,想向其中存入一个字符串"person",setting应该先调用什么方法.**
+
 调用edit()方法
 //实例化SharedPreferences对象（第一步） 
 SharedPreferences mySharedPreferences= getSharedPreferences("test", 
