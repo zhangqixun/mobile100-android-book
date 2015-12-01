@@ -40,6 +40,9 @@ Hander持有对UI主线程消息队列MessageQueue和消息循环Looper的引用
 
 UI主线程通过Looper循环查询消息队列UI_MQ，当发现有消息存在时会将消息从消息队列中取出。首先分析消息，通过消息的参数判断该消息对应的Handler，然后将消息分发到指定的Handler进行处理。
 
+---
+
+
 **2、请简述在单线程模型中Message、Handler、Message Queue、Looper之间的关系**
 
 简单的说，Handler获取当前线程中的looper对象，looper用来从存放Message的MessageQueue中取出Message，再有Handler进行Message的分发和处理。
@@ -76,6 +79,9 @@ Looper是每条线程里的Message Queue的管家。Android没有Global的Messag
 2. Looper.getMainLooper()得到的是主线程的Looper对象，Looper.myLooper()得到的是当前线程的Looper对象。
 
 
+---
+
+
 **3、Hanlder是线程与Activity通信的桥梁,如果线程处理不当，你的机器就会变得越慢，那线程销毁的方法是? ** 
 
 onDestroy()  
@@ -83,9 +89,15 @@ onDestroy()
 正确销毁线程的方法应该是handler.removeCallBacks()。
 
 
+---
+
+
 **4、请解释run()、start()、sleep()、suspend()等方法的作用。**
 
 start是启动线程对象，使之从新建状态转入就绪状态；sleep让线程睡眠一段时间，在此期间线程不消耗CPU资源；suspend使线程挂起，暂停执行， 如果想恢复线程，必须由其他线程调用 resume方法。
+
+---
+
 
 **5、简述Andriod如何处理UI与耗时操作的通信，有哪些方式及各自的优缺点。**
 
