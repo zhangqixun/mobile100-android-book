@@ -15,16 +15,16 @@
    
 * 知识点1：
 
-      知识点介绍
+      HttpClient相当于一个增强版的HttpURLConnection。HttpURLConnection提供的功能，HttpClient都能提供。HttpClient并能提供对Session以及Cookie的相关处理。
 
 * 知识点2：
 
-      知识点介绍
+      如果需要发送GET请求，创建HttpGet对象；发送POST请求，创建HttpPost对象。要发送请求参数时，调用HttpGet与HttpPost的setParams（HttpParams params）.
 
 
 * 知识点3：
 
-      知识点介绍
+      调用HttpClient对象的execute(HttpURLRequest request)发送请求，返回HttpResponse；调用HttpResponse的getAllHeaders()获取响应头，getEntity（）获取HttpEntity对象，该对象包括服务器的相应内容。
 
 
    
@@ -33,11 +33,11 @@
 
 **3.1 实验内容**
 
-*简要介绍本次实验的主要内容*
+使用HttpClient访问网络资源。
 
 **3.2 实验步骤**
 
-*详细描述本次实验的具体步骤*
+
 
 **四、常见问题及注意事项**
 
