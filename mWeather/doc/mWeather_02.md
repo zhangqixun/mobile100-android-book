@@ -49,7 +49,7 @@
 		padding: 指定控件的内边距，也就是说控件当中的内容,相应的有paddingTop、paddingBottom、paddingLeft、paddingRight几个属性。
 		此处与layout_margin属性进行区别，layout_margin表示该控件距离父控件的边距。
 			  ![](images/3.png)
-        ![](images/3.png)
+        ![](images/1.jpg)
 * gravity：
 		gravity:设置布局管理器内组件(子元素)的对齐方式 。
 		该属性是对该view 内容的限定．比如一个button 上面的text. 你可以设置该text 在view的靠左，靠右等位置．此处要与layout_gravity有所区别，layout_gravity是用来设置该view相对与父view 的位置．也就是说，指定该元素在LinearLayout(父容器)的对齐方式, 也就是该组件本身的对齐方式
