@@ -138,55 +138,84 @@ JDK（Java Development Kit）顾名思义是java开发工具包，是程序员�
 
 图 1.1.5
 1.2 配置环境变量
+
 JDK安装完毕后我们需要配置环境变量。
+
 1、右键点击【计算机】，选择【属性】，出现属性界面，点击【高级系统设置】（如图 1.2.1）。
+![](1.2.1.png)
 
 图 1.2.1
+
 2、弹出“高级系统设置”界面后，点击【环境变量】（如图 1.2.2）
+![](1.2.2.png)
    图1.2.2
+   
 3、出现环境变量界面后我们需要配置系统变量中的三个变量，它们是“JAVA_HOME环境变量”、“PATH环境变量”、” CLASSPATH环境变量”。 
+
 （一）JAVA_HOME环境变量
+
 首先，配置 “JAVA_HOME”。从这个变量的名字就知道，它是java的 “家”。那么，java的 “家”在哪里呢？其实，它就是一个路径，这个路径就是我们刚刚安装的JDK的安装路径。因为JDK里面包含了所有java编译、运行的程序包。所以，我们把这个路径下的文件夹称为java的家。Android Studio/Eclipse/NetBeans/Tomcat等软件就是通过搜索JAVA_HOME变量来找到并使用安装好的JDK。这么一来，JAVA_HOME变量是不是有点门牌号的意思呢？
+
 既然是JDK的安装目录，我们就找到JDK的安装目录。右击地址栏上的地址，选择【复制地址】。如图（1.2.3）
+![](1.2.3.png)
 
 图  1.2.3
+
 复制地址后，我们返回到环境变量配置界面，系统变量下面的【新建】。弹出新建窗口，变量名填入”JAVA_HOME”，变量值填入你刚刚复制的JDK的地址。（如图 1.2.4）
+![](1.2.4.png)
 
 图 1.2.4
+
 （二）PATH环境变量
+
 接下来，我们来配置“PATH环境变量”。PATH环境变量作用是指定命令搜索路径，在shell下面执行命令时，它会到PATH变量所指定的路径中查找看是否能找到相应的命令程序。我们需要把 jdk安装目录下的bin目录增加到现有的PATH变量中，bin目录中包含经常要用到的可执行文件如javac/java/javadoc等待，设置好 PATH变量后，就可以在任何目录下执行javac/java等工具了。
+
 在“系统变量”选项区域中查看PATH变量，如果不存在，则新建变量 PATH，否则选中该变量，单击“编辑”按钮，在“变量值”文本框的起始位置添加“%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;”或者是直接“%JAVA_HOME%\bin;”(不要落下分号，分号是用来与其他变量值隔开来的)单击确定按钮。（如图 1.2.5）。
+![](1.2.5.png)
 
 图 1.2.5
+
 （三）CLASSPATH环境变量
+
 CLASSPATH环境变量作用是指定类搜索路径，如果我们要使用已经编写好的类，首先我们需要找到它们，JVM就是通过CLASSPTH来寻找类的。我们 需要把jdk安装目录下的lib子目录中的dt.jar和tools.jar设置到CLASSPATH中。当然，当前目录“.”也必须加入到该变量中。
+
 在“系统变量”选项区域中查看CLASSPATH 变量，如果不存在，则新建变量CLASSPATH，否则选中该变量，单击“编辑”按钮，在“变量值”文本框的起始位置添加“.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar;”。（不要落下前面的“ . ”，）（如图1.2.6）
+![](1.2.6.png)
+
 图 1.2.6
+
 (四) 验证环境变量是否配置成功
+
 打开DOS窗口，输入“javac/java”等java代码编辑程序。若出现其用法，说明已经配置成功。如图（1.2.7）
 
+![](1.2.7.png)
+
 图 1.2.7
+
 至此，Java开发环境搭建完毕。
 
 二、android studio的安装与使用
+
 2.1 Windows下android studio的下载与安装
+
 1、下载地址：http://developer.android.com/sdk/index.html
+
 2、点击“Develop”在Tools菜单下选择“Download”，网站可以识别到当前电脑的系统，如实
 验电脑是Windows系统，所以提供了Windows系统的下载链接。如下图所示：
 
+![](2.1.1.png)
+
 图 2.1.1
+
 3、点击“Download Android Studio for Windows”后，勾选“I have read and agree with the above terms and conditions”，开始下载。如下图所示：
+![](downlode.png)
+
 
 如果需要安装其他版本可以选择“Other Download Options”，如下图所示：
-
-下载后，双击下载完成的安装包，进行安装，如图所示：
-
-点击“Next”继续。
+![](other.png)
 
 
-出现以下界面，继续点击“Next”继续。
-
-点击“I Agree”继续安装。
+下载后，双击下载完成的安装包，进行安装，点击“Next”继续，继续点击“Next”继续，点击“I Agree”继续安装。
 
 
 
