@@ -14,7 +14,9 @@
 * 布局间的继承关系：
 	  在UML图中可以看出, 绝对布局 帧布局 网格布局 相对布局 线性布局是直接继承ViewGroup。
 	  表格布局是继承的LinearLayout。
-	  	  ![](images/1.png)
+	  
+![](images/1.jpg)
+
 	  ![](images/1.png)
       android中View类是最基本的一个UI类，基本上所有高级UI组件都是继承View类实现的，一个Viewgroup对象是一个Android.view.Viewgroup的实例，Viewgroup的作用就是View的容器，它负责对添加进Viewgroup的这些View进行布局。当然一个Viewgroup也可以加入另一个Viewgroup里面，因为Viewgroup也是继承于View.Viewgroup类，它是一个抽象类，也是其他容器类的基类。
 	  下面我们用到的布局就是它的实现类。Viewgroups的实现类比较多，在我们的demo中用到的比较多的就是线性布局和相对布局。
