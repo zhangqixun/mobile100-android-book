@@ -10,7 +10,6 @@
    * [线性布局](lab/lab05/index.md)
    * [相对布局](lab/lab06/index.md)
    * [基本控件](lab/lab07/index.md)
-   * [SharedPreferences](lab/lab08/index.md)
    * [多线程](lab/lab09/index.md)
    * [HttpUrlConection](lab/lab10/index.md)
    * [HttpClient](lab/lab11/index.md)
