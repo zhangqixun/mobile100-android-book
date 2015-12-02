@@ -67,12 +67,12 @@ Google Play开发者后台中同时提供了多个统计工具用来记录已发
 对应用软件进行签名的主要意义在于对其提供一个唯一的标识ID（这个ID通常和开发者信息相关），可用于软件更新、网络识别等功能。通常来讲，软件在更新过程中其内容会不断变化，但是其签名是始终确定的，这样就可以保证软件在更新时可以确定两个软件是否为同一个产品。有关于应用签名的更多细节，可参见：https://developer.android.com/tools/publishing/app-signing.html
 
 Android Studio提供了一个名为keytool的工具，这个工具可用于获得签名时所用的密码库的证书信息。在终端中，我们可以输入以下命令获得密码库的证书指纹：
-
+```
 keytool -exportcert \
 -alias <your-key-name> \
 -keystore <path-to-production-keystore> \
 -list –v
-
+```
 之后我们会获得一串SHA1码，它可用于应用程序的身份确认以及一些网络服务的授权等工作。
 
 （2）	关于大体积文件的上传
