@@ -19,7 +19,7 @@
 
 * 知识点2：
 
-      如果需要发送GET请求，创建HttpGet对象；发送POST请求，创建HttpPost对象。要发送请求参数时，调用HttpGet与HttpPost的setParams（HttpParams params）.
+      如果需要发送GET请求，创建HttpGet对象；发送POST请求，创建HttpPost对象。要发送请求参数时，调用HttpGet与HttpPost的setParams（HttpParams params）
 
 
 * 知识点3：
