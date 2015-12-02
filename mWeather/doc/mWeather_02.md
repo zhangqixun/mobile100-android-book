@@ -30,13 +30,27 @@
 		相对布局（RelativeLayout）:在该布局下所有子元素会根据相互之间的相对位置来排布和显示
 		相对布局容器内子组件的位置总是相对兄弟组件、父容器决定的，因此这种布局方式称为相对布局。
 		同样的，为了控制该布局容器内各子组件的布局分布，RelativeLayout提供了一个内部类，RelativeLayout.LayoutParams,该类提供了大量的XML属性来控制R布局容器中子组件的布局分布。
-		在相对布局中，一般用到的控件属性解释如下：android:layout_above  为将该控件的底部放在指定id控件的上方android:layout_below   同理类似，将该控件的顶部放在指定id控件的下方android:layout_toLeftOf  将该控件的右端紧挨着放在指定id控件的左端。android:layout_toRightOf  将该控件的左端紧挨着放在指定id控件的右端android:layout_alignParentRight  为true时将该控件右端与父控件右端对齐android:layout_alignParentLeft       为true时将该控件左端与父控件左端对齐android:layout_alignParentTop       为true时将该控件顶端与父控件顶端对齐android:layout_alignParentBottom  为true时将该控件底端与父控件底端对齐android:layout_alignBottom   将该控件底部与指定id控件底部控件对齐android:layout_alignLeft 将该控件左边与指定id控件左边对齐android:layout_alignRight        将该控件右边与指定id控件右边对齐android:layout_alignTop  将该控件顶端与指定id控件顶端对齐
+		在相对布局中，一般用到的控件属性解释如下：
+		android:layout_above  为将该控件的底部放在指定id控件的上方
+		android:layout_below   同理类似，将该控件的顶部放在指定id控件的下方
+		android:layout_toLeftOf  将该控件的右端紧挨着放在指定id控件的左端。
+		android:layout_toRightOf  将该控件的左端紧挨着放在指定id控件的右端
+		android:layout_alignParentRight 为true时将该控件右端与父控件右端对齐
+		android:layout_alignParentLeft  为true时将该控件左端与父控件左端对齐
+		android:layout_alignParentTop  为true时将该控件顶端与父控件顶端对齐
+		android:layout_alignParentBottom 为true时将该控件底端与父控件底端对齐
+		android:layout_alignBottom  将该控件底部与指定id控件底部控件对齐
+		android:layout_alignLeft 将该控件左边与指定id控件左边对齐
+		android:layout_alignRight  将该控件右边与指定id控件右边对齐
+		android:layout_alignTop  将该控件顶端与指定id控件顶端对齐
 
 * padding和margin：
-		padding: 指定控件的内边距，也就是说控件当中的内容,相应的有paddingTop、paddingBottom、paddingLeft、paddingRight几个属性。此处与layout_margin属性进行区别，layout_margin表示该控件距离父控件的边距。
+		padding: 指定控件的内边距，也就是说控件当中的内容,相应的有paddingTop、paddingBottom、paddingLeft、paddingRight几个属性。
+		此处与layout_margin属性进行区别，layout_margin表示该控件距离父控件的边距。
         ![](images/3.png)
 * gravity：
-		gravity:设置布局管理器内组件(子元素)的对齐方式, 。该属性是对该view 内容的限定．比如一个button 上面的text.  你可以设置该text 在view的靠左，靠右等位置．此处要与layout_gravity有所区别，layout_gravity是用来设置该view相对与父view 的位置．也就是说，指定该元素在LinearLayout(父容器)的对齐方式, 也就是该组件本身的对齐方式
+		gravity:设置布局管理器内组件(子元素)的对齐方式 。
+		该属性是对该view 内容的限定．比如一个button 上面的text. 你可以设置该text 在view的靠左，靠右等位置．此处要与layout_gravity有所区别，layout_gravity是用来设置该view相对与父view 的位置．也就是说，指定该元素在LinearLayout(父容器)的对齐方式, 也就是该组件本身的对齐方式
 		android:gravity 还可以写成：bottom|center_horizontal
 		简单的说，android:layout_gravity 是控制组件本身的对齐方式, android:gravity是控制本容器子组件的对齐方式;
 		android:orientation 设置布局管理器内组件排列方式, 设置为horizontal(水平),vertical(垂直), 默认为垂直排列
@@ -52,10 +66,10 @@
       ImageView控件主要用于图片的显示
       Image控件的基本常用属性为src，作用是指定图片来源   
 * 其他布局：
-	  TableLayout表格布局。TableLayout继承了LinearLayout，它的本质仍然是线性布局。不需要声明包含多少列多少行，通过添加TableRow以及其他组件控制表格的行列数。向TableLayout中添加一个TableRow，TableRow就是一个表格行，它也是容器，可以继续添加其他组件。
-	  FrameLayout帧布局。帧布局容器为每个加入其中的组件创建一个空白的区域（称为一帧），每个子组件占据一帧，这些帧根据gravity的属性执行自动对齐。帧布局的效果把组件一个一个叠加在一起。
-	  GridLayout网格布局。把整个容器划分成rows*columns个网格，每个网格可以放一个组件，也可以设置一个组件横跨多少列纵跨多少行。
-	  AbsoluteLayout绝对布局。就是android不提供任何布局控制，而由开发人员自己通过X坐标，Y坐标来控制组件的位置。
+	  1）TableLayout表格布局。TableLayout继承了LinearLayout，它的本质仍然是线性布局。不需要声明包含多少列多少行，通过添加TableRow以及其他组件控制表格的行列数。向TableLayout中添加一个TableRow，TableRow就是一个表格行，它也是容器，可以继续添加其他组件。
+	  2）FrameLayout帧布局。帧布局容器为每个加入其中的组件创建一个空白的区域（称为一帧），每个子组件占据一帧，这些帧根据gravity的属性执行自动对齐。帧布局的效果把组件一个一个叠加在一起。
+	  3）GridLayout网格布局。把整个容器划分成rows*columns个网格，每个网格可以放一个组件，也可以设置一个组件横跨多少列纵跨多少行。
+	  4）AbsoluteLayout绝对布局。就是android不提供任何布局控制，而由开发人员自己通过X坐标，Y坐标来控制组件的位置。
 
 * 帧布局示意：
 	  示意代码如下：
@@ -67,7 +81,7 @@
 
 **3.1 主要思路**
 
-将今日天气界面划分成几个模块，模块之间采用线性布局，模块内部的控件使用相对布局，以此实现今日天气的界面。
+	  将今日天气界面划分成几个模块，模块之间采用线性布局，模块内部的控件使用相对布局，以此实现今日天气的界面。
 
 **3.2 实践步骤**
 	  ![](images/11.png)
@@ -92,8 +106,9 @@
 	  ![](images/27.png)
 	  ![](images/28.png)
 	  以上，就完成了今日天气信息的制作。
+	  
 **四、常见问题及注意事项**
 
-1、区分开margin和padding等诸如此类的易混淆属性。
-2、如果不清楚某个布局的常用属性，及时到API查阅。
-3、对于不同应用场景，选择合适的布局事半功倍。如制作一个计算器，布局采用网格布局会更方便。
+	  1、区分开margin和padding等诸如此类的易混淆属性。
+	  2、如果不清楚某个布局的常用属性，及时到API查阅。
+	  3、对于不同应用场景，选择合适的布局事半功倍。如制作一个计算器，布局采用网格布局会更方便。
