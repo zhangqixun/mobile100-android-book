@@ -17,7 +17,6 @@
 	  
 ![](images/1.jpg)
 
-	  ![](images/1.png)
       android中View类是最基本的一个UI类，基本上所有高级UI组件都是继承View类实现的，一个Viewgroup对象是一个Android.view.Viewgroup的实例，Viewgroup的作用就是View的容器，它负责对添加进Viewgroup的这些View进行布局。当然一个Viewgroup也可以加入另一个Viewgroup里面，因为Viewgroup也是继承于View.Viewgroup类，它是一个抽象类，也是其他容器类的基类。
 	  下面我们用到的布局就是它的实现类。Viewgroups的实现类比较多，在我们的demo中用到的比较多的就是线性布局和相对布局。
 
@@ -50,8 +49,8 @@
 * padding和margin：
 		padding: 指定控件的内边距，也就是说控件当中的内容,相应的有paddingTop、paddingBottom、paddingLeft、paddingRight几个属性。
 		此处与layout_margin属性进行区别，layout_margin表示该控件距离父控件的边距。
-			  ![](images/3.png)
-        ![](images/1.jpg)
+![](images/3.png)
+  
 * gravity：
 		gravity:设置布局管理器内组件(子元素)的对齐方式 。
 		该属性是对该view 内容的限定．比如一个button 上面的text. 你可以设置该text 在view的靠左，靠右等位置．此处要与layout_gravity有所区别，layout_gravity是用来设置该view相对与父view 的位置．也就是说，指定该元素在LinearLayout(父容器)的对齐方式, 也就是该组件本身的对齐方式
@@ -77,11 +76,11 @@
 
 * 帧布局示意：
 	  示意代码如下：
-	  ![](images/5.png)
-	  	  ![](images/5.png)
+![](images/5.png)
+
 	  运行图如下
-	  ![](images/4.png)
-	  	  ![](images/4.png)
+![](images/4.png)
+ 
 	  如果将每个TextView大小设置的一样的话，帧布局的效果就是 只会显示最上面这个蓝色的TextView了。
 **三、主要思路及步骤**
 
