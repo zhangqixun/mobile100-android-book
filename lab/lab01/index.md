@@ -98,13 +98,20 @@
 
 
 一、Java开发环境的搭建
+
 1.1 JDK（Java Development Kit）的下载与安装
+
 JDK（Java Development Kit）顾名思义是java开发工具包，是程序员使用java语言编写java程序所需的开发工具包，是提供给程序员使用的。JDK包含了JRE，同时还包含了编译java源码的编译器javac，还包含了很多java程序调试和分析的工具：jconsole，jvisualvm等工具软件，还包含了java程序编写所需的文档和demo例子程序。
+
 如果你需要运行java程序，只需安装JRE就可以了。如果你需要编写java程序，需要安装JDK。
 大家可以在oracle官网上下载JDK安装包。
+
 网址：（http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html）该网址打开后即为JDK的下载界面，根据自己的系统选择相应的版本，以32位windows7举例（如图1.1.1）：
+
 1、点击“Accept License Agreement”选项，以接受下载许可；
+
 2、点击相应版本下载（本机为windows 32位系统）。
+![](1.1.1.png)
 
 图 1.1.1
 
