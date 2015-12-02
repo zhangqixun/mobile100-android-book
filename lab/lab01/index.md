@@ -2,7 +2,7 @@
 
 起草人: 李佳佳1501210933  日期：15年12月03日
 
-起草人: 张喜涛（助教）  日期：15年12月03日
+起草人: 张喜涛（本实验参考助教提供的实验手册） 
 
 # 
 
@@ -19,81 +19,81 @@
 目录
 
 一、Java开发环境的搭建	
-1.1 JDK（Java Development Kit）的下载与安装	3
+1.1 JDK（Java Development Kit）的下载与安装	
 
-1.2 配置环境变量	6
+1.2 配置环境变量	
 
-二、android studio的安装与使用	11
+二、android studio的安装与使用	
 
-2.1 Windows下android studio的下载与安装	11
+2.1 Windows下android studio的下载与安装	
 
-2.2 使用android studio创建你的第一个Android程序。	18
+2.2 使用android studio创建你的第一个Android程序。	
 
-三、Intel Atom x86模拟器的安装与使用	21
+三、Intel Atom x86模拟器的安装与使用	
 
 四、SDK更新	26
 
-五、创建一个AVD（Android Virtual Device）	28
+五、创建一个AVD（Android Virtual Device）	
 
-六、搭建环境过程中的一些问题	33
+六、搭建环境过程中的一些问题	
 
 6.1  无法访问外网（android studio无法下载及SDK更新无法联网）
 
-6.2 Intel HAXM 安装不成功	33
+6.2 Intel HAXM 安装不成功	
 
-6.3 ADB启动失败	34
+6.3 ADB启动失败	
 
-6.4 Failure [INSTALL_FAILED_OLDER_SDK]	3
-5
-6.5 android studio安装卡在SDK下载界面不动（Setup Wizard - Downloading Components）	36
+6.4 Failure [INSTALL_FAILED_OLDER_SDK]	
 
-6.6运行模拟器时错误	38
+6.5 android studio安装卡在SDK下载界面不动（Setup Wizard - Downloading Components）	
 
-6.7 高版本程序运行在低版本模拟器	39
+6.6运行模拟器时错误	
 
-6.8点击开始新Android项目无反应	39
+6.7 高版本程序运行在低版本模拟器	
 
-6.9虚拟机启动后卡在开机界面	39
+6.8点击开始新Android项目无反应	
 
-6.10  SDK、AVD闪退	40
+6.9虚拟机启动后卡在开机界面	
 
-6.11安卓虚拟机找不到system image	40
+6.10  SDK、AVD闪退	
 
-6.12.Android Studio不识别移动设备	40
+6.11安卓虚拟机找不到system image	
 
-6.13.Fetching android sdk component information	40
+6.12.Android Studio不识别移动设备	
 
-6.14.failed to create jvm error code:不能启动java虚拟机	41
+6.13.Fetching android sdk component information	
 
-6.15.Android Studio安装后发现所有的中文都变成小框框	42
+6.14.failed to create jvm error code:不能启动java虚拟机	
 
-6.16.建立项目时及运行时均报错，出现中文乱码	42
+6.15.Android Studio安装后发现所有的中文都变成小框框	
 
-6.17.Android Studio Gradle project sync failed	42
+6.16.建立项目时及运行时均报错，出现中文乱码	
 
-6.18.No resource found that matches the given name'android:Widget.Material.ActionButton'	43
+6.17.Android Studio Gradle project sync failed	
 
-6.19.主板BIOS并不支持开启intel virtual technology	43
+6.18.No resource found that matches the given name'android:Widget.Material.ActionButton'	
 
-6.20.Failed to configure driver: unknown error. Failed to open drive（安装 intel HAXM 模拟器加速器异常）	44
+6.19.主板BIOS并不支持开启intel virtual technology	
 
-6.21.启动X86模拟器时出现异常	44
+6.20.Failed to configure driver: unknown error. Failed to open drive（安装 intel HAXM 模拟器加速器异常）	
 
-6.22.res/layout/目录下的所有布局文件必须小写字母	45
+6.21.启动X86模拟器时出现异常	
 
-6.23.无法下载SDK，日志信息显示网络访问失败	45
+6.22.res/layout/目录下的所有布局文件必须小写字母	
 
-6.24.Axtivity_main.xml的Design中没有预览图	46
+6.23.无法下载SDK，日志信息显示网络访问失败	
 
-6.25.如何自己搭建x86模拟器	46
+6.24.Axtivity_main.xml的Design中没有预览图	
+
+6.25.如何自己搭建x86模拟器	
 
 6.26.HAXM is not working and emulator runs in emulation mode
 
-6.27.界面过大，导致看不到按钮	53
+6.27.界面过大，导致看不到按钮	
 
-6.28.在Android Studio中打开DDMS	53
+6.28.在Android Studio中打开DDMS	
 
-6.29.Android studio中快捷键的学习	54
+6.29.Android studio中快捷键的学习	
 
 
 
