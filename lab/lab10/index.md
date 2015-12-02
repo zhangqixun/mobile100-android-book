@@ -23,11 +23,6 @@
      HttpURLConnection新增加的四种方法： getResponseCode(): 获取服务器的响应消息。 getResponseMessage(): 获取服务器的响应消息。 getRequestMethod(): 获取发送请求的方法。 setRequestMethod(String method): 设置发送请求的方法。
 
 
-* 知识点3：
-
-      知识点介绍
-
-
    
 
 **三、实验内容及步骤**
