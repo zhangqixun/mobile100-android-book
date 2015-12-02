@@ -12,7 +12,7 @@
 
 **二、基础知识**
 
-*![](06_4.png)*
+  *![](06_4.png)*
 
 *在城市选择布局中，我们将要用到ImageView、ListView、TextView和EditText控件。*
 
