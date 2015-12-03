@@ -67,26 +67,7 @@ AppWidget 框架的主要类介绍
 
 **3.2 实践步骤**
 * 
-main.xml布局，代码如下:  
-```
-<?xml version="1.0" encoding="utf-8"?>     
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"    
-    android:orientation="vertical"    
-    android:layout_width="fill_parent"    
-    android:layout_height="fill_parent"    
-    >     
-    <TextView       
-        android:id="@+id/wether"    
-        android:layout_width="fill_parent"      
-        android:layout_height="wrap_content"      
-        android:text="@string/hello"    
-        android:textSize="12px"    
-        android:textColor="#ff0000"    
-        />
-    </LinearLayout>
-```
-* 
-建立Widget内容提供者文件，我们在res下建立xml文件夹，并且新建一个widget_provider.xml代码入下:  
+weather_widget.xml布局，代码如下:  
 ```
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -110,7 +91,19 @@ main.xml布局，代码如下:
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/tq"/>
-</LinearLayout>    
+</LinearLayout>
+```
+* 
+建立Widget内容提供者文件，我们在res下建立xml文件夹，并且新建一个widget_provider.xml代码入下:  
+```
+<?xml version="1.0" encoding="utf-8"?>     
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"    
+    android:minWidth="50dip"    
+    android:minHeight="50dip"    
+    android:updatePeriodMillis="10000"    
+    
+    android:initialLayout="@layout/main"    
+/>     
 ```
 * 
 修改配置文件AndroidManifest.xml，后台注册Receiver,代码如下:
