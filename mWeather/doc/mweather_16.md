@@ -94,7 +94,7 @@ weather_widget.xml布局主要有三个控件，分别为显示时间的TextView
 </LinearLayout>
 ```
 * 
-建立Widget内容提供者文件，我们在res下建立xml文件夹，并且新建一个widget_provider.xml代码入下:  
+建立Widget内容提供者文件，我们在res下建立xml文件夹，并且新建一个mywidget.xml代码入下:  
 ```
 <?xml version="1.0" encoding="utf-8"?>     
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"    
