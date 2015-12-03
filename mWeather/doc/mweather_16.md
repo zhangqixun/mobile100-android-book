@@ -211,7 +211,6 @@ public class MyWidgetProvider extends AppWidgetProvider{
         RemoteViews remoteViews;
         AppWidgetManager appWidgetManager;
         ComponentName thisWidget;
-        DateFormat format = SimpleDateFormat.getTimeInstance(SimpleDateFormat.MEDIUM, Locale.getDefault());
         public MyWeather(Context context, AppWidgetManager appWidgetManager) {
             this.appWidgetManager = appWidgetManager;
             remoteViews = new RemoteViews(context.getPackageName(), R.layout.weather_widget);
@@ -223,13 +222,15 @@ public class MyWidgetProvider extends AppWidgetProvider{
             String city = "大兴";
             String image_url="";
             try {
-                String info = new ShowApiRequest("http://route.showapi.com/9-2","10522","26b1b72176e744b8b1850088a4963358")
+            //此处笔者用的是“易源接口”提供的API，下面的***分别代表你应用的appid和secretid
+                String info = new ShowApiRequest("http://route.showapi.com/9-2","****","*********")
                         .addTextPara("areaid","101050701")
                         .addTextPara("area",city)
                         .addTextPara("needMoreDay","0")
                         .addTextPara("needIndex","0")
                         .addTextPara("needHourData","0")
                         .post();
+                //获取接口返回的信息
                 JSONObject wholeInfo = new JSONObject(info);
                 JSONObject showapi_res_body  = wholeInfo.getJSONObject("showapi_res_body");
                 JSONObject now  = showapi_res_body.getJSONObject("now");
