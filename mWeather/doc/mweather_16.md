@@ -272,5 +272,6 @@ public class MyWidgetProvider extends AppWidgetProvider{
     ![](device-2015-12-03-222716.png)
 **四、常见问题及注意事项**
 
-*
+* 
+AndroidManifest.xml中注册Receiver一定要严格按照下面的写法
 
