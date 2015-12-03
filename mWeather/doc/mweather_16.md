@@ -273,5 +273,7 @@ public class MyWidgetProvider extends AppWidgetProvider{
 **四、常见问题及注意事项**
 
 * 
-AndroidManifest.xml中注册Receiver一定要严格按照下面的写法
-
+AndroidManifest.xml中注册Receiver一定要严格按照下面的写法，否则很有可能注册失败，找不到插件
+![](20151203223055.png)
+* 
+由于要用到网络，不要忘了开网络权限
