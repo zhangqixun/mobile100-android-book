@@ -95,7 +95,8 @@ humitityTv.setText(getString(R.string.dis_humidity) + todayWeather.getShidu());
 把  
 windTv.setText("风力" + todayWeather.getFengli());  
 改为  
-windTv.setText(getString(R.string.dis_wind) + todayWeather.getFengli());
+windTv.setText(getString(R.string.dis_wind) + todayWeather.getFengli());  
+然后设置手机里的语言，可以看到效果。
 
 **四、常见问题及注意事项**
 
