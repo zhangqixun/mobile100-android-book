@@ -54,13 +54,16 @@ AppWidget 框架的主要类介绍
 **3.1 主要思路**
 *一般Widget设计步骤如下*
 * 
-第一个xml是布局XML文件(如：main.xml)，是这个widget的布局。一般来说如果用这个部件显示时间，那就只在这个布局XML中声明一个textview
+第一个xml是布局XML文件(如：weather_widget.xml)，是这个widget的布局。
 * 
-第二个xml是widget_provider.xml,主要是用于声明一个appwidget的。其中，Layout就是指定上面那个main.xml
+第二个xml是mywidget.xml,主要是用于声明一个appwidget的。
 * 
 第三个xml是AndroidManifest.xml，注册broadcastReceiver信息。
 * 
 最后一个Java类用于做一些业务逻辑操作。让其继承类AppWidgetProvider
+
+上述涉及到的文件及其目录情况如下：
+
 
 **3.2 实践步骤**
 * 
