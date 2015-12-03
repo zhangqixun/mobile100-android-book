@@ -107,23 +107,34 @@ weather_widget.xml布局主要有三个控件，分别为显示时间的TextView
 * 
 修改配置文件AndroidManifest.xml，后台注册Receiver,代码如下:
 ```
-<?xml version="1.0" encoding="utf-8"?>     
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"    
-      package="com.android.tutor"    
-      android:versionCode="1"    
-      android:versionName="1.0">     
-    <application android:icon="@drawable/icon" android:label="@string/app_name">     
-        <receiver android:name=".WidetDemo"    
-                  android:label="@string/app_name">     
-            <intent-filter>     
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />     
-            </intent-filter>     
-            <meta-data android:name="android.appwidget.provider"    
-                       android:resource="@xml/widget_provider"    
-            />     
-        </receiver>     
-    </application>     
-    <uses-sdk android:minSdkVersion="7" />     
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.itsucks.mywidget"
+    android:versionCode="1"
+    android:versionName="1.0">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name=".MyWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+            android:resource="@xml/mywidget"/>
+        </receiver>
+    </application>
 </manifest>
 ```
 * 
