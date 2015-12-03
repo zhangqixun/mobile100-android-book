@@ -100,9 +100,10 @@ windTv.setText(getString(R.string.dis_wind) + todayWeather.getFengli());
 
 **四、常见问题及注意事项**
 
-*   4.1 除了values文件夹下的资源外，其他资源比如drawable、layout、menu、XML等也可以用这种方法进行国际化和本地化处理。
-*   4.2 已掌握命名规则的话，也可以在project视图中手动建立文件夹，加入资源文件。
-*   4.3 在Java代码中如果要对引用的资源字符串再进行“连接”等操作的话，应该用getString(R.string.xxx)的形式获取R文件对应的字符串。举例：  
+*   4.1 默认资源很重要。当找不到对应设置的资源的时候，安卓会到默认资源去寻找，如果这时在默认资源里都找不到就会出错。所以默认的strings.xml也要完善。
+*   4.2 除了values文件夹下的资源外，其他资源比如drawable、layout、menu、XML等也可以用这种方法进行国际化和本地化处理。
+*   4.3 已掌握命名规则的话，也可以在project视图中手动建立文件夹，加入资源文件。
+*   4.4 在Java代码中如果要对引用的资源字符串再进行“连接”等操作的话，应该用getString(R.string.xxx)的形式获取R文件对应的字符串。举例：  
 在程序中有以下代码，效果如图：    
 ![](g11n_7.png)  
 ![](g11n_8.png)  
