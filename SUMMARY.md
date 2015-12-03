@@ -71,7 +71,6 @@
    * [Android中Fregment解析(1501210962 罗霄)](paper/1501210962.md)
    * [Android的图形与图像处理（1501210918 黄凯凯）](paper/2015/1501210918.md)
    * [Android MD5加密算法及方法混淆(1501210723 魏焓颖)](paper/2015/1501210723_why.md)
-   * Android中的事件处理机制（1501210707 王可颖）
 * [常见面试题目](question/index.md)
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
