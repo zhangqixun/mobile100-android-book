@@ -189,7 +189,7 @@ public class MyWidgetProvider extends AppWidgetProvider{
         super.onReceive(context, intent);
     }
 
-    //显示时间信息
+    //显示时间信息处理
     public class MyTime extends TimerTask {
         RemoteViews remoteViews;
         AppWidgetManager appWidgetManager;
