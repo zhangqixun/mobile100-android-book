@@ -52,7 +52,9 @@
 *   3.2.1 找出程序中需要国际化处理的地方，用黑圈围住的地方就是
 ![](g11n_1.png)
 *   3.2.2 添加不同语言环境下的strings.xml文件    
-新建一个resource file：  
+切换到Android管理模式：  
+![](g11n_13.png)  
+右键单击values，新建一个resource file：  
 ![](g11n_2.png)
 ![](g11n_3.png)
 然后选择语言和地区：  
@@ -60,7 +62,14 @@
 可以输入关键词搜索。选择了之后，自动创建的文件夹名字为values-zh-rCN：  
 ![](g11n_5.png)
 *   3.2.3 定义程序中用到的字符串：  
-![](g11n_6.png)
+<?xml version="1.0" encoding="utf-8"?>  
+<resources>  
+    <string name="app_name">我的天气</string>  
+    <string name="bj_weather">北京天气</string>  
+    <string name="dis_release">发布</string>  
+    <string name="dis_humidity">湿度:</string>  
+    <string name="dis_wind">风力:</string>  
+</resources>  
 *   3.2.4 替换程序中的文案。Java代码中用R.string.xxx的形式，xml文件中用@string/xxx的形式。
 *   按上述步骤，添加繁体中文、英语等其他方案。
 
