@@ -180,7 +180,7 @@ public class MyWidgetProvider extends AppWidgetProvider{
         timer.scheduleAtFixedRate(new MyTime(context, appWidgetManager), 1, 1000);
         //显示天气的定时器，设置为没小时刷新一次
         Timer wTimer = new Timer();
-        wTimer.scheduleAtFixedRate(new MyWeather(context, appWidgetManager), 5000, 3600000);
+        wTimer.scheduleAtFixedRate(new MyWeather(context, appWidgetManager), 1, 3600000);
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
     @Override
