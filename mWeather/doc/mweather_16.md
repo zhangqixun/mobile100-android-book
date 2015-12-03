@@ -96,14 +96,13 @@ weather_widget.xml布局主要有三个控件，分别为显示时间的TextView
 * 
 建立Widget内容提供者文件，我们在res下建立xml文件夹，并且新建一个mywidget.xml代码入下:  
 ```
-<?xml version="1.0" encoding="utf-8"?>     
-<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"    
-    android:minWidth="50dip"    
-    android:minHeight="50dip"    
-    android:updatePeriodMillis="10000"    
-    
-    android:initialLayout="@layout/main"    
-/>     
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="300dip" android:minHeight="72dp"
+    android:updatePeriodMillis="1000"
+    android:initialLayout="@layout/weather_widget"
+    >
+</appwidget-provider>     
 ```
 * 
 修改配置文件AndroidManifest.xml，后台注册Receiver,代码如下:
