@@ -88,14 +88,29 @@ main.xml布局，代码如下:
 * 
 建立Widget内容提供者文件，我们在res下建立xml文件夹，并且新建一个widget_provider.xml代码入下:  
 ```
-<?xml version="1.0" encoding="utf-8"?>     
-<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"    
-    android:minWidth="50dip"    
-    android:minHeight="50dip"    
-    android:updatePeriodMillis="10000"    
-    
-    android:initialLayout="@layout/main"    
-/>     
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Large Text"
+        android:id="@+id/time"
+        android:gravity="center"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Large Text"
+        android:id="@+id/temperature"/>
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/tq"/>
+</LinearLayout>    
 ```
 * 
 修改配置文件AndroidManifest.xml，后台注册Receiver,代码如下:
