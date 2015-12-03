@@ -269,7 +269,7 @@ public class MyWidgetProvider extends AppWidgetProvider{
 ```   
 * 
 天气插件实现如下截图
-
+    ![](device-2015-12-03-222716.png)
 **四、常见问题及注意事项**
 
 *
