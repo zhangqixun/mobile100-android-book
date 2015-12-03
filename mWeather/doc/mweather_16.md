@@ -126,7 +126,6 @@ weather_widget.xml布局主要有三个控件，分别为显示时间的TextView
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <receiver android:name=".MyWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
