@@ -67,7 +67,7 @@ AppWidget 框架的主要类介绍
 
 **3.2 实践步骤**
 * 
-weather_widget.xml布局，代码如下:  
+weather_widget.xml布局主要有三个控件，分别为显示时间的TextView、显示天气信息的TextView和显示天气图标的ImageView，代码如下:  
 ```
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
