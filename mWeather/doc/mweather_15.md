@@ -62,14 +62,14 @@
 可以输入关键词搜索。选择了之后，自动创建的文件夹名字为values-zh-rCN：  
 ![](g11n_5.png)
 *   3.2.3 定义程序中用到的字符串：  
-<?xml version="1.0" encoding="utf-8"?>  
-<resources>  
-    <string name="app_name">我的天气</string>  
-    <string name="bj_weather">北京天气</string>  
-    <string name="dis_release">发布</string>  
-    <string name="dis_humidity">湿度:</string>  
-    <string name="dis_wind">风力:</string>  
-</resources>  
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">我的天气</string>
+    <string name="bj_weather">北京天气</string>
+    <string name="dis_release">发布</string>
+    <string name="dis_humidity">湿度:</string>
+    <string name="dis_wind">风力:</string>
+</resources>
 *   3.2.4 按上述步骤，添加繁体中文、英语等其他方案。英文的如下：  
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
