@@ -206,7 +206,8 @@ public class MyWidgetProvider extends AppWidgetProvider{
             appWidgetManager.updateAppWidget(thisWidget, remoteViews);
          }
         }
-        public class MyWeather extends TimerTask {
+    //显示天气信息处理
+    public class MyWeather extends TimerTask {
         RemoteViews remoteViews;
         AppWidgetManager appWidgetManager;
         ComponentName thisWidget;
