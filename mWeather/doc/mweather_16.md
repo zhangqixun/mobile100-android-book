@@ -267,6 +267,10 @@ public class MyWidgetProvider extends AppWidgetProvider{
     }
 }    
 ```   
+* 
+天气插件实现如下截图
+
 **四、常见问题及注意事项**
 
-*详细描述本部分的常遇到的问题以及开发过程中的注意事项*
+*
+
