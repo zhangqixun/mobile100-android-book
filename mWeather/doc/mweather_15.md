@@ -71,6 +71,7 @@
     <string name="dis_wind">风力:</string>
 </resources>
 *   3.2.4 按上述步骤，添加繁体中文、英语等其他方案。英文的如下：  
+
 <pre><code><?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MyWeather</string>
@@ -78,7 +79,8 @@
     <string name="dis_release"> Released</string>
     <string name="dis_humidity">Humidity:</string>
     <string name="dis_wind">Wind:</string>
-</resources></code></pre>
+</resources>
+
 *   3.2.5 替换程序中的文案。Java代码中用R.string.xxx的形式，xml文件中用@string/xxx的形式。  
 AndroidManifest.xml里面，把application标签下的android:label属性改为：
 android:label="@string/app_name"  
