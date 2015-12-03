@@ -138,40 +138,128 @@ weather_widget.xml布局主要有三个控件，分别为显示时间的TextView
 ```
 * 
 写一个类继承自AppWidgetProvide
+
 ```
-import java.util.Calendar;     
-import java.util.Date;     
-import java.util.GregorianCalendar;     
-import java.util.Timer;     
-import java.util.TimerTask;     
-import android.appwidget.AppWidgetManager;     
-import android.appwidget.AppWidgetProvider;     
-import android.content.ComponentName;     
-import android.content.Context;     
-import android.widget.RemoteViews;     
-public class MyWidet extends AppWidgetProvider {     
-    @Override    
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager,     
-            int[] appWidgetIds) {     
-        Timer timer = new Timer();     
-        timer.scheduleAtFixedRate(new MyTime(context,appWidgetManager), 1, 60000);     
+package com.itsucks.mywidget;
+import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.widget.RemoteViews;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import com.show.api.ShowApiRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+/**
+ * Created by zhangwei on 2015/11/29.
+ */
+public class MyWidgetProvider extends AppWidgetProvider{
+    
+    @Override
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager,
+                         int[] appWidgetIds){
+        // TODO Auto-generated method stub
+        //显示时间的定时器，每秒刷新一次
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new MyTime(context, appWidgetManager), 1, 1000);
+        Timer wTimer = new Timer();
+        wTimer.scheduleAtFixedRate(new MyWeather(context, appWidgetManager), 5000, 3600000);
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
-    private class MyTime extends TimerTask{     
-        RemoteViews remoteViews;     
-        AppWidgetManager appWidgetManager;     
-        ComponentName thisWidget;     
-             
-        public MyTime(Context context,AppWidgetManager appWidgetManager){     
-            this.appWidgetManager = appWidgetManager;     
-            remoteViews = new RemoteViews(context.getPackageName(),R.layout.main);
-            thisWidget = new ComponentName(context,MyWidet.class)
-        }     
-        public void run() {     
-            //获取天气预报信息
-            String weather="";
-            remoteViews.setTextViewText(R.id.wordcup, "今天天气："+weather);     
-            appWidgetManager.updateAppWidget(thisWidget, remoteViews);     
+    @Override
+    public void onReceive(Context context, Intent intent)
+    {
+        super.onReceive(context, intent);
+    }
+
+    //显示时间信息
+    public class MyTime extends TimerTask {
+        RemoteViews remoteViews;
+        AppWidgetManager appWidgetManager;
+        ComponentName thisWidget;
+        DateFormat format = SimpleDateFormat.getTimeInstance(SimpleDateFormat.MEDIUM, Locale.getDefault());
+        public MyTime(Context context, AppWidgetManager appWidgetManager) {
+            this.appWidgetManager = appWidgetManager;
+            remoteViews = new RemoteViews(context.getPackageName(), R.layout.weather_widget);
+            thisWidget = new ComponentName(context, MyWidgetProvider.class);
+            }
+        @Override
+        public void run() {
+         remoteViews.setTextViewText(R.id.time, format.format(new Date()));
+            appWidgetManager.updateAppWidget(thisWidget, remoteViews);
+         }
+        }
+        public class MyWeather extends TimerTask {
+        RemoteViews remoteViews;
+        AppWidgetManager appWidgetManager;
+        ComponentName thisWidget;
+        DateFormat format = SimpleDateFormat.getTimeInstance(SimpleDateFormat.MEDIUM, Locale.getDefault());
+        public MyWeather(Context context, AppWidgetManager appWidgetManager) {
+            this.appWidgetManager = appWidgetManager;
+            remoteViews = new RemoteViews(context.getPackageName(), R.layout.weather_widget);
+            thisWidget = new ComponentName(context, MyWidgetProvider.class);
+        }
+        @Override
+        public void run() {
+            String temp = "";
+            String city = "大兴";
+            String image_url="";
+            try {
+                String info = new ShowApiRequest("http://route.showapi.com/9-2","10522","26b1b72176e744b8b1850088a4963358")
+                        .addTextPara("areaid","101050701")
+                        .addTextPara("area",city)
+                        .addTextPara("needMoreDay","0")
+                        .addTextPara("needIndex","0")
+                        .addTextPara("needHourData","0")
+                        .post();
+                JSONObject wholeInfo = new JSONObject(info);
+                JSONObject showapi_res_body  = wholeInfo.getJSONObject("showapi_res_body");
+                JSONObject now  = showapi_res_body.getJSONObject("now");
+                temp = now.getString("temperature")+"℃";
+                image_url = now.getString("weather_pic");
+                Bitmap weather_pic = getBitmap(image_url);
+                System.out.println("temp:"+temp);
+                remoteViews.setTextViewText(R.id.temperature, city +":"+ temp);
+                if(weather_pic!=null){
+                    remoteViews.setImageViewBitmap(R.id.image,weather_pic);
+                }
+                appWidgetManager.updateAppWidget(thisWidget, remoteViews);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                remoteViews.setTextViewText(R.id.temperature, city+"：-5℃");
+                appWidgetManager.updateAppWidget(thisWidget, remoteViews);
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+        //根据天气图标url从网络获取图片
+        public Bitmap getBitmap(String path) throws IOException {
+            URL url = new URL(path);
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            conn.setConnectTimeout(5000);
+            conn.setRequestMethod("GET");
+            if(conn.getResponseCode() == 200){
+                InputStream inputStream = conn.getInputStream();
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                return bitmap;
+            }
+            return null;
         }
     }
 }    
