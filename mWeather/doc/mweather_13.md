@@ -320,13 +320,10 @@
                 pullParser.setInput(new StringReader(xmldata));
                 int eventType = pullParser.getEventType();
                 while(eventType != XmlPullParser.END_DOCUMENT) {
-                    //String nodeName = pullParser.getName();
                     switch (eventType) {
-                        //判断当前事件是否为文档开始
                         case XmlPullParser.START_DOCUMENT:
                             lists = new ArrayList<FutureWeather>();
                             break;
-                        //判断当前事件是否为标签元素开始事件
                         case XmlPullParser.START_TAG:
                             if(pullParser.getName().equals("weather")) {
                                 futureWeather = new FutureWeather();
@@ -352,7 +349,6 @@
                                 }
                             }
                             break;
-                        //判断当前事件是否为标签元素结束时间
                         case XmlPullParser.END_TAG:
                             if (pullParser.getName().equals("weather")) {
                                 lists.add(futureWeather);
