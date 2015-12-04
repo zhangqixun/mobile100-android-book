@@ -260,7 +260,7 @@
 
 注意：由于本块的代码对未来六天的处理方式较为类似，所以我们只给出部分关键代码。
 
-1、在TodayWeather.java中添加如下属性,用于保存昨天的信息，并添加其set和get方法
+1、在TodayWeather.java中实现Serializable接口（即public class TodayWeather implements Serializable ），并添加如下属性,用于保存昨天的信息，添加其set和get方法
 
             private String fdate0;
             private String fhigh0;
@@ -465,25 +465,31 @@
             
 9、在updateTodayWeather()方法中添加如下语句，用于在界面更新未来天气：
 
-        //昨天天气
-        FurWeeks[0].setText(todayWeather.getFdate0());
-        FurTemps[0].setText(todayWeather.getFhigh0() + "~" + todayWeather.getFlow0());
-        FurClis[0].setText(todayWeather.getFtype0());
-        FurWinds[0].setText(todayWeather.getFfengxiang0());
-        if (todayWeather.getFtype0()!=null) {
-            changeFurureWeatherImg(FurImages[0], todayWeather.getFtype0());
-        }
-
-        //未来5天
-        for (int i=0; i<lists.size(); i++) {
-            FutureWeather futureWeather = lists.get(i);
-            FurWeeks[i+1].setText(futureWeather.getFdate());
-            FurTemps[i+1].setText(futureWeather.getFhigh() + "~" + futureWeather.getFlow());
-            FurClis[i+1].setText(futureWeather.getFtype());
-            FurWinds[i+1].setText(futureWeather.getFfengxiang());
-            if (futureWeather.getFtype() != null) {
-                changeFurureWeatherImg(FurImages[i+1], futureWeather.getFtype());
+        void updateTodayWeather(TodayWeather todayWeather, List<FutureWeather> lists) {
+            ……
+            
+            //昨天天气
+            FurWeeks[0].setText(todayWeather.getFdate0());
+            FurTemps[0].setText(todayWeather.getFhigh0() + "~" + todayWeather.getFlow0());
+            FurClis[0].setText(todayWeather.getFtype0());
+            FurWinds[0].setText(todayWeather.getFfengxiang0());
+            if (todayWeather.getFtype0()!=null) {
+                changeFurureWeatherImg(FurImages[0], todayWeather.getFtype0());
             }
+
+            //未来5天
+            for (int i=0; i<lists.size(); i++) {
+                FutureWeather futureWeather = lists.get(i);
+                FurWeeks[i+1].setText(futureWeather.getFdate());
+                FurTemps[i+1].setText(futureWeather.getFhigh() + "~" + futureWeather.getFlow());
+                FurClis[i+1].setText(futureWeather.getFtype());
+                FurWinds[i+1].setText(futureWeather.getFfengxiang());
+                if (futureWeather.getFtype() != null) {
+                    changeFurureWeatherImg(FurImages[i+1], futureWeather.getFtype());
+                }
+            }
+            
+            ……
         }
             
 10、运行结果如下：
