@@ -260,35 +260,24 @@
 
 注意：由于本块的代码对未来六天的处理方式较为类似，所以我们只给出部分关键代码。
 
-1、在TodayWeather.java中添加如下属性，并添加其set和get方法
+1、在TodayWeather.java中添加如下属性,用于保存昨天的信息，并添加其set和get方法
 
-            private String fdate1;
-            private String fhigh1;
-            private String flow1;
-            private String ftype1;
-            private String ffengxiang1;
-            private String fdate2;
-            private String fhigh2;
-            private String flow2;
-            private String ftype2;
-            private String ffengxiang2;
-            private String fdate3;
-            private String fhigh3;
-            private String flow3;
-            private String ftype3;
-            private String ffengxiang3;
-            private String fdate4;
-            private String fhigh4;
-            private String flow4;
-            private String ftype4;
-            private String ffengxiang4;
             private String fdate0;
             private String fhigh0;
             private String flow0;
             private String ftype0;
             private String ffengxiang0;
             
-2、在MainActivity.java中parseXML()方法中添加如下语句：
+2、新建FutureWeather.java文件，用于保存未来天气，添加如下属性，并添加其set和get方法
+
+            private String fdate;
+            private String fhigh;
+            private String flow;
+            private String ftype;
+            private String ffengxiang;
+
+
+3、在MainActivity.java中private TodayWeather parseXML(String xmldata)方法中添加如下语句，保存从XML文件中解析出来的昨天天气信息：
 
             case XmlPullParser.START_TAG:
                 if(xmlPullParser.getName().equals("resp")) {
@@ -297,86 +286,6 @@
                 if (todayWeather != null) {
                     if (xmlPullParser.getName().equals("city")) {
                         ……
-                    } else if (xmlPullParser.getName().equals("date") && dateCount==1) {
-                        eventType = xmlPullParser.next();
-                        todayWeather.setFdate1(xmlPullParser.getText());
-                        dateCount++;
-                    } else if (xmlPullParser.getName().equals("high") && highCount==1) {
-                        eventType = xmlPullParser.next();
-                        todayWeather.setFhigh1(xmlPullParser.getText().substring(2).trim());
-                        highCount++;
-                    } else if (xmlPullParser.getName().equals("low") && lowCount==1) {
-                        eventType = xmlPullParser.next();
-                        todayWeather.setFlow1(xmlPullParser.getText().substring(2).trim());
-                        lowCount++;
-                    }else if (xmlPullParser.getName().equals("type") && typeCount==1) {
-                        eventType = xmlPullParser.next();
-                        todayWeather.setFtype1(xmlPullParser.getText());
-                        typeCount++;
-                    } else if (xmlPullParser.getName().equals("fengxiang") && fengxiangCount==1) {
-                        eventType = xmlPullParser.next();
-                        todayWeather.setFfengxiang1(xmlPullParser.getText());
-                        fengxiangCount++;
-                    } else if (xmlPullParser.getName().equals("date") && dateCount==2) {
-                        eventType = xmlPullParser.next();
-                        todayWeather.setFdate2(xmlPullParser.getText());
-                        dateCount++;
-                    } else if (xmlPullParser.getName().equals("high") && highCount==2) {
-                        eventType = xmlPullParser.next();
-                        todayWeather.setFhigh2(xmlPullParser.getText().substring(2).trim());
-                        highCount++;
-                    } else if (xmlPullParser.getName().equals("low") && lowCount==2) {
-                        eventType = xmlPullParser.next();
-                        todayWeather.setFlow2(xmlPullParser.getText().substring(2).trim());
-                        lowCount++;
-                    }else if (xmlPullParser.getName().equals("type") && typeCount==2) {
-                        eventType = xmlPullParser.next();
-                        todayWeather.setFtype2(xmlPullParser.getText());
-                        typeCount++;
-                    } else if (xmlPullParser.getName().equals("fengxiang") && fengxiangCount==2) {
-                        eventType = xmlPullParser.next();
-                        todayWeather.setFfengxiang2(xmlPullParser.getText());
-                        fengxiangCount++;
-                    } else if (xmlPullParser.getName().equals("date") && dateCount==3) {
-                        eventType = xmlPullParser.next();
-                        todayWeather.setFdate3(xmlPullParser.getText());
-                        dateCount++;
-                    } else if (xmlPullParser.getName().equals("high") && highCount==3) {
-                        eventType = xmlPullParser.next();
-                        todayWeather.setFhigh3(xmlPullParser.getText().substring(2).trim());
-                        highCount++;
-                    } else if (xmlPullParser.getName().equals("low") && lowCount==3) {
-                        eventType = xmlPullParser.next();
-                        todayWeather.setFlow3(xmlPullParser.getText().substring(2).trim());
-                        lowCount++;
-                    }else if (xmlPullParser.getName().equals("type") && typeCount==3) {
-                        eventType = xmlPullParser.next();
-                        todayWeather.setFtype3(xmlPullParser.getText());
-                        typeCount++;
-                    } else if (xmlPullParser.getName().equals("fengxiang") && fengxiangCount==3) {
-                        eventType = xmlPullParser.next();
-                        todayWeather.setFfengxiang3(xmlPullParser.getText());
-                        fengxiangCount++;
-                    } else if (xmlPullParser.getName().equals("date") && dateCount==4) {
-                        eventType = xmlPullParser.next();
-                        todayWeather.setFdate4(xmlPullParser.getText());
-                        dateCount++;
-                    } else if (xmlPullParser.getName().equals("high") && highCount==4) {
-                        eventType = xmlPullParser.next();
-                        todayWeather.setFhigh4(xmlPullParser.getText().substring(2).trim());
-                        highCount++;
-                    } else if (xmlPullParser.getName().equals("low") && lowCount==4) {
-                        eventType = xmlPullParser.next();
-                        todayWeather.setFlow4(xmlPullParser.getText().substring(2).trim());
-                        lowCount++;
-                    }else if (xmlPullParser.getName().equals("type") && typeCount==4) {
-                        eventType = xmlPullParser.next();
-                        todayWeather.setFtype4(xmlPullParser.getText());
-                        typeCount++;
-                    } else if (xmlPullParser.getName().equals("fengxiang") && fengxiangCount==4) {
-                        eventType = xmlPullParser.next();
-                        todayWeather.setFfengxiang4(xmlPullParser.getText());
-                        fengxiangCount++;
                     } else if (xmlPullParser.getName().equals("date_1")) {
                         eventType = xmlPullParser.next();
                         todayWeather.setFdate0(xmlPullParser.getText());
@@ -386,17 +295,114 @@
                     } else if (xmlPullParser.getName().equals("low_1")) {
                         eventType = xmlPullParser.next();
                         todayWeather.setFlow0(xmlPullParser.getText().substring(2).trim());
-                    }else if (xmlPullParser.getName().equals("type_1")) {
+                    }else if (xmlPullParser.getName().equals("type_1") && type_1Count==0) {
                         eventType = xmlPullParser.next();
                         todayWeather.setFtype0(xmlPullParser.getText());
-                    } else if (xmlPullParser.getName().equals("fx_1")) {
+                        type_1Count++;
+                    } else if (xmlPullParser.getName().equals("fx_1") && fx_1Count==0) {
                         eventType = xmlPullParser.next();
                         todayWeather.setFfengxiang0(xmlPullParser.getText());
+                        fx_1Count++;
                     }
                 }
                 break;
-                
-3、在MainActivity.java中添加changeFurureWeatherImg()方法，用于动态修改天气图片
+
+4、在MainActivity.java中添加private List<FutureWeather> pullParseXML(String xmldata)方法来解析未来天气：
+
+        private List<FutureWeather> pullParseXML(String xmldata) {
+            List<FutureWeather> lists = null;
+            FutureWeather futureWeather = null;
+            try{
+                int typeCou = 0;
+                int fengxiangCou = 0;
+                XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                XmlPullParser pullParser = factory.newPullParser();
+                pullParser.setInput(new StringReader(xmldata));
+                int eventType = pullParser.getEventType();
+                while(eventType != XmlPullParser.END_DOCUMENT) {
+                    //String nodeName = pullParser.getName();
+                    switch (eventType) {
+                        //判断当前事件是否为文档开始
+                        case XmlPullParser.START_DOCUMENT:
+                            lists = new ArrayList<FutureWeather>();
+                            break;
+                        //判断当前事件是否为标签元素开始事件
+                        case XmlPullParser.START_TAG:
+                            if(pullParser.getName().equals("weather")) {
+                                futureWeather = new FutureWeather();
+                            }
+                            if (futureWeather != null) {
+                                if (pullParser.getName().equals("date")) {
+                                    eventType = pullParser.next();
+                                    futureWeather.setFdate(pullParser.getText());
+                                } else if (pullParser.getName().equals("high")) {
+                                    eventType = pullParser.next();
+                                    futureWeather.setFhigh(pullParser.getText().substring(2).trim());
+                                } else if (pullParser.getName().equals("low")) {
+                                    eventType = pullParser.next();
+                                    futureWeather.setFlow(pullParser.getText().substring(2).trim());
+                                } else if (pullParser.getName().equals("type") && typeCou==0) {
+                                    eventType = pullParser.next();
+                                    futureWeather.setFtype(pullParser.getText());
+                                    typeCou++;
+                                } else if (pullParser.getName().equals("fengxiang") && fengxiangCou==0) {
+                                    eventType = pullParser.next();
+                                    futureWeather.setFfengxiang(pullParser.getText());
+                                    fengxiangCou++;
+                                }
+                            }
+                            break;
+                        //判断当前事件是否为标签元素结束时间
+                        case XmlPullParser.END_TAG:
+                            if (pullParser.getName().equals("weather")) {
+                                lists.add(futureWeather);
+                                futureWeather = null;
+                                typeCou = 0;
+                                fengxiangCou = 0;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    eventType = pullParser.next();
+                }
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+            return lists;
+        }
+
+5、在MainActivity.java的queryWeatherCode()函数中修改消息发送代码，如下：
+
+            TodayWeather todayWeather1 = parseXML(responseStr);
+            List<FutureWeather> lists = pullParseXML(responseStr);
+            if(todayWeather1 != null && lists != null) {
+                Message msg = new Message();
+                msg.what = UPDATE_TODAY_WEATHER;
+                msg.obj = lists;
+                Bundle data = new Bundle();
+                data.putSerializable("todayWeather", todayWeather1);
+                msg.setData(data);
+                mHandler.sendMessage(msg);
+            }
+
+6、修改Handler代码，如下：
+
+            private Handler mHandler = new Handler() {
+                public void handleMessage(android.os.Message msg) {
+                    switch (msg.what) {
+                        case UPDATE_TODAY_WEATHER:
+                            TodayWeather todayWeather = (TodayWeather)msg.getData().get("todayWeather");
+                            List<FutureWeather> list = (List<FutureWeather>)msg.obj;
+                            updateTodayWeather(todayWeather, list);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            };
+
+7、在MainActivity.java中添加changeFurureWeatherImg()方法，用于动态修改天气图片
 
             void changeFurureWeatherImg(ImageView view, String str) {
                 if(str.equals("暴雪")) {
@@ -444,23 +450,41 @@
         
 4、在initview()中添加如下语句，对page1.xml和page2.xml中的控件进行监控
 
-        ————只列部分代码，其余类似
-            weekD1 = (TextView)one_page.findViewById(R.id.weekDay1);
-            temperatureD1 = (TextView)one_page.findViewById(R.id.temperatureDay1);
-            climateD1 = (TextView)one_page.findViewById(R.id.climateDay1);
-            windD1 = (TextView)one_page.findViewById(R.id.windDay1);
-            imageD1 = (ImageView)one_page.findViewById(R.id.imageDay1);
+        private TextView[] FurWeeks = new TextView[6];
+        private TextView[] FurTemps = new TextView[6];
+        private TextView[] FurClis = new TextView[6];
+        private TextView[] FurWinds = new TextView[6];
+        private ImageView[] FurImages = new ImageView[6];
+        
+        ————只列部分绑定控件代码，其余类似
+            FurWeeks[0] = (TextView)one_page.findViewById(R.id.weekDay1);
+            FurTemps[0] = (TextView)one_page.findViewById(R.id.temperatureDay1);
+            FurClis[0] = (TextView)one_page.findViewById(R.id.climateDay1);
+            FurWinds[0] = (TextView)one_page.findViewById(R.id.windDay1);
+            FurImages[0] = (ImageView)one_page.findViewById(R.id.imageDay1);
             
-5、在updateTodayWeather()方法中添加如下语句：
+5、在updateTodayWeather()方法中添加如下语句，用于在界面更新未来天气：
 
-        ————只列部分代码，其余类似
-            weekD1.setText(todayWeather.getFdate0());
-            temperatureD1.setText(todayWeather.getFhigh0() + "~" + todayWeather.getFlow0());
-            climateD1.setText(todayWeather.getFtype0());
-            windD1.setText(todayWeather.getFfengxiang0());
-            if (todayWeather.getFtype0()!=null) {
-                changeFurureWeatherImg(imageD1, todayWeather.getFtype0());
+        //昨天天气
+        FurWeeks[0].setText(todayWeather.getFdate0());
+        FurTemps[0].setText(todayWeather.getFhigh0() + "~" + todayWeather.getFlow0());
+        FurClis[0].setText(todayWeather.getFtype0());
+        FurWinds[0].setText(todayWeather.getFfengxiang0());
+        if (todayWeather.getFtype0()!=null) {
+            changeFurureWeatherImg(FurImages[0], todayWeather.getFtype0());
+        }
+
+        //未来5天
+        for (int i=0; i<lists.size(); i++) {
+            FutureWeather futureWeather = lists.get(i);
+            FurWeeks[i+1].setText(futureWeather.getFdate());
+            FurTemps[i+1].setText(futureWeather.getFhigh() + "~" + futureWeather.getFlow());
+            FurClis[i+1].setText(futureWeather.getFtype());
+            FurWinds[i+1].setText(futureWeather.getFfengxiang());
+            if (futureWeather.getFtype() != null) {
+                changeFurureWeatherImg(FurImages[i+1], futureWeather.getFtype());
             }
+        }
             
 6、运行结果如下：
     
@@ -485,4 +509,7 @@
         weekD1 = (TextView)one_page.findViewById(R.id.weekDay1);
         
         //inflater.inflate(R.layout.xxx, null) 返回的是当前指定的xml的生成的View对象，可以把inflater理解为xml视图解析器。通过这种方式就可以监听了
+        
     3、在做对不同天气类型更新相应的图片时，一定要做信息为空的时候做处理
+    
+    4、注意XML的解析
