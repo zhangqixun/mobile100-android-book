@@ -448,7 +448,7 @@
                 }
             }
         
-4、在initview()中添加如下语句，对page1.xml和page2.xml中的控件进行监控
+8、在initview()中添加如下语句，对page1.xml和page2.xml中的控件进行监控
 
         private TextView[] FurWeeks = new TextView[6];
         private TextView[] FurTemps = new TextView[6];
@@ -463,7 +463,7 @@
             FurWinds[0] = (TextView)one_page.findViewById(R.id.windDay1);
             FurImages[0] = (ImageView)one_page.findViewById(R.id.imageDay1);
             
-5、在updateTodayWeather()方法中添加如下语句，用于在界面更新未来天气：
+9、在updateTodayWeather()方法中添加如下语句，用于在界面更新未来天气：
 
         //昨天天气
         FurWeeks[0].setText(todayWeather.getFdate0());
@@ -486,7 +486,7 @@
             }
         }
             
-6、运行结果如下：
+10、运行结果如下：
     
 ![](1011.png)    
 
