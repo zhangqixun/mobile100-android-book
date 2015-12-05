@@ -1,3 +1,275 @@
 # Android Binder机制(1501210451 张志康)
 
-    ![](zzk_0001.jpg)![](zzk_0002.jpg)
+学号：1501210451  姓名：张志康  专业：集成电路工程
+
+# 
+本文主要分析native层和Java层的Android binder通信机制。
+
+binder是Android最为常见的进程通信机制之一，其驱动和通信库是binder的核心，分别由C和C++编写，应用程序通过JNI同底层库进行关联，也就是native层驱动和通信库通过Java层包装后被Java层调用。
+
+源代码网址：http://androidxref.com/4.2_r1/
+
+参考博客：http://blog.csdn.net/coding_glacier/article/details/7520199
+
+
+
+**一、native层整体通信流程**
+
+* 通信流程概要 
+      在探究binder通信流程之前，首先我们需要了解Binder机制的四个组件：Client、Server、Service Manager和Binder驱动程序。关系如图：
+    ![](zzk_1.png)
+    
+        应用程序最终目的是完成Client组件和Server组件之间的通信。ServiceManger对于大家而言是一个公共接入点，0便是ServiceManger的句柄值。
+
+        从表面看通信建立的流程便是注册和获取的过程： 
+        1、client通过参数（Parcel包）传递进行通信请求；
+        2、在收到通信请求时，Server组件需要通过0这个句柄值访问ServiceManger，在ServiceManger中注册一个binder实体。并关联一个字符串；
+        3、Client组件通过0这个标识去访问ServiceManger，通过一个字符去查询Server组件的引用，此ServiceManger将Server注册的binder实体的一个引用传递给Client端，此时client便可根据这个引用同server进行通信了。
+        由以上可知，在收到请求时server将一个binder实体传递给C进程，而client得到的只是binder的一个引用，进而调用binder实体的函数。BpBinder和BBinder分别代表binder 的引用和实体，它们均继承自IBinder类。
+        在描述具体流程之前我们先来了解binder通信中需要用到的三个主要基类：
+        1.基类IInterface：
+        为server端提供接口，它的子类声明了service能够实现的所有的方法；
+        2.基类IBinder
+        BBinder与BpBinder均为IBinder的子类，因此可以看出IBinder定义了binder IPC的通信协议，BBinder与BpBinder在这个协议框架内进行的收和发操作，构建了基本的binder IPC机制。
+        3.基类BpRefBase
+        client端在查询SM获得所需的的BpBinder后，BpRefBase负责管理当前获得的BpBinder实例。
+* ServiceManger
+        首先我们来了解一下在通信流程中ServiceManger所做的工作。
+	    ServiceManger是一个linux级进程，是一个service管理器（service向SM注册是，service就是一个client，而ServiceManger便是server），即我们前边提到的：每一个service被使用之前，均要向ServiceManger注册，客户端通过查询ServiceManger是否存在此服务来获取service的handle（标识符）。
+	    ServiceManger入口函数为：service_manager.c
+        位于：/frameworks/base/cmds/servicemanager/
+
+        270int main(int argc, char **argv)
+        271{
+        272    struct binder_state *bs;
+        273    void *svcmgr = BINDER_SERVICE_MANAGER;
+        274
+        275    bs = binder_open(128*1024);
+        276	
+        277    if (binder_become_context_manager(bs)) {
+        278        ALOGE("cannot become context manager (%s)\n", strerror(errno));
+        279        return -1;
+        280    }
+        281
+        282    svcmgr_handle = svcmgr;
+        283    binder_loop(bs, svcmgr_handler);
+        284    return 0;
+        285}
+        主要工作：
+            1. 初始化binder，打开/dev/binder设备，在内存中为binder映射128Kb空间。
+        bs = binder_open(128*1024);
+        其中binder_open位于binder.c中，源代码为：
+        94struct binder_state *binder_open(unsigned mapsize)
+        95{
+        96    struct binder_state *bs;
+        97
+        98    bs = malloc(sizeof(*bs));
+        99    if (!bs) {
+        100        errno = ENOMEM;
+        101        return 0;
+        102    }
+        103
+        104    bs->fd = open("/dev/binder", O_RDWR);
+        105    ……
+        127    return 0;
+        128}
+            2. 指定SM对于代理binder的handle为0，即client尝试同SM通信时创建一个handle为0的代理binder。
+        void *svcmgr = BINDER_SERVICE_MANAGER;
+        svcmgr_handle = svcmgr;
+        其中BINDER_SERVICE_MANAGER在binder.h中被指定为0：
+        #define BINDER_SERVICE_MANAGER ((void*) 0)
+            3. 通知binder driver(BD)使SM成为BD的context manager；
+        if (binder_become_context_manager(bs)) {
+        LOGE("cannot become context manager (%s)/n", strerror(errno));
+        return -1;
+        }
+        binder_become_context_manager(bs)源码位于binder.c中：
+        	int binder_become_context_manager(struct binder_state *bs)
+        138{
+        139    return ioctl(bs->fd, BINDER_SET_CONTEXT_MGR, 0);
+        140}
+            4.进入一个死循环，不断读取内核的binder    driver，查看是否有对service的操作请求，如果有调用svcmgr_handler来处理请求操作：
+        binder_loop(bs, svcmgr_handler);
+        binder_loop(,)源码位于binder.c中：
+        void binder_loop(struct binder_state *bs, binder_handler func)
+        358{
+        359    int res;
+        360    struct binder_write_read bwr;
+        361    unsigned readbuf[32];
+        362	……
+        391    }
+        392}
+            5.维护一个svclist列表来存储service的信息。
+        	源码位于service_manager.c：
+        int svcmgr_handler(struct binder_state *bs,
+        202                   struct binder_txn *txn,
+        203                   struct binder_io *msg,
+        204                   struct binder_io *reply)
+        205{
+        206    struct svcinfo *si;
+        207    ……
+        268}
+        ![](zzk_2.png)
+* ProcessState
+            ProcessState是每个进程在使用Binder通信时都需要维护的，用来描述当前进程的binder状态。
+            ProcessState主要完成两个功能：
+            1.创建一个thread负责与内核中的binder模块进行通信（Poolthread）。
+        在Binder IPC中，所有进程均会启动一个thread来负责与binder来直接通信，也就是不断读写binder，这个线程主体是一个IPCThreadState对象（具体介绍见第4节）。
+	        Poolthread启动方式：ProcessState::self()->startThreadPool();
+        /frameworks/native/libs/binder/ProcessState.cpp
+        136void ProcessState::startThreadPool()
+        137{
+        138    AutoMutex _l(mLock);
+        139    if (!mThreadPoolStarted) {
+        140        mThreadPoolStarted = true;
+        141        spawnPooledThread(true);
+        142    }
+        143}
+
+	        2.为知道的handle创建一个BpBinder对象，并管理进程中所有的BpBinder对象。
+        	BpBinder在第一节已经提到，其主要功能是负责client向BD发送调用请求的数据，是client端binder通信的核心，通过调用transact向BD发送调用请求的数据。
+	        ProcessState通过如下函数获取BpBinder对象：
+	        /frameworks/native/libs/binder/ProcessState.cpp
+        	sp<IBinder> ProcessState::getContextObject(const sp<IBinder>& caller)
+        90{
+        91    return getStrongProxyForHandle(0);
+        92}
+
+        sp<IBinder> ProcessState::getStrongProxyForHandle(int32_t handle)
+        184{
+        185    sp<IBinder> result;
+        186
+        187    AutoMutex _l(mLock);
+        188
+        189    handle_entry* e = lookupHandleLocked(handle);
+		……
+        210    return result;
+        211}
+
+        ProcessState::handle_entry* ProcessState::lookupHandleLocked(int32_t handle)
+        171{
+        172    const size_t N=mHandleToObject.size();
+        173    if (N <= (size_t)handle) {
+        174        handle_entry e;
+        175        e.binder = NULL;
+        176        e.refs = NULL;
+        177        status_t err = mHandleToObject.insertAt(e, N, handle+1-N);
+        178        if (err < NO_ERROR) return NULL;
+        179    }
+            180    return &mHandleToObject.editItemAt(handle);
+        181}
+
+        	在获取BpBinder对象的过程中，ProcessState会维护一个BpBinder的vecto：mHandleToObject(具体调用过程见上述源代码)。
+        	创建一个BpBinder实例时，回去查询mHandleToObject，如果对应的handler以及有binder指针，就不再创建，否则创建并插入到mHandlerToObject中（具体代码见上述的lookupHandleLocked）。
+        	BpBinder构造函数位于/frameworks/native/libs/binder/BpBinder.cpp：
+        	BpBinder::BpBinder(int32_t handle)
+        90    : mHandle(handle)
+        91    , mAlive(1)
+        92    , mObitsSent(0)
+        93    , mObituaries(NULL)
+        94{
+        95    ALOGV("Creating BpBinder %p handle %d\n", this, mHandle);
+        96
+        97    extendObjectLifetime(OBJECT_LIFETIME_WEAK);
+        98    IPCThreadState::self()->incWeakHandle(handle);
+        99}
+        	通过此构造函数我们可以发现：BpBinder会将通信中server的handle记录下来。当有数据发送时，会把数据的发送目标通知BD。
+        	
+* IPCThreadState
+        IPCThreadState也是一个单例模式，由上边我们已知每个进程维护一个ProcessState实例，且ProcessState只启动一个Pool thread，因此一个进程之后启动一个Pool thread。
+        	IPCThreadState实际内容为：
+
+        void IPCThreadState::joinThreadPool(bool isMain)
+        421{
+        422    LOG_THREADPOOL("**** THREAD %p (PID %d) IS JOINING THE THREAD POOL\n", (void*)pthread_self(), getpid());
+        423
+        424    mOut.writeInt32(isMain ? BC_ENTER_LOOPER : BC_REGISTER_LOOPER);        
+        429    set_sched_policy(mMyThreadId, SP_FOREGROUND); 
+        431    status_t result;
+        432    do {
+        433        int32_t cmd;
+        436        if (mIn.dataPosition() >= mIn.dataSize()) {
+        437            size_t numPending = mPendingWeakDerefs.size();
+        438            if (numPending > 0) {
+        439                for (size_t i = 0; i < numPending; i++) {
+        440                    RefBase::weakref_type* refs = mPendingWeakDerefs[i];
+        441                    refs->decWeak(mProcess.get());
+        442                }
+        443                mPendingWeakDerefs.clear();
+        444            }
+        446            numPending = mPendingStrongDerefs.size();
+        447            if (numPending > 0) {
+        448                for (size_t i = 0; i < numPending; i++) {
+        449                    BBinder* obj = mPendingStrongDerefs[i];
+        450                    obj->decStrong(mProcess.get());
+        451                }
+        452                mPendingStrongDerefs.clear();
+        453            }
+        454        }
+        457        result = talkWithDriver();
+        458        if (result >= NO_ERROR) {
+        459            size_t IN = mIn.dataAvail();
+        460            if (IN < sizeof(int32_t)) continue;
+        461            cmd = mIn.readInt32();
+        462            IF_LOG_COMMANDS() {
+        463                alog << "Processing top-level Command: "
+        464                    << getReturnString(cmd) << endl;
+        465            }
+        468            result = executeCommand(cmd);
+        469        }
+        482        if(result == TIMED_OUT && !isMain)         {
+        483            break;
+        484        }
+        485    } while (result != -ECONNREFUSED && result != -EBADF);
+        486
+        487    LOG_THREADPOOL("**** THREAD %p (PID %d)         IS LEAVING THE THREAD POOL err=%p\n",
+        488        (void*)pthread_self(), getpid(), (void*)result);
+        489
+        490    mOut.writeInt32(BC_EXIT_LOOPER);
+        491    talkWithDriver(false);
+        492}
+        ProcessState中有2个Parcel成员（mIn和mOut），由以上代码可见，Pool Thread会不断查询BD中是否有数据可读，若有，则保存在mIn；不停检查mOut是否有数据需要向BD发送，若有，则写入BD。
+        根据第三节提到的：BpBinder通过调用transact向BD发送调用请求的数据，也就是说ProcessState中生成的BpBinder实例通过调用IPCThreadState的transact函数来向mOut中写入数据，这样的话这个binder IPC过程的client端的调用请求的发送过程就讲述完毕。
+        IPCThreadState有两个重要的函数，talkWithDriver函数负责从BD读写数据，executeCommand函数负责解析并执行mIn中的数据。
+
+
+
+
+    
+
+**二、基础知识**
+
+*简要介绍本模块所需掌握的基础知识*
+   
+
+
+      知识点介绍
+
+* 知识点2：
+
+      知识点介绍
+
+
+* 知识点3：
+
+      知识点介绍
+
+
+   
+
+**三、主要思路及步骤**
+
+**3.1 主要思路**
+
+*简要介绍主要思路*
+
+**3.2 实践步骤**
+
+*详细描述开发的具体步骤*
+
+**四、常见问题及注意事项**
+
+*详细描述本部分的常遇到的问题以及开发过程中的注意事项*
+
+
+
