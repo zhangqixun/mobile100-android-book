@@ -510,12 +510,52 @@ status_t BpBinder::transact(
         152        data.recycle();
         153    }
         可知，将name和Service对象封装到Parcel中，调用transact()方法送出，并将当前操作标记为ADD_SERVICE_TRANSACTION，根据上一章提到的内容，transact()便会调用到BpBinder中，此时便进入到native层的使用，这部分内容已经在上一章节分析完毕，具体流程图如下：
+        ![](zzk_3.png)
 
+* 客户端得到一个Service：
 
+      主要流程如下：通过Java层的ServerManager得到相应的Service，然后通过asInterface()将得到的对象转为客户端可直接调用的代理对象，然后调用代理对象的updateAdnRecordsEfBySearch()方法。
+        具体分析如下：
+        首先，通过ServerManager得到相应的BpBinder对象。
+        源码位于ServerManager.java中
+        public static IBinder getService(String name) {
+        50        try {
+        51            IBinder service = sCache.get(name);
+        52            if (service != null) {
+        53                return service;
+        54            } else {
+        55                return getIServiceManager().getService(name);
+        56            }
+        57        } catch (RemoteException e) {
+        58            Log.e(TAG, "error in getService", e);
+        59        }
+        60        return null;
+        61    }
+        可见，调用getIServiceManager()对象的getService()方法，代码如下。
+        private static IServiceManager getIServiceManager() {
+        34        if (sServiceManager != null) {
+        35            return sServiceManager;
+        36        }
+        37
+        38        // Find the service manager
+        39        sServiceManager = ServiceManagerNative.asInterface(BinderInternal.getContextObject());
+        40        return sServiceManager;
+        41    }
+        可知通过IServiceManager得到的是一个ServiceManager在Java层的代理对象，下边来分析此代理对象的getService(     )方法。
+        /frameworks/base/core/java/android/os/ServiceManagerNative.java
+        public IBinder getService(String name) throws RemoteException {
+        119        Parcel data = Parcel.obtain();
+        120        Parcel reply = Parcel.obtain();
+        121        data.writeInterfaceToken(IServiceManager.descriptor);
+        122        data.writeString(name);
+        123        mRemote.transact(GET_SERVICE_TRANSACTION, data, reply, 0);
+        124        IBinder binder = reply.readStrongBinder();
+        125        reply.recycle();
+        126        data.recycle();
+        127        return binder;
+        128    }
+        可见，getService请求被转交给native层，由上一章分析可知，native层得到请求后会将目标Service的BpBinder返回给客户端，得到BpBinder对象后，通过asInterface()得到一个Proxy对象，客户端便通过这个代理类调用服务端定义的各种方法。具体客户端得到Service的流程图如下：
 
-* 知识点3：
-
-      知识点介绍
 
 
    
