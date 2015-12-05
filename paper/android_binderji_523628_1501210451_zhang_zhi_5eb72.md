@@ -15,7 +15,7 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
 
 **一、native层整体通信流程**
 
-* 通信流程概要 
+* **通信流程概要** 
     在探究binder通信流程之前，首先我们需要了解Binder机制的四个组件：Client、Server、Service Manager和Binder驱动程序。关系如图：
     ![](zzk_1.png)
     
@@ -41,7 +41,7 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
     3.基类BpRefBase
     client端在查询SM获得所需的的BpBinder后，BpRefBase负责管理当前获得的BpBinder实例。
     
-* ServiceManger
+* **ServiceManger**
     首先我们来了解一下在通信流程中ServiceManger所做的工作。
 
 	ServiceManger是一个linux级进程，是一个service管理器（service向SM注册是，service就是一个client，而ServiceManger便是server），即我们前边提到的：每一个service被使用之前，均要向ServiceManger注册，客户端通过查询ServiceManger是否存在此服务来获取service的handle（标识符）。
@@ -119,7 +119,7 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
         207    ……
         268}
 ![](zzk_2.png)
-* ProcessState
+* **ProcessState**
     ProcessState是每个进程在使用Binder通信时都需要维护的，用来描述当前进程的binder状态。
 
     ProcessState主要完成两个功能：
@@ -196,7 +196,7 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
     通过此构造函数我们可以发现：BpBinder会将通信中server的handle记录下来。当有数据发送时，会把数据的发送目标通知BD。
     
         	
-* IPCThreadState
+* **IPCThreadState**
     IPCThreadState也是一个单例模式，由上边我们已知每个进程维护一个ProcessState实例，且ProcessState只启动一个Pool thread，因此一个进程之后启动一个Pool thread。
     
     IPCThreadState实际内容为：
@@ -257,9 +257,9 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
     IPCThreadState有两个重要的函数，talkWithDriver函数负责从BD读写数据，executeCommand函数负责解析并执行mIn中的数据。
     
 ![](zzk_3.png)
-*  两个接口类
+*  **两个接口类**
 
-1.BpINTERFACE
+ 1.BpINTERFACE
 
 	 client在获得server端service时，server端向client提供一个接口，client在这个接口基础上创建一个BpINTERFACE，使用此对象，client端的应用能够像本地调用一样直接调用server端的方法，而不必关系binder IPC实现。
 	 
@@ -280,7 +280,7 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
 BpINTERFACE既实现了service中各方法的本地操作，将每个方法的参数以Parcel的形式发送给BD。同时又将BpBinder作为了自己的成员来管理，将BpBinder存储在mRemote中，BpServiceManager通过调用BpRefBase的remote()来获得BpBinder指针。
     
     
-2. BnINTERFACE	
+ 2. BnINTERFACE	
 	
         同样位于/frameworks/native/include/binder/IInterface.h 
         49template<typename INTERFACE>
@@ -299,7 +299,7 @@ class BBinder : public
 IBinder，由此可见，server端的binder操作及状态维护是通过BBinder来实现的。BBinder即为binder的本质。
     
 	
-3.接口类总结
+ 3.接口类总结
 	
 由上节的描述及刚才对于两个接口类源代码分析可知：BpBinder是client端用于创建消息发送的机制，而BBinder是server端用于接口消息的通道。
 
@@ -345,7 +345,7 @@ BpBinder是client创建的用于消息发送的代理，其transact函数用于�
         
 由上述可知，BpINTERFACE，BnINTERFACE均来自同一接口类IINTERFACE，由此保证了service方法在C/S两端的一致性。
 
-* writeStrongBinder和readStrongBinder
+* **writeStrongBinder和readStrongBinder**
 
  
 
@@ -386,7 +386,7 @@ BpBinder是client创建的用于消息发送的代理，其transact函数用于�
         } 
         return finish_flatten_binder(binder, obj, out);
         }
-下边举例说明，addService源码为：
+  下边举例说明，addService源码为：
     	/frameworks/native/libs/binder/IServiceManager.cpp
     	virtual status_t addService(const String16& name,     const sp<IBinder>& service,
         155            bool allowIsolated)
@@ -399,7 +399,7 @@ BpBinder是client创建的用于消息发送的代理，其transact函数用于�
         162        status_t err =         remote()->transact(ADD_SERVICE_TRANSACTION, data, &reply);
         163        return err == NO_ERROR ? reply.readExceptionCode() : err;
         164    }
-由上述代码块可知，写入到parcel的binder类型为BINDER_TYPE_BINDER，然而SM收到的Service的binder类型必须为BINDER_TYPE_HANDLE才会将其添加到svclist中，因此说，addService开始传递的binder类型为BINDER_TYPE_BINDER然而SM收到的binder类型为BINDER_TYPE_HANDLE，中间经历了一个改变，代码如下：
+  由上述代码块可知，写入到parcel的binder类型为BINDER_TYPE_BINDER，然而SM收到的Service的binder类型必须为BINDER_TYPE_HANDLE才会将其添加到svclist中，因此说，addService开始传递的binder类型为BINDER_TYPE_BINDER然而SM收到的binder类型为BINDER_TYPE_HANDLE，中间经历了一个改变，代码如下：
         	drivers/staging/android/Binder.c
     	static void binder_transaction(struct binder_proc *proc,
                    struct binder_thread *thread,
@@ -412,10 +412,10 @@ BpBinder是client创建的用于消息发送的代理，其transact函数用于�
         fp->handle = ref->desc;
         ……
         }
-由以上函数可知，SM只保存了Service binder的handle和name，当client需要和Service通信时，如何才能获得Service得binder呢？需要由readStrongBinder来完成。
+  由以上函数可知，SM只保存了Service binder的handle和name，当client需要和Service通信时，如何才能获得Service得binder呢？需要由readStrongBinder来完成。
 2. readStrongBinder
 
-Client向server请求时，server向BD发送一个binder返回给SM(保存handle和name)，当IPCThreadState收到由返回的parcel时，client通过这一函数将这个server返回给SM的binder读出。
+  Client向server请求时，server向BD发送一个binder返回给SM(保存handle和name)，当IPCThreadState收到由返回的parcel时，client通过这一函数将这个server返回给SM的binder读出。
 
         源码为：
         /frameworks/native/libs/binder/Parcel.cpp
