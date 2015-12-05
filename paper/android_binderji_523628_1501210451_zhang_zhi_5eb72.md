@@ -459,7 +459,7 @@ BpBinder是client创建的用于消息发送的代理，其transact函数用于�
 
 *下边来解析一下java层对于binder的封装过程，分四部分来进行介绍：Java层ServiceManager的结构、如何注册一个Service、如何得到一个Service、Service代理对象方法的过程。*
    
-*ServiceManager的结构:
+***ServiceManager的结构:**
 
       在Java层，ServiceManager的函数源码为：
 	    /frameworks/base/core/java/android/os/ServiceManager.java
@@ -489,7 +489,7 @@ BpBinder是client创建的用于消息发送的代理，其transact函数用于�
 由源码可知，ServiceManager没有继承其他类，下边我们来分析ServiceManager管理binder通信的流程。
 
 
-* 在Java层注册Service：
+* **在Java层注册Service：**
 
   通过ServiceManager的addService()可注册自己，其传输了两个参数：String name, IBinder service，分别为name和BBinder的子类对象，跟native层ServiceManager中Service的注册方法相一致。
 
@@ -580,7 +580,7 @@ BpBinder是client创建的用于消息发送的代理，其transact函数用于�
   可知，将name和Service对象封装到Parcel中，调用transact()方法送出，并将当前操作标记为ADD_SERVICE_TRANSACTION，根据上一章提到的内容，transact()便会调用到BpBinder中，此时便进入到native层的使用，这部分内容已经在上一章节分析完毕，具体流程图如下：
 ![](zzk_4.jpg)
 
-* 客户端得到一个Service：
+* **客户端得到一个Service：**
 
   主要流程如下：通过Java层的ServerManager得到相应的Service，然后通过asInterface()将得到的对象转为客户端可直接调用的代理对象，然后调用代理对象的updateAdnRecordsEfBySearch()方法。
 
