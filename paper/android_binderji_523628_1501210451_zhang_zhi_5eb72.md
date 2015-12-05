@@ -510,7 +510,7 @@ status_t BpBinder::transact(
         152        data.recycle();
         153    }
         可知，将name和Service对象封装到Parcel中，调用transact()方法送出，并将当前操作标记为ADD_SERVICE_TRANSACTION，根据上一章提到的内容，transact()便会调用到BpBinder中，此时便进入到native层的使用，这部分内容已经在上一章节分析完毕，具体流程图如下：
-![](zzk_4.png)
+![](zzk_4.jpg)
 
 * 客户端得到一个Service：
 
