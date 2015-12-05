@@ -434,9 +434,83 @@ status_t BpBinder::transact(
     	由源码可知，ServiceManager没有继承其他类，下边我们来分析ServiceManager管理binder通信的流程。
 
 
-* 知识点2：
+* 在Java层注册Service：
 
-      知识点介绍
+        通过ServiceManager的addService()可注册自己，其传输了两个参数：String name, IBinder service，分别为name和BBinder的子类对象，跟native层ServiceManager中Service的注册方法相一致。
+	    具体源码如下：
+	    public static void addService(String name, IBinder service) {
+        71        try {
+        72            getIServiceManager().addService(name, service, false);
+        73        } catch (RemoteException e) {
+        74            Log.e(TAG, "error in addService", e);
+        75        }
+        76    }
+    	getIServiceManager().addService表明将此操作请求转发给了getIServiceManager()，返回一个IServiceManger类型的sServiceManager对象，源码如下：
+    	private static IServiceManager getIServiceManager() {
+        34        if (sServiceManager != null) {
+        35            return sServiceManager;
+        36        }
+        39        sServiceManager = ServiceManagerNative.asInterface(BinderInternal.getContextObject());
+        40        return sServiceManager;
+        41    }
+        BinderInternal.getContextObject在native层得到BpBinder对象。
+        ServiceManagerNative.asInterface 将BpBinder封装为Java层可用的ServiceManagerProxy对象。
+        下面来通过源码具体分析BpBinder封装为ServiceManagerProxy的过程：
+	static public IServiceManager asInterface(IBinder obj)
+        34    {
+        35        if (obj == null) {
+        36            return null;
+        37        }
+        38        IServiceManager in =
+        39            (IServiceManager)obj.queryLocalInterface(descriptor);
+        40        if (in != null) {
+        41            return in;
+        42        }
+        43
+        44        return new ServiceManagerProxy(obj);
+        45    }
+        由源码可知，通过asInterface的转换，BpBinder对象生成了ServiceManagerProxy对象。也就是说getIServiceManager()得到的是一个ServiceManagerProxy对象，那么ServiceManagerProxy又是什么，下边来具体分析一下。
+        class ServiceManagerProxy implements IServiceManager {
+        110    public ServiceManagerProxy(IBinder remote) {
+        111        mRemote = remote;
+        112    }
+        114    public IBinder asBinder() {
+        115        return mRemote;
+        116    }
+        118    public IBinder getService(String name) throws RemoteException {
+        119        
+        128    }
+        130    public IBinder checkService(String name) throws RemoteException {
+        131        
+        140    }
+        142    public void addService(String name, IBinder service, boolean allowIsolated)
+143            throws RemoteException {
+144       
+153    }
+155    public String[] listServices() throws RemoteException {
+156        
+182    }
+184    public void setPermissionController(IPermissionController controller)
+185            throws RemoteException {
+186        
+193    }
+195    private IBinder mRemote;
+196}
+由源码可知，ServiceManagerProxy继承自IServiceManager，提供add、get、list、check等方法。由以上分析可知，通过getIServiceManager的便可得到ServiceManagerProxy对象，调用其addService方法便可进行注册，addService源码如下：
+public void addService(String name, IBinder service, boolean allowIsolated)
+143            throws RemoteException {
+144        Parcel data = Parcel.obtain();
+145        Parcel reply = Parcel.obtain();
+146        data.writeInterfaceToken(IServiceManager.descriptor);
+147        data.writeString(name);
+148        data.writeStrongBinder(service);
+149        data.writeInt(allowIsolated ? 1 : 0);
+150        mRemote.transact(ADD_SERVICE_TRANSACTION, data, reply, 0);
+151        reply.recycle();
+152        data.recycle();
+153    }
+可知，将name和Service对象封装到Parcel中，调用transact()方法送出，并将当前操作标记为ADD_SERVICE_TRANSACTION，根据上一章提到的内容，transact()便会调用到BpBinder中，此时便进入到native层的使用，这部分内容已经在上一章节分析完毕，具体流程图如下：
+
 
 
 * 知识点3：
