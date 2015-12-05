@@ -46,11 +46,11 @@ https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 
 ##三、主要思路及步骤
 
-**3.1 主要思路**
+###3.1 主要思路
 
     把天气预报项目中直接写文案的地方，全部改成从R文件中引用字符串资源。
 
-**3.2 实践步骤**
+###3.2 实践步骤
 
 *   3.2.1 找出程序中需要国际化处理的地方，用黑圈围住的地方就是
 ![](g11n_1.png)
@@ -64,25 +64,26 @@ https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 ![](g11n_4.png)
 可以输入关键词搜索。选择了之后，自动创建的文件夹名字为values-zh-rCN：  
 ![](g11n_5.png)
-*   3.2.3 定义程序中用到的字符串：  
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">我的天气</string>
-    <string name="bj_weather">北京天气</string>
-    <string name="dis_release">发布</string>
-    <string name="dis_humidity">湿度:</string>
-    <string name="dis_wind">风力:</string>
-</resources>
+*   3.2.3 定义程序中用到的字符串：
+
+    <pre><code><?xml version="1.0" encoding="utf-8"?>  
+    <resources>  
+        <string name="app_name">我的天气</string>
+        <string name="bj_weather">北京天气</string>
+        <string name="dis_release">发布</string>
+        <string name="dis_humidity">湿度:</string>
+        <string name="dis_wind">风力:</string>
+    </resources></code></pre>
 *   3.2.4 按上述步骤，添加繁体中文、英语等其他方案。英文的如下：  
 
-<pre><code><?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">MyWeather</string>
-    <string name="bj_weather">Beijing Weather</string>
-    <string name="dis_release"> Released</string>
-    <string name="dis_humidity">Humidity:</string>
-    <string name="dis_wind">Wind:</string>
-</resources>
+    <pre><code><?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <string name="app_name">MyWeather</string>
+        <string name="bj_weather">Beijing Weather</string>
+        <string name="dis_release"> Released</string>
+        <string name="dis_humidity">Humidity:</string>
+        <string name="dis_wind">Wind:</string>
+    </resources></code></pre>
 
 *   3.2.5 替换程序中的文案。Java代码中用R.string.xxx的形式，xml文件中用@string/xxx的形式。  
 AndroidManifest.xml里面，把application标签下的android:label属性改为：
