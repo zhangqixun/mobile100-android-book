@@ -40,8 +40,8 @@ R文件中的索引，并非是和资源一对一的关系。它应该是根据�
 * 知识点3：
 
 language code 是两位小写字母，采用ISO 639-1标准，country code 是两位大写字母，采用ISO 3166-1标准。我们可以在维基百科上查看标准的具体信息：  
-https://en.wikipedia.org/wiki/ISO_639-1  
-https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+[ISO 639-1](https://en.wikipedia.org/wiki/ISO_639-1 ) 
+[ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
 
 
 
