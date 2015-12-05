@@ -484,32 +484,32 @@ status_t BpBinder::transact(
         131        
         140    }
         142    public void addService(String name, IBinder service, boolean allowIsolated)
-143            throws RemoteException {
-144       
-153    }
-155    public String[] listServices() throws RemoteException {
-156        
-182    }
-184    public void setPermissionController(IPermissionController controller)
-185            throws RemoteException {
-186        
-193    }
-195    private IBinder mRemote;
-196}
-由源码可知，ServiceManagerProxy继承自IServiceManager，提供add、get、list、check等方法。由以上分析可知，通过getIServiceManager的便可得到ServiceManagerProxy对象，调用其addService方法便可进行注册，addService源码如下：
-public void addService(String name, IBinder service, boolean allowIsolated)
-143            throws RemoteException {
-144        Parcel data = Parcel.obtain();
-145        Parcel reply = Parcel.obtain();
-146        data.writeInterfaceToken(IServiceManager.descriptor);
-147        data.writeString(name);
-148        data.writeStrongBinder(service);
-149        data.writeInt(allowIsolated ? 1 : 0);
-150        mRemote.transact(ADD_SERVICE_TRANSACTION, data, reply, 0);
-151        reply.recycle();
-152        data.recycle();
-153    }
-可知，将name和Service对象封装到Parcel中，调用transact()方法送出，并将当前操作标记为ADD_SERVICE_TRANSACTION，根据上一章提到的内容，transact()便会调用到BpBinder中，此时便进入到native层的使用，这部分内容已经在上一章节分析完毕，具体流程图如下：
+        143            throws RemoteException {
+        144       
+        153    }
+        155    public String[] listServices() throws RemoteException {
+        156        
+        182    }
+        184    public void setPermissionController(IPermissionController controller)
+        185            throws RemoteException {
+        186        
+        193    }
+        195    private IBinder mRemote;
+        196}
+        由源码可知，ServiceManagerProxy继承自IServiceManager，提供add、get、list、check等方法。由以上分析可知，通过getIServiceManager的便可得到ServiceManagerProxy对象，调用其addService方法便可进行注册，addService源码如下：
+        public void addService(String name, IBinder     service, boolean allowIsolated)
+        143            throws RemoteException {
+        144        Parcel data = Parcel.obtain();
+        145        Parcel reply = Parcel.obtain();
+        146        data.writeInterfaceToken(IServiceManager.descriptor);
+        147        data.writeString(name);
+        148        data.writeStrongBinder(service);
+        149        data.writeInt(allowIsolated ? 1 : 0);
+        150        mRemote.transact(ADD_SERVICE_TRANSACTION, data, reply, 0);
+        151        reply.recycle();
+        152        data.recycle();
+        153    }
+        可知，将name和Service对象封装到Parcel中，调用transact()方法送出，并将当前操作标记为ADD_SERVICE_TRANSACTION，根据上一章提到的内容，transact()便会调用到BpBinder中，此时便进入到native层的使用，这部分内容已经在上一章节分析完毕，具体流程图如下：
 
 
 
