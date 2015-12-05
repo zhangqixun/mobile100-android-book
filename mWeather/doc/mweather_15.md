@@ -65,43 +65,62 @@ https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 可以输入关键词搜索。选择了之后，自动创建的文件夹名字为values-zh-rCN：  
 ![](g11n_5.png)
 *   3.2.3 定义程序中用到的字符串：
-
-    <pre><code><?xml version="1.0" encoding="utf-8"?>  
+``` XML
+    <?xml version="1.0" encoding="utf-8"?>  
     <resources>  
         <string name="app_name">我的天气</string>
         <string name="bj_weather">北京天气</string>
         <string name="dis_release">发布</string>
         <string name="dis_humidity">湿度:</string>
         <string name="dis_wind">风力:</string>
-    </resources></code></pre>
+    </resources>
+```
 *   3.2.4 按上述步骤，添加繁体中文、英语等其他方案。英文的如下：  
-
-    <pre><code><?xml version="1.0" encoding="utf-8"?>
+``` XML
+    <?xml version="1.0" encoding="utf-8"?>
     <resources>
         <string name="app_name">MyWeather</string>
         <string name="bj_weather">Beijing Weather</string>
         <string name="dis_release"> Released</string>
         <string name="dis_humidity">Humidity:</string>
         <string name="dis_wind">Wind:</string>
-    </resources></code></pre>
+    </resources>
+```
+*   3.2.5 替换程序中的文案。Java代码中用R.string.xxx的形式，xml文件中用@string/xxx的形式。
 
-*   3.2.5 替换程序中的文案。Java代码中用R.string.xxx的形式，xml文件中用@string/xxx的形式。  
 AndroidManifest.xml里面，把application标签下的android:label属性改为：
-<pre><code>android:label="@string/app_name"</code></pre>
+``` JAVA
+android:label="@string/app_name"
+```
 weather_info.xml里面，把ID为title_city_name的TextView控件的android:text属性改为：  
-<pre><code>android:text="@string/bj_weather"</code></pre>
+``` JAVA
+android:text="@string/bj_weather"
+```
 MainActivity.java里面，把  
-<pre><code>timeTv.setText(todayWeather.getUpdatetime() + "发布");</code></pre>
+``` JAVA
+timeTv.setText(todayWeather.getUpdatetime() + "发布");
+```
 改为：  
-<pre><code>timeTv.setText(todayWeather.getUpdatetime() + getString(R.string.dis_release));</code></pre> 
+``` JAVA
+timeTv.setText(todayWeather.getUpdatetime() + getString(R.string.dis_release));
+```
 把  
-<pre><code>humitityTv.setText("湿度" + todayWeather.getShidu());</code></pre>
+``` JAVA
+humitityTv.setText("湿度" + todayWeather.getShidu());
+```
 改为：
-<pre><code>humitityTv.setText(getString(R.string.dis_humidity) + todayWeather.getShidu());</code></pre>
+``` JAVA
+humitityTv.setText(getString(R.string.dis_humidity) + todayWeather.getShidu());
+```
 把  
-<pre><code>windTv.setText("风力" + todayWeather.getFengli());</code></pre>
+``` JAVA
+windTv.setText("风力" + todayWeather.getFengli());
+```
 改为：
-<pre><code>windTv.setText(getString(R.string.dis_wind) + todayWeather.getFengli());</code></pre>
+``` JAVA
+windTv.setText(getString(R.string.dis_wind) + todayWeather.getFengli());
+```
+
 然后设置手机里的语言，可以看到效果。
 
 ##四、常见问题及注意事项
