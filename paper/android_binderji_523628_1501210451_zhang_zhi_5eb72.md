@@ -120,10 +120,14 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
         268}
 ![](zzk_2.png)
 * ProcessState
-            ProcessState是每个进程在使用Binder通信时都需要维护的，用来描述当前进程的binder状态。
-            ProcessState主要完成两个功能：
-            1.创建一个thread负责与内核中的binder模块进行通信（Poolthread）。
-        在Binder IPC中，所有进程均会启动一个thread来负责与binder来直接通信，也就是不断读写binder，这个线程主体是一个IPCThreadState对象（具体介绍见第4节）。
+    ProcessState是每个进程在使用Binder通信时都需要维护的，用来描述当前进程的binder状态。
+
+    ProcessState主要完成两个功能：
+    
+    1.创建一个thread负责与内核中的binder模块进行通信（Poolthread）。
+    
+    在Binder IPC中，所有进程均会启动一个thread来负责与binder来直接通信，也就是不断读写binder，这个线程主体是一个IPCThreadState对象（具体介绍见第4节）。
+
 	        Poolthread启动方式：ProcessState::self()->startThreadPool();
         /frameworks/native/libs/binder/ProcessState.cpp
         136void ProcessState::startThreadPool()
@@ -135,9 +139,12 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
         142    }
         143}
 
-	        2.为知道的handle创建一个BpBinder对象，并管理进程中所有的BpBinder对象。
-        	BpBinder在第一节已经提到，其主要功能是负责client向BD发送调用请求的数据，是client端binder通信的核心，通过调用transact向BD发送调用请求的数据。
-	        ProcessState通过如下函数获取BpBinder对象：
+	2.为知道的handle创建一个BpBinder对象，并管理进程中所有的BpBinder对象。
+	
+    BpBinder在第一节已经提到，其主要功能是负责client向BD发送调用请求的数据，是client端binder通信的核心，通过调用transact向BD发送调用请求的数据。
+    
+	ProcessState通过如下函数获取BpBinder对象：
+	
 	        /frameworks/native/libs/binder/ProcessState.cpp
         	sp<IBinder> ProcessState::getContextObject(const sp<IBinder>& caller)
         90{
