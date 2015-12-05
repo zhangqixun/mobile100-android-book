@@ -279,9 +279,9 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
         69    virtual IBinder*            onAsBinder();
         70};
         
-可见，BpINTERFACE继承自INTERFACE、BpRefBase。
+  可见，BpINTERFACE继承自INTERFACE、BpRefBase。
     
-BpINTERFACE既实现了service中各方法的本地操作，将每个方法的参数以Parcel的形式发送给BD。同时又将BpBinder作为了自己的成员来管理，将BpBinder存储在mRemote中，BpServiceManager通过调用BpRefBase的remote()来获得BpBinder指针。
+  BpINTERFACE既实现了service中各方法的本地操作，将每个方法的参数以Parcel的形式发送给BD。同时又将BpBinder作为了自己的成员来管理，将BpBinder存储在mRemote中，BpServiceManager通过调用BpRefBase的remote()来获得BpBinder指针。
     
     
  2. BnINTERFACE	
@@ -298,16 +298,16 @@ BpINTERFACE既实现了service中各方法的本地操作，将每个方法的�
         57    virtual IBinder*            onAsBinder();
         58};
         
-由代码可知，BnInterface继承自INTERFACE、BBinder。
-class BBinder : public
-IBinder，由此可见，server端的binder操作及状态维护是通过BBinder来实现的。BBinder即为binder的本质。
+  由代码可知，BnInterface继承自INTERFACE、BBinder。
+  class BBinder : public
+  IBinder，由此可见，server端的binder操作及状态维护是通过BBinder来实现的。BBinder即为binder的本质。
     
 	
  3.接口类总结
 	
-由上节的描述及刚才对于两个接口类源代码分析可知：BpBinder是client端用于创建消息发送的机制，而BBinder是server端用于接口消息的通道。
+  由上节的描述及刚才对于两个接口类源代码分析可知：BpBinder是client端用于创建消息发送的机制，而BBinder是server端用于接口消息的通道。
 
-BpBinder是client创建的用于消息发送的代理，其transact函数用于向IPCThreadState发送消息，通知其有消息要发送给BD，部分源代码如下：
+  BpBinder是client创建的用于消息发送的代理，其transact函数用于向IPCThreadState发送消息，通知其有消息要发送给BD，部分源代码如下：
 
 	/frameworks/native/libs/binder/BpBinder.cpp
     status_t BpBinder::transact(
@@ -325,7 +325,7 @@ BpBinder是client创建的用于消息发送的代理，其transact函数用于�
     210            return UNKNOWN_TRANSACTION;
     211    }
     212}
-由BBinder的源码可知，其作用是当IPCThreadState收到BD消息时，通过transact方法将其传递给它的子类BnSERVICE的onTransact函数执行server端的操作。部分源码如下：
+  由BBinder的源码可知，其作用是当IPCThreadState收到BD消息时，通过transact方法将其传递给它的子类BnSERVICE的onTransact函数执行server端的操作。部分源码如下：
 
         /frameworks/native/libs/binder/Binder.cpp
     	status_t BBinder::transact(
@@ -347,7 +347,7 @@ BpBinder是client创建的用于消息发送的代理，其transact函数用于�
         116    return err;
         117}
         
-由上述可知，BpINTERFACE，BnINTERFACE均来自同一接口类IINTERFACE，由此保证了service方法在C/S两端的一致性。
+  由上述可知，BpINTERFACE，BnINTERFACE均来自同一接口类IINTERFACE，由此保证了service方法在C/S两端的一致性。
 
 * **writeStrongBinder和readStrongBinder**
 
@@ -450,7 +450,7 @@ BpBinder是client创建的用于消息发送的代理，其transact函数用于�
         252    return BAD_TYPE;
         253}
         
-  上源码可知：发现如果server返回的binder类型为BINDER_TYPE_BINDER的话，直接获取这个binder；如果server返回的binder类型为BINDER_TYPE_HANDLE时，那么需要重新创建一个BpBinder返回给client。Client通过获得SMhandle来重新构建代理binder与server进行通信。
+  由如上源码可知：发现如果server返回的binder类型为BINDER_TYPE_BINDER的话，直接获取这个binder；如果server返回的binder类型为BINDER_TYPE_HANDLE时，那么需要重新创建一个BpBinder返回给client。Client通过获得SMhandle来重新构建代理binder与server进行通信。
 
 至此，native通信机制已构建完毕。
   
