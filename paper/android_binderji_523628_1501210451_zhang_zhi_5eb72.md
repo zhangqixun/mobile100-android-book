@@ -175,9 +175,12 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
             180    return &mHandleToObject.editItemAt(handle);
         181}
 
-        	在获取BpBinder对象的过程中，ProcessState会维护一个BpBinder的vecto：mHandleToObject(具体调用过程见上述源代码)。
-        	创建一个BpBinder实例时，回去查询mHandleToObject，如果对应的handler以及有binder指针，就不再创建，否则创建并插入到mHandlerToObject中（具体代码见上述的lookupHandleLocked）。
-        	BpBinder构造函数位于/frameworks/native/libs/binder/BpBinder.cpp：
+    在获取BpBinder对象的过程中，ProcessState会维护一个BpBinder的vecto：mHandleToObject(具体调用过程见上述源代码)。
+    
+    创建一个BpBinder实例时，回去查询mHandleToObject，如果对应的handler以及有binder指针，就不再创建，否则创建并插入到mHandlerToObject中（具体代码见上述的lookupHandleLocked）。
+    
+    BpBinder构造函数位于/frameworks/native/libs/binder/BpBinder.cpp：
+    
         	BpBinder::BpBinder(int32_t handle)
         90    : mHandle(handle)
         91    , mAlive(1)
@@ -189,11 +192,14 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
         97    extendObjectLifetime(OBJECT_LIFETIME_WEAK);
         98    IPCThreadState::self()->incWeakHandle(handle);
         99}
-        	通过此构造函数我们可以发现：BpBinder会将通信中server的handle记录下来。当有数据发送时，会把数据的发送目标通知BD。
+        
+    通过此构造函数我们可以发现：BpBinder会将通信中server的handle记录下来。当有数据发送时，会把数据的发送目标通知BD。
+    
         	
 * IPCThreadState
-        IPCThreadState也是一个单例模式，由上边我们已知每个进程维护一个ProcessState实例，且ProcessState只启动一个Pool thread，因此一个进程之后启动一个Pool thread。
-        	IPCThreadState实际内容为：
+    IPCThreadState也是一个单例模式，由上边我们已知每个进程维护一个ProcessState实例，且ProcessState只启动一个Pool thread，因此一个进程之后启动一个Pool thread。
+    
+    IPCThreadState实际内容为：
 
         void IPCThreadState::joinThreadPool(bool isMain)
         421{
@@ -244,30 +250,39 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
         490    mOut.writeInt32(BC_EXIT_LOOPER);
         491    talkWithDriver(false);
         492}
-        ProcessState中有2个Parcel成员（mIn和mOut），由以上代码可见，Pool Thread会不断查询BD中是否有数据可读，若有，则保存在mIn；不停检查mOut是否有数据需要向BD发送，若有，则写入BD。
-        根据第三节提到的：BpBinder通过调用transact向BD发送调用请求的数据，也就是说ProcessState中生成的BpBinder实例通过调用IPCThreadState的transact函数来向mOut中写入数据，这样的话这个binder IPC过程的client端的调用请求的发送过程就讲述完毕。
-        IPCThreadState有两个重要的函数，talkWithDriver函数负责从BD读写数据，executeCommand函数负责解析并执行mIn中的数据。
+    ProcessState中有2个Parcel成员（mIn和mOut），由以上代码可见，Pool Thread会不断查询BD中是否有数据可读，若有，则保存在mIn；不停检查mOut是否有数据需要向BD发送，若有，则写入BD。
+    
+    根据第三节提到的：BpBinder通过调用transact向BD发送调用请求的数据，也就是说ProcessState中生成的BpBinder实例通过调用IPCThreadState的transact函数来向mOut中写入数据，这样的话这个binder IPC过程的client端的调用请求的发送过程就讲述完毕。
+    
+    IPCThreadState有两个重要的函数，talkWithDriver函数负责从BD读写数据，executeCommand函数负责解析并执行mIn中的数据。
+    
 ![](zzk_3.png)
 *  两个接口类
-        1.BpINTERFACE
-	    client在获得server端service时，server端向client提供一个接口，client在这个接口基础上创建一个BpINTERFACE，使用此对象，client端的应用能够像本地调用一样直接调用server端的方法，而不必关系binder IPC实现。
+*  
+    1.BpINTERFACE
+
+	 client在获得server端service时，server端向client提供一个接口，client在这个接口基础上创建一个BpINTERFACE，使用此对象，client端的应用能够像本地调用一样直接调用server端的方法，而不必关系binder IPC实现。
+	 
 	    BpINTERFACE原型如下：
         /frameworks/native/include/binder/IInterface.h 
         62template<typename INTERFACE>
-    63class BpInterface : public INTERFACE, public BpRefBase
-    64{
+        63class BpInterface : public INTERFACE, public BpRefBase
+        64{
         65public:
         66                                BpInterface(const sp<IBinder>& remote);
-    67
-    68protected:
+        67
+        68protected:
         69    virtual IBinder*            onAsBinder();
         70};
-        可见，BpINTERFACE继承自INTERFACE、BpRefBase。
-    	BpINTERFACE既实现了service中各方法的本地操作，将每个方法的参数以Parcel的形式发送给BD。同时又将BpBinder作为了自己的成员来管理，将BpBinder存储在mRemote中，BpServiceManager通过调用BpRefBase的remote()来获得BpBinder指针。
-    	2. BnINTERFACE	
+    可见，BpINTERFACE继承自INTERFACE、BpRefBase。
+    
+    BpINTERFACE既实现了service中各方法的本地操作，将每个方法的参数以Parcel的形式发送给BD。同时又将BpBinder作为了自己的成员来管理，将BpBinder存储在mRemote中，BpServiceManager通过调用BpRefBase的remote()来获得BpBinder指针。
+    
+	2. BnINTERFACE	
+	
         同样位于/frameworks/native/include/binder/IInterface.h 
         49template<typename INTERFACE>
-    50class BnInterface : public INTERFACE, public BBinder
+        50class BnInterface : public INTERFACE, public BBinder
         51{
         52public:
         53    virtual sp<IInterface>      queryLocalInterface(const String16& _descriptor);
@@ -275,7 +290,7 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
         55
         56protected:
         57    virtual IBinder*            onAsBinder();
-    58};
+        58};
         由代码可知，BnInterface继承自INTERFACE、BBinder。
         class BBinder : public IBinder，由此可见，server端的binder操作及状态维护是通过BBinder来实现的。BBinder即为binder的本质。
 	3.接口类总结
