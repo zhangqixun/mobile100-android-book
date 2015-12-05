@@ -404,9 +404,35 @@ status_t BpBinder::transact(
 
 *下边来解析一下java层对于binder的封装过程，分四部分来进行介绍：Java层ServiceManager的结构、如何注册一个Service、如何得到一个Service、Service代理对象方法的过程。*
    
+*ServiceManager的结构:
 
+      在Java层，ServiceManager的函数源码为：
+	    /frameworks/base/core/java/android/os/ServiceManager.java
+	    public final class ServiceManager {
+        36        } 
+        49    public static IBinder getService(String name) {
+        50        
+        61    }
+        62
+        70    public static void addService(String name, IBinder service) {
+        71       
+        76    }
+        77
+        87    public static void addService(String name, IBinder service, boolean allowIsolated) {
+        93    }
+        94
+        99    public static IBinder checkService(String name) {
+        111    }
+        112
+        116    public static String[] listServices() throws RemoteException {
+        117        
+        123    }
+        124
+        133    public static void initServiceCache(Map<String, IBinder> cache) {
+        134        
+        138    }
+    	由源码可知，ServiceManager没有继承其他类，下边我们来分析ServiceManager管理binder通信的流程。
 
-      知识点介绍
 
 * 知识点2：
 
