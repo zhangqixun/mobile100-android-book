@@ -87,21 +87,21 @@ https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 
 *   3.2.5 替换程序中的文案。Java代码中用R.string.xxx的形式，xml文件中用@string/xxx的形式。  
 AndroidManifest.xml里面，把application标签下的android:label属性改为：
-<pre><code>android:label="@string/app_name"</pre></code>
+<pre><code>android:label="@string/app_name"</code></pre>
 weather_info.xml里面，把ID为title_city_name的TextView控件的android:text属性改为：  
-<pre><code>android:text="@string/bj_weather"</pre></code>
+<pre><code>android:text="@string/bj_weather"</code></pre>
 MainActivity.java里面，把  
-<pre><code>timeTv.setText(todayWeather.getUpdatetime() + "发布");</pre></code>
+<pre><code>timeTv.setText(todayWeather.getUpdatetime() + "发布");</code></pre>
 改为：  
-<pre><code>timeTv.setText(todayWeather.getUpdatetime() + getString(R.string.dis_release));</pre></code>  
+<pre><code>timeTv.setText(todayWeather.getUpdatetime() + getString(R.string.dis_release));</code></pre> 
 把  
-<pre><code>humitityTv.setText("湿度" + todayWeather.getShidu());</pre></code>  
-改为  
-<pre><code>humitityTv.setText(getString(R.string.dis_humidity) + todayWeather.getShidu());</pre></code>
+<pre><code>humitityTv.setText("湿度" + todayWeather.getShidu());</code></pre>
+改为：
+<pre><code>humitityTv.setText(getString(R.string.dis_humidity) + todayWeather.getShidu());</code></pre>
 把  
-<pre><code>windTv.setText("风力" + todayWeather.getFengli());</pre></code>
-改为  
-<pre><code>windTv.setText(getString(R.string.dis_wind) + todayWeather.getFengli());</pre></code>
+<pre><code>windTv.setText("风力" + todayWeather.getFengli());</code></pre>
+改为：
+<pre><code>windTv.setText(getString(R.string.dis_wind) + todayWeather.getFengli());</code></pre>
 然后设置手机里的语言，可以看到效果。
 
 ##四、常见问题及注意事项
