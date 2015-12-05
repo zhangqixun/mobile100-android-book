@@ -345,9 +345,13 @@ BpBinder是client创建的用于消息发送的代理，其transact函数用于�
         
 由上述可知，BpINTERFACE，BnINTERFACE均来自同一接口类IINTERFACE，由此保证了service方法在C/S两端的一致性。
 
-*writeStrongBinder和readStrongBinder
-        1. writeStrongBinder是client将一个binder传送给server时需要调用的函数。
-    	具体源码如下：
+* writeStrongBinder和readStrongBinder
+
+ 
+
+1. writeStrongBinder是client将一个binder传送给server时需要调用的函数。
+
+        具体源码如下：
     	status_t Parcel::writeStrongBinder(const     sp<IBinder>& val)
     	681{
     	682    return flatten_binder(ProcessState::self(), val, this);
@@ -382,7 +386,7 @@ BpBinder是client创建的用于消息发送的代理，其transact函数用于�
         } 
         return finish_flatten_binder(binder, obj, out);
         }
-    	下边举例说明，addService源码为：
+下边举例说明，addService源码为：
     	/frameworks/native/libs/binder/IServiceManager.cpp
     	virtual status_t addService(const String16& name,     const sp<IBinder>& service,
         155            bool allowIsolated)
@@ -395,7 +399,7 @@ BpBinder是client创建的用于消息发送的代理，其transact函数用于�
         162        status_t err =         remote()->transact(ADD_SERVICE_TRANSACTION, data, &reply);
         163        return err == NO_ERROR ? reply.readExceptionCode() : err;
         164    }
-    	由上述代码块可知，写入到parcel的binder类型为BINDER_TYPE_BINDER，然而SM收到的Service的binder类型必须为BINDER_TYPE_HANDLE才会将其添加到svclist中，因此说，addService开始传递的binder类型为BINDER_TYPE_BINDER然而SM收到的binder类型为BINDER_TYPE_HANDLE，中间经历了一个改变，代码如下：
+由上述代码块可知，写入到parcel的binder类型为BINDER_TYPE_BINDER，然而SM收到的Service的binder类型必须为BINDER_TYPE_HANDLE才会将其添加到svclist中，因此说，addService开始传递的binder类型为BINDER_TYPE_BINDER然而SM收到的binder类型为BINDER_TYPE_HANDLE，中间经历了一个改变，代码如下：
         	drivers/staging/android/Binder.c
     	static void binder_transaction(struct binder_proc *proc,
                    struct binder_thread *thread,
@@ -408,9 +412,11 @@ BpBinder是client创建的用于消息发送的代理，其transact函数用于�
         fp->handle = ref->desc;
         ……
         }
-        由以上函数可知，SM只保存了Service binder的handle和name，当client需要和Service通信时，如何才能获得Service得binder呢？需要由readStrongBinder来完成。
-        2. readStrongBinder
-        Client向server请求时，server向BD发送一个binder返回给SM(保存handle和name)，当IPCThreadState收到由返回的parcel时，client通过这一函数将这个server返回给SM的binder读出。
+由以上函数可知，SM只保存了Service binder的handle和name，当client需要和Service通信时，如何才能获得Service得binder呢？需要由readStrongBinder来完成。
+2. readStrongBinder
+
+Client向server请求时，server向BD发送一个binder返回给SM(保存handle和name)，当IPCThreadState收到由返回的parcel时，client通过这一函数将这个server返回给SM的binder读出。
+
         源码为：
         /frameworks/native/libs/binder/Parcel.cpp
         sp<IBinder> Parcel::readStrongBinder() const
