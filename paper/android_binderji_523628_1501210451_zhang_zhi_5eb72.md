@@ -231,15 +231,178 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
         ProcessState中有2个Parcel成员（mIn和mOut），由以上代码可见，Pool Thread会不断查询BD中是否有数据可读，若有，则保存在mIn；不停检查mOut是否有数据需要向BD发送，若有，则写入BD。
         根据第三节提到的：BpBinder通过调用transact向BD发送调用请求的数据，也就是说ProcessState中生成的BpBinder实例通过调用IPCThreadState的transact函数来向mOut中写入数据，这样的话这个binder IPC过程的client端的调用请求的发送过程就讲述完毕。
         IPCThreadState有两个重要的函数，talkWithDriver函数负责从BD读写数据，executeCommand函数负责解析并执行mIn中的数据。
+        ![](zzk_3.png)
+*  两个接口类
+        1.BpINTERFACE
+	    client在获得server端service时，server端向client提供一个接口，client在这个接口基础上创建一个BpINTERFACE，使用此对象，client端的应用能够像本地调用一样直接调用server端的方法，而不必关系binder IPC实现。
+	    BpINTERFACE原型如下：
+        /frameworks/native/include/binder/IInterface.h 
+        62template<typename INTERFACE>
+    63class BpInterface : public INTERFACE, public BpRefBase
+    64{
+        65public:
+        66                                BpInterface(const sp<IBinder>& remote);
+    67
+    68protected:
+        69    virtual IBinder*            onAsBinder();
+        70};
+        可见，BpINTERFACE继承自INTERFACE、BpRefBase。
+    	BpINTERFACE既实现了service中各方法的本地操作，将每个方法的参数以Parcel的形式发送给BD。同时又将BpBinder作为了自己的成员来管理，将BpBinder存储在mRemote中，BpServiceManager通过调用BpRefBase的remote()来获得BpBinder指针。
+    	2. BnINTERFACE	
+        同样位于/frameworks/native/include/binder/IInterface.h 
+        49template<typename INTERFACE>
+    50class BnInterface : public INTERFACE, public BBinder
+        51{
+        52public:
+        53    virtual sp<IInterface>      queryLocalInterface(const String16& _descriptor);
+        54    virtual const String16&     getInterfaceDescriptor() const;
+        55
+        56protected:
+        57    virtual IBinder*            onAsBinder();
+    58};
+        由代码可知，BnInterface继承自INTERFACE、BBinder。
+        class BBinder : public IBinder，由此可见，server端的binder操作及状态维护是通过BBinder来实现的。BBinder即为binder的本质。
+	3.接口类总结
+	由上节的描述及刚才对于两个接口类源代码分析可知：BpBinder是client端用于创建消息发送的机制，而BBinder是server端用于接口消息的通道。
+	BpBinder是client创建的用于消息发送的代理，其transact函数用于向IPCThreadState发送消息，通知其有消息要发送给BD，部分源代码如下：
+	/frameworks/native/libs/binder/BpBinder.cpp
+status_t BpBinder::transact(
+160    uint32_t code, const Parcel& data, Parcel* reply, uint32_t flags)
+161{
+163    if (mAlive) {
+164        status_t status = IPCThreadState::self()->transact(
+165            mHandle, code, data, reply, flags);
+166        if (status == DEAD_OBJECT) mAlive = 0;
+167        return status;
+168    }
+170    return DEAD_OBJECT;
+207        }
+209        default:
+210            return UNKNOWN_TRANSACTION;
+211    }
+212}
+	由BBinder的源码可知，其作用是当IPCThreadState收到BD消息时，通过transact方法将其传递给它的子类BnSERVICE的onTransact函数执行server端的操作。部分源码如下：
+        /frameworks/native/libs/binder/Binder.cpp
+    	status_t BBinder::transact(
+        98    uint32_t code, const Parcel& data, Parcel* reply, uint32_t flags)
+        99{
+        100    data.setDataPosition(0); 
+        102    status_t err = NO_ERROR;
+        103    switch (code) {
+        104        case PING_TRANSACTION:
+        105            reply->writeInt32(pingBinder());
+        106            break;
+        107        default:
+        108            err = onTransact(code, data, reply, flags);
+        109            break;
+        110    }
+        112    if (reply != NULL) {
+        113        reply->setDataPosition(0);
+        114    }
+        116    return err;
+        117}
+    	由上述可知，BpINTERFACE，BnINTERFACE均来自同一接口类IINTERFACE，由此保证了service方法在C/S两端的一致性。
+*writeStrongBinder和readStrongBinder
+        1. writeStrongBinder是client将一个binder传送给server时需要调用的函数。
+    	具体源码如下：
+    	status_t Parcel::writeStrongBinder(const     sp<IBinder>& val)
+    	681{
+    	682    return flatten_binder(ProcessState::self(), val, this);
+    	683}
+    	flatten_binder为：
+        status_t flatten_binder(const sp<ProcessState>& proc,
+        const sp<IBinder>& binder, Parcel* out)
+        {
+            flat_binder_object obj;
+        
+            obj.flags = 0x7f | FLAT_BINDER_FLAG_ACCEPTS_FDS;
+            if (binder != NULL) {
+                IBinder *local = binder->localBinder();
+                if (!local) {
+                    BpBinder *proxy = binder->remoteBinder();
+                if (proxy == NULL) {
+                    LOGE("null proxy");
+            }
+            const int32_t handle = proxy ? proxy->handle() : 0;
+            obj.type = BINDER_TYPE_HANDLE;
+            obj.handle = handle;
+            obj.cookie = NULL;
+        } else {
+            obj.type = BINDER_TYPE_BINDER;
+            obj.binder = local->getWeakRefs();
+            obj.cookie = local;
+        }
+        } else {
+            obj.type = BINDER_TYPE_BINDER;
+            obj.binder = NULL;
+            obj.cookie = NULL;
+        } 
+        return finish_flatten_binder(binder, obj, out);
+    }
+    	下边举例说明，addService源码为：
+    	/frameworks/native/libs/binder/IServiceManager.cpp
+    	virtual status_t addService(const String16& name,     const sp<IBinder>& service,
+        155            bool allowIsolated)
+        156    {
+        157        Parcel data, reply;
+    158        data.writeInterfaceToken(IServiceManager::getInterfaceDescriptor());
+        159        data.writeString16(name);
+        160        data.writeStrongBinder(service);
+        161        data.writeInt32(allowIsolated ? 1 : 0);
+        162        status_t err =         remote()->transact(ADD_SERVICE_TRANSACTION, data, &reply);
+        163        return err == NO_ERROR ? reply.readExceptionCode() : err;
+        164    }
+    	由上述代码块可知，写入到parcel的binder类型为BINDER_TYPE_BINDER，然而SM收到的Service的binder类型必须为BINDER_TYPE_HANDLE才会将其添加到svclist中，因此说，addService开始传递的binder类型为BINDER_TYPE_BINDER然而SM收到的binder类型为BINDER_TYPE_HANDLE，中间经历了一个改变，代码如下：
+        	drivers/staging/android/Binder.c
+    	static void binder_transaction(struct binder_proc *proc,
+                   struct binder_thread *thread,
+                   struct binder_transaction_data *tr, int reply){
+        	……
+            if (fp->type == BINDER_TYPE_BINDER)
+           fp->type = BINDER_TYPE_HANDLE;
+         else
+              fp->type = BINDER_TYPE_WEAK_HANDLE;
+        fp->handle = ref->desc;
+        ……
+        }
+        由以上函数可知，SM只保存了Service binder的handle和name，当client需要和Service通信时，如何才能获得Service得binder呢？需要由readStrongBinder来完成。
+        2. readStrongBinder
+        Client向server请求时，server向BD发送一个binder返回给SM(保存handle和name)，当IPCThreadState收到由返回的parcel时，client通过这一函数将这个server返回给SM的binder读出。
+        源码为：
+        /frameworks/native/libs/binder/Parcel.cpp
+        sp<IBinder> Parcel::readStrongBinder() const
+        1041{
+        1042    sp<IBinder> val;
+        1043    unflatten_binder(ProcessState::self(), *this,      &val);
+        1044    return val;
+        1045}
 
+        unflatten_binder为：
+        status_t unflatten_binder(const sp<ProcessState>& proc,
+        237    const Parcel& in, sp<IBinder>* out)
+        238{
+        239    const flat_binder_object* flat = in.readObject(false);
+        240
+        241    if (flat) {
+        242        switch (flat->type) {
+        243            case BINDER_TYPE_BINDER:
+        244                *out = static_cast<IBinder*>(flat->cookie);
+        245                return finish_unflatten_binder(NULL, *flat, in);
+        246            case BINDER_TYPE_HANDLE:
+        247                *out = proc->getStrongProxyForHandle(flat->handle);
+        248                return finish_unflatten_binder(
+        249                    static_cast<BpBinder*>(out->get()),         *flat, in);
+        250        }
+        251    }
+        252    return BAD_TYPE;
+        253}
+        由如上源码可知：发现如果server返回的binder类型为BINDER_TYPE_BINDER的话，直接获取这个binder；如果server返回的binder类型为BINDER_TYPE_HANDLE时，那么需要重新创建一个BpBinder返回给client。Client通过获得SMhandle来重新构建代理binder与server进行通信。
+        至此，native通信机制已构建完毕。
+  
 
+**二、Java层的binder机制**
 
-
-    
-
-**二、基础知识**
-
-*简要介绍本模块所需掌握的基础知识*
+*下边来解析一下java层对于binder的封装过程，分四部分来进行介绍：Java层ServiceManager的结构、如何注册一个Service、如何得到一个Service、Service代理对象方法的过程。*
    
 
 
