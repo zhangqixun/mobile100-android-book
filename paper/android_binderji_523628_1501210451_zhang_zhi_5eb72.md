@@ -450,7 +450,7 @@ BpBinder是client创建的用于消息发送的代理，其transact函数用于�
         252    return BAD_TYPE;
         253}
         
-由如上源码可知：发现如果server返回的binder类型为BINDER_TYPE_BINDER的话，直接获取这个binder；如果server返回的binder类型为BINDER_TYPE_HANDLE时，那么需要重新创建一个BpBinder返回给client。Client通过获得SMhandle来重新构建代理binder与server进行通信。
+  上源码可知：发现如果server返回的binder类型为BINDER_TYPE_BINDER的话，直接获取这个binder；如果server返回的binder类型为BINDER_TYPE_HANDLE时，那么需要重新创建一个BpBinder返回给client。Client通过获得SMhandle来重新构建代理binder与server进行通信。
 
 至此，native通信机制已构建完毕。
   
