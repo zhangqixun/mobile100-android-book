@@ -487,7 +487,7 @@ Client向server请求时，server向BD发送一个binder返回给SM(保存handle
 
 * 在Java层注册Service：
 
-通过ServiceManager的addService()可注册自己，其传输了两个参数：String name, IBinder service，分别为name和BBinder的子类对象，跟native层ServiceManager中Service的注册方法相一致。
+  通过ServiceManager的addService()可注册自己，其传输了两个参数：String name, IBinder service，分别为name和BBinder的子类对象，跟native层ServiceManager中Service的注册方法相一致。
 
 	    具体源码如下：
 	    public static void addService(String name, IBinder service) {
@@ -498,7 +498,7 @@ Client向server请求时，server向BD发送一个binder返回给SM(保存handle
         75        }
         76    }
         
-getIServiceManager().addService表明将此操作请求转发给了getIServiceManager()，返回一个IServiceManger类型的sServiceManager对象，源码如下：
+  getIServiceManager().addService表明将此操作请求转发给了getIServiceManager()，返回一个IServiceManger类型的sServiceManager对象，源码如下：
 
     	private static IServiceManager getIServiceManager() {
         34        if (sServiceManager != null) {
@@ -508,12 +508,12 @@ getIServiceManager().addService表明将此操作请求转发给了getIServiceMa
         40        return sServiceManager;
         41    }
         
-BinderInternal.getContextObject在native层得到BpBinder对象。
+  BinderInternal.getContextObject在native层得到BpBinder对象。
 
-ServiceManagerNative.asInterface
-将BpBinder封装为Java层可用的ServiceManagerProxy对象。
+  ServiceManagerNative.asInterface
+  将BpBinder封装为Java层可用的ServiceManagerProxy对象。
 
-下面来通过源码具体分析BpBinder封装为ServiceManagerProxy的过程：
+  下面来通过源码具体分析BpBinder封装为ServiceManagerProxy的过程：
 
 	static public IServiceManager asInterface(IBinder obj)
         34    {
@@ -529,7 +529,7 @@ ServiceManagerNative.asInterface
         44        return new ServiceManagerProxy(obj);
         45    }
     
-由源码可知，通过asInterface的转换，BpBinder对象生成了ServiceManagerProxy对象。也就是说getIServiceManager()得到的是一个ServiceManagerProxy对象，那么ServiceManagerProxy又是什么，下边来具体分析一下。
+  由源码可知，通过asInterface的转换，BpBinder对象生成了ServiceManagerProxy对象。也就是说getIServiceManager()得到的是一个ServiceManagerProxy对象，那么ServiceManagerProxy又是什么，下边来具体分析一下。
 
         class ServiceManagerProxy implements IServiceManager {
         110    public ServiceManagerProxy(IBinder remote) {
@@ -558,7 +558,7 @@ ServiceManagerNative.asInterface
         195    private IBinder mRemote;
         196}
         
-由源码可知，ServiceManagerProxy继承自IServiceManager，提供add、get、list、check等方法。由以上分析可知，通过getIServiceManager的便可得到ServiceManagerProxy对象，调用其addService方法便可进行注册，addService源码如下：
+  由源码可知，ServiceManagerProxy继承自IServiceManager，提供add、get、list、check等方法。由以上分析可知，通过getIServiceManager的便可得到ServiceManagerProxy对象，调用其addService方法便可进行注册，addService源码如下：
 
         public void addService(String name, IBinder     service, boolean allowIsolated)
         143            throws RemoteException {
@@ -573,12 +573,12 @@ ServiceManagerNative.asInterface
         152        data.recycle();
         153    }
         
-可知，将name和Service对象封装到Parcel中，调用transact()方法送出，并将当前操作标记为ADD_SERVICE_TRANSACTION，根据上一章提到的内容，transact()便会调用到BpBinder中，此时便进入到native层的使用，这部分内容已经在上一章节分析完毕，具体流程图如下：
+  可知，将name和Service对象封装到Parcel中，调用transact()方法送出，并将当前操作标记为ADD_SERVICE_TRANSACTION，根据上一章提到的内容，transact()便会调用到BpBinder中，此时便进入到native层的使用，这部分内容已经在上一章节分析完毕，具体流程图如下：
 ![](zzk_4.jpg)
 
 * 客户端得到一个Service：
 
-主要流程如下：通过Java层的ServerManager得到相应的Service，然后通过asInterface()将得到的对象转为客户端可直接调用的代理对象，然后调用代理对象的updateAdnRecordsEfBySearch()方法。
+  主要流程如下：通过Java层的ServerManager得到相应的Service，然后通过asInterface()将得到的对象转为客户端可直接调用的代理对象，然后调用代理对象的updateAdnRecordsEfBySearch()方法。
 
         具体分析如下：
         首先，通过ServerManager得到相应的BpBinder对象。
@@ -608,7 +608,7 @@ ServiceManagerNative.asInterface
         41    }
         
         
-可知通过IServiceManager得到的是一个ServiceManager在Java层的代理对象，下边来分析此代理对象的getService(     )方法。
+  可知通过IServiceManager得到的是一个ServiceManager在Java层的代理对象，下边来分析此代理对象的getService(     )方法。
 
         /frameworks/base/core/java/android/os/ServiceManagerNative.java
         public IBinder getService(String name) throws RemoteException {
@@ -623,7 +623,7 @@ ServiceManagerNative.asInterface
         127        return binder;
         128    }
         
-可见，getService请求被转交给native层，由上一章分析可知，native层得到请求后会将目标Service的BpBinder返回给客户端，得到BpBinder对象后，通过asInterface()得到一个Proxy对象，客户端便通过这个代理类调用服务端定义的各种方法。具体客户端得到Service的流程图如下：
+  可见，getService请求被转交给native层，由上一章分析可知，native层得到请求后会将目标Service的BpBinder返回给客户端，得到BpBinder对象后，通过asInterface()得到一个Proxy对象，客户端便通过这个代理类调用服务端定义的各种方法。具体客户端得到Service的流程图如下：
 ![](zzk_5.jpg)
 
 
