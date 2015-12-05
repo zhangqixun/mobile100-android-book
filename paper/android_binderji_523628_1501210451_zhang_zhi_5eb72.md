@@ -109,7 +109,7 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
         206    struct svcinfo *si;
         207    ……
         268}
-        ![](zzk_2.png)
+![](zzk_2.png)
 * ProcessState
             ProcessState是每个进程在使用Binder通信时都需要维护的，用来描述当前进程的binder状态。
             ProcessState主要完成两个功能：
@@ -231,7 +231,7 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
         ProcessState中有2个Parcel成员（mIn和mOut），由以上代码可见，Pool Thread会不断查询BD中是否有数据可读，若有，则保存在mIn；不停检查mOut是否有数据需要向BD发送，若有，则写入BD。
         根据第三节提到的：BpBinder通过调用transact向BD发送调用请求的数据，也就是说ProcessState中生成的BpBinder实例通过调用IPCThreadState的transact函数来向mOut中写入数据，这样的话这个binder IPC过程的client端的调用请求的发送过程就讲述完毕。
         IPCThreadState有两个重要的函数，talkWithDriver函数负责从BD读写数据，executeCommand函数负责解析并执行mIn中的数据。
-        ![](zzk_3.png)
+![](zzk_3.png)
 *  两个接口类
         1.BpINTERFACE
 	    client在获得server端service时，server端向client提供一个接口，client在这个接口基础上创建一个BpINTERFACE，使用此对象，client端的应用能够像本地调用一样直接调用server端的方法，而不必关系binder IPC实现。
@@ -338,14 +338,14 @@ status_t BpBinder::transact(
             obj.cookie = NULL;
         } 
         return finish_flatten_binder(binder, obj, out);
-    }
+        }
     	下边举例说明，addService源码为：
     	/frameworks/native/libs/binder/IServiceManager.cpp
     	virtual status_t addService(const String16& name,     const sp<IBinder>& service,
         155            bool allowIsolated)
         156    {
         157        Parcel data, reply;
-    158        data.writeInterfaceToken(IServiceManager::getInterfaceDescriptor());
+        158        data.writeInterfaceToken(IServiceManager::getInterfaceDescriptor());
         159        data.writeString16(name);
         160        data.writeStrongBinder(service);
         161        data.writeInt32(allowIsolated ? 1 : 0);
@@ -510,7 +510,7 @@ status_t BpBinder::transact(
         152        data.recycle();
         153    }
         可知，将name和Service对象封装到Parcel中，调用transact()方法送出，并将当前操作标记为ADD_SERVICE_TRANSACTION，根据上一章提到的内容，transact()便会调用到BpBinder中，此时便进入到native层的使用，这部分内容已经在上一章节分析完毕，具体流程图如下：
-        ![](zzk_3.png)
+![](zzk_4.png)
 
 * 客户端得到一个Service：
 
@@ -555,24 +555,18 @@ status_t BpBinder::transact(
         127        return binder;
         128    }
         可见，getService请求被转交给native层，由上一章分析可知，native层得到请求后会将目标Service的BpBinder返回给客户端，得到BpBinder对象后，通过asInterface()得到一个Proxy对象，客户端便通过这个代理类调用服务端定义的各种方法。具体客户端得到Service的流程图如下：
+![](zzk_5.jpg)
 
 
 
    
 
-**三、主要思路及步骤**
+**三、总结**
 
-**3.1 主要思路**
+**Binder通信整体流程图如下：**
 
-*简要介绍主要思路*
 
-**3.2 实践步骤**
-
-*详细描述开发的具体步骤*
-
-**四、常见问题及注意事项**
-
-*详细描述本部分的常遇到的问题以及开发过程中的注意事项*
+![](zzk_6.jpg)
 
 
 
