@@ -73,6 +73,7 @@
    * [为ListView添加分段标头（1501211035 张守一）](paper/weilistview_tian_jia_fen_duan_biao_tou_ff08_150121.md)
    * [Android MD5加密算法及方法混淆(1501210723 魏焓颖)](paper/2015/1501210723_why.md)
    * [Android小工具开发（1501211016杨晓）](paper/androidxiao_gong_ju_kai_fa_ff08_1501211016_yang_xi.md)
+   * Android Binder机制(1501210451 张志康)
 * [常见面试题目](question/index.md)
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
