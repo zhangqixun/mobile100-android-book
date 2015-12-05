@@ -274,11 +274,13 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
         68protected:
         69    virtual IBinder*            onAsBinder();
         70};
+        
     可见，BpINTERFACE继承自INTERFACE、BpRefBase。
     
     BpINTERFACE既实现了service中各方法的本地操作，将每个方法的参数以Parcel的形式发送给BD。同时又将BpBinder作为了自己的成员来管理，将BpBinder存储在mRemote中，BpServiceManager通过调用BpRefBase的remote()来获得BpBinder指针。
     
-	2. BnINTERFACE	
+    2. BnINTERFACE	
+    
 	
         同样位于/frameworks/native/include/binder/IInterface.h 
         49template<typename INTERFACE>
