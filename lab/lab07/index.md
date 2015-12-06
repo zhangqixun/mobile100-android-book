@@ -7,26 +7,34 @@
 
 **一、实验目的**
 
-*简要介绍本次实验的主要目的。*
+*了解android studio的几种基本控件并学会使用*
 
 **二、基础知识**
 
-*简要介绍本次实验所需掌握的基础知识*
+* 大多数的界面控件都在android.view和android.widget包中，android.view.View为他们的父类，还有Dialog系列,android.app.Dialog为父类等等。Android的原生控件，一般是在res/layout下的xml文件中声明。然后在Activity通过使用super.setContentView(R.layout.某布局layout文件名)来加载layout。在Activity中获取控件的引用需要使用super.findViewById(R.id.控件的ID)，接着就可以使用这个引用对控件进行操作，例如添加监听，设置内容等。当然也可以通过代码动态的使用控件。*
    
-* 知识点1：
+* 文本类：
+
+      TextView,EditText,AutoCompleteTextView,
+* 按钮类：
+
+      Button，CheckBox，  
+* 图片类：
+
+      
+
+* 时间控件：
 
       知识点介绍
 
-* 知识点2：
+
+* 进度显示：
 
       知识点介绍
 
-
-* 知识点3：
+* 导航：
 
       知识点介绍
-
-
    
 
 **三、实验内容及步骤**
