@@ -18,23 +18,27 @@
       TextView,EditText,AutoCompleteTextView,
 * 按钮类：
 
-      Button，CheckBox，  
+      Button，CheckBox，RadioButton,ToggleButton,
+      
+      ZoomButton  
 * 图片类：
 
-      
+      ImageView,
+
 
 * 时间控件：
 
-      知识点介绍
+      Datepicker,DigitalClock,AnalogClock
+      
 
 
 * 进度显示：
 
-      知识点介绍
+      ProcessBar,SeekBar,AbsSeekBar
 
 * 导航：
 
-      知识点介绍
+      TabHost,TabWidget
    
 
 **三、实验内容及步骤**
