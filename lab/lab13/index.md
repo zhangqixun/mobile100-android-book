@@ -12,11 +12,25 @@
 **二、基础知识**
 
 *Json格式的定义，封装和解析*
-   
+  * Json概述：
+
+      一种轻量级的数据交换格式，具有良好的可读和便于快速编写的特性
+      业内主流技术为其提供了完整的解决方案（有点类似于正则表达式，获得了当今大部分语言的支持），从而可以在不同平台间进行数据交换。json采用兼容性很高的文本格式。
+      
 * Json格式：
 
-      json格式是javascript对象与数组相结合形成的一种数据组织方式，主要优势在于体积小，
-      如：{success: 0, result:{ a:z, b:y, c: [{name:jack, id:12}, {name:Tom, id:13}]}
+    
+      json格式主要有对象类型和数组类型，当然也有复合型（两种都存在）
+      对象类型例如：
+      { "firstName": "Brett", "lastName":"McLaughlin", "email": "aaaa" } 
+      数组类型例如：{"people":[
+      {"firstName":"Brett","lastName":"McLaughlin","email":"aaaa"},
+      {"firstName":"Jason","lastName":"Hunter","email":"bbbb"},
+      {"firstName":"Elliotte","lastName":"Harold","email":"cccc"}]}
+      
+      混合类型如： {success: 0, result:{ a:z, b:y, c:
+      [{name:jack, id:12}, {name:Tom, id:13}]}
+     
 
 * Json解析：
 
