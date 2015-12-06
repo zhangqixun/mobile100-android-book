@@ -258,6 +258,7 @@ CLASSPATH环境变量作用是指定类搜索路径，如果我们要使用已�
 
 
 2.2 以下演示使用android studio创建你的第一个Android程序。
+
 ![](D1.png)
 
 点击”Start a new Android Studio project”来开始创建一个android程序。如图：
@@ -293,40 +294,45 @@ Intel Atom x86的模拟器比标准的Android模拟器具有更高的执行效�
 下载地址： https://software.intel.com/zh-cn/ 
 
 1、点击“工具”菜单中的“安卓”选项，
+![](D31.png)
 
 
 2、点击”英特尔HAXM”选项。
 
+![](D32.png)
 3、找到适合自己的操作系统。（本机为windows）然后点击相应的下载包。
-
+![](D33.png)
 
 4、点击“接受许可”进行下载
-
+![](D34.png)
 
 5、下载后进行安装（首次安装可能会出现安装失败）如图：
+![](D35.png)
 
 这是因为电脑的主板未开启”Virtualization”选项。
 解决办法：进入你的BIOS。找到Virtualization。将他打开。
 由于这一步不同的品牌机操作步骤不同。可以自己摸索。
 如图：
+![](D36.png)
 
 6、重启后继续安装，双击安装包，点击”Next”继续。
 
-
+![](D37.png)
 
 7、继续点击”Next”继续。
 
-
+![](D38.png)
 
 8、点击“Install”执行安装命令。
-
+![![](D36.png)](D39.png)
 
 9、点击“Finish”以完成安装。
 
-
+![](D40.png)
 
 
 四、SDK更新
+
 下面介绍更新SDK步骤：
 点击android studio面板上的SDK Manager按钮（或直接打开你本机SDK安装路径中的SDK Manager）如图（图中标识“SDK”的位置）
 
