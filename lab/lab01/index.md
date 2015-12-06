@@ -335,10 +335,13 @@ Intel Atom x86的模拟器比标准的Android模拟器具有更高的执行效�
 
 下面介绍更新SDK步骤：
 点击android studio面板上的SDK Manager按钮（或直接打开你本机SDK安装路径中的SDK Manager）如图（图中标识“SDK”的位置）
+![](D41.png)
 
-值得注意的是：如果你在android studio里面打开SDK Manager的话，可能需要等上一段时间。之后才会出现下图：
+值得注意的是：如果你在android studio![](D44.png)里面打开SDK Manager的话，可能需要等上一段时间。之后才会出现下图：
+![](D42.png)
 
 这幅图片将你已经安装或是部分安装的不同版本的SDK。如果需要添加，请点击“Launch Standlone SDK Manager”来打开SDK Manager。（或是直接在你SDK安装路径下打开SDK Manager）打开后如下图：
+![](D43.png)
 
 这里面有你想要更新的SDK组件。（此步骤需要连接谷歌服务器，请大家自行解决）。
 
@@ -346,36 +349,39 @@ Intel Atom x86的模拟器比标准的Android模拟器具有更高的执行效�
 AVD（Android Virtual Device）是一个可以安卓虚拟设备。我们可以用它来当做测试机来调试我们的程序。
 同更新SDK一样，你有两种方式去创建一个AVD。你可以点击android studio面板上的AVD图标，如下图，也可以直接找到SDK安装路径下的“AVD Manager”.点击运行。
 
-
+![](D444.png)
 
 在android studio里面点击AVD Manager图标会出现下图：
 
 这时点击“Create Virtual Device”.来创建一个AVD。
+![](D45.png)
 
 
 接下来会”Select Hardware”界面，选择合适的硬件后，点击“Next”.
 
-
+![](46.png)
 
 
 这里为“System Image”界面，是让我们选择一个合适的安卓系统镜像。由于我们已经安装Intel HAXM（Intel Atom x86模拟器）。这里我们选择一个X86的ABI。点击“Next”继续。
+![](D47.png)
 
 这里你可以为你的AVD命名，并且设置它的一些参数。然后点击Finish完成。
-
+![](D49.png)
 
 当你创建一个或几个不同的AVD时候，你需要启动并使用它。点击右方“Action”中的绿色三角形来运行它。
+![](D50.png)
 
 根据PC的不同，启动时间会有所不同，有些机器第一次启动会失败，这时候我们可以先关闭，再次启动。（首次启动时间比较长）
 
 启动完毕后，我们可以点击android studio中的运行按钮，如下图：
-
+![](D51.png)
 
 
 
 选择一个可以利用的设备，点击OK
 
 我们的HelloWorld可以运行在设备上。
-
+![](D52.png)
 
 
 至此，安卓环境搭建完毕。谢谢
