@@ -391,6 +391,7 @@ AVD（Android Virtual Device）是一个可以安卓虚拟设备。我们可以�
 由于大陆地区正常情况下无法访问google网站。然而，SDK更新需要链接google服务器。所以，这对于我们来说是一个难题。下面我来介绍一些方法去解决。当然，大家可能有更好的方法，你可以通过我们的微信群或者QQ群来分享你的方法。
 
 1、启动 Android SDK Manager ，打开主界面，依次选择「Tools」、「Options...」，弹出『Android SDK Manager - Settings』窗口，对话框如下图所示。
+![](D61.png)
 
 方法一：使用国内某些开源软件镜像站， 域名mirrors.neusoft.edu.cn，端口号为80。
 方法二：使用已有的代理，这是可以使用自己设置的代理，域名和端口号视情况而定。
@@ -402,49 +403,60 @@ AVD（Android Virtual Device）是一个可以安卓虚拟设备。我们可以�
 
 6.2 Intel HAXM 安装不成功
 在首次安装 Intel HAXM的时候可能会出现失败的情况，如下图：
+![](D62.png)
 
 这是因为Intel HAXM (Hardware Accelerated Execution Manager) 使用基于 Intel(R) Virtualization Technology (VT) 的硬件加速， 因此需要 CPU 支持 VT ， 所以是BIOS里面的“Virtualization Technology”选项没有打开，去BIOS里面打开就可以了。
 英特尔官方给出的解决办法如下：
+
 Intel VT-x not enabled
 In some cases, Intel VT-x may be disabled in the system BIOS and must be enabled within the BIOS setup utility. To access the BIOS setup utility, a key must be pressed during the computer’s boot sequence. This key is dependent on which BIOS is used but it is typically the F2, Delete, or Esc key. Within the BIOS setup utility, Intel VT may be identified by the terms "VT", "Virtualization Technology", or "VT-d." Make sure to enable all of the Virtualization features.
 6.3 ADB启动失败
 安装AndroidStudio的时候，当启动虚拟机的时候出现了ADB没有反应的问题，ADB not responding. You can wait more,or kill"abd.exe" process manually and click 'Restart'
 截图如下：
+![](D63.png)
 
 出现这个提示的时候，事实上任务管理器不存在一个"abd.exe"的进程，也就没法kill "abd.exe"，这时，应该查下abd.exe使用的端口5037被“谁"占用，然后kill这个进程，再重新编译就行了。
 步骤1：查询端口占用的方法：开始——运行——cmd：打开命令窗口，输入：netstat -aon|findstr “5037” 回车，正常的话会显示出来：
+![](D64.png)
 
 表明PID = 4632的进程占用了这个端口号
-
+![](D65.png)
 
 打开任务管理器，显示出PID列，找到这个4632的进程，kill掉，再在Android Studio重新编译即可。
+
 
 6.4 Failure [INSTALL_FAILED_OLDER_SDK]
 解决方法：在工程的build.gradle文件中设置安卓sdk的最小版本minSdkVersion，不能高于目前模拟器所支持的sdk版本。
 
+![](D66.png)
 6.5 android studio安装卡在SDK下载界面不动（Setup Wizard - Downloading Components）
 安装后第1次启动的时候会首先显示“Fetching Android SDK component information”
 
-等一会儿在Setup Wizard - Downloading Components界面下面开始下载Andorid SDK，
+![](D67.png)
+等一会儿在Setup Wizard - Downloading Components界面下面开始下载Andorid SDK
+![](D68.png)
 还是由于被墙的缘故，下载不了。
 解决方法：
 1、关闭安装向导。
 2、打开Android Studio安装目录的bin目录下面的idea properties文件，添加一条禁用开始运行向导的配置项：disable.android.first.run=true.
 3、启动程序打开项目向导界面，此时点击Start a new Android Studio project没有反应，并且在Configure下面的SDK Manager也是灰色的，这是因为没有安装Android SDK 的原因。
+![](D69.png)
 
 4、这个时候需要打开Configure-Settings，在查找框里面输入proxy，找到下面的HTTP Proxy，设置代理服务器，然后退出将上面在idea.properties配置文件中添加的那条配置项注释掉重新打开Android Studio等刚开始的向导把Android SDK下载安装完成就可以了。
 
 6.6运行模拟器时错误
 当我们启动一个选择x86的虚拟机的会后，有可能会出现这个界面
+![](D70.png)
 
 这是由于安装 Intel HAXM版本过低。
 解决方法一：去引文官网去下载新版本。
 解决方法二：进入“<Android SDK>\extras\intel\Hardware_Accelerated_Execution_Manager\”这个文件夹，运行intelhaxm-android.exe来更新。
 6.7 高版本程序运行在低版本模拟器
 创建“Hello world”程序出错！
-	
+![](D71.png)
  
 
+![](D72.png)
 原因分析以及解决方法:jar包的原因，之前创建的模拟器是基于Android 4.4.2的，但是创建的HelloWorld默认是基于Android 5.0重新添加jar包，在工程区域右键->Build Path ->Configure Build Path->Add External JARs...选定jar包后点击“OK”即可。
 6.8点击开始新Android项目无反应
 在欢迎界面的面板，点击ConfigureProject DefaultsProject Structure，然后会发现Android SDK location的路径是空的。点击右边的浏览按钮，然后找到相应的SDK路径，并保存。回到欢迎界面，单击Start a new Android Studio project，会发现可以弹出创建工程的界面了，问题得到解决。
@@ -452,6 +464,7 @@ In some cases, Intel VT-x may be disabled in the system BIOS and must be enabled
 重启电脑后进行一下操作：
 1）将system-images里的x86从android-19defaultx86目录，移动到了android-19x86。
 2）修改了虚拟机的配置信息，RAM设置从1536改为512（设置大的想法是想让虚拟机快一些，多点内存资源），SD card从0修改为Size 100，如下图所示。
+![](D73.png)
 
 
 6.10  SDK、AVD闪退
