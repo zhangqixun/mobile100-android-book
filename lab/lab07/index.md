@@ -15,9 +15,15 @@
    
 * 文本类：
 
-      TextView,EditText,AutoCompleteTextView,
+
+     主要是显示文本，获取文本内容，例如：
+     
+     TextView,EditText,AutoCompleteTextView,
 * 按钮类：
 
+
+   
+      
       Button，CheckBox，RadioButton,ToggleButton,
       
       ZoomButton  
@@ -45,7 +51,7 @@
 
 **3.1 实验内容**
 
-*简要介绍本次实验的主要内容*
+*  主要是在布局中使用文本类（实验用TextView），图片类（实验中用ImageView），按钮类（试验中用Button）控件，显示控件，修改控件 *
 
 **3.2 实验步骤**
 
