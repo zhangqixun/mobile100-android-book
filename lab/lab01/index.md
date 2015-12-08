@@ -10,92 +10,12 @@
 
 **一、实验目的**
 
-1.经过本次实验，成功搭建安卓开发环境。
+1. 经过本次实验，成功搭建安卓开发环境。
+2. 学会新建项目并开始开发项目
 
-2.学会新建项目并开始开发项目
 
 **二、实验详情**
-
-目录
-
-一、Java开发环境的搭建	
-1.1 JDK（Java Development Kit）的下载与安装	
-
-1.2 配置环境变量	
-
-二、android studio的安装与使用	
-
-2.1 Windows下android studio的下载与安装	
-
-2.2 使用android studio创建你的第一个Android程序。	
-
-三、Intel Atom x86模拟器的安装与使用	
-
-四、SDK更新	26
-
-五、创建一个AVD（Android Virtual Device）	
-
-六、搭建环境过程中的一些问题	
-
-6.1  无法访问外网（android studio无法下载及SDK更新无法联网）
-
-6.2 Intel HAXM 安装不成功	
-
-6.3 ADB启动失败	
-
-6.4 Failure [INSTALL_FAILED_OLDER_SDK]	
-
-6.5 android studio安装卡在SDK下载界面不动（Setup Wizard - Downloading Components）	
-
-6.6运行模拟器时错误	
-
-6.7 高版本程序运行在低版本模拟器	
-
-6.8点击开始新Android项目无反应	
-
-6.9虚拟机启动后卡在开机界面	
-
-6.10  SDK、AVD闪退	
-
-6.11安卓虚拟机找不到system image	
-
-6.12.Android Studio不识别移动设备	
-
-6.13.Fetching android sdk component information	
-
-6.14.failed to create jvm error code:不能启动java虚拟机	
-
-6.15.Android Studio安装后发现所有的中文都变成小框框	
-
-6.16.建立项目时及运行时均报错，出现中文乱码	
-
-6.17.Android Studio Gradle project sync failed	
-
-6.18.No resource found that matches the given name'android:Widget.Material.ActionButton'	
-
-6.19.主板BIOS并不支持开启intel virtual technology	
-
-6.20.Failed to configure driver: unknown error. Failed to open drive（安装 intel HAXM 模拟器加速器异常）	
-
-6.21.启动X86模拟器时出现异常	
-
-6.22.res/layout/目录下的所有布局文件必须小写字母	
-
-6.23.无法下载SDK，日志信息显示网络访问失败	
-
-6.24.Axtivity_main.xml的Design中没有预览图	
-
-6.25.如何自己搭建x86模拟器	
-
-6.26.HAXM is not working and emulator runs in emulation mode
-
-6.27.界面过大，导致看不到按钮	
-
-6.28.在Android Studio中打开DDMS	
-
-6.29.Android studio中快捷键的学习	
-
-
+	
 
 一、Java开发环境的搭建
 
@@ -106,7 +26,8 @@ JDK（Java Development Kit）顾名思义是java开发工具包，是程序员�
 如果你需要运行java程序，只需安装JRE就可以了。如果你需要编写java程序，需要安装JDK。
 大家可以在oracle官网上下载JDK安装包。
 
-网址：（http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html）该网址打开后即为JDK的下载界面，根据自己的系统选择相应的版本，以32位windows7举例（如图1.1.1）：
+网址：（http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html）
+该网址打开后即为JDK的下载界面，根据自己的系统选择相应的版本，以32位windows7举例（如图1.1.1）：
 
 1、点击“Accept License Agreement”选项，以接受下载许可；
 
@@ -122,6 +43,7 @@ JDK（Java Development Kit）顾名思义是java开发工具包，是程序员�
 3、下载后，双击运行。在等待安装包采集完信息后出现以下界面（如图1.1.2），点击下一步按钮继续。
 
 ![](1.1.2.png)
+
 图 1.1.2
 
 4、在安装路径界面（如图1.1.3），你可以根据你的需要选择路径（一般默认就好），如果非默认路径，你一定要记住，以便以后配置环境变量时候用到。点击“下一步”继续。
