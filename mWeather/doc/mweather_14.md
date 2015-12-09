@@ -10,7 +10,7 @@
 
 **二、基础知识**
 
-**
+
    
 * 知识点1：
 
@@ -42,7 +42,8 @@
 （1）添加布局文件：
 创建新的活动和布局文件guide，在guide.java中将guide.xml设为可见：
 setContentView(R.layout.guide);
-创建三个page文件page1.xml,page2.xml,page3.xml;
+创建三个page文件page1.xml,page2.xml,page3.xml;在这三个文件中可以任意添加组件。
+
 在guide.java中增加显示三个page文件的方法initView():
 
 ```
@@ -89,7 +90,7 @@ A、添加切换到主界面的Button
 guide_btn = (Button)views.get(2).findViewById(R.id.guide_btn);
 ```
 
-其中，由于该button设置在第//三个视图中，所以实例化该button时需要先指定到对应的视图。
+其中，由于该button设置在第三个视图中，所以实例化该button时需要先指定到对应的视图。
 
 ```
 guide_btn.setOnClickListener(new View.OnClickListener() {
@@ -169,7 +170,7 @@ else{
 
 **四、常见问题及注意事项**
 
-*A、	完成guide活动后，要在androidManifest中将默认活动改为guide，否则无法显示。
+A、	完成guide活动后，要在androidManifest中将默认活动改为guide，否则无法显示。
 B、	在向pageview中添加组建组件时，要注意指定组建所在的view，否则会报空指针异常
 
 ```
