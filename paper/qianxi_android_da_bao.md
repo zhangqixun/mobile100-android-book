@@ -39,3 +39,10 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.1.1'
 }
 ```
+* 文件开头apply plugin是最新gradle版本的写法，以前的写法是apply plugin: ‘android’
+* compileSdkVersion是安卓所用编译器的版本
+* buildToolsVersion是Gradle工具的版本，第一次使用时会自动下载
+* applicationId代表应用的包名，minSdkVersion代表最小支持的API，targetSdkVersion代表目标API，versionCode和versionName是自己定义的应用版本
+* buildTypes代表生成APK时的类型，默认只有release版本
+* minifyEnabled代表是否启用zip压缩，默认为true
+* proguardFiles这部分有两段，前一部分代表系统默认的android程序的混淆文件，后一部分是我们项目里的自定义的混淆文件
