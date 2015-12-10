@@ -46,7 +46,7 @@ dependencies {
 * buildToolsVersion是Gradle工具的版本，第一次使用时会自动下载
 * applicationId代表应用的包名，minSdkVersion代表最小支持的API，targetSdkVersion代表目标API，versionCode和versionName是自己定义的应用版本
 * buildTypes代表生成APK时的类型，默认只有release版本
-* minifyEnabled代表是否启用zip压缩，默认为true
+* minifyEnabled代表混淆处理
 * proguardFiles这部分有两段，前一部分代表系统默认的android程序的混淆文件，后一部分是我们项目里的自定义的混淆文件
 
 **2.Fragments/build.gradle**  
@@ -199,3 +199,32 @@ android {
 }
 ```
 使用buildtype还有好处就是，如果想生成所有渠道的release版本，使用assembleRelease命令即可，debug版本和preview版本同理。
+
+## Build Type中的定制参数
+
+
+``` GRADLE
+android {
+    buildTypes {
+        debug {}
+        preview {}
+        release {
+            manifestPlaceholders = [app_label:"Dabao_release"]
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlignEnabled false
+        }
+    }
+}
+```
+``` GRADLE
+//manifestPlaceholders 替换占位符
+//minifyEnabled 混淆处理
+//shrinkResources 去除无用资源
+//signingConfig 签名信息
+//proguardFiles 混淆配置
+//zipAlignEnabled 压缩
+
+```
