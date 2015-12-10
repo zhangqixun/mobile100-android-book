@@ -104,4 +104,9 @@ OS:           Windows 7 6.1 x86
 
 BUILD SUCCESSFUL
 ```
-4.
+4.最后执行 *gradlew build*。这个命令会直接编译并生成相应的apk文件，如果看到如下字样就代表build成功了：
+``` GRADLE
+BUILD SUCCESSFUL
+
+Total time: 31.456 secs
+```
