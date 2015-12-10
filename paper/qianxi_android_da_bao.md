@@ -268,3 +268,7 @@ def hostName() {
 getString(R.string.build_time)
 getString(R.string.build_host)
 ```
+
+## DEMO
+
+最后做了一个可以用Gradle批量打包APK的demo，整个项目一起打包了，点击下载。导入项目后，如果Android Studio是默认安装路径应该就不用配置什么了，就可以用上述命令进行尝试。生成的APK文件位于*${project}\Dabao\app\build\outputs\apk*目录下（*Dabao*是项目名）。
