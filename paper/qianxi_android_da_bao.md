@@ -11,3 +11,4 @@ Gradle是一种依赖管理工具，基于Groovy语言，面向Java应用为主�
 ## Gradle基本概念
 
 和Gradle相关的几个文件一般有如下几个：
+![](qianxi02.png)
