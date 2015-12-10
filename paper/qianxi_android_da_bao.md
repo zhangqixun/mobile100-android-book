@@ -79,3 +79,6 @@ app是项目的module，如果还有其他module，也要加上去。
 
 ## 如何使用Gradle
 
+1. 
+使用命令行终端，cd到要操作的项目根路径下。推荐使用Android Studio里面集成的Terminal，默认路径就是项目根路径。
+![](qianxi03.png)
