@@ -186,4 +186,15 @@ android {
 ```
 上面定义了baidu等这些渠道，用一个循环吧channel_value的值设为渠道的名字。
 
-## 
+## 自定义Build Type
+
+现在有一种需求，增加一种build type，介于debug和release之间，就是和release版本一样，但是要保留debug状态，我们称为preview版本吧。
+``` GRADLE
+android {
+    buildTypes {
+        debug {}
+        preview {}
+        release {}
+    }
+}
+```
