@@ -71,3 +71,8 @@ allprojects {
 内容主要包含了两个方面：一方面是声明仓库的源，这里可以看到是指明的jcenter()；另一方面是声明了android gradle plugin的版本。
 
 **3.Fragments/settings.gradle**  
+这个文件是全局的项目配置文件，里面主要声明一些需要加入gradle的module，我们来看看该文件的内容：
+``` GRADLE
+include ':app'
+```
+app是项目的module，如果还有其他module，也要加上去。
