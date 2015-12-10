@@ -125,15 +125,65 @@ Total time: 31.456 secs
 
 把其中的*${app_label}*替换为字符串
 
-AndroidManifest.xml中
+AndroidManifest.xml中：
 ``` XML
 <meta-data android:name="UMENG_APPKEY" android:value="${app_label}" />  
 ```
-build.gradle中
+build.gradle中：
 ``` Gradle
 android{
     defaultConfig{
-        manifestPlaceholders = [app_label:"@string/app_name"]
+        manifestPlaceholders = [app_label:"xixihaha"]
     }
 }
 ```
+
+## 独立配置签名信息
+
+对于签名相关的信息,直接写在gradle当然不好,特别是一些开源项目，可以添加到gradle.properties：
+``` GRADLE
+RELEASE_KEY_PASSWORD=xxxx
+RELEASE_KEY_ALIAS=xxx
+RELEASE_STORE_PASSWORD=xxx
+RELEASE_STORE_FILE=../.keystore/xxx.jks
+```
+然后在build.gradle中引用即可：
+``` GRADLE
+android {
+    signingConfigs {
+        release {
+            storeFile file(RELEASE_STORE_FILE)
+            storePassword RELEASE_STORE_PASSWORD
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+        }
+    }
+}
+```
+
+## 多渠道打包
+
+多渠道打包的关键之处在于，定义不同的product flavor, 并把AndroiManifest中的channel渠道编号替换为对应的flavor标识：
+
+``` GRADLE
+android {
+    productFlavors {
+        baidu {}
+        alibaba {}
+        tencent {}
+        xiaomi {}
+        jingdong {}
+        renren {}
+        sina {}
+        netease{}
+        youku {}
+        facepp {}
+    }
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders = [channel_value: name]
+    }
+}
+```
+上面定义了baidu等这些渠道，用一个循环吧channel_value的值设为渠道的名字。
+
+## 
