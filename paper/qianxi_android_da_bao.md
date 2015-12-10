@@ -11,7 +11,9 @@ Gradle是一种依赖管理工具，基于Groovy语言，面向Java应用为主�
 ## Gradle基本概念
 
 Fragments是一个项目，和Gradle相关的几个文件一般有如下几个：
+
 ![](qianxi02.png)
+
 **1.Fragments/app/build.gradle**  
 这个文件是app文件夹下这个Module的gradle配置文件，也可以算是整个项目最主要的gradle配置文件，我们来看下这个文件的内容：
 ``` GRADLE
@@ -80,7 +82,9 @@ app是项目的module，如果还有其他module，也要加上去。
 ## 如何使用Gradle
 
 1.使用命令行终端，cd到要操作的项目根路径下。推荐使用Android Studio里面集成的Terminal，默认路径就是项目根路径。
+
 ![](qianxi03.png)
+
 2.执行 *gradlew -v* 来查看下项目所用的Gradle版本
 如果你是第一次执行会去下载Gradle。执行成功后会看到如下信息：
 ``` GRADLE
