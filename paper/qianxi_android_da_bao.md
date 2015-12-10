@@ -4,7 +4,7 @@
 
 Navie！当然不会。使用gradle打包apk已经成为当前主流趋势。
 
-## 什么是Gradle？
+## 什么是Gradle
 
 Gradle是一种依赖管理工具，基于Groovy语言，面向Java应用为主，它抛弃了基于XML的各种繁琐配置，取而代之的是一种基于Groovy的内部领域特定（DSL）语言。
 
@@ -76,3 +76,4 @@ allprojects {
 include ':app'
 ```
 app是项目的module，如果还有其他module，也要加上去。
+## 如何使用Gradle
