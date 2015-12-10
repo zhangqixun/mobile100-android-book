@@ -121,3 +121,19 @@ Total time: 31.456 secs
 * *gradlew installRelease* Release模式打包并安装
 * *gradlew uninstallRelease* 卸载Release模式包
 
+## 替换AndroidManifest中的占位符
+
+把其中的*${app_label}*替换为字符串
+
+AndroidManifest.xml中
+``` XML
+<meta-data android:name="UMENG_APPKEY" android:value="${app_label}" />  
+```
+build.gradle中
+``` Gradle
+android{
+    defaultConfig{
+        manifestPlaceholders = [app_label:"@string/app_name"]
+    }
+}
+```
