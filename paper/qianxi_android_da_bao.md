@@ -231,3 +231,16 @@ android {
 
 ## 自定义导出APK的名称
 
+在导出的文件足够多的时候，使用默认的命名不够清晰直观。这个时候，我们就需要自定义APK的名称，并且把不同版本的APK放到不同子文件夹下。
+``` GRADLE
+android {
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.outputFile = new File(
+                    output.outputFile.parent + "/${variant.buildType.name}",
+                    "${variant.buildType.name}-${variant.versionName}-${variant.productFlavors[0].name}.apk".toLowerCase())
+        }
+    }
+}
+```
+用以上代码就可以生成形如*preview-v1.0-baidu.apk*的文件了。
