@@ -76,4 +76,6 @@ allprojects {
 include ':app'
 ```
 app是项目的module，如果还有其他module，也要加上去。
+
 ## 如何使用Gradle
+
