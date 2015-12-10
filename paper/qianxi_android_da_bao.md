@@ -198,3 +198,4 @@ android {
     }
 }
 ```
+使用buildtype还有好处就是，如果想生成所有渠道的release版本，使用assembleRelease命令即可，debug版本和preview版本同理。
