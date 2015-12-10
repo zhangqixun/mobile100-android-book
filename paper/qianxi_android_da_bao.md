@@ -244,3 +244,27 @@ android {
 }
 ```
 用以上代码就可以生成形如*preview-v1.0-baidu.apk*的文件了。
+
+## 一些额外信息
+
+如果要把编译的时间、编译的机器添加到APK中，而又不方便直接在代码里面实现，那要怎么办呢？这时候也可以使用Gradle：
+``` GRADLE
+android {
+    defaultConfig {
+        resValue "string", "build_time", buildTime()
+        resValue "string", "build_host", hostName()
+    }
+}
+
+def buildTime() {
+    return new Date().format("yyyy-MM-dd HH:mm:ss")
+}
+def hostName() {
+    return System.getProperty("user.name") + "@" + InetAddress.localHost.hostName
+}
+```
+以上代码动态地添加了build_time、build_host两个字符串资源，在其他地方可以像引用字符串一样使用：
+``` GRADLE
+getString(R.string.build_time)
+getString(R.string.build_host)
+```
