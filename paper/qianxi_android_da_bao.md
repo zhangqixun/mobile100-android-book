@@ -10,5 +10,32 @@ Gradle是一种依赖管理工具，基于Groovy语言，面向Java应用为主�
 
 ## Gradle基本概念
 
-和Gradle相关的几个文件一般有如下几个：
+Fragments是一个项目，和Gradle相关的几个文件一般有如下几个：
 ![](qianxi02.png)
+**1.9GAG/app/build.gradle**  
+这个文件是app文件夹下这个Module的gradle配置文件，也可以算是整个项目最主要的gradle配置文件，我们来看下这个文件的内容：
+``` GRADLE
+apply plugin: 'com.android.application'
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "com.example.bus.fragments"
+        minSdkVersion 15
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:22.1.1'
+}
+```
