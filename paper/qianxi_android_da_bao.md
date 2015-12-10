@@ -99,14 +99,11 @@ OS:           Windows 7 6.1 x86
 ```
 3.接着执行 *gradlew clean*。执行这个命令会去下载Gradle的一些依赖，下载成功并编译通过时会看到如下信息：
 ``` GRADLE
-:app:clean UP-TO-DATE
-:extras:ShimmerAndroid:clean UP-TO-DATE
-
+:app:clean
 BUILD SUCCESSFUL
 ```
 4.最后执行 *gradlew build*。这个命令会直接编译并生成相应的apk文件，如果看到如下字样就代表build成功了：
 ``` GRADLE
 BUILD SUCCESSFUL
-
 Total time: 31.456 secs
 ```
