@@ -79,10 +79,29 @@ app是项目的module，如果还有其他module，也要加上去。
 
 ## 如何使用Gradle
 
-1. 
-使用命令行终端，cd到要操作的项目根路径下。推荐使用Android Studio里面集成的Terminal，默认路径就是项目根路径。
+1.使用命令行终端，cd到要操作的项目根路径下。推荐使用Android Studio里面集成的Terminal，默认路径就是项目根路径。
 ![](qianxi03.png)
-2. 
-执行 *gradlew -v* 来查看下项目所用的Gradle版本
-如果你是第一次执行会去下载Gradle。执行成功后会看到版本信息。
-3. 
+2.执行 *gradlew -v* 来查看下项目所用的Gradle版本
+如果你是第一次执行会去下载Gradle。执行成功后会看到如下信息：
+``` GRADLE
+------------------------------------------------------------
+Gradle 2.2.1
+------------------------------------------------------------
+
+Build time:   2014-11-24 09:45:35 UTC
+Build number: none
+Revision:     6fcb59c06f43a4e6b1bcb401f7686a8601a1fb4a
+
+Groovy:       2.3.6
+Ant:          Apache Ant(TM) version 1.9.3 compiled on December 23 2013
+JVM:          1.8.0_45 (Oracle Corporation 25.45-b02)
+OS:           Windows 7 6.1 x86
+```
+3.接着执行 *gradlew clean*。执行这个命令会去下载Gradle的一些依赖，下载成功并编译通过时会看到如下信息：
+``` GRADLE
+:app:clean UP-TO-DATE
+:extras:ShimmerAndroid:clean UP-TO-DATE
+
+BUILD SUCCESSFUL
+```
+4.
