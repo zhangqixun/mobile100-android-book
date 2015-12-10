@@ -47,4 +47,27 @@ dependencies {
 * minifyEnabled代表是否启用zip压缩，默认为true
 * proguardFiles这部分有两段，前一部分代表系统默认的android程序的混淆文件，后一部分是我们项目里的自定义的混淆文件
 
-**2.Fragments/build.gradle**
+**2.Fragments/build.gradle**  
+这个文件是整个项目的gradle基础配置文件,我们来看看这里面的内容：
+``` GRADLE
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.2.3'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+```
+内容主要包含了两个方面：一方面是声明仓库的源，这里可以看到是指明的jcenter()；另一方面是声明了android gradle plugin的版本。
+
+**3.Fragments/settings.gradle**  
