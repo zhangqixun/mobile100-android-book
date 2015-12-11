@@ -78,6 +78,7 @@
    * [浅析Android打包(1501210946 刘彬彬)](paper/qianxi_android_da_bao.md)
    * [Android中数据的处理和调用(1501210399-闻征涛）](paper/androidzhong_shu_ju_de_chu_li_he_diao_752828_15012.md)
    * [安卓图形图像处理（1501210927 孔祥稀）](paper/an_zhuo_tu_xing_tu_xiang_chu_li_ff08_1501210927_ko.md)
+   * Android动效与个性化交互（1501210479 白鹤松）
 * [常见面试题目](question/index.md)
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
