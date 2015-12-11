@@ -59,5 +59,15 @@ Animation下有五个子类：AlphaAnimation(渐变),RotateAnimation(旋转),Sca
 
 在Animation框架里，主要的类主要有Animation和Transformation、Interpolator(插值器，后面也会专门讲)
 Transformation里面主要对alpha和matrix进行了封装，而改变view的透明度就是改变alpha，移动、旋转、缩放甚至错切则都是改变matrix
-Animation里有一个重要的方法applyTransformation，实现自定义Animation也主要是实现这个方法：
+Animation里有一个重要的方法applyTransformation，实现自定义Animation也主要是实现这个方法。
+
 以AlphaAnimation为例：
+    
+    /**  
+    * Changes the alpha property of the supplied {@link Transformation}  
+    */  
+    @Override  
+        protected void applyTransformation(float interpolatedTime, Transformation t) {  
+        final float alpha = mFromAlpha;  
+        t.setAlpha(alpha + ((mToAlpha - alpha) * interpolatedTime));  
+    }  
