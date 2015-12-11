@@ -18,9 +18,10 @@
 
 3.实际改变不一样。Animation改变的是view的绘制位置，而非实际属性；Property Animation改变的是view的实际属性；如：用两套框架分别对一个button做位移动画，用animation处理之后的点击响应会在原处，而用Property Animation处理后的点击响应会在最终位置处。
 
-总的来说可以分为：Tween Animation（补间动画） 和Frame Animation（帧动画）
 
-###2.1帧动画（Frame Animation）：
+##1 Animation
+总的来说可以分为：Tween Animation（补间动画） 和Frame Animation（帧动画）
+###1.1帧动画（Frame Animation）：
 帧动画其实就是按照一定的时间间隔进行快速的图片切换，达到视觉上的动画效果，这种动画相对来说缺点较多，
 比如：
 
@@ -53,7 +54,7 @@ animDrawable.start();
 如果不这么做，那么在性能比较差的机器上很可能就会出现没有播放的情况，因为只显示出了第一帧，问题在于动画没有和view完成关联，所以不要在onCreate中去调用启动，而需要在onWindowFocusChanged中进行调用；
 
 在极特殊的情况下如果还无法播放，则可以mHandler.postDelay 200 毫秒解决。
-###2.2补间动画（Tween Animation）
+###1.2补间动画（Tween Animation）
 Animation下有五个子类：AlphaAnimation(渐变),RotateAnimation(旋转),ScaleAnimation(缩放),TranslateAnimation(位移)
 在实现原理上除了AlphaAnimation是动态的去改变view的alpha值，其他三个都是去改变里面的Matrix；
 
@@ -71,3 +72,128 @@ Animation里有一个重要的方法applyTransformation，实现自定义Animati
         final float alpha = mFromAlpha;  
         t.setAlpha(alpha + ((mToAlpha - alpha) * interpolatedTime));  
     }  
+    渐变动画只需要在里面根据当前的interpolatedTime(已经由插值器转换后的值)动态计算出对应的alpha，重新设置到Transformation中即可；
+Animation的使用也相对比较简单，可以通过xml配置，也可以通过代码生成。
+
+1.xml配置：
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <set xmlns:android="http://schemas.android.com/apk/res/android"
+     android:shareInterpolator="false" >
+
+    <scale>
+
+        <!-- 单次运行时间 -->
+        android:duration="500"
+        <!-- 运行完成后是否保持结束时的状态 -->
+        android:fillAfter="true"
+        <!-- 运行完成后是否回到开始时的状态 -->
+        android:fillBefore="false"
+        <!-- 初始时大小，1代表原大小，0代表无 -->
+        android:fromXScale="1"
+        android:fromYScale="1"
+        <!-- 使用的插值器，控制运行过程中的速率 -->
+        android:interpolator="@android:anim/accelerate_interpolator"
+        <!-- 相对中心点，50%代表自身中心，50%p代表相对父view的中心 -->
+        android:pivotX="50%"
+        android:pivotY="50%"
+        <!-- 重复的次数，infinite代表永久循环 -->
+        android:repeatCount="infinite"
+        <!-- 重复的模式， restart代表重新开始，reverse代表反转-->
+        android:repeatMode="restart"
+        <!-- 延迟多久后开始 -->
+        android:startOffset="100"
+        <!-- 要到达的缩放比例 -->
+        android:toXScale="0"
+        android:toYScale="0" />
+    </scale>
+    
+    <translate
+        android:duration="550"
+        <!-- 相对当前位置的像素距离 -->
+        android:fromYDelta="300"
+        android:interpolator="@android:anim/accelerate_interpolator"
+        android:toYDelta="0" />
+
+    <alpha
+        android:duration="550"
+        android:fromAlpha="0"
+        android:toAlpha="1" />
+
+    </set>
+当要多个效果同时使用时，则如上使用set标签进行组合，在代码中使用如下：
+
+    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.app_clean_animation);
+    view.startAnimation(animation);
+##2 Property Animation（属性动画）
+属性动画，它更改的是对象的实际属性，在View Animation（Tween Animation）中，其改变的是View的绘制效果，真正的View的属性保持不变，比如无论你在对话中如何缩放Button的大小，Button的有效点击区域还是没有应用动画时的区域，其位置与大小都不变。而在Property Animation中，改变的是对象的实际属性，如Button的缩放，Button的位置与大小属性值都改变了。而且Property Animation不止可以应用于View，还可以应用于任何对象。Property Animation只是表示一个值在一段时间内的改变，当值改变时要做什么事情完全是你自己决定的。
+在Property Animation中，可以对动画应用以下属性：
+
+1.TimeInterpolator(插值器，和低版本的Interpolator一样)：属性值的计算方式，如先快后慢
+
+2.TypeEvaluator：根据属性的开始、结束值与TimeInterpolator计算出的因子计算出当前时间的属性值
+
+3.Repeat Count and behavoir：重复次数与方式，如播放3次、5次、无限循环，可以此动画一直重复，或播放完时再反向播放
+
+4.Animation sets：动画集合，即可以同时对一个对象应用几个动画，这些动画可以同时播放也可以对不同动画设置不同开始偏移
+
+5.Frame refreash delay：多少时间刷新一次，即每隔多少时间计算一次属性值，默认为10ms，最终刷新时间还受系统进程调度与硬件的影响
+
+上面都是些概念，但这些东西不必刻意去记，或去理解插值器这样的比较生涩的概念，我们只需要使用他最实用的部分，并熟悉动画的实现套路；
+所以对于属性动画主要带大家熟悉两个类，ValueAnimator和ObjectAnimator,通过这两个类我们平常遇到的动效大部分都能够加以解决；
+###2.1 ValueAnimator：
+ValueAnimator包含了 Property Animation 动画的所有核心功能，如动画时间，开始、结束属性值，相应时间属性值计算方法等。
+
+在我看来，使用 ValueAnimator 只是为我们创建了一个过程，我们可以用ValueAnimator.ofXXX()进行创建，然后通过各种setXXX()给其设定过程的时间，速率变化效果等，然后通过addUpdateListener()中去拿这个过程中回调回来的中间值，然后使用这些中间值改变view的属性形成动态效果；
+
+上面这句话通过代码表现如下：
+
+比如我们使用 ValueAnimator 在2S内将view横向拉长为2倍，纵向压缩为0：
+                
+            // 在2S内将view横向拉长为2倍，纵向压缩为0
+            // 创建0－1的一个过程,任何复杂的过程都可以采用归一化，然后在addUpdateListener回调里去做自己想要的变化
+            ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
+            // 设置过程的时间为2S
+            valueAnimator.setDuration(SCALE_ANIM_TIME);
+            // 设置这个过程是速度不断变快的
+            valueAnimator.setInterpolator(new AccelerateInterpolator());
+            // 这个过程中不断执行的回调
+            valueAnimator.addUpdateListener(new AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    // 不断回调的在0-1这个范围内，经过插值器插值之后的返回值
+                    float value = (Float) animation.getAnimatedValue();
+                    // ViewHelper可直接用于修改view属性
+                    // 将宽在2S内放大一倍
+                    ViewHelper.setScaleX(mTestImage, 1 + value);
+                    // 将高在2S内压缩为0
+                    ViewHelper.setScaleY(mTestImage, 1 - value);
+                }
+            });
+            // AnimatorListenerAdapter是AnimatorListener的空实现，根据需要覆盖的方法自行选择
+            valueAnimator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    super.onAnimationStart(animation);
+                    Toast.makeText(getApplicationContext(), "onAnimationStart", Toast.LENGTH_SHORT)
+                            .show();
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    Toast.makeText(getApplicationContext(), "onAnimationEnd", Toast.LENGTH_SHORT)
+                            .show();
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                    super.onAnimationCancel(animation);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+                    super.onAnimationRepeat(animation);
+                }
+            });
+            valueAnimator.start();
