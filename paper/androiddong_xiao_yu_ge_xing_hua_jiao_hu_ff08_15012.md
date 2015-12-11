@@ -273,7 +273,11 @@ TimeInterpolator　　　　　　　　   一个接口，允许你自定义inte
 ObjectAnimator 是ValueAnimator 的子类，可以直接改变Object的属性，目前可供改变的属性主要有：
 
 translationX,translationY           View相对于原始位置的偏移量
+
 rotation,rotationX,rotationY       旋转，rotation用于2D旋转角度，3D中用到后两个
+
 scaleX,scaleY                           缩放比
+
 x,y                                             View的最终坐标，是View的left，top位置加上translationX，translationY
+
 alpha                                         透明度
