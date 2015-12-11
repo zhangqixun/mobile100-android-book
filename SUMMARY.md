@@ -77,6 +77,7 @@
    * [andrio­d安全机制分­析与技术 （1501210968潘依南）](paper/andriodan_quan_ji_zhi_5206ad_xi_yu_ji_zhu__1501210.md)
    * [浅析Android打包(1501210946 刘彬彬)](paper/qianxi_android_da_bao.md)
    * [Android中数据的处理和调用(1501210399-闻征涛）](paper/androidzhong_shu_ju_de_chu_li_he_diao_752828_15012.md)
+   * 安卓图形图像处理（1501210927 孔祥稀）
 * [常见面试题目](question/index.md)
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
