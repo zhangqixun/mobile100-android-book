@@ -392,6 +392,7 @@ public Bitmap getRoundedBitmap() {
 
 程序运行效果如下图所示：
 
+![](pic3.png)
 
 二、图片灰化处理
 在Android中可以通过ColorMatrix类实现图像处理软件中的滤镜效果，通过ColorMatrix类可以对位图中的每个像素进行变换处理，达到特殊的滤镜效果，下面通过一个例子来介绍如何通过ColorMatrix对图像进行灰化处理，Java代码如下：
@@ -418,3 +419,27 @@ public Bitmap getGrayBitmap() {
 效果如下图所示：
 
 ![](picture4.png)
+
+三．提取图像Alpha位图
+Android中的ARGB_8888类型的位图由Alpha（透明度）、Red（红）、Green（绿）、Blue（蓝）四部分组成，其中Alpha部分也就是常说的Alpha通道，它控制图像的透明度。在Android中Bitmap类提供了extractAlpha()方法，可以把位图中的Alpha部分提取出来作为一个新的位图，然后与填充颜色后的Paint结合重新绘制一个新图像。下面通过一个例子来说明Bitmap类的extractAlpha()方法的使用，Java代码如下：
+```
+//提取图像Alpha位图  
+public Bitmap getAlphaBitmap() {
+    BitmapDrawable mBitmapDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.enemy_infantry_ninja);
+    Bitmap mBitmap = mBitmapDrawable.getBitmap();
+    //BitmapDrawable的getIntrinsicWidth（）方法，Bitmap的getWidth（）方法  
+    //注意这两个方法的区别  
+    //Bitmap mAlphaBitmap = Bitmap.createBitmap(mBitmapDrawable.getIntrinsicWidth(), mBitmapDrawable.getIntrinsicHeight(), Config.ARGB_8888);  
+    Bitmap mAlphaBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(), Bitmap.Config.ARGB_8888);
+    Canvas mCanvas = new Canvas(mAlphaBitmap);
+    Paint mPaint = new Paint();
+    mPaint.setColor(Color.BLUE);
+    //从原位图中提取只包含alpha的位图  
+    Bitmap alphaBitmap = mBitmap.extractAlpha();
+    //在画布上（mAlphaBitmap）绘制alpha位图  
+    mCanvas.drawBitmap(alphaBitmap, 0, 0, mPaint);
+    return mAlphaBitmap;
+}  
+```
+效果如下图所示：
+
