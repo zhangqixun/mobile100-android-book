@@ -188,7 +188,7 @@ android {
     }
 }
 ```
-上面定义了baidu等这些渠道，用一个循环吧channel_value的值设为渠道的名字。
+上面定义了baidu等这些渠道，用一个循环把channel_value的值设为渠道的名字。
 
 ## 自定义Build Type
 
