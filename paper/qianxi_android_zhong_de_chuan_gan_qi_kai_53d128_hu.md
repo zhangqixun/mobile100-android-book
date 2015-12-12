@@ -245,4 +245,127 @@ private SensorEventListener listener=new SensorEventListener() {
 然后，我们实现指南针的gui部分，先准备两张图片，分别表示罗盘与指针：
 ![](5.png)
 
+在activity_main中插入：
+
+```
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/compass_img"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/compass" />
+    <ImageView
+        android:id="@+id/arrow_img"
+        android:layout_width="60dp"
+        android:layout_height="110dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/arrow" />
+
+</RelativeLayout>
+
+```
+再修改MainActivity中的代码,通过旋转罗盘，实现指南针的功能。
+
+```
+private ImageView compassImg;
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    compassImg=(ImageView)findViewById(R.id.compass_img);
+……
+}
+……
+private SensorEventListener listener=new SensorEventListener() {
+    float[] accelerometerValues=new float[3];
+    float[] magneticValues=new float[3];
+    float lastRotateDegree;
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            accelerometerValues = event.values.clone();
+        } else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
+            magneticValues = event.values.clone();
+        }
+        float[] R = new float[9];
+        float[] values = new float[3];
+        SensorManager.getRotationMatrix(R, null, accelerometerValues,
+                magneticValues);
+        SensorManager.getOrientation(R, values);
+        Log.d("MainActivity", "value[0] is " + Math.toDegrees(values[0]));
+        float rotateDegree = -(float) Math.toDegrees(values[0]);
+        if (Math.abs(rotateDegree - lastRotateDegree) > 1) {
+            RotateAnimation animation = new RotateAnimation
+                    (lastRotateDegree, rotateDegree, Animation.RELATIVE_TO_SELF, 0.5f, Animation.
+                            RELATIVE_TO_SELF, 0.5f);
+            animation.setFillAfter(true);
+            compassImg.startAnimation(animation);
+            lastRotateDegree = rotateDegree;
+        }
+    }
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+};
+
+
+```
+
+
+当前结果如下：
+
+![](6.png)
+
+下面，我们再加入摇一摇的功能：
+
+
+```
+private float lightLevel;
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+……
+Sensor lightSensor=sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+sensorManager.registerListener(listener,accelerometerSensor,SensorManager.SENSOR_DELAY_NORMAL);
+…….
+}
+private SensorEventListener listener=new SensorEventListener() {
+    float[] accelerometerValues=new float[3];
+    float[] magneticValues=new float[3];
+    float lastRotateDegree;
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+…….
+else if(event.sensor.getType()==Sensor.TYPE_LIGHT)
+{
+    lightLevel=event.values[0];
+}
+if(accelerometerValues[0]>15 ||accelerometerValues[1]>15||accelerometerValues[2]>15)
+{
+    Toast.makeText(MainActivity.this,"当前光照强度为"+lightLevel,Toast.LENGTH_SHORT).show();
+}
+
+
+```
+
+至此，我们完成了一次基本的传感器开发案例。
+
+
+
+
+参考文献：
+
+[1] 郭霖. 第一行代码——Android. 人民邮电出版社，2014
+
+[2]汪永松.Android平台开发之旅[M].北京：机械工业出版社，2010.7
+
+[3] http://www.jizhuomi.com/android/course/258.html
+
 
