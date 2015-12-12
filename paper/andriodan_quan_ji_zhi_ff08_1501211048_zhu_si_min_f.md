@@ -38,6 +38,5 @@ android:protectionLevel: 权限的等级
 normal: 是最低的等级，声明次权限的app，系统会默认授予次权限，不会提示用户 dangerous:  权限对应的操作有安全风险，系统在安装声明此类权限的app时会提示用户 signature:  权限表明的操作只针对使用同一个证书签名的app开放 
 signatureOrSystem: 与signature类似，只是增加了rom中自带的app的声明
  注：android:name 属性是必须的，其他的可选，未写的系统会指定默认值。
- 常见的权限举例如下：
- 
+ 常见的权限举例如下：![](01.png)
  
