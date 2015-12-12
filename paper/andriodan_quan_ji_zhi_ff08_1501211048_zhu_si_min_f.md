@@ -20,4 +20,4 @@ Android 框架提供一套默认的权限存储在android.anifest.permission 类
 
 ## 2、 Android permission 管理机制
 
-一个权限主要包含三个方面的信息：权限的名称；属于的权限组；保护级别。一个权限组是指把权限按照功能分成的不同的集合。每一个权限组包含若干具体权限。每个权限通过 protectionLevel 来标识保护级别： normal ， dangerous ， signature ， signatureorsystem 。不同的保护级别代表了程序要使用此权限时的认证方式。 normal 的权限只要申请了就可以使用；dangerous的权限在安装时需要用户确认才可以使用； signature 和 signatureorsystem 的权限需要使用者的 app和系统使用同一个数字证书。
+一个权限主要包含三个方面的信息：权限的名称；属于的权限组；保护级别。一个权限组是指把权限按照功能分成的不同的集合。每一个权限组包含若干具体权限。每个权限通过 protectionLevel 来标识保护级别： normal ， dangerous ， signature ， signatureorsystem 。不同的保护级别代表了程序要使用此权限时的认证方式。 normal 的权限只要申请了就可以使用；dangerous的权限在安装时需要用户确认才可以使用； signature 和 signatureorsystem 的权限需要使用者的 app 和系统使用同一个数字证书。
