@@ -417,3 +417,4 @@ public Bitmap getGrayBitmap() {
 ```
 效果如下图所示：
 
+![](picture4.png)
