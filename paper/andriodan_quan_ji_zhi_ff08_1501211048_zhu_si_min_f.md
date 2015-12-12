@@ -41,7 +41,24 @@ Android提供了如下的一种机制，可以使两个apk打破前面讲的这�
 
 ### 1.2.4 AndroidManifest.xml中的显式权限声明
 
+Android默认应用是没有任何权限去操作其他应用或系统相关特性的，应用在进行某些操作时都需要显式地去申请相应的权限。
+一般以下动作时都需要申请相应的权限：
 
+A particular permission may be enforced at a number of places during your program's operation:
+
+At the time of a call into the system, to prevent an application from executing certain functions.When starting an activity, to prevent applications from launching activities of other applications.Both sending and receiving broadcasts, to control who can receive your broadcast or who can send a broadcast to you.When accessing and operating on a content provider.Binding or starting a service.
+
+
+在应用安装的时候，package installer会检测该应用请求的权限，根据该应用的签名或者提示用户来分配相应的权限。
+在程序运行期间是不检测权限的。如果安装时权限获取失败，那执行就会出错，不会提示用户权限不够。
+大多数情况下，权限不足导致的失败会引发一个 SecurityException，会在系统log（system log）中有相关记录。
+
+### 1.2.5 权限继承/UserID继承
+
+当我们遇到apk权限不足时，我们有时会考虑写一个linux程序，然后由apk调用它去完成某个它没有权限完成的事情，很遗憾，这种方法是行不通的。
+前面讲过，android权限是在进程层面的，也就是说一个apk应用启动的子进程的权限不可能超越其父进程的权限（即apk的权限），
+即使单独运行某个应用有权限做某事，但如果它是由一个apk调用的，那权限就会被限制。
+实际上，android是通过给子进程分配父进程的UserID实现这一机制的。
 
 
 ## 2、 Android permission 管理机制
