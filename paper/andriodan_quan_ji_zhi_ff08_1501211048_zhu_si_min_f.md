@@ -40,3 +40,4 @@ signatureOrSystem: 与signature类似，只是增加了rom中自带的app的声�
  注：android:name 属性是必须的，其他的可选，未写的系统会指定默认值。
  常见的权限举例如下：
  
+ 
