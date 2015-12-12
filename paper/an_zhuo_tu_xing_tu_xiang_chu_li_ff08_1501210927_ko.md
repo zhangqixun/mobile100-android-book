@@ -464,4 +464,21 @@ public Bitmap getScaleBitmap() {
     ```
     程序运行结果如下：
     
+    ![](picture6.png)
+    图片旋转
+    使用Matrix类preRotate或者postRotate可以对图像进行旋转操作，它只有一个参数表示旋转的角度，下面使用preRotate对图像顺时针旋转30度，Java代码如下：
+    ```
+    //getRotatedBitmap  
+public Bitmap getRotatedBitmap() {
+    BitmapDrawable mBitmapDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.pet);
+    Bitmap mBitmap = mBitmapDrawable.getBitmap();
+    int width = mBitmap.getWidth();
+    int height = mBitmap.getHeight();
+    Matrix matrix = new Matrix();
+    matrix.preRotate(45);
+    Bitmap mRotateBitmap = Bitmap.createBitmap(mBitmap, 0, 0, width, height, matrix, true);
+    return mRotateBitmap;
+}  
+    ```
+    效果如下图所示：
     
