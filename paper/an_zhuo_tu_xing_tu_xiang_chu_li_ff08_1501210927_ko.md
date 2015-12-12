@@ -390,6 +390,5 @@ public Bitmap getRoundedBitmap() {
 }
 ```
 
-
 程序运行效果如下图所示：
 
