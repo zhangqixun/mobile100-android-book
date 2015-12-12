@@ -42,7 +42,7 @@ Adapter是连接后端数据和前端显示的适配器接口，是数据和UI�
 * SimpleCursorAdapter可以适用于简单的纯文字型ListView，它需要Cursor的字段和UI的id对应起来。如需要实现更复杂的UI也可以重写其他方法。可以认为是SimpleAdapter对数据库的简单结合，可以方便地把数据库的内容以列表的形式展示出来。  
 
 **2：ListView的实现**   
-**2.1 ListView控件与ArrayAdapter适配器的实现**  
+**2.1：ListView控件与ArrayAdapter适配器的实现**  
 ArrayAdapter是android中自己定义好的一种适配器，将数据添加到自己定义的View中，View中只有一个TextView。具体步骤如下：   
 1：定义要添加的数据，数据以数组形式存储，举例我们定义为String数组，用来存储人物姓名。   
 ```
@@ -89,7 +89,7 @@ public ArrayAdapter(Context context, @LayoutRes int resource, @NonNull List<T> o
 ArrayAdapter的使用就是基于这三步，其实总体来说，所有的Adapter适配器都是基于这三步。     
 最终实现结果为：    
 ![](img002.png)     
-**2.2 ListView控件与SimpleAdapter适配器的实现**     
+**2.2：ListView控件与SimpleAdapter适配器的实现**     
 SimpleAdapter也是Android自己提供的一个Adapter适配器，SimpleAdapter可以使用我们自己定义的Item布局文件，首先来看一下SimpleAdapter的构造器： 
 ```
 public SimpleAdapter(Context context, List<? extends Map<String, ?>> data,
@@ -210,45 +210,144 @@ public class Person {
         this.info = info;
         this.image =image;
     }
+    ······
+}```
+2：自定义Adapter，创建一个类继承BaseAdapter。BaseAdapter中有四个抽象的方法：public int getCount()，public Object getItem(int position)，public long getItemId(int position)，public View getView(int position,View convertView, ViewGroup viewGroup)，因此在我们继承BaseAdapter类后必须实现这四个方法。具体方法如下： 
+```
+public class MyAdapter extends BaseAdapter {
 
-    public int getImage() {
-        return image;
+    private LayoutInflater mInflater;
+    private List<Person> mData;
+    private int resouceID;
+    public MyAdapter(LayoutInflater inflater,int resouceID,List<Person> data)
+    {
+        this.mInflater = inflater;
+        this.resouceID = resouceID;
+        this.mData = data;
+    }
+    @Override
+    public int getCount() {
+        return mData.size();
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    @Override
+    public Object getItem(int position) {
+        return position;
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View personView  = mInflater.inflate(resouceID, null);
+        Person person = mData.get(position);//获取人物对象
+        ImageView image= (ImageView)personView.findViewById(R.id.image);//获取每一个控件对象
+        TextView  name = (TextView)personView.findViewById(R.id.name);
+        TextView  age = (TextView)personView.findViewById(R.id.age);
+        TextView  sex = (TextView)personView.findViewById(R.id.sex);
+        TextView  info = (TextView)personView.findViewById(R.id.info);
+        image.setImageResource(person.getImage());//将数据添加到布局控件中
+        name.setText(person.getName());
+        age.setText(person.getAge());
+        sex.setText(person.getSex());
+        info.setText(person.getInfo());
 
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
+        return personView;
     }
 }```
+3：定义数据的布局方式，也就是数据的View，此过程在SimpleAdapter中已介绍，此处略过；  
+4:在MainActivity中初始化数据，然后创建自定义的Adapter对象，通过setAdapter()方法将自定义的布局加载到ListView中。具体代码如下：    
+```
+private void initViews()
+{
+    listview = (ListView)findViewById(R.id.listview);
+    data.add(new Person("梅长苏","29","男","琅琊榜首，江左梅郎",R.drawable.c001));
+    data.add(new Person("飞流", "17", "男", "梅长苏贴身护卫，武功奇高",R.drawable.c002));
+    data.add(new Person("萧景琰", "31", "男", "战功累累、靖边有功的成年皇子",R.drawable.c003));
+    data.add(new Person("霓凰郡主", "27", "女", "梅长苏青梅竹马的未婚妻",R.drawable.c004));
+    MyAdapter myAdapter = new MyAdapter(getLayoutInflater(),R.layout.listview_item,data);
+    listview.setAdapter(myAdapter);
+}```
+结果展示：  
+![](img004.png)     
+**3：ListView使用的优化**   
+因为ArrayAdapter和Simplea是android中已定义好了的适配器，所以优化的空间不大。着重处理的是自定义Adapter适配器的优化。   
+**3.1：convertView优化**    
+使用自定义的adapter，会要重写getView方法，在getView方法产生给用户item的视图以及数据。有时候在ListView中显示的数据非常多，虽然手机的屏幕有限，数据可以通过滚动的方式显示。但如果大量的数据一次性加载完成，会降低数据的读取速度，增加占用的内存，那么可以通过convertView来解决这个问题。     
+convertView是采用一种缓存的方式，数据加载时首先加载在手机屏幕上出现的View，当滑动手机屏幕时，会有View被划出屏幕，同时也会有新的View进入屏幕。此时convertView就将出屏的View保存下来作为下一个进入屏幕的新的View使用。        
+Android中有个叫做Recycler的构件，如下： 
+![](img005.png)     
+1：ListView先请求一个type1视图（getView），然后请求其他可见的item，convertView在getView中是null。   
+2：当item1滚出屏幕，并且一个新的item从屏幕低端上来时，ListView再请求一个type1视图。convertView此时不再是null，它的值是item1。因此，只需设定新的数据然后返回convertView，不必新创建一个View，
+所以对自定义的Adapter中getView 方法的优化如下： 
+```
+public View getView(int position, View convertView, ViewGroup parent) {
+    if(convertView ==null){
+        convertView = mInflater.inflate(resouceID, null);
+    }
+    Person person = mData.get(position);//获取人物对象
+    ImageView image= (ImageView)convertView.findViewById(R.id.image);//获取每一个控件对象
+    TextView  name = (TextView)convertView.findViewById(R.id.name);
+    TextView  age = (TextView)convertView.findViewById(R.id.age);
+    TextView  sex = (TextView)convertView.findViewById(R.id.sex);
+    TextView  info = (TextView)convertView.findViewById(R.id.info);
+    image.setImageResource(person.getImage());//将数据添加到布局控件中
+    name.setText(person.getName());
+    age.setText(person.getAge());
+    sex.setText(person.getSex());
+    info.setText(person.getInfo());
+
+    return convertView;
+}```        
+**3.2：内部类ViewHolder优化**   
+前面的getView方法会有一个缺点，就是每次在getVIew的时候，都需要重新的findViewById，重新找到控件，然后进行控件的赋值以及事件相应设置。这样其实在做重复的事情，因为geiview中，其实包含有这些控件，而且这些控件的id还都是一样的，也就是其实只要在view中findViewById一次，后面无需要每次都要findViewById了。此时可以定义一个内部类ViewHolder，通过ViewHolder将显示在ListView中的数据通过findViewById获取到然后在接下来不为空的convertView直接获取ViewHolder的Tag即可。这样可以不用每次都要findViewById了，减少了性能的消耗。同时重用了convertView，很大程度上的减少了内存的消耗。     
+具体代码如下：
+```
+public View getView(int position, View convertView, ViewGroup parent) {
+    ViewHolder viewHolder =null;
+    Person person = mData.get(position);//获取人物对象
+    if(convertView ==null){
+        convertView = mInflater.inflate(resouceID, null);
+        viewHolder = new ViewHolder();
+        viewHolder.image= (ImageView)convertView.findViewById(R.id.image);//获取每一个控件对象
+        viewHolder.name = (TextView)convertView.findViewById(R.id.name);
+        viewHolder.age = (TextView)convertView.findViewById(R.id.age);
+        viewHolder.sex = (TextView)convertView.findViewById(R.id.sex);
+        viewHolder.info = (TextView)convertView.findViewById(R.id.info);
+        //convertView为空时，ViewHolder将显示在ListView中的数据对应控件通过findViewById获得
+        convertView.setTag(viewHolder);
+    }
+    else{
+        //convertView不为空时，直接获取ViewHolder的Tag即可
+        viewHolder =(ViewHolder)convertView.getTag();
+    }
+    viewHolder.image.setImageResource(person.getImage());//将数据添加到布局控件中
+    viewHolder.name.setText(person.getName());
+    viewHolder.age.setText(person.getAge());
+    viewHolder.sex.setText(person.getSex());
+    viewHolder.info.setText(person.getInfo());
+
+    return convertView;
+}
+class ViewHolder
+{
+    ImageView image;
+    TextView  name;
+    TextView  age;
+    TextView  sex;
+    TextView  info;
+}```    
+**4:总结**  
+ListView是android界面中非常常用的控件之一，其实ListView使用不难，难的地方在于与 其他控件的配合使用与交互。如全选与反选按钮的实现，list与右侧字母表顺序的结合，需要自己定义View控件来配合使用。因此，在使用控件的时候，应多思考控件是如何实现的，而不仅仅限于会用而已。多了解android界面后面做的工作和架构能使我们更好的把握控件，从而定义自己需要的控件。  
+
+## 主要参考文档         
+
+·[1]:http://my.oschina.net/u/1463230/blog/269252
+·[2]:http://www.cnblogs.com/zhengbeibei/archive/2013/05/14/3078805.html
+
+
+
 
