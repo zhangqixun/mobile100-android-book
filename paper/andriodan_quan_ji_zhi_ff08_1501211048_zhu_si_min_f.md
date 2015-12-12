@@ -5,7 +5,10 @@
 学院：北京大学软件与微电子学院
 
 
-#  Android 安全机制概述
+
+##   Android 安全机制概述
+
+
 
 Android 是一个权限分离的系统 。 这是利用 Linux 已有的权限管理机制，通过为每一个 Application 分配不同的 uid 和 gid ， 从而使得不同的 Application 之间的私有数据和访问（ native 以及 java 层通过这种 sandbox 机制，都可以）达到隔离的目的 。 与此 同时， Android 还 在此基础上进行扩展，提供了 permission 机制，它主要是用来对 Application 可以执行的某些具体操作进行权限细分和访问控制，同时提供了 per-URI permission 机制，用来提供对某些特定的数据块进行 ad-hoc 方式的访问。
 
@@ -62,6 +65,10 @@ At the time of a call into the system, to prevent an application from executing 
 
 
 ##Android permission 管理机制
+
+
+
+
 Android 框架提供一套默认的权限存储在android.anifest.permission 类中，同时也允许我们自己定义新的权限。我们在写应用程序时声明权限，程序安装时新权限被引入系统。权限授权在应用程序被安装时执行。当在设备上安装应用程序时，程序将请求完成任务必需的权限集合。被请求的权限列单显示在设备屏幕上以待用户审查只有用户同意授权后，程序才会被安装，该应用程序获得所有被请求的权限。所以，Android 系统实施的主要安全准则是应用程序只有得到权限许可后，才能执行可能会影响到系统其它部分的操作。每个权限被定义成一个字符串，用来传达权限以执行某个特殊的操作。所有权限可以分为两个类别:一种是执行程序时被应用程序所请求的权限，一种是应用程序的组件之间通信时被其它组件请求的权限。开发者通过在AndroidManifest.xml文件中编写权限标签来定义以上两种类别的权限策略。如果没有在AndroidManifest.xml文件中相应申明，则会运行错误且提示：java.lang.SecurityException: Permission Denial ...<br>
 一个权限主要包含三个方面的信息：权限的名称；属于的权限组；保护级别。一个权限组是指把权限按照功能分成的不同的集合。每一个权限组包含若干具体权限。每个权限通过 protectionLevel 来标识保护级别： normal ， dangerous ， signature ， signatureorsystem 。不同的保护级别代表了程序要使用此权限时的认证方式。 normal 的权限只要申请了就可以使用；dangerous的权限在安装时需要用户确认才可以使用； signature 和 signatureorsystem 的权限需要使用者的 app和系统使用同一个数字证书。系统的那个权限，就是用的```<permission>```来定义好的，那么，谁要想使用，只需要对应的添加```<user-permission。```即可.<br> 
 <permission   
@@ -86,3 +93,80 @@ signatureOrSystem: 与signature类似，只是增加了rom中自带的app的声�
 首先创建了两个app，app A ，app B ； 
 app A中注册了一个BroadcastReceiver ,app B 发送消息 
 app A的menifest文件： 
+```<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.testbutton"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="7"
+        android:targetSdkVersion="15" />
+    <!-- 声明权限 -->
+    <permission android:name="com.example.testbutton.RECEIVE" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+            launcheMode="singleTask"
+            android:configChanges="locale|orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@style/android:style/Theme.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- 注册Broadcast Receiver，并指定了给当前Receiver发送消息方需要的权限 -->
+        <receiver
+            android:name="com.example.testbutton.TestButtonReceiver"
+            android:permission="com.example.testbutton.RECEIVE" >
+            <intent-filter>
+                <action android:name="com.test.action" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>```
+
+app B 的menifest 文件内容
+
+
+```<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.testsender"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="7"
+        android:targetSdkVersion="15" />
+    <!-- 声明使用指定的权限 -->
+    <uses-permission android:name="com.example.testbutton.RECEIVE" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>```
+这样app B 给app A 发送消息，A就可以收到了，若未在app B的menifest文件中声明使用相应的权限，app B发送的消息，A是收不到的。 
+另外，也可在app B 的menifest文件中声明权限时，添加android:protectionLevel=“signature”,指定app B只能接收到使用同一证书签名的app 发送的消息。 
+
+## Android 用户权限赋予
+1、进入处理应用程序授权申请的入口函数；<br>
+2、系统从被安装应用程序的 AndroidManifest.xml<br> 3、文件中获取该应用正常运行需申请的权限列表；<br>
+4、显示对话框，请求用户确认是否满足这些权限需求；
+若同意，则应用程序正常安装，并被赋予相应的权限；若否定，则应用程序不被安装。系统仅提供给用户选择“是”或者“否”的权利，没有选择其中某些权限进行授权的权利。
+![](112.jpg)
