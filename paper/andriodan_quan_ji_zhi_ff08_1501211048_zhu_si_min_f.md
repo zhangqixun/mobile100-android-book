@@ -82,3 +82,7 @@ normal: 是最低的等级，声明次权限的app，系统会默认授予次权
 signatureOrSystem: 与signature类似，只是增加了rom中自带的app的声明
  注：android:name 属性是必须的，其他的可选，未写的系统会指定默认值。
  常见的权限举例如下：![](01.png)
+下面通过指定一个BroadcastReceiver的权限来实验 
+首先创建了两个app，app A ，app B ； 
+app A中注册了一个BroadcastReceiver ,app B 发送消息 
+app A的menifest文件： 
