@@ -481,4 +481,22 @@ public Bitmap getRotatedBitmap() {
 }  
     ```
     效果如下图所示：
+    ![](picture7.png)
+    3）图像倾斜
+    使用Matrix类preSkew或者postSkew可以对图像进行倾斜操作，它的两个参数分别为x和y坐标倾斜度，下面使用preSkew对图像进行倾斜变换，Java代码如下：
+    ```
+    //getScrewBitmap  
+public Bitmap getScrewBitmap() {
+    BitmapDrawable mBitmapDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.pet);
+    Bitmap mBitmap = mBitmapDrawable.getBitmap();
+    int width = mBitmap.getWidth();
+    int height = mBitmap.getHeight();
+    Matrix matrix = new Matrix();
+    matrix.preSkew(1.0f, 0.15f);
+    Bitmap mScrewBitmap = Bitmap.createBitmap(mBitmap, 0, 0, width, height, matrix, true);
+    return mScrewBitmap;
+}  
+    ```
+    效果如下图所示：
+    
     
