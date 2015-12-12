@@ -81,6 +81,7 @@
    * [Android动效与个性化交互（1501210479 白鹤松）](paper/androiddong_xiao_yu_ge_xing_hua_jiao_hu_ff08_15012.md)
    * [Android利用Intent与其他应用交互(1501210426  李仕聪)](paper/androidli_yong_intent_yu_qi_ta_ying_yong_jiao_4e92.md)
    * [Android 界面布局分析（1501210662 盛意林）](paper/android_jie_mian_bu_ju_fen_xi_ff08_1501210662_shen.md)
+   * 浅析Android中的传感器开发(黄汉煜    1501210915)
 * [常见面试题目](question/index.md)
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
