@@ -39,6 +39,9 @@ Android提供了如下的一种机制，可以使两个apk打破前面讲的这�
 实现方法是：Android会为程序存储的数据分配该程序的UserID。
 借助于Linux严格的文件系统访问权限，便实现了apk之间不能相互访问似有数据的机制。
 
+### 1.2.4 AndroidManifest.xml中的显式权限声明
+
+
 
 
 ## 2、 Android permission 管理机制
