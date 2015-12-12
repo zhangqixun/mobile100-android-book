@@ -155,9 +155,94 @@ protected void onCreate(Bundle savedInstanceState) {
 
 最后，方向传感器有两种解决方案。可以沿用前两种传感器的模式，调用Sensor.TYPE_ORIENTATION 这种传感器类型，其values数组会记录手机在所有方向上的旋转角度，看似简单，并且实际上有效，但是，android现在已废弃Sensor.TYPE_ORIENTATION。因此，我们推荐使用加速度传感器和地磁传感器共同计算得出方向。由于方向传感器的精确度要求通常都比较高， 这里我们把传感器输出信息的更新速率提高了一些，使用的是 SENSOR_DELAY_GAME。
 
+```
+        sensorManager=(SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        Sensor magneticSensor=sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        Sensor accelerometerSensor=sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(listener,magneticSensor,SensorManager.SENSOR_DELAY_GAME);
+        sensorManager.registerListener(listener,accelerometerSensor,SensorManager.SENSOR_DELAY_GAME);
+```
+
 接下来在 onSensorChanged()方法中可以获取到 SensorEvent的 values数组，分别记录着加 速 度 传 感 器 和 地 磁 传 感 器 输 出 的 值 。 然 后 将 这 两 个 值 传 入 到 SensorManager 的getRotationMatrix()方法中就可以得到一个包含旋转矩阵的 R数组。
+
+
+```
+SensorManager.getRotationMatrix(R, null, accelerometerValues, magneticValues);
+```
 
 其中第一个参数 R 是一个长度为 9 的 float 数组，getRotationMatrix()方法计算出的旋转数据就会赋值到这个数组当中。 第二个参数是一个用于将地磁向量转换成重力坐标的旋转矩阵，通常指定为 null即可。第三和第四个参数则分别就是加速度传感器和地磁传感器输出的values值。
 然后，调用SensorManager 的 getOrientation()方法来计算手机的旋转数据，values是一个长度为 3的 float数组， 手机在各个方向上的旋转数据都会被存放到这个数组当中。其中 values[0]记录着手机围绕着Z 轴的旋转弧度，values[1]记录着手机围绕 X轴的旋转弧度，values[2]记录着手机围绕 Y轴的旋转弧度。
 
+```
+SensorManager.getOrientation(R, values);
+```
+
 最后，注意这里计算出的数据都是以弧度为单位的， 因此如果你想将它们转换成角度还需要调用如下方法：
+
+```
+(float) Math.toDegrees(values[0])
+```
+
+四、	编程实践
+
+首先，我们先实现获取角度（即“方向传感器”）的功能，键入如下代码：
+
+```
+private SensorManager sensorManager;
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    sensorManager=(SensorManager) getSystemService(Context.SENSOR_SERVICE);
+    Sensor magneticSensor=sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+    Sensor accelerometerSensor=sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+    sensorManager.registerListener(listener,magneticSensor,SensorManager.SENSOR_DELAY_GAME);
+    sensorManager.registerListener(listener,accelerometerSensor,SensorManager.SENSOR_DELAY_GAME);
+}
+@Override
+protected void onDestroy()
+{
+    super.onDestroy();
+    if(sensorManager!=null)
+    {
+        sensorManager.unregisterListener(listener);
+    }
+}
+private SensorEventListener listener=new SensorEventListener() {
+    float[] accelerometerValues=new float[3];
+    float[] magneticValues=new float[3];
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if(event.sensor.getType()==Sensor.TYPE_ACCELEROMETER)
+        {
+            accelerometerValues=event.values.clone();
+        }
+        else if (event.sensor.getType()==Sensor.TYPE_MAGNETIC_FIELD)
+        {
+            magneticValues=event.values.clone();
+        }
+        float[] R = new float[9];
+        float[] values = new float[3];
+        SensorManager.getRotationMatrix(R, null, accelerometerValues,
+                magneticValues);
+        SensorManager.getOrientation(R, values);
+        Log.d("MainActivity", "value[0] is " + Math.toDegrees(values[0]));
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+};
+
+```
+
+旋转手机，可以得到旋转的角度：
+
+![](4.png)
+
+然后，我们实现指南针的gui部分，先准备两张图片，分别表示罗盘与指针：
+![](5.png)
+
+
