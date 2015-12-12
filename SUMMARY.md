@@ -77,7 +77,7 @@
    * [andrio­d安全机制分­析与技术 （1501210968潘依南）](paper/andriodan_quan_ji_zhi_5206ad_xi_yu_ji_zhu__1501210.md)
    * [浅析Android打包(1501210946 刘彬彬)](paper/qianxi_android_da_bao.md)
    * [Android中数据的处理和调用(1501210399-闻征涛）](paper/androidzhong_shu_ju_de_chu_li_he_diao_752828_15012.md)
-   * [安卓图形图像处理（1501210927 孔祥稀）](paper/an_zhuo_tu_xing_tu_xiang_chu_li_ff08_1501210927_ko.md)
+   * [android图形图像处理（1501210927 孔祥稀）](paper/an_zhuo_tu_xing_tu_xiang_chu_li_ff08_1501210927_ko.md)
    * [Android动效与个性化交互（1501210479 白鹤松）](paper/androiddong_xiao_yu_ge_xing_hua_jiao_hu_ff08_15012.md)
    * [Android利用Intent与其他应用交互(1501210426  李仕聪)](paper/androidli_yong_intent_yu_qi_ta_ying_yong_jiao_4e92.md)
    * [Android 界面布局分析（1501210662 盛意林）](paper/android_jie_mian_bu_ju_fen_xi_ff08_1501210662_shen.md)
