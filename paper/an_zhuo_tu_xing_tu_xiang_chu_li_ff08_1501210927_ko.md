@@ -593,5 +593,6 @@ canvas.drawBitmap(bitmap, srcRect, faceRect, mPaint);
 效果如下图所示：
 
 ![](picture10.png)
+![](pictur11.png)
 
     
