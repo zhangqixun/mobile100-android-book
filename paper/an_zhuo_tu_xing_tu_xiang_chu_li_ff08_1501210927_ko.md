@@ -443,3 +443,25 @@ public Bitmap getAlphaBitmap() {
 ```
 效果如下图所示：
 
+![](picture5.png)
+
+三．图像变换
+Android开发框架提供了一个坐标变换矩阵Matrix类，它可以与Bitmap类的createBitmap方法结合使用，对图像进行缩放、旋转、扭曲等变换处理。图像变换操作就是对坐标变换矩阵进行矩阵乘法运算，Matrix类中提供了一些简便的方法如preScale、postScale、preRotate、postRotate、preSkrew、postSkrew、preTranslate、postTranslate等封装了矩阵的运算，它们与Bitmap类的createBitmap方法结合使用可以很容易地对图像进行缩放、旋转、扭曲、平移操作。
+图像缩放 
+    使用Matrix类preScale或者postScale可以对图像进行缩放操作，它的两个参数分别为x和y坐标缩放比例，下面使用preScale对图像进行放大0.75倍，Java代码如下：
+    ```
+    //getScaleBitmap
+public Bitmap getScaleBitmap() {
+    BitmapDrawable mBitmapDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.pet);
+    Bitmap mBitmap = mBitmapDrawable.getBitmap();
+    int width = mBitmap.getWidth();
+    int height = mBitmap.getHeight();
+    Matrix matrix = new Matrix();
+    matrix.preScale(0.75f, 0.75f);
+    Bitmap mScaleBitmap = Bitmap.createBitmap(mBitmap, 0, 0, width, height, matrix, true);
+    return mScaleBitmap;
+}
+    ```
+    程序运行结果如下：
+    
+    
