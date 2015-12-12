@@ -392,3 +392,28 @@ public Bitmap getRoundedBitmap() {
 
 程序运行效果如下图所示：
 
+
+二、图片灰化处理
+在Android中可以通过ColorMatrix类实现图像处理软件中的滤镜效果，通过ColorMatrix类可以对位图中的每个像素进行变换处理，达到特殊的滤镜效果，下面通过一个例子来介绍如何通过ColorMatrix对图像进行灰化处理，Java代码如下：
+```
+//图片灰化处理  
+public Bitmap getGrayBitmap() {
+    Bitmap mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.android);
+    Bitmap mGrayBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(), Bitmap.Config.ARGB_8888);
+    Canvas mCanvas = new Canvas(mGrayBitmap);
+    Paint mPaint = new Paint();
+    //创建颜色变换矩阵  
+    ColorMatrix mColorMatrix = new ColorMatrix();
+    //设置灰度影响范围  
+    mColorMatrix.setSaturation(0);
+    //创建颜色过滤矩阵  
+    ColorMatrixColorFilter mColorFilter = new ColorMatrixColorFilter(mColorMatrix);
+    //设置画笔的颜色过滤矩阵  
+    mPaint.setColorFilter(mColorFilter);
+    //使用处理后的画笔绘制图像  
+    mCanvas.drawBitmap(mBitmap, 0, 0, mPaint);
+    return mGrayBitmap;
+}  
+```
+效果如下图所示：
+
