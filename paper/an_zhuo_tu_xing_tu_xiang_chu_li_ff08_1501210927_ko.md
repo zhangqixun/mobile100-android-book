@@ -594,5 +594,5 @@ canvas.drawBitmap(bitmap, srcRect, faceRect, mPaint);
 
 ![](picture10.png)
 ![](pictur11.png)
-
+![](pictur12.png)
     
