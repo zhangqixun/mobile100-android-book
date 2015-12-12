@@ -549,4 +549,48 @@ private Bitmap getReflectedBitmap() {
 
 ![](picture9.png)
 
+5）图像剪切
+    如果只需要图像的一部分，就必须对图像进行剪切处理，在原图像上选择一个剪切区域，使用PorterDuffXfermode图像叠加规则，就可以把指定的图像区域剪切下来，下面通过三个步骤来说明如果对图像进行剪切操作。 
+    第一步，创建一个新位图作为画板，然后把原图像画到新位图上面，第二步，绘制一个剪切区域，比如要剪切人物的脸部区域，需要在指定的位置绘制一个圆角矩形区域，代码中的坐标是在调试中获得，在其他分辨率下会有所不同，第三步，从原图像上获取指定区域的图像，并绘制到屏幕上，java代码如下：
+```
+BitmapDrawable bd = (BitmapDrawable) getResources().getDrawable(
+        R.drawable.beauty);
+Bitmap bitmap = bd.getBitmap();
+int w = bitmap.getWidth();
+int h = bitmap.getHeight();
+Bitmap bm = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+Canvas canvas = new Canvas(bm);
+Paint mPaint = new Paint();
+mPaint.setAntiAlias(true);
+mPaint.setStyle(Paint.Style.STROKE);
+canvas.drawBitmap(bitmap, 0, 0, mPaint);  
+int deltX = 76;
+int deltY = 98;
+DashPathEffect dashStyle = new DashPathEffect(new float[] { 10, 5,        5, 5 }, 2);//创建虚线边框样式  
+RectF faceRect = new RectF(0, 0, 88, 106);
+float [] faceCornerii = new float[] {30,30,30,30,75,75,75,75};
+Paint mPaint = new Paint();//创建画笔  
+mPaint.setColor(0xFF6F8DD5);
+mPaint.setStrokeWidth(6);
+mPaint.setPathEffect(dashStyle);
+Path clip = new Path();//创建路径  
+clip.reset();
+clip.addRoundRect(faceRect, faceCornerii, Direction.CW);//添加圆角矩形路径  
+canvas.save();//保存画布  
+canvas.translate(deltX, deltY);
+canvas.clipPath(clip, Region.Op.DIFFERENCE);
+canvas.drawColor(0xDF222222);
+canvas.drawPath(clip, mPaint);//绘制路径  
+canvas.restore();  
+Rect srcRect = new Rect(0, 0, 88, 106);
+srcRect.offset(deltX, deltY);
+PaintFlagsDrawFilter dfd = new PaintFlagsDrawFilter(Paint.ANTI_ALIAS_FLAG,
+        Paint.FILTER_BITMAP_FLAG);
+canvas.setDrawFilter(dfd);
+canvas.clipPath(clip);//使用路径剪切画布  
+canvas.drawBitmap(bitmap, srcRect, faceRect, mPaint); 
+```
+效果如下图所示：
+
+![](picture10.png)
     
