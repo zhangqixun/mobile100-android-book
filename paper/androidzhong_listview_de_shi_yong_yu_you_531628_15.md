@@ -88,5 +88,167 @@ android:paddingStart="?android:attr/expandableListPreferredItemPaddingLeft"
 public ArrayAdapter(Context context, @LayoutRes int resource, @NonNull List<T> objects)```
 ArrayAdapter的使用就是基于这三步，其实总体来说，所有的Adapter适配器都是基于这三步。     
 最终实现结果为：    
+![](img002.png)     
+**2.2 ListView控件与SimpleAdapter适配器的实现**     
+SimpleAdapter也是Android自己提供的一个Adapter适配器，SimpleAdapter可以使用我们自己定义的Item布局文件，首先来看一下SimpleAdapter的构造器： 
+```
+public SimpleAdapter(Context context, List<? extends Map<String, ?>> data,
+        @LayoutRes int resource, String[] from, @IdRes int[] to) {
+    mData = data;
+    mResource = mDropDownResource = resource;
+    mFrom = from;
+    mTo = to;
+    mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+}```
+第一个参数 Context context是指当前的Activity，传入this即可；    
+第二个参数 ```List<? extends Map<String,?>> data ``` 是指传入的数据类型必须是List集合，集合存放的数据类型必须是Map； 
+第三个参数 int resource 是指View的布局文件，也就是要显示数据的View；    
+第四个参数String[] from数据是以Map类型存放在List集合中，from参数是指存放在List中每条Map数据的键值集合；  
+第五个参数int[] to是指每条Map类型的数据中的不同键值对应道不同的布局控件中。     
+下面是SimpleAdapter的具体实现步骤：     
+1：在Activity对应的布局文件中定义一个ListView控件。     
+2：编写一个View 的布局文件，将数据以该View 的形式存放在ListView中，举例如下：
+```
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    >
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="姓名"
+        android:textStyle="bold"
+        android:textColor="#0e99ff"
+        android:textSize="20sp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
+        <TextView
+            android:id="@+id/sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="性别"
+            android:textStyle="bold"
+            android:textColor="#ff99ff"
+            android:textSize="15sp"/>
+        <TextView
+            android:id="@+id/age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="年龄"
+            android:textStyle="bold"
+            android:textColor="#ff99ff"
+            android:textSize="15sp"/>
+    </LinearLayout>
 
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="信息"
+        android:textStyle="bold"
+        android:textColor="#0e99ff"
+        android:textSize="20sp"/>
+</LinearLayout>```  
+3:创建数据。创建List的集合存放Map类型的数据，并对其进行初始化。也可以从数据库中读取，存入List列表中。举例如下：
+```
+private HashMap<String,String> createDataItem(String name,String age,String sex,String info)
+{
+    HashMap<String,String> dataItem = new HashMap<String,String>();
+    dataItem.put("name",name);
+    dataItem.put("age",age);
+    dataItem.put("sex",sex);
+    dataItem.put("info",info);
+
+    return dataItem;
+}
+private List<HashMap<String,String>> data = new ArrayList<HashMap<String,String>>();
+data.add(createDataItem("梅长苏","29","男","琅琊榜首，江左梅郎"));
+data.add(createDataItem("飞流","17","男","梅长苏贴身护卫，武功奇高"));
+data.add(createDataItem("萧景琰","31","男","战功累累、靖边有功的成年皇子"));
+data.add(createDataItem("霓凰郡主","27","女","梅长苏青梅竹马的未婚妻"));```
+4：创建SimpleAdapter对象；
+```
+listview = (ListView)findViewById(R.id.listview);
+String[] from = new String[]{"name","age","sex","info"};
+int[] to = new int[]{R.id.name,R.id.age,R.id.sex,R.id.info};
+data.add(createDataItem("梅长苏","29","男","琅琊榜首，江左梅郎"));
+data.add(createDataItem("飞流","17","男","梅长苏贴身护卫，武功奇高"));
+data.add(createDataItem("萧景琰","31","男","战功累累、靖边有功的成年皇子"));
+data.add(createDataItem("霓凰郡主","27","女","梅长苏青梅竹马的未婚妻"));
+SimpleAdapter simpleAdapter = new SimpleAdapter(MainActivity.this,data,R.layout.listview_item,from,to);```
+5：设置适配器。
+```
+listview.setAdapter(simpleAdapter);```
+结果显示为：    
+![](img003.png)     
+显示有些简陋，具体细节可以根据自己的界面布局要求做具体调整。    
+**2.3ListView控件与自定义适配器的实现**     
+可能每一个条目中不会只有TextView，也可以有ImageView，此时我们需要用到自定义Adapter来实现。这是ListView中使用最多的一个Adapter适配器，可以根据自己的意愿去创建数据和数据的布局样式，使用方式灵活。下面我们来实现一下。  
+1:首先我们先来创建我们需要的数据模型。创建一个人物类，包括的属性有人物照片id、人物姓名、人物年龄、人物性别、人物简介；
+```
+public class Person {
+    private int image;
+    private String name;
+    private String age;
+    private String sex;
+    private String info;
+
+    public Person(String name,String age,String sex,String info,int image)
+    {
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+        this.info = info;
+        this.image =image;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+}```
 
