@@ -496,7 +496,50 @@ public Bitmap getScrewBitmap() {
     Bitmap mScrewBitmap = Bitmap.createBitmap(mBitmap, 0, 0, width, height, matrix, true);
     return mScrewBitmap;
 }  
-    ```
-    效果如下图所示：
+```
+
+效果如下图所示：
+ ![](picture8.png)
     
+    4）图像倒影
+    为图像添加倒影效果之后，图像看起来会有立体感，更有真实感，在Android中使用Matrix类可以很容易实现图像的倒影效果。主要是Matrix的preScale方法的使用，给它设置负数缩放比例，图像就会进行反转。然后通过设置Shader添加渐变效果。Java代码如下：
+    
+```
+//getReflectedBitmap  
+private Bitmap getReflectedBitmap() {
+    BitmapDrawable mBitmapDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.pet);
+    Bitmap mBitmap = mBitmapDrawable.getBitmap();
+    int width = mBitmap.getWidth();
+    int height = mBitmap.getHeight();
+    Matrix matrix = new Matrix();
+    // 图片缩放，x轴变为原来的1倍，y轴为-1倍,实现图片的反转  
+    matrix.preScale(1, -1);
+    //创建反转后的图片Bitmap对象，图片高是原图的一半。  
+    //Bitmap mInverseBitmap = Bitmap.createBitmap(mBitmap, 0, height/2, width, height/2, matrix, false);  
+    //创建标准的Bitmap对象，宽和原图一致，高是原图的1.5倍。  
+    //注意两种createBitmap的不同  
+    //Bitmap mReflectedBitmap = Bitmap.createBitmap(width, height*3/2, Config.ARGB_8888);  
+    Bitmap mInverseBitmap = Bitmap.createBitmap(mBitmap, 0, 0, width, height, matrix, false);
+    Bitmap mReflectedBitmap = Bitmap.createBitmap(width, height*2, Config.ARGB_8888);
+
+    // 把新建的位图作为画板  
+    Canvas mCanvas = new Canvas(mReflectedBitmap);
+    //绘制图片  
+    mCanvas.drawBitmap(mBitmap, 0, 0, null);
+    mCanvas.drawBitmap(mInverseBitmap, 0, height, null);
+    //添加倒影的渐变效果  
+    Paint mPaint = new Paint();
+    Shader mShader = new LinearGradient(0, height, 0, mReflectedBitmap.getHeight(), 0x70ffffff, 0x00ffffff, TileMode.MIRROR);
+    mPaint.setShader(mShader);
+    //设置叠加模式  
+    mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+    //绘制遮罩效果  
+    mCanvas.drawRect(0, height, width, mReflectedBitmap.getHeight(), mPaint);
+    return mReflectedBitmap;
+}
+```
+
+效果如下图所示：
+
+
     
