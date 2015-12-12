@@ -14,7 +14,7 @@ Android 是一个权限分离的系统 。 这是利用 Linux 已有的权限管
 
 在 Android 上，一个用户 UID 标示一个应用程序。应用程序在安装时被分配用户 UID，应用程序在设备上的存续期间内，用户 UID 保持不变。对于普通的应用程序，GID即等于UID。GIDS 是由框架在 Application 安装过程中生成，与 Application 申请的具体权限相关。 如果 Application 申请的相应的 permission 被 granted ，而且有对应的GIDS， 那么 这个Application 的 gids 中将 包含这个 gids。记住权限(GIDS)是关于允许或限制应用程序（而不是用户）访问设备资源。
 
-## 1.2 permission
+## 1.2 Android的权限规则
 
 
 
