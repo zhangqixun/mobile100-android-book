@@ -96,7 +96,8 @@ public class MainActivity extends Activity {
 
     }
 }
-```程序运行效果如图所示：
+```
+程序运行效果如图所示：
 
 ![](picture.png)
 
@@ -291,4 +292,103 @@ public class GameStart  extends  Activity {
 ```
 
 程序运行结果如图所示：
+
+![](picture2.png)
+
+1.3 Bitmap类
+    Bitmap类代表位图，它是Android系统中图像处理最重要的类之一。使用它不仅可以获取图像文件信息，进行图像剪切，旋转，缩放等操作，还可以指定格式保存文件。Bitmap实现在android.graphics包中。但是Bitmap类的构造函数是私有的，外面并不能实例化，只能是通过JNI实例化。这必然是某个辅助类提供了创建Bitmap的接口，而这个类的实现通过JNI接口来实例化Bitmap的，这个类就是BitmapFactory。
+BitMap类常用方法：
+public void recycle()
+回收位图占用的内存空间，把位图标记为Dead 
+public final boolean isRecycled()
+判断位图内存是否已释放 
+public final int getWidth()
+获取位图的宽度 
+public final int getHeight()
+获取位图的高度 
+public final boolean isMutable()
+图片是否可修改 
+public int getScaledWidth(Canvas canvas)
+获取指定密度转换后的图像的宽度 
+public int getScaledHeight(Canvas canvas)
+获取指定密度转换后的图像的高度 
+public boolean compress(CompressFormat format, int quality, OutputStream stream)
+按指定的图片格式以及画质，将图片转换为输出流。
+format：Bitmap.CompressFormat.PNG或Bitmap.CompressFormat.JPEG 
+quality：画质，0-100.0表示最低画质压缩，100以最高画质压缩。对于PNG等无损格式的图片，会忽略此项设置。  
+public static Bitmap createBitmap(Bitmap src)
+以src为原图生成不可变得新图像 
+public static Bitmap createScaledBitmap(Bitmap src, int dstWidth, 
+int dstHeight, boolean filter)
+以src为原图，创建新的图像，指定新图像的高宽以及是否可变。
+public static Bitmap createBitmap(int width, int height, Config config)
+创建指定格式、大小的位图 
+public static Bitmap createBitmap(Bitmap source, int x, int y, int width, int height)
+以source为原图，创建新的图片，指定起始坐标以及新图像的高宽。 
+BitmapFactory工厂类常用方法： 
+public boolean inJustDecodeBounds（）
+如果设置为true，不获取图片，不分配内存，但会返回图片的高度宽度信息。 
+public int inSampleSize（）
+图片缩放的倍数。如果设为4，则宽和高都为原来的1/4，则图是原来的1/16。
+public int outWidth（）
+获取图片的宽度值 
+public int outHeight（）
+获取图片的高度值 
+public int inDensity（）
+用于位图的像素压缩比 
+public int inTargetDensity（）
+用于目标位图的像素压缩比（要生成的位图）
+public boolean inScaled（）
+设置为true时进行图片压缩，从inDensity到inTargetDensity。
+public static Bitmap decodeFile(String pathName, Options opts) 
+public static Bitmap decodeFile(String pathName) 
+读取一个资源文件得到一个位图。如果位图数据不能被解码，或者opts参数只请求大小信息时，则返回NuLL。 
+public static Bitmap decodeResource(Resources res, int id) 
+public static Bitmap decodeResource(Resources res, int id, Options opts) 
+从输入流中解码位图 
+public static Bitmap decodeStream(InputStream is) 
+从字节数组中解码生成不可变的位图
+下面通过几个例子详细介绍Bitmap的用法
+一、图片圆角处理
+    在Android中可以很容通过图像叠加的规则为图片添加圆角效果。正常情况下，在已有的图像上绘图时将会在其上面添加一层新的图形。如果绘图时使用的Paint是完全不透明的，那么它将完全遮挡住下面的图像，如果Paint是部分透明的，那么它将会对重叠部分图像的颜色叠加处理。通过PorterDuffXfermode规则可以设置绘制图像时的叠加规则。PorterDuffXfermode是非常强大的转换模式，使用它可以设置图像叠加的Porter-Duff规则，来控制Paint如何与Canvas上已有的图像进行叠加。下面列举了常用的12条Porter-Duff规则及其表示的含义：
+
+PorterDuff.Mode.CLEAR 清除画布上图像
+PorterDuff.Mode.SRC 显示上层图像
+PorterDuff.Mode.DST 显示下层图像
+PorterDuff.Mode.SRC_OVER上下层图像都显示，下层居上显示
+PorterDuff.Mode.DST_OVER 上下层都显示,下层居上显示
+PorterDuff.Mode.SRC_IN 取两层图像交集部分,只显示上层图像
+PorterDuff.Mode.DST_IN 取两层图像交集部分,只显示下层图像
+PorterDuff.Mode.SRC_OUT 取上层图像非交集部分
+PorterDuff.Mode.DST_OUT 取下层图像非交集部分
+PorterDuff.Mode.SRC_ATOP 取下层图像非交集部分与上层图像交集部分
+PorterDuff.Mode.DST_ATOP 取上层图像非交集部分与下层图像交集部分
+PorterDuff.Mode.XOR 取两层图像的非交集部分
+下面使用PorterDuff.Mode.SRC_IN规则来给图片添加圆角效果，主要的思路是先绘制一个圆角矩形，然后在上面绘制图像，取图像与圆角矩形的交集部分，只保留图像。代码如下：
+
+```
+//图片圆角处理  
+public Bitmap getRoundedBitmap() {
+    Bitmap mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.frame);
+    //创建新的位图  
+    Bitmap bgBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(), Config.ARGB_8888);
+    //把创建的位图作为画板  
+    Canvas mCanvas = new Canvas(bgBitmap);
+    Paint mPaint = new Paint();
+    Rect mRect = new Rect(0, 0, mBitmap.getWidth(), mBitmap.getHeight());
+    RectF mRectF = new RectF(mRect);
+    //设置圆角半径为20  
+    float roundPx = 15;
+    mPaint.setAntiAlias(true);
+    //先绘制圆角矩形  
+    mCanvas.drawRoundRect(mRectF, roundPx, roundPx, mPaint);
+    //设置图像的叠加模式  
+    mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+    //绘制图像  
+    mCanvas.drawBitmap(mBitmap, mRect, mRect, mPaint);
+    return bgBitmap;
+}
+```
+
+程序运行效果如下图所示：
 
