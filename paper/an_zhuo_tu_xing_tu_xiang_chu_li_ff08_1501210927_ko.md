@@ -447,10 +447,11 @@ public Bitmap getAlphaBitmap() {
 
 三．图像变换
 Android开发框架提供了一个坐标变换矩阵Matrix类，它可以与Bitmap类的createBitmap方法结合使用，对图像进行缩放、旋转、扭曲等变换处理。图像变换操作就是对坐标变换矩阵进行矩阵乘法运算，Matrix类中提供了一些简便的方法如preScale、postScale、preRotate、postRotate、preSkrew、postSkrew、preTranslate、postTranslate等封装了矩阵的运算，它们与Bitmap类的createBitmap方法结合使用可以很容易地对图像进行缩放、旋转、扭曲、平移操作。
-图像缩放 
+图像缩放
     使用Matrix类preScale或者postScale可以对图像进行缩放操作，它的两个参数分别为x和y坐标缩放比例，下面使用preScale对图像进行放大0.75倍，Java代码如下：
-    ```
-    //getScaleBitmap
+    
+ ```
+ // getScaleBitmap
 public Bitmap getScaleBitmap() {
     BitmapDrawable mBitmapDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.pet);
     Bitmap mBitmap = mBitmapDrawable.getBitmap();
@@ -461,31 +462,36 @@ public Bitmap getScaleBitmap() {
     Bitmap mScaleBitmap = Bitmap.createBitmap(mBitmap, 0, 0, width, height, matrix, true);
     return mScaleBitmap;
 }
-    ```
-    程序运行结果如下：
+ ```
+ 
+程序运行结果如下：
+
+![](picture6.png)
+
+图片旋转
+使用Matrix类preRotate或者postRotate可以对图像进行旋转操作，它只有一个参数表示旋转的角度，下面使用preRotate对图像顺时针旋转30度，Java代码如下：
     
-    ![](picture6.png)
-    图片旋转
-    使用Matrix类preRotate或者postRotate可以对图像进行旋转操作，它只有一个参数表示旋转的角度，下面使用preRotate对图像顺时针旋转30度，Java代码如下：
-    ```
-    //getRotatedBitmap  
+ ```
+//getRotatedBitmap  
 public Bitmap getRotatedBitmap() {
-    BitmapDrawable mBitmapDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.pet);
-    Bitmap mBitmap = mBitmapDrawable.getBitmap();
-    int width = mBitmap.getWidth();
-    int height = mBitmap.getHeight();
-    Matrix matrix = new Matrix();
-    matrix.preRotate(45);
-    Bitmap mRotateBitmap = Bitmap.createBitmap(mBitmap, 0, 0, width, height, matrix, true);
-    return mRotateBitmap;
+BitmapDrawable mBitmapDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.pet);
+Bitmap mBitmap = mBitmapDrawable.getBitmap();
+int width = mBitmap.getWidth();
+int height = mBitmap.getHeight();
+Matrix matrix = new Matrix();
+matrix.preRotate(45);
+Bitmap mRotateBitmap = Bitmap.createBitmap(mBitmap, 0, 0, width, height, matrix, true);
+return mRotateBitmap;
 }  
-    ```
-    效果如下图所示：
-    ![](picture7.png)
-    3）图像倾斜
-    使用Matrix类preSkew或者postSkew可以对图像进行倾斜操作，它的两个参数分别为x和y坐标倾斜度，下面使用preSkew对图像进行倾斜变换，Java代码如下：
-    ```
-    //getScrewBitmap  
+```
+效果如下图所示：
+
+![](picture7.png)
+
+3）图像倾斜
+使用Matrix类preSkew或者postSkew可以对图像进行倾斜操作，它的两个参数分别为x和y坐标倾斜度，下面使用preSkew对图像进行倾斜变换，Java代码如下：
+```
+//getScrewBitmap  
 public Bitmap getScrewBitmap() {
     BitmapDrawable mBitmapDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.pet);
     Bitmap mBitmap = mBitmapDrawable.getBitmap();
@@ -499,10 +505,11 @@ public Bitmap getScrewBitmap() {
 ```
 
 效果如下图所示：
+
  ![](picture8.png)
     
-    4）图像倒影
-    为图像添加倒影效果之后，图像看起来会有立体感，更有真实感，在Android中使用Matrix类可以很容易实现图像的倒影效果。主要是Matrix的preScale方法的使用，给它设置负数缩放比例，图像就会进行反转。然后通过设置Shader添加渐变效果。Java代码如下：
+ 4）图像倒影
+ 为图像添加倒影效果之后，图像看起来会有立体感，更有真实感，在Android中使用Matrix类可以很容易实现图像的倒影效果。主要是Matrix的preScale方法的使用，给它设置负数缩放比例，图像就会进行反转。然后通过设置Shader添加渐变效果。Java代码如下：
     
 ```
 //getReflectedBitmap  
@@ -521,7 +528,6 @@ private Bitmap getReflectedBitmap() {
     //Bitmap mReflectedBitmap = Bitmap.createBitmap(width, height*3/2, Config.ARGB_8888);  
     Bitmap mInverseBitmap = Bitmap.createBitmap(mBitmap, 0, 0, width, height, matrix, false);
     Bitmap mReflectedBitmap = Bitmap.createBitmap(width, height*2, Config.ARGB_8888);
-
     // 把新建的位图作为画板  
     Canvas mCanvas = new Canvas(mReflectedBitmap);
     //绘制图片  
@@ -541,5 +547,6 @@ private Bitmap getReflectedBitmap() {
 
 效果如下图所示：
 
+![](picture9.png)
 
     
