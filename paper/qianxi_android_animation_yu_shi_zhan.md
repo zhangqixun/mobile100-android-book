@@ -135,4 +135,42 @@ Translate:
         android:toYDelta="100" />     
 
 ```
+* 在Activity当中，新建一个图片（ImageView）和四个按钮（Button），后文的事例将通过让每个按钮分别触发一种功能，使得图片产生相应地变化，布局结束后如下图所示。![](3-1.png)
+* 在Activity当中，新建一个图片（ImageView）和四个按钮（Button），后文的事例将通过让每个按钮分别触发一种功能，使得图片产生相应地变化，布局结束后如下图所示。
+
+* 此后，在Activity当中用代码让ImageView和Button与控件绑定，注意实现如下的两个核心方法，其他方法比较简单，就不在这里赘述，需要的可以自行查看源代码
+
+```
+/**
+     * 加载并启动动画，执行动画的关键
+     * @param view 动画执行的对象，在这里全部都是应用到img，注意看onClick部分
+     * @param type  动画的种类
+     */
+    private void  doAnimation(View view,int type){
+        Animation animation = AnimationUtils.loadAnimation(this, type);
+        view.startAnimation(animation);
+    }
+
+    /**
+     * 根据不同的按钮，选择执行不同的方法作为一个参数，交由doAnimation执行
+     * @param v
+     */
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.button_alpha){
+            this.doAnimation(img,R.anim.mebiuw_anima_alpha);
+        }
+        else if(v.getId()==R.id.button_scale){
+            this.doAnimation(img,R.anim.mebiuw_anima_scale);
+        }
+        else if(v.getId()==R.id.button_rotate){
+            this.doAnimation(img,R.anim.mebiuw_anima_rotate);
+        }
+        else if(v.getId()==R.id.button_translate){
+            this.doAnimation(img,R.anim.mebiuw_anima_translate);
+        }
+    }
+```
+
+* 由此，完成了ViewAnimation的实战，ViewAnimation简单易懂，操作方便，大家不妨在自己的项目中多多使用。
 
