@@ -86,8 +86,91 @@ Property Animation包含着较多的内容，也是当前Android开发最为重�
         fromYDelta：动画开始的Y坐标；
         toYDelta：动画结束的Y坐标；
 
+## 3.2 ViewAnimation实战
+
+在这一节当中，将介绍如何在Anroid项目中，使用ViewAnimation效果，步骤如下：
+
+* 创建一个空白的应用程序，新建一个Activity，找到res里的anima文件夹，如果是Android Studio当中没有的话可以通过AndroidStudio自带的工具建立一个文件夹即可。
 
 
+* 分别为四种不同的动画建立对应的xml文件，具体可以参考如下代码合并显示了：
 
+```
+例如新建一个Alpha动画的XML（mebiuw_anima_alpha.xml)文件，就如下的形式，以Set标签做维ROOT，按照我们给定的参数填写参数
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--从0.1的透明度过渡到1.0的透明度，同AlphaAnimation(float fromAlpha, float toAlpha)一致,这里多加了一个持续时间-->
+    <alpha
+        android:fromAlpha="1.0"
+        android:toAlpha="0.1"
+        android:duration="5000">
+    </alpha>
 
+</set>
+
+同理对不同的动画，具有相同的基础结构，这里仅贴出<Set>以内有改变的地方，如果需要查看所有代码，可以到Github上查看源代码
+Rotate：
+<!--旋转配置，同上文介绍的构造方法相对应，旋转1周，持续1000ms们同事定义伸缩值-->
+<rotate android:fromDegrees="0"
+        android:toDegrees="360"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:duration="1000" />
+
+Scale:
+<!--伸缩配置，具体的动画信息，同上文介绍的参数介绍一致-->
+    <scale android:fromXScale="0.0"
+        android:toXScale="1.0"
+        android:fromYScale="0.0"
+        android:toYScale="1.0"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:duration="5000" />
+
+Translate:
+<!--转换配置，具体的动画信息，同上文介绍的参数介绍一致-->
+<translate android:fromXDelta="10"
+        android:toXDelta="100"
+        android:fromYDelta="10"
+        android:toYDelta="100" />     
+
+```
+* 在Activity当中，新建一个图片（ImageView）和四个按钮（Button），后文的事例将通过让每个按钮分别触发一种功能，使得图片产生相应地变化，布局结束后如下图所示。![](3-1.png)
+* 在Activity当中，新建一个图片（ImageView）和四个按钮（Button），后文的事例将通过让每个按钮分别触发一种功能，使得图片产生相应地变化，布局结束后如下图所示。
+
+* 此后，在Activity当中用代码让ImageView和Button与控件绑定，注意实现如下的两个核心方法，其他方法比较简单，就不在这里赘述，需要的可以自行查看源代码
+
+```
+/**
+     * 加载并启动动画，执行动画的关键
+     * @param view 动画执行的对象，在这里全部都是应用到img，注意看onClick部分
+     * @param type  动画的种类
+     */
+    private void  doAnimation(View view,int type){
+        Animation animation = AnimationUtils.loadAnimation(this, type);
+        view.startAnimation(animation);
+    }
+
+    /**
+     * 根据不同的按钮，选择执行不同的方法作为一个参数，交由doAnimation执行
+     * @param v
+     */
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.button_alpha){
+            this.doAnimation(img,R.anim.mebiuw_anima_alpha);
+        }
+        else if(v.getId()==R.id.button_scale){
+            this.doAnimation(img,R.anim.mebiuw_anima_scale);
+        }
+        else if(v.getId()==R.id.button_rotate){
+            this.doAnimation(img,R.anim.mebiuw_anima_rotate);
+        }
+        else if(v.getId()==R.id.button_translate){
+            this.doAnimation(img,R.anim.mebiuw_anima_translate);
+        }
+    }
+```
+
+* 由此，完成了ViewAnimation的实战，ViewAnimation简单易懂，操作方便，大家不妨在自己的项目中多多使用。
 
