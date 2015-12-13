@@ -8,7 +8,7 @@
 
 **一、实验目的**
 
-*了解Intent的使用*
+*了解Intent的基本概念、工作过程、属性和操作方法，了解显示Intent和隐士Intent，并且能够通过Intent来实现活动之间的跳转*
 
 **二、基础知识**
 
@@ -16,17 +16,24 @@
    
 * 知识点1：
 
-      Intent基本使用,怎么传递参数
+      Intent中包含对其他组件的意图的描述信息，如要执行的动作、涉及的数据等等。
+      Android根据Intent的描述，找到相应的组件，并将Intent传递给相应的组件，完成组件的调用。
+      Intent在这里起到一个媒介的作用，专门提供组件互相调用的相关信息。
+      Intent对象主要包括：组件名称、动作、数据、类别、附加信息和标志位6大部分。
 
 * 知识点2：
 
-      startActivity()和startActivityForResult()的区别
-
+      了解Activity栈的概念：
+      某一时刻只有一个Activity处在栈顶。
+      Activity创建、压栈、用户可交互。
+      Back，退栈。
+      Activity销毁，退栈。
 
 * 知识点3：
 
-      Intent在寻找目标组件时有两种方法
-
+      Intent的用法大致可以分为两种，显式Intent和隐式Intent。相比于显式Intent，隐式Intent含蓄了很多，
+      它并不明确指出我们想要启动哪一个活动，而是指定了一系列更为抽象的action和category等信息，然后交友系统去分析这个Intent，并找出
+      合适的方法去启动。
 
    
 
