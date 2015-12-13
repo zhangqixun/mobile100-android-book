@@ -1,6 +1,5 @@
 # 浅析Android Animation与实战
 
-# 浅析Android Animation相关
 作者：巫思杏 1501211005
 
 
@@ -49,22 +48,46 @@ Property Animation包含着较多的内容，也是当前Android开发最为重�
 ## 3.1 ViewAnimation种类介绍
 
 之前在第二章当中已经介绍了ViewAnimation的一些基本知识，那么这章将开始针对如何应用ViewAnimation做一个深入的实战，首先我们需要了解的是ViewAnimation的种类，具体来说Tween的四个主要实现如下：
-*AlphaAnimation：透明渐变动画，一般采用如下的构造方法进行构造
-    AlphaAnimation(float fromAlpha, float toAlpha)
-	fromAlpha：动画开始时的透明度（取值范围为0.0到1.0）；
-    toAlpha：动画结束时的透明度；
-	或者是在XML当中，采用alpha标签进行描述。
+* AlphaAnimation：透明渐变动画，一般采用如下的构造方法进行构造
+
+        AlphaAnimation(float fromAlpha, float toAlpha)
+    	fromAlpha：动画开始时的透明度（取值范围为0.0到1.0）；
+        toAlpha：动画结束时的透明度；
+    	或者是在XML当中，采用alpha标签进行描述。
 * ScaleAnimation：缩放渐变动画，一般采用如下的构造方法：
 
 
-    ScaleAnimation(float fromX, float toX, float fromY, float toY, int pivotXType, float pivotXValue, int pivotYType, float pivotYValue)来构造；
-    fromX：动画开始X坐标上的伸缩尺度；
-    toX：动画结束X坐标上的伸缩尺度；
-    fromY：动画开始Y坐标上的伸缩尺度；
-    toY：动画结束Y坐标上的伸缩尺度；
-    pivotXType：X坐标上的伸缩模式，取值有：Animation.ABSOLUTE, Animation.RELATIVE_TO_SELF, Animation.RELATIVE_TO_PARENT；
-    pivotXValue：X坐标上的伸缩值；
-    pivotYType：Y坐标上的伸缩模式，取值有：Animation.ABSOLUTE, Animation.RELATIVE_TO_SELF, Animation.RELATIVE_TO_PARENT；
-    pivotYValue：Y坐标上的伸缩值；
+        ScaleAnimation(float fromX, float toX, float fromY, float toY, int pivotXType, float pivotXValue, int pivotYType, float pivotYValue)来构造；
+        fromX：动画开始X坐标上的伸缩尺度；
+        toX：动画结束X坐标上的伸缩尺度；
+        fromY：动画开始Y坐标上的伸缩尺度；
+        toY：动画结束Y坐标上的伸缩尺度；
+        pivotXType：X坐标上的伸缩模式，取值有：Animation.ABSOLUTE, Animation.RELATIVE_TO_SELF, Animation.RELATIVE_TO_PARENT；
+        pivotXValue：X坐标上的伸缩值；
+        pivotYType：Y坐标上的伸缩模式，取值有：Animation.ABSOLUTE, Animation.RELATIVE_TO_SELF, Animation.RELATIVE_TO_PARENT；
+        pivotYValue：Y坐标上的伸缩值；
+
+
+* TranslateAnimation：实现位置变换的实现类，常使用如下的方法构造
+ 
+        TranslateAnimation(float fromXDelta, float toXDelta, float fromYDelta, float toYDelta)
+        fromXDelta：动画开始的X坐标；
+        toXDelta：动画结束的X坐标；
+        fromYDelta：动画开始的Y坐标；
+        toYDelta：动画结束的Y坐标；
+* RotateAnimation：主要控制旋转的动画实现类，常使用如下构造方法
+
+        RotateAnimation(float fromDegrees, float toDegrees, int pivotXType, float pivotXValue, int pivotYType, float pivotYValue)来构造；
+        fromDegrees：旋转开始角度；
+        toDegrees：旋转结束角度；
+        pivotXType, pivotXValue, pivotYType, pivotYValue与尺度变化动画ScaleAnimation类似；
+        fromXDelta：动画开始的X坐标；
+        toXDelta：动画结束的X坐标；
+        fromYDelta：动画开始的Y坐标；
+        toYDelta：动画结束的Y坐标；
+
+
+
+
 
 
