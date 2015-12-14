@@ -176,3 +176,5 @@ bitmap1对象被GC回收。
 FileCountLimitedDiscCache：可以设定缓存图片额个数，当超过设定值，删除最先加入到硬盘的文件。
 * 
 LimitedAgeDiscCache：设定文件存活的最长时间，当超过这个值，就删除该文件
+* 
+TotalSizeLimitedDiscCache：设定缓存bitmap的最大值，当超过设定值时，删除最先加入到硬盘的文件
