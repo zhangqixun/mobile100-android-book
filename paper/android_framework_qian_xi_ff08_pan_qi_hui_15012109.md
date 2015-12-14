@@ -30,4 +30,6 @@
     　　3）启动脚本中指定的服务，执行指定的命令或动作；
     　　4）作为守护进程循环检查是否有action需要执行、是否需要重启某服务等。
          详细代码可以参考init.c中入口函数main的实现。
-  
+  2、init.rc脚本启动
+
+     init.rc文件是Android系统的重要配置文件，位于/system/core/rootdir/目录中。主要功能是定义了系统启动时需要执行的一系列action及service：执行特定动作、设置环境变量和属性和执行特定的service。该脚本在init进程的init.c:main函数中解析并启动。代码如下：
