@@ -329,7 +329,7 @@ SQLite Database数据库。Android对数据库的支持很好，它本身集成�
  
    上面就是SQLite的基本应用，但在实际开发中，为了能够更好的管理和维护数据库，我们会封装一个继承自SQLiteOpenHelper类的数据库操作类，然后以这个类为基础，再封装我们的业务逻辑方法。
    
-下面，我们就以一个实例来讲解具体的用法，我们新建一个项目，结构如下：
+下面，我们就以一个实例来讲解具体的用法，我们新建一个项目，
 
 
 其中DBHelper继承了SQLiteOpenHelper，作为维护和管理数据库的基类，DBManager是建立在DBHelper之上，封装了常用的业务方法，Person是我们的person表对应的JavaBean，MainActivity就是我们显示的界面。
