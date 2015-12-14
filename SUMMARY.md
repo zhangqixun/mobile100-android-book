@@ -89,7 +89,7 @@
    * [Android平台下软件安全保护技术的分析（1501210994 王晨）](paper/androidping_tai_xia_ruan_jian_an_quan_bao_hu_ji_zh.md)
    * [浅析Android Animation与实战](paper/qianxi_android_animation_yu_shi_zhan.md)
    * [Android中service的用法和地位](paper/androidzhong_service_de_yong_fa_he_di_wei.md)
-   * [android多线程编程机制](paper/1501210929.md)
+   * [android多线程编程机制(1501210929赖涛)](paper/1501210929.md)
 * [常见面试题目](question/index.md)
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
