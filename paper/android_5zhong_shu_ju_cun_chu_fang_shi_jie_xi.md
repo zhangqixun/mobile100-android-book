@@ -47,10 +47,10 @@
 　　
 （四）、通过commit()方法提交数据。
 
- 4.下面是用SharedPreferences存储数据的一个案例：
+ . 下面是用SharedPreferences存储数据的一个案例：
  `
  
- void ReadSharedPreferences()
+ `````````void ReadSharedPreferences()
 
 {
 String strName,strPassword;
@@ -74,20 +74,20 @@ user.putString(“PASSWORD” ,strPassword);
 
 user.commit();
 
-}``
-
+}````````
+```
 `
-以上面的数据存储结果为例，打开后可以看到一个user_info.xml的文件，打开后可以看到：
+```以上面的数据存储结果为例，打开后可以看到一个user_info.xml的文件，打开后可以看到：
 
 <?xml version=”1.0″ encoding=”UTF-8″?>
 <map>
 
-<string name=NAME>moandroid</string>
+<string name="NAME">moandroid</string>
 
 
-<string name=PASSWORD>SharedPreferences</string>
+<string name="PASSWORD">SharedPreferences</string>
 
-</map>
+</map>```
 
 * 
 使用SharedPreferences是有些限制的：只能在同一个包内使用，不能在不同的包之间使用。
@@ -96,9 +96,10 @@ user.commit();
 SharedPreferences存储免去了创建数据库，创建表，写SQL语句等诸多操作，相对而言更加方便，简洁。但是SharedPreferences也有其自身缺陷，比如其职能存储boolean，int，float，long和String五种简单的数据类型，比如其无法进行条件查询等。所以不论SharedPreferences的数据存储操作是如何简单，它也只能是存储方式的一种补充，而无法完全替代如SQLite数据库这样的其他数据存储方式。
 
 
-#**二、文件存储数据**
-  
-* 
+ 
+###二、文件存储数据
+
+
 核心原理: Context提供了两个方法来打开数据文件里的文件IO流 FileInputStream openFileInput(String name); FileOutputStream(String name , int mode),这两个方法第一个参数用于指定文件名，第二个参数指定打开文件的模式。具体有以下值可选：
 MODE_PRIVATE：为默认操作模式，代表该文件是私有数据，只能被应用本身访问，在该模式下，写入的内容会覆盖原文件的内容，如果想把新写入的内容追加到原文件中。可 以使用Context.MODE_APPEND
 MODE_APPEND：模式会检查文件是否存在，存在就往文件追加内容，否则就创建新文件。
@@ -146,6 +147,7 @@ MODE_WORLD_WRITEABLE：表示当前文件可以被其他应用写入。
    如果希望文件被其他应用读和写，可以传入： openFileOutput(“itcast.txt”, Context.MODE_WORLD_READABLE + Context.MODE_WORLD_WRITEABLE); android有一套自己的安全模型，当应用程序(.apk)在安装时系统就会分配给他一个userid，当该应用要去访问其他资源比如文件的时候，就需要userid匹配。默认情况下，任何应用创建的文件，sharedpreferences，数据库都应该是私有的（位于/data/data/<package name>/files），其他程序无法访问。
    除非在创建时指定了Context.MODE_WORLD_READABLE或者Context.MODE_WORLD_WRITEABLE ，只有这样其他程序才能正确访问。
 读取文件示例:
+
 
 public void load() 
 
@@ -280,8 +282,8 @@ SQLite Database数据库。Android对数据库的支持很好，它本身集成�
    
 上面的代码中基本上囊括了大部分的数据库操作；对于添加、更新和删除来说，我们都可以使用。
 
-1.db.executeSQL(String sql);  
-2.db.executeSQL(String sql, Object[] bindArgs);//sql语句中使用占位符，然后第二个参数是实际的参数集  
+```1.db.executeSQL(String sql);  
+2.db.executeSQL(String sql, Object[] bindArgs);```//sql语句中使用占位符，然后第二个参数是实际的参数集  
 除了统一的形式之外，他们还有各自的操作方法：
 
 1.db.insert(String table, String nullColumnHack, ContentValues values);  
@@ -524,6 +526,7 @@ public class DBManager {  
 44.    }  
 .}  
  在getReadableDatabase()方法中，首先判断是否已存在数据库实例并且是打开状态，如果是，则直接返回该实例，否则试图获取一个可读写模式的数据库实例，如果遇到磁盘空间已满等情况获取失败的话，再以只读模式打开数据库，获取数据库实例并返回，然后为mDatabase赋值为最新打开的数据库实例。既然有可能调用到getWritableDatabase()方法，我们就要看一下了：
+
 .public synchronized SQLiteDatabase getWritableDatabase() {  
 2.    if (mDatabase != null && mDatabase.isOpen() && !mDatabase.isReadOnly()) {  
 3.        // 如果mDatabase不为空已打开并且不是只读模式 则返回该实例  
@@ -781,7 +784,7 @@ CursorWrapper cursorWrapper = new CursorWrapper(c) {  
 如果试图从CursorWrapper里获取“_id”对应的列索引，我们就返回查询结果里“id”对应的列索引即可。
 
 **
-# 四.使用ContentProvider存储数据*
+# 四.使用ContentProvider存储数据
 
 ContentProvider（内容提供者）是Android中的四大组件之一。主要用于对外共享数据，也就是通过ContentProvider把应用中的数据共享给其他应用访问，其他应用可以通过ContentProvider对指定应用中的数据进行操作。ContentProvider分为系统的和自定义的，系统的也就是例如联系人，图片等数据。
 
@@ -834,13 +837,16 @@ ContentProvider（内容提供者）是Android中的四大组件之一。主要�
 
 Content Provider增删改查实例（通过listview显示操作过的数据）
 
-1，创建person库，person表
+
+### 1，创建person库，person表
+
+
 
 1.import android.content.Context;  
 2.import android.database.sqlite.SQLiteDatabase;  
 3.import android.database.sqlite.SQLiteOpenHelper;  
 4.  
-5.public class DBOpenHelper extends SQLiteOpenHelper {  
+.public class DBOpenHelper extends SQLiteOpenHelper {  
 6.      
 7.    private static final String DATABASE_NAME = "person.db"; //数据库名称  
 8.    private static final int DATABASE_VERSION = 1;//数据库版本  
@@ -865,7 +871,10 @@ Content Provider增删改查实例（通过listview显示操作过的数据）
 27.  
 .}  
 
-2，自定义Content Provider类，增删改查的方法
+
+### 2，自定义Content Provider类，增删改查的方法
+
+
 [java] view plaincopy
   
 1.import android.content.ContentProvider;  
@@ -876,7 +885,7 @@ Content Provider增删改查实例（通过listview显示操作过的数据）
 6.import android.database.sqlite.SQLiteDatabase;  
 7.import android.net.Uri;  
 8.  
-9.public class PersonProvider extends ContentProvider {  
+.public class PersonProvider extends ContentProvider {  
 10.    private DBOpenHelper dbOpenHelper;  
 11.    private static final UriMatcher MATCHER = new UriMatcher(  
 12.            UriMatcher.NO_MATCH);  
@@ -1002,7 +1011,10 @@ Content Provider增删改查实例（通过listview显示操作过的数据）
 132.  
 .}  
 
-*3，activity
+
+### 3，activity
+
+
 [java] view plaincopy
   
 
