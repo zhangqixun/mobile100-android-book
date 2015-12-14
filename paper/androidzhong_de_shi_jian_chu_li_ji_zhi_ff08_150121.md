@@ -67,5 +67,30 @@ public class MainActivity extends Activity {
 * 外部类形式的事件监听器不能自由访问创建GUI界面的类中的组件，编程不够简洁。
 
 但如果某个事件监听器确实需要被多个GUI界面所共享，而且主要是完成某种业务逻辑的实现，则可以考虑使用外部类形式。下面的程序定义了一个外部事件监听器类，实现了发送短信的功能。
-
+```
+public class MySendListener implements View.OnLongClickListener {
+    private Activity act;
+    private EditText address;
+    private EditText content;
+    public MySendListener(Activity act, EditText address, EditText content) {
+        this.act = act;
+        this.address = address;
+        this.content = content;
+    }
+    @Override
+    public boolean onLongClick(View v) {
+        String addressStr = address.getText().toString();
+        String contentStr = content.getText().toString();
+        // 获取短信管理器
+        SmsManager smsManager = SmsManager.getDefault();
+        // 创建发送短信的PendingIntent
+        PendingIntent sentIntent = PendingIntent.getBroadcast(act, 0, new Intent(), 0);
+        // 发送文本短信
+        smsManager.sendTextMessage(addressStr, null, contentStr, sentIntent, null);
+        Toast.makeText(act, "短信发送完成", Toast.LENGTH_LONG).show();
+        return false;
+    }
+}
+```
+然后，在MainActivity中，为指定按钮的长单击事件绑定监听器，当用户长单击按钮时，程序触发监听器，其中包含的事件处理方法向指定手机发送短信。
 
