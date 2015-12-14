@@ -63,3 +63,4 @@ ImageDownloader：图片下载器，负责从图片的各个来源获取输入�
 * 
 Cache：图片缓存，主要分为MemoryCache和DiskCache两部分。
 * 
+MemoryCache：内存图片缓存，可以向内存缓存图片或从内存缓存中读取图片。
