@@ -123,29 +123,23 @@ APP消息推送，及时收到新信息
 ## 4.1	编程习惯，通过使用一些性能更有的方法
 
 
+
+####安卓APP基本使用Java开发语言。Java语言是运行在Java虚拟机JVM之上，通过JVM特性来优化，如：
+
 * 
-安卓APP基本使用Java开发语言。Java语言是运行在Java虚拟机JVM之上，通过JVM特性来优化，如：
-
-
-* * 
 减少异常的使用
-
-* * 
+* 
 合理使用变量和修饰符
-
-* * 
+* 
 适当的算法
 
 
-
+####UI布局优化
 * 
-
-UI布局优化
-* * 
 减少布局层数
-* * 
+* 
 使用RelativeLayout来代替LinearLayout（RelativeLayout性能更优）
-* * 
+* 
 采用<include>标签共享重用布局等
 
 
@@ -155,18 +149,15 @@ UI布局优化
 
 Android应用开发中，难免会遇到service开发。Service在后台运行，和其他组件一样，都是运行在主线程中，因此不能用它来做耗时的请求或者动作。你可以在服务中开一个线程，在线程中做耗时动作。
 
-* 
-Service状态检查
+####Service状态检查
 
 由于Service不可见，当Service没有及时关闭时在后台运行，必会增加耗电。如第二节中讲的Weather APP，正是由于Service没有关闭导致耗电巨大。
 
-* 
-用IntentService代替Service开发
+####用IntentService代替Service开发
 
 在多数情况下，使用IntentService可在运行完毕后自动停止，减少耗电。
 
-* 
-定时任务Alarm机制
+####定时任务Alarm机制
 
 有些情况下当需要周期的进行某些动作时，可以使用Timer类和Alarm机制。但当CPU进入下会面状态时Timer便无法执行。而Alarm则无此情况。同时在Android 4.4之后，Alarm通过一些优化，将临近的几个任务同时执行，降低CPU被唤醒的次数，延长点出使用时间。
 
