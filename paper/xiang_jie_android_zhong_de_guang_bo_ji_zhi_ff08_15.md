@@ -65,9 +65,7 @@ public class MainActivity extends Activity {
 
 ③ 在AndroidManifest.xml文件中加入可以查询网络状态的权限。Android系统为了保证应用程序可安全性做了规定，如果程序要访问一些系统的关键性信息，必须在配置文件中声明权限才可以，否则程序将会直接崩溃。具体代码如下：
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.broadcasttest" >
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+![](10.PNG)
 
 ④ 查看运行结果。运行程序后按下Home键，点击打开/关闭数据网络开关，查看效果。
 ![](1.PNG)
@@ -86,25 +84,7 @@ public class BootCompleteReceiver extends BroadcastReceiver {
 
 ② 修改AndroidManifest.xml文件，将这个广播接收器的类名注册进去。具体代码如下：
 
-<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <receiver android:name=".BootCompleteReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-        </receiver>
+![](11.PNG)
 
 <application>标签内出现了一个新的标签<receiver>，所有静态注册的广播接收器都是在这里进行注册的。首先通过android：name来指定具体注册哪一个广播接收器，然后在<intent-filter>标签里加入想要接收的广播就行。另外，监听系统开机广播也需要声明权限。
 
@@ -126,27 +106,11 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
 ② 在AndroidManifest.xml文件中对这个广播接收器进行注册。具体代码如下：
 
-<receiver android:name=".MyBroadcastReceiver">
-    <intent-filter>
-     <action android:name="com.example.broadcasttest.MY_BROADCAST"/>
-    </intent-filter>
-</receiver>
+![](12.PNG)
 
 ③ 修改activity_main.xml中的代码，具体如下：
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="发送广播"
-        />
-
-</LinearLayout>
+![](15.PNG)
 
 ④ 修改MainActivity中的代码，具体如下：
 
@@ -179,11 +143,7 @@ public class AnotherBroadcastReceiver extends BroadcastReceiver {
 
 ② 在AndroidManifest.xml文件中对这个广播接收器进行注册。具体代码如下：
 
-<receiver android:name=".AnotherBroadcastReceiver">
-    <intent-filter>
-    <action android:name="com.example.broadcasttest.MY_BROADCAST" />
-    </intent-filter>
-</receiver>
+![](20.PNG)
 
 ③ 演示效果，打开BroadcastTest，点击Send Broadcast按钮，结果如下：
 
@@ -205,11 +165,7 @@ button.setOnClickListener(new View.OnClickListener() {
 
 ⑤ 修改AndroidManifest.xml文件中的代码，给广播接收器设置优先级，优先级较高的广播接收器就可以先接收到广播。具体代码如下：
 
-<receiver android:name=".MyBroadcastReceiver">
-<intent-filter android:priority="100">
-            <action android:name="com.example.broadcasttest.MY_BROADCAST"/>
-        </intent-filter>
-</receiver>
+![](25.PNG)
 
 ⑥ 修改MyBroadcastReceiver中的代码，在onReceive（）方法中调用abortBroadcast()方法，将这广播截断，这样后面的广播接收器将无法再接收到这条广播。
 
