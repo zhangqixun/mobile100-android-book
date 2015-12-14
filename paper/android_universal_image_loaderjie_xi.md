@@ -70,3 +70,5 @@ DiskCache：本地图片缓存，可向本地磁盘缓存保存图片或从本�
 ImageDecoder：图片解码器，负责将图片输入流InputStream转换为Bitmap对象。
 * 
 BitmapProcessor：图片处理器，负责从缓存读取或写入前对图片进行处理。
+* 
+BitmapDisplayer：将Bitmap对象显示在相应的控件ImageAware上。
