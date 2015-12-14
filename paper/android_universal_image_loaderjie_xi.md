@@ -157,3 +157,6 @@ LruMemoryCache的缓存实现方法我们已经了解了，在LinkedHashMap.get(
 1. 
 调用put()方法，向缓存池中放入bitmap1和bitmap2两个对象。
 ![8](xl_im8.png)
+
+1. 
+继续放入第三个bitmap3，根据假设，将会超过用户设定的缓存池阈值。
