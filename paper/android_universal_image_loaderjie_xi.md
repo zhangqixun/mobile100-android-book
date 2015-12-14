@@ -180,3 +180,6 @@ LimitedAgeDiscCache：设定文件存活的最长时间，当超过这个值，�
 TotalSizeLimitedDiscCache：设定缓存bitmap的最大值，当超过设定值时，删除最先加入到硬盘的文件
 * 
 UnlimitedDiscCache：无任何限制
+
+在UIL中有着比较完整的存储策略，根据预先制定的控件大小，使用频率（生命命周期）以及文件个数的约束条件，都有着对应的实现机制。下面我们仅对UIL的默认磁盘缓存处理UnlimitedDiscCache进行介绍。因为其继承自BaseDiscCache，并且大多数直接使用BaseDiscCache中的方法，因此我们以BaseDiscCache为主对UnlimitedDiscCache进行介绍。
+
