@@ -37,7 +37,26 @@ Android提供了强大的事件处理机制，包括两套事件处理机制：
 
 使用内部类可以在当前类中复用该监听器类；因为监听器类是外部类的内部类，所以可以自由访问外部类的所有界面组件。这也是内部类的两个优势。
 
+```
+public class MainActivity extends Activity {
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Button button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(new MyClickListner());
+    }
+    //单击事件的监听器（内部类）
+    class MyClickListner implements View.OnClickListener{
+        //事件处理器
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(MainActivity.this,"单击了按钮",Toast.LENGTH_SHORT).show();
+        }
+    }
+}
+```
 
 
 
