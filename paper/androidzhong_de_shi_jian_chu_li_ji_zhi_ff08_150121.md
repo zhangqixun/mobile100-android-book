@@ -213,9 +213,7 @@ public class MainActivity extends Activity{
 
 为了使用回调机制类处理GUI组件上所发生的事件，我们需要为该组件提供对应的事件处理方法，而Java又是一种静态语言，我们无法为某个对象动态地添加方法，因此，只能继承GUI组件类，并重写该类的事件处理方法实现。
 
-Android为所有GUI组件都提供了一些事件处理的回调方法，以View为例，包含以下方法：
-
-功能：该方法是接口KeyEvent.Callback中的抽象方法，所有的View全部实现了该接口并重写了该方法，该方法用来捕捉手机键盘被按下的事件。
+Android为所有GUI组件都提供了一些事件处理的回调方法，包含以下方法：
 
 （1）onKeyDown：
 
@@ -232,39 +230,85 @@ Android为所有GUI组件都提供了一些事件处理的回调方法，以View
 返回值：该方法的返回值为一个boolean类型的变量，当返回true时，表示已经完整地处理了这个事件，并不希望其他的回调方法再次进行处理，而当返回false时，表示并没有完全处理完该事件，更希望其他回调方法继续对其进行处理，例如Activity中的回调方法。
 
 （2）onKeyUp：
-功能：该方法同样是接口KeyEvent.Callback中的一个抽象方法，并且所有的View同样全部实现了该接口并重写了该方法，onKeyUp方法用来捕捉手机键盘按键抬起的事件。 
-声明：public boolean onKeyUp (int keyCode, KeyEvent event) 参数说明： 同onKeyDown
+
+功能：该方法同样是接口KeyEvent.Callback中的一个抽象方法，并且所有的View同样全部实现了该接口并重写了该方法，onKeyUp方法用来捕捉手机键盘按键抬起的事件。
+
+声明：public boolean onKeyUp(int keyCode, KeyEvent event)
+
+参数说明：同onKeyDown
 
 （3）onTouchEvent：
-功能：该方法在View类中的定义，并且所有的View子类全部重写了该方法，应用程序可以通过该方法处理手机屏幕的触摸事件。 声明：public boolean onTouchEvent (MotionEvent event)  参数说明：  
-参数event：参数event为手机屏幕触摸事件封装类的对象，其中封装了该事件的所有信息，例如触摸的位置、触摸的类型以及触摸的时间等。该对象会在用户触摸手机屏幕时被创建。 
-返回值：该方法的返回值机理与键盘响应事件的相同，同样是当已经完整地处理了该事件且不希望其他回调方法再次处理时返回true，否则返回 false。 详细说明： 
-  该方法并不像之前介绍过的方法只处理一种事件，一般情况下以下三种情况的事件全部由onTouchEvent方法处理，只是三种情况中的动作值不同。 
-屏幕被按下：当屏幕被按下时，会自动调用该方法来处理事件，此时MotionEvent.getAction()的值为 MotionEvent.ACTION_DOWN，如果在应用程序中需要处理屏幕被按下的事件，只需重新该回调方法，然后在方法中进行动作的判断即可。 
-屏幕被抬起：当触控笔离开屏幕时触发的事件，该事件同样需要onTouchEvent方法来捕捉，然后在方法中进行动作判断。当 MotionEvent.getAction()的值为MotionEvent.ACTION_UP时，表示是屏幕被抬起的事件。 
-在屏幕中拖动：该方法还负责处理触控笔在屏幕上滑动的事件，同样是调用MotionEvent.getAction()方法来判断动作值是否为 MotionEvent.ACTION_MOVE再进行处理。
 
-（4）onTrackBallEvent： 
-功能： 接下来将介绍的是手机中轨迹球的处理方法onTrackBallEvent。所有的View同样全部实现了该方法。 声明： public boolean onTrackballEvent (MotionEvent event)  
-详细说明：该方法的使用方法与前面介绍过的各个回调方法基本相同，可以在Activity中重写该方法，也可以在各个View的实现类中重写。 
-参数event：参数event为手机轨迹球事件封装类的对象，其中封装了触发事件的详细信息，同样包括事件的类型、触发时间等，一般情况下，该对象会在用户操控轨迹球时被创建。 
-返回值：该方法的返回值与前面介绍的各个回调方法的返回值机制完全相同，因本书篇幅有限，不再赘述。 轨迹球与手机键盘的区别如下所示： 
-     １） 某些型号的手机设计出的轨迹球会比只有手机键盘时更美观，可增添用户对手机的整体印象。      ２） 轨迹球使用更为简单，例如在某些游戏中使用轨迹球控制会更为合理。 
-     ３）使用轨迹球会比键盘更为细化，即滚动轨迹球时，后台的表示状态的数值会变化得更细微、更精准。 
+功能：该方法在View类中的定义，并且所有的View子类全部重写了该方法，应用程序可以通过该方法处理手机屏幕的触摸事件。
+
+声明：public boolean onTouchEvent(MotionEvent event)
+
+参数说明：
+* 
+参数event：参数event为手机屏幕触摸事件封装类的对象，其中封装了该事件的所有信息，例如触摸的位置、触摸的类型以及触摸的时间等。该对象会在用户触摸手机屏幕时被创建。
+
+返回值：该方法的返回值机理与键盘响应事件的相同，同样是当已经完整地处理了该事件且不希望其他回调方法再次处理时返回true，否则返回false。
+
+详细说明：
+该方法并不像之前介绍过的方法只处理一种事件，一般情况下以下三种情况的事件全部由onTouchEvent方法处理，只是三种情况中的动作值不同。
+* 
+屏幕被按下：当屏幕被按下时，会自动调用该方法来处理事件，此时MotionEvent.getAction()的值为MotionEvent.ACTION_DOWN，如果在应用程序中需要处理屏幕被按下的事件，只需重新该回调方法，然后在方法中进行动作的判断即可。
+* 
+屏幕被抬起：当触控笔离开屏幕时触发的事件，该事件同样需要onTouchEvent方法来捕捉，然后在方法中进行动作判断。当MotionEvent.getAction()的值为MotionEvent.ACTION_UP时，表示是屏幕被抬起的事件。
+* 
+在屏幕中拖动：该方法还负责处理触控笔在屏幕上滑动的事件，同样是调用MotionEvent.getAction()方法来判断动作值是否为MotionEvent.ACTION_MOVE再进行处理。
+
+（4）onTrackBallEvent：
+
+功能：接下来将介绍的是手机中轨迹球的处理方法onTrackBallEvent。所有的View同样全部实现了该方法。
+
+声明：public boolean onTrackballEvent(MotionEvent event)
+
+详细说明：该方法的使用方法与前面介绍过的各个回调方法基本相同，可以在Activity中重写该方法，也可以在各个View的实现类中重写。
+
+参数说明：
+* 
+参数event：参数event为手机轨迹球事件封装类的对象，其中封装了触发事件的详细信息，同样包括事件的类型、触发时间等，一般情况下，该对象会在用户操控轨迹球时被创建。
+
+返回值：该方法的返回值与前面介绍的各个回调方法的返回值机制完全相同，因本书篇幅有限，不再赘述。
+
+轨迹球与手机键盘的区别如下所示：
+
+１）某些型号的手机设计出的轨迹球会比只有手机键盘时更美观，可增添用户对手机的整体印象。
+２）轨迹球使用更为简单，例如在某些游戏中使用轨迹球控制会更为合理。
+
+３）使用轨迹球会比键盘更为细化，即滚动轨迹球时，后台的表示状态的数值会变化得更细微、更精准。
+
 提示：在模拟器运行状态下，可以通过F6键打开模拟器的轨迹球，然后便可以通过鼠标的移动来模拟轨迹球事件。
 
-（5）onFocusChanged： 
-功能： 前面介绍的各个方法都可以在View及Activity中重写，接下来介绍的onFocusChanged却只能在View中重写。该方法是焦点改变的回调方法，当某个控件重写了该方法后，当焦点发生变化时，会自动调用该方法来处理焦点改变的事件。 
-声明：protected void onFocusChanged (boolean gainFocus, int direction, Rect previously FocusedRect)  详细说明： 
-     参数gainFocus：参数gainFocus表示触发该事件的View是否获得了焦点，当该控件获得焦点时，gainFocus等于true，否则等于false。      参数direction：参数direction表示焦点移动的方向，用数值表示，有兴趣的读者可以重写View中的该方法打印该参数进行观察。 
-     参数previouslyFocusedRect：表示在触发事件的View的坐标系中，前一个获得焦点的矩形区域，即表示焦点是从哪里来的。如果不可用则为null。 
-提示： 
-焦点：焦点描述了按键事件（或者是屏幕事件等）的承受者，每次按键事件都发生在拥有焦点的View上。在应用程序中，我们可以对焦点进行控制，例如从一个 View移动另一个View。下面列出一些与焦点有关的常用方法：        setFocusable方法：设置View是否可以拥有焦点。        isFocusable方法：监测此View是否可以拥有焦点。 
-       setNextFocusDownId方法：设置View的焦点向下移动后获得焦点View的ID。        hasFocus方法：返回了View的父控件是否获得了焦点。        requestFocus方法：尝试让此View获得焦点。 
-       isFocusableTouchMode方法：设置View是否可以在触摸模式下获得焦点，在默认情况下是不可用获得的。 
+（5）onFocusChanged：
 
+功能：前面介绍的各个方法都可以在View及Activity中重写，接下来介绍的onFocusChanged却只能在View中重写。该方法是焦点改变的回调方法，当某个控件重写了该方法后，当焦点发生变化时，会自动调用该方法来处理焦点改变的事件。
 
+声明：protected void onFocusChanged(boolean gainFocus, int direction, Rect previously FocusedRect)
 
+参数说明：
+* 
+参数gainFocus：参数gainFocus表示触发该事件的View是否获得了焦点，当该控件获得焦点时，gainFocus等于true，否则等于false。
+* 
+参数direction：参数direction表示焦点移动的方向，用数值表示，有兴趣的读者可以重写View中的该方法打印该参数进行观察。
+* 
+参数previouslyFocusedRect：表示在触发事件的View的坐标系中，前一个获得焦点的矩形区域，即表示焦点是从哪里来的。如果不可用则为null。
 
-（6）
+提示：
+
+* 
+焦点：焦点描述了按键事件（或者是屏幕事件等）的承受者，每次按键事件都发生在拥有焦点的View上。在应用程序中，我们可以对焦点进行控制，例如从一个View移动另一个View。下面列出一些与焦点有关的常用方法：
+
+setFocusable方法：设置View是否可以拥有焦点。
+
+isFocusable方法：监测此View是否可以拥有焦点。
+
+setNextFocusDownId方法：设置View的焦点向下移动后获得焦点View的ID。
+
+hasFocus方法：返回了View的父控件是否获得了焦点。
+
+requestFocus方法：尝试让此View获得焦点。
+
+isFocusableTouchMode方法：设置View是否可以在触摸模式下获得焦点，在默认情况下是不可用获得的。
 
