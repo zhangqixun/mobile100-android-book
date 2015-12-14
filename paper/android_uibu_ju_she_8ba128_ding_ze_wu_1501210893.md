@@ -241,7 +241,81 @@
                 layout_rowSpan 占用几行
             2.应用
                 以一个计算器来展示Grid布局。笔者认为计算器这类的UI设计使用Grid布局是最佳了。方便快速又理想。
-        
+                ```
+                <?xml version="1.0" encoding="utf-8"?>
+                <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:rowCount="6"
+                    android:columnCount="4" >
+                    　　<Button
+                    android:id="@+id/one"
+                    android:text="1"/>
+                    　　<Button
+                    android:id="@+id/two"
+                    android:text="2"/>
+                    　　<Button
+                    android:id="@+id/three"
+                    android:text="3"/>
+                    　　<Button
+                    android:id="@+id/devide"
+                    android:text="/"/>
+                    　　<Button
+                    android:id="@+id/four"
+                    android:text="4"/>
+                    　　<Button
+                    android:id="@+id/five"
+                    android:text="5"/>
+                    　　<Button
+                    android:id="@+id/six"
+                    android:text="6"/>
+                    　　<Button
+                    android:id="@+id/multiply"
+                    android:text="×"/>
+                    　　<Button
+                    android:id="@+id/seven"
+                    android:text="7"/>
+                    　　<Button
+                    android:id="@+id/eight"
+                    android:text="8"/>
+                    　　<Button
+                    android:id="@+id/nine"
+                    android:text="9"/>
+                    <Button
+                        android:id="@+id/minus"
+                        android:text="-"/>
+                    <Button
+                        android:id="@+id/zero"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill"
+                        android:text="0"/>
+                    　　<Button
+                    android:id="@+id/point"
+                    android:text="."/>
+                    <Button
+                        android:id="@+id/plus"
+                        android:layout_rowSpan="2"
+                        android:layout_gravity="fill"
+                        android:text="+"/>
+                    <Button
+                        android:id="@+id/equal"
+                        android:layout_columnSpan="3"
+                        android:layout_gravity="fill"
+                        android:text="="/>
+                    <Button
+                        android:id="@+id/clear"
+                        android:layout_columnSpan="4"
+                        android:layout_rowSpan="2"
+                        android:layout_gravity="fill"
+                        android:text="C"/>
+                </GridLayout>
+                
+                ```
+                如果是使用其他布局来实现这个UI的话，会稍微复杂一点，并且没这么灵活和方便。
+            3.截图
+            
+           ![](dingzewu005.png) 
         *  AbsoluteLayout
         
             1.详解
