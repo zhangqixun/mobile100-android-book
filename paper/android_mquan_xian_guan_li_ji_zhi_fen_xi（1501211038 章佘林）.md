@@ -32,6 +32,47 @@
 * **有限制的在安装时取得的权限**
 
     在用户安装或更新应用时系统将使应用取得相应的权限，这种权限仅限在PROTECTION_NORMAL级别的权限。如闹铃和联网权限属于PROTECTION_NORMAL级别，它们将在应用安装时自动被获取。
+     PROTECTION_NORMAL 类权限依然可以在manifest中直接声明：
+    ```android.permission.ACCESS_LOCATION_EXTRA_COMMANDS
+android.permission.ACCESS_NETWORK_STATE
+android.permission.ACCESS_NOTIFICATION_POLICY
+android.permission.ACCESS_WIFI_STATE
+android.permission.ACCESS_WIMAX_STATE
+android.permission.BLUETOOTH
+android.permission.BLUETOOTH_ADMIN
+android.permission.BROADCAST_STICKY
+android.permission.CHANGE_NETWORK_STATE
+android.permission.CHANGE_WIFI_MULTICAST_STATE
+android.permission.CHANGE_WIFI_STATE
+android.permission.CHANGE_WIMAX_STATE
+android.permission.DISABLE_KEYGUARD
+android.permission.EXPAND_STATUS_BAR
+android.permission.FLASHLIGHT
+android.permission.GET_ACCOUNTS
+android.permission.GET_PACKAGE_SIZE
+android.permission.INTERNET
+android.permission.KILL_BACKGROUND_PROCESSES
+android.permission.MODIFY_AUDIO_SETTINGS
+android.permission.NFC
+android.permission.READ_SYNC_SETTINGS
+android.permission.READ_SYNC_STATS
+android.permission.RECEIVE_BOOT_COMPLETED
+android.permission.REORDER_TASKS
+android.permission.REQUEST_INSTALL_PACKAGES
+android.permission.SET_TIME_ZONE
+android.permission.SET_WALLPAPER
+android.permission.SET_WALLPAPER_HINTS
+android.permission.SUBSCRIBED_FEEDS_READ
+android.permission.TRANSMIT_IR
+android.permission.USE_FINGERPRINT
+android.permission.VIBRATE
+android.permission.WAKE_LOCK
+android.permission.WRITE_SYNC_SETTINGS
+com.android.alarm.permission.SET_ALARM
+com.android.launcher.permission.INSTALL_SHORTCUT
+com.android.launcher.permission.UNINSTALL_SHORTCUT
+```
+    
 * **用户在运行时控制的权限**
 
     当应用需要取得某项权限时，系统会弹出一个对话框通知用户是否允许取得相应的权限，通过回调函数通知应用是否取得了相应的权限。如果用户允许获得权限，那么应用将获得相应权限控制范围内所有的功能。
