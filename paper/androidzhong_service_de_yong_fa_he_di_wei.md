@@ -56,7 +56,7 @@
 
 ### 2.2 在子线程中更新UI
 和许多其他的 GUI 库一样,Android 的 UI 也是线程不安全的。也就是说,如果想要更新应用程序里的UI 元素,则必须在主线程中进行,否则就会出现异常。
-眼见为实,让我们通过一个具体的例子来验证一下吧。新建一个 AndroidThreadTest项目,然后修改 activity_main.xml 中的代码：
+眼见为实,让我们通过一个具体的例子来验证一下吧。新建一个 AndroidThreadTest项目,然后修改 activity_test_update_ui.xml 中的代码：
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" >
             <Button
@@ -72,10 +72,10 @@
                 android:text="Hello world"
                 android:textSize="20sp" />
     </RelativeLayout>
-布局文件中定义了两个控件,TextView 用于在屏幕的正中央显示一个 Hello world 字符 串,Button 用于改变 TextView 中显示的内容,我们希望在点击 Button 后可以把 TextView 中 显示的字符串改成 Nice to meet you。
-接下来修改 MainActivity 中的代码,如下所示:
+布局文件中定义了两个控件,TextView 用于在屏幕的正中央显示一个 Hello world 字符串,Button 用于改变 TextView 中显示的内容,我们希望在点击 Button 后可以把 TextView 中 显示的字符串改成 Nice to meet you。
+接下来修改 activity_test_update_ui 中的代码,如下所示:
 
-    public class MainActivity extends Activity implements OnClickListener {
+    public class TestUpdateUi extends Activity implements OnClickListener {
             private TextView text;
             private Button changeText;
             @Override
