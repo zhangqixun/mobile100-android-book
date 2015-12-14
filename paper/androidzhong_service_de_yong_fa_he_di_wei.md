@@ -15,7 +15,7 @@
     当我们需要执行一些耗时操作,比如说发起一条网络请求时,考虑到网速等其他原因,服务器未必会立刻响应我们的请求,如果 不将这类操作放在子线程里去运行,就会导致主线程被阻塞住,从而影响用户对软件的正常使用。
    
 
-### 2.1线程的基本用法
+### 2.1 线程的基本用法
 
 定义一个线程只需要新建一个类继承自 Thread,然后重写父类的 run()方法,并在里面 编写耗时逻辑即可,如下所示:
 
@@ -54,6 +54,24 @@
             }
         }).start();
 
+### 2.2 在子线程中更新UI
+和许多其他的 GUI 库一样,Android 的 UI 也是线程不安全的。也就是说,如果想要更新应用程序里的UI 元素,则必须在主线程中进行,否则就会出现异常。
+眼见为实,让我们通过一个具体的例子来验证一下吧。新建一个 AndroidThreadTest项目,然后修改 activity_main.xml 中的代码,一个button,一个textview：
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" >
+            <Button
+                android:id="@+id/change_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Change Text" />
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Hello world"
+                android:textSize="20sp" />
+    </RelativeLayout>
 
 
 
