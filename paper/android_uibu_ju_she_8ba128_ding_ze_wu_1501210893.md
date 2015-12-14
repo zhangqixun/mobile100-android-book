@@ -64,6 +64,7 @@
                         组件内部的位置
             
             2. 应用
+                下面的实例通过
                 
                ```
                <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -96,8 +97,8 @@
                 android:text="第四层视图"/>
                 </FrameLayout>
                ```
-            
-            
+            3.截图
+            ![](1298207998@chatroom_1450078205212_75.png)
             
     
         *  RelativeLaout
