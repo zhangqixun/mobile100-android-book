@@ -96,6 +96,7 @@
    * [Android Universal Image Loader解析](paper/android_universal_image_loaderjie_xi.md)
    * [详解Android中的重力感应](paper/xiang_jie_android_zhong_de_zhong_li_gan_ying.md)
    * [详解Android中的广播机制（1501210974 屈中山）](paper/xiang_jie_android_zhong_de_guang_bo_ji_zhi_ff08_15.md)
+   * 安卓app和耗电（李少斐1501210939）
 * [常见面试题目](question/index.md)
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
