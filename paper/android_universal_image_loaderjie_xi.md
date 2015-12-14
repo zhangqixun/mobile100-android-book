@@ -139,3 +139,5 @@ LinkedHashMap维护着一个运行于所有条目的双重链接列表，此链�
 
 因此，当accessOrder的值为“true”时，LinkedHashMap中的get()方法返回所匹配的值，并且在返回前还会将所匹配的key对应的entry调整在列表中的顺序，让其处于列表的最后。其实现源码如下图所示。
 ![4](xl_im4.png)
+
+LruMemoryCache的缓存实现方法我们已经了解了，在LinkedHashMap.get()方法执行后，LinkedHashMap中entry的顺序会得到调整，那又如何保证最近使用的项不会被删除呢？接下来我们来看LinkedHashMap.put()方法的实现原理。
