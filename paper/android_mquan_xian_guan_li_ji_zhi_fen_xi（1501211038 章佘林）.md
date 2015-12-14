@@ -167,6 +167,8 @@ if (ActivityCompat.shouldShowRequestPermissionRationale(this,
         permissionsNeeded.add("Read Contacts");
     if (!addPermission(permissionsList, Manifest.permission.WRITE_CONTACTS))
         permissionsNeeded.add("Write Contacts");```
+        
+        ![](肌肤包.PNG)
 
 
 
