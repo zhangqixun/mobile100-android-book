@@ -120,7 +120,7 @@
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                 case UPDATE_TEXT:
-    // 在这里可以进行UI操作 text.setText("Nice to meet you"); break;
+                // 在这里可以进行UI操作 text.setText("Nice to meet you"); break;
                 default:
                     break;
     } }
