@@ -119,13 +119,14 @@
         private Handler handler = new Handler() {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
-                case UPDATE_TEXT:
-                // 在这里可以进行UI操作 text.setText("Nice to meet you"); break;
-                default:
-                    break;
+                    case UPDATE_TEXT:
+                        text.setText("Nice to meet you"); break;
+                    default:
+                        break;
     } }
     };
     ......
+    
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
