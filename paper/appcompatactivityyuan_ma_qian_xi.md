@@ -226,7 +226,7 @@ protected void onCreate(Bundle savedInstanceState) {
 
 ---
 
-###更多关于ation bar的资料请参阅Google给的官方文档。
+###更多关于ac![![](AppCompatActivity类继承关系.bmp)](AppCompatActivity类继承关系.bmp)tion bar的资料请参阅Google给的官方文档。
 
 
 ---
