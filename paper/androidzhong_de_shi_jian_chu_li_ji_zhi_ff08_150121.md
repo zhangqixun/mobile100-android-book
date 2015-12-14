@@ -161,6 +161,12 @@ public class MainActivity extends Activity{
     }
 }
 ```
+
+
+
+---
+
+
 “new监听器接口”或“new事件适配器”的形式就是用于创建匿名内部类形式的事件监听器。
 
 
@@ -170,4 +176,28 @@ Android中还可以直接在界面布局文件中为指定标签绑定事件处�
 
 对于很多Android界面组件标签而言，它们都支持onClick等属性，属性值就是形如xxx(View source)的方法的方法名。
 
+```
+ <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:text="单击我"
+        android:onClick="click"/>
+```
 
+
+---
+
+```
+public class MainActivity extends Activity{
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+        //source参数代表事件源
+     public void click(View source){
+        Toast.makeText(MainActivity.this,"单击了按钮",Toast.LENGTH_SHORT).show();
+    }
+}
+```
