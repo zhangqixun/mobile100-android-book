@@ -150,4 +150,8 @@ Activity的调度：
 AMS与ActivityThread的通信模型图如下：
 ![](0_13293978108wND.gif)
 
-**WindowManagerService** WmS是Android中图形用户接口的引擎，它管理着所有的窗口。所谓的管理大致包含创建、删除、设置焦点等操作。因为涉及内容太多，我只讲一讲WindowManagerService对窗体的组织形式。
+**WindowManagerService** WmS是Android中图形用户接口的引擎，它管理着所有的窗口。所谓的管理大致包含创建、删除、设置焦点等操作。因为涉及内容太多，这里只讲WindowManagerService对窗体的组织形式。
+
+在Android系统中，Activity是以堆栈的形式组织在ActivityManagerService服务中的。与Activity类似，Android系统中的窗口也是以堆栈的形式组织在WindowManagerService服务中的，其中，Z轴位置较低的窗口位于Z轴位置较高的窗口的下面。
+
+在Window管理服务WindowManagerService中，每一个窗口都是通过一个WindowState对象来描述的。例如，一个Activity组件窗口可能有一个启动窗口（Starting Window），还有若干个子窗口，那么这些窗口就会组成一组，并且都是以Activity组件在Window管理服务WindowManagerService中所对应的AppWindowToken对象为令牌的。从抽象的角度来看，就是在Window管理服务WindowManagerService中，每一个令牌（AppWindowToken或者WindowToken）都是用来描述一组窗口（WindowState）的，并且每一个窗口的子窗口也是与它同属于一个组，即都有着相同的令牌。
