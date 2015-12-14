@@ -99,6 +99,7 @@
    * [安卓app和耗电（李少斐1501210939）](paper/an_zhuo_app_he_hao_dian_ff08_li_shao_fei_150121093.md)
    * [AppcompatActivity源码浅析](paper/appcompatactivityyuan_ma_qian_xi.md)
    * [Android中的消息传递（1501210883 陈靖野）](paper/androidzhong_de_xiao_xi_chuan_di.md)
+   * 从计算机底层看待android应用程序的优化（1501210370 邓中洋）
 * [常见面试题目](question/index.md)
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
