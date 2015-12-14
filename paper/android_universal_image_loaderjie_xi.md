@@ -162,3 +162,5 @@ LruMemoryCache的缓存实现方法我们已经了解了，在LinkedHashMap.get(
 继续放入第三个bitmap3，根据假设，将会超过用户设定的缓存池阈值。
 ![9](xl_im9.png)
 
+1. 
+释放对bitmap1对象的引用，即释放最少被访问使用的bitmap对象。
