@@ -173,4 +173,10 @@ if (ActivityCompat.shouldShowRequestPermissionRationale(this,
 
 
 
+---
+
+
+
+参考文献：移动平台应用软件开发(0C706) 课程报告---Android M 新特性分析，刘旭
+
 
