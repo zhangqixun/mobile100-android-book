@@ -70,6 +70,207 @@ public class MainActivity extends Activity {
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
 ④ 查看运行结果。运行程序后按下Home键，点击打开/关闭数据网络开关，查看效果。
+![](1.PNG)
+![](2.PNG)
+
+###**3.3 静态注册实现开机启动**
+① 新建一个BootCompleteReceiver继承自BroadcastReceiver，具体代码如下：
+
+public class BootCompleteReceiver extends BroadcastReceiver {
+    
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Toast.makeText(context, "开机完成", Toast.LENGTH_SHORT).show();
+    }
+}
+
+② 修改AndroidManifest.xml文件，将这个广播接收器的类名注册进去。具体代码如下：
+
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <receiver android:name=".BootCompleteReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+<application>标签内出现了一个新的标签<receiver>，所有静态注册的广播接收器都是在这里进行注册的。首先通过android：name来指定具体注册哪一个广播接收器，然后在<intent-filter>标签里加入想要接收的广播就行。另外，监听系统开机广播也需要声明权限。
+
+③ 查看运行效果。
+
+![](3.PNG)
+
+##**4. 发送自定义广播**
+###**4.1 发送标准广播**
+① 新建一个BroadcastReceiver类，使它继承自BroadcastReceiver类。具体代码如下：
+
+public class MyBroadcastReceiver extends BroadcastReceiver {
+    
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Toast.makeText(context, "MyBroadcastReceiver 接收到了这个广播", Toast.LENGTH_SHORT).show();
+    }
+}
+
+② 在AndroidManifest.xml文件中对这个广播接收器进行注册。具体代码如下：
+
+<receiver android:name=".MyBroadcastReceiver">
+    <intent-filter>
+     <action android:name="com.example.broadcasttest.MY_BROADCAST"/>
+    </intent-filter>
+</receiver>
+
+③ 修改activity_main.xml中的代码，具体如下：
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发送广播"
+        />
+
+</LinearLayout>
+
+④ 修改MainActivity中的代码，具体如下：
+
+Button button = (Button)findViewById(R.id.button);
+button.setOnClickListener(new View.OnClickListener() {
+        
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent("com.example.broadcasttest.MY_BROADCAST");
+            sendBroadcast(intent);
+        }
+});
+
+⑤ 演示效果。
+
+![](4.PNG)
+
+###**4.2 发送有序广播**
+广播是一种可以跨进程的通信方式，在一个应用程序内发出的广播，其他的应用程序也是可以收到的。
+
+①新建一个BroadcastTest2项目，新建一个AnotherBroadcastReceiver类继承自BroadcastReceiver。具体代码如下：
+
+public class AnotherBroadcastReceiver extends BroadcastReceiver {
+    
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Toast.makeText(context, "AnotherBroadcastReceiver 收到广播", Toast.LENGTH_SHORT).show();
+    }
+}
+
+② 在AndroidManifest.xml文件中对这个广播接收器进行注册。具体代码如下：
+
+<receiver android:name=".AnotherBroadcastReceiver">
+    <intent-filter>
+    <action android:name="com.example.broadcasttest.MY_BROADCAST" />
+    </intent-filter>
+</receiver>
+
+③ 演示效果，打开BroadcastTest，点击Send Broadcast按钮，结果如下：
+
+![](5.PNG)
+
+这就证明了，一个应用程序发出的广播可以被其他的应用程序接收到。
+
+④ 关闭BroadcastTest2项目，修改MainActivity中的代码，将sendBroadcast（）方法改成sendOrderedBroadcast（）方法。sendOrderedBroadcast（）方法接收两个参数，第一个参数仍然是Intent，第二个参数是一个与权限相关的字符串，传入null即可。具体代码如下：
+
+Button button = (Button)findViewById(R.id.button);
+button.setOnClickListener(new View.OnClickListener() {
+
+    @Override
+    public void onClick(View v) {
+            Intent intent = new Intent("com.example.broadcasttest.MY_BROADCAST");
+            sendOrderedBroadcast(intent, null);
+        }
+});
+
+⑤ 修改AndroidManifest.xml文件中的代码，给广播接收器设置优先级，优先级较高的广播接收器就可以先接收到广播。具体代码如下：
+
+<receiver android:name=".MyBroadcastReceiver">
+<intent-filter android:priority="100">
+            <action android:name="com.example.broadcasttest.MY_BROADCAST"/>
+        </intent-filter>
+</receiver>
+
+⑥ 修改MyBroadcastReceiver中的代码，在onReceive（）方法中调用abortBroadcast()方法，将这广播截断，这样后面的广播接收器将无法再接收到这条广播。
+
+⑦ 演示效果。
+![](7.PNG)
+
+##**5. 使用本地广播**
+前面所发送和接收的都属于系统全局广播，即发出的广播可以被其他任何的应用程序接收到，并且可以接收来自于其他任何应用程序的广播。这样就很容易会引起安全性的问题。为了能够简单的解决广播的安全性问题，Android引入了一套本地广播机制，使用这个机制发出的广播可以只能够在应用程序内部进行传递，并且广播接收器也只能接收来自本应用程序发出的故宫宁波，这样安全性问题就不存在了。
+
+下面通过具体实例来尝试一下它的用法：
+
+① 修改MainActivity中的代码，新建类LocalReceiver，具体代码如下：
+
+class LocalReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Toast.makeText(context, "接收到了本地广播", Toast.LENGTH_SHORT).show();
+        }
+}
+
+② 修改onCreate()方法和onDestroy()方法，首先通过LocalBroadcastManagerd的getInstance()方法得到它的一个实例，然后注册广播接收器的时候调用LocalBroadcastManager的sendBroadcast（）方法。具体代码如下：
+
+private IntentFilter intentFilter;
+    private LocalReceiver localReceiver;
+    private LocalBroadcastManager localBroadcastManager;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
+
+        Button button = (Button)findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent("com.example.broadcasttest.Local_BROADCAST");
+                localBroadcastManager.sendBroadcast(intent);
+            }
+        });
+
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("com.example.broadcasttest.Local_BROADCAST");
+        localReceiver = new LocalReceiver();
+        localBroadcastManager.registerReceiver(localReceiver, intentFilter);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        localBroadcastManager.unregisterReceiver(localReceiver);
+    }
+
+③ 演示效果。
+
+![](8.PNG)
+
+
+
 
 
 
