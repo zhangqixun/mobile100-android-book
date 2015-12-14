@@ -339,8 +339,13 @@ TestService
     
 可以看到,这里在 onCreate()方法中分别获取到了 Start Service 按钮和 Stop Service 按钮的实例,并给它们注册了点击事件。
 然后在 Start Service 按钮的点击事件里,我们构建出了 一个 Intent 对象,并调用 startService()方法来启动 MyService 这个服务。在 Stop Serivce 按钮 的点击事件里,我们同样构建出了一个 Intent 对象,并调用 stopService()方法来停止 MyService 这个服务。**startService()和 stopService()方法都是定义在 Context 类**中的,所以我们在活动里 可以直接调用这两个方法。注意,这里完全是由活动来决定服务何时停止的,如果没有点击 Stop Service 按钮,服务就会一直处于运行状态。那服务有没有什么办法让自已停止下来呢? 当然可以,只需要在 MyService 的任何一个位置调用 **stopSelf()方法**就能让这个服务停止下来了。
-在 MyService 的几个方法中加入打印日志,如下所示:
-      
+在 MyService 的几个方法中加入打印日志
+点击一下 Start Service 按钮,再点击 Stop Service 按钮,观察 LogCat 中的打印日志
+
+![](QQ20151214-5@2x.png)
+
+
+onCreate()方法是在服务第一次创建的时候调用的,而 onStartCommand()方法则在 每次启动服务的时候都会调用,由于刚才我们是第一次点击 Start Service 按钮,服务此时还 未创建过,所以两个方法都会执行,之后如果你再连续多点击几次 Start Service 按钮,你就 会发现只有onStartCommand()方法可以得到执行了。  
       
       
       
