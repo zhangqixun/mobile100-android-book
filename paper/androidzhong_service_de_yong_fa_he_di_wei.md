@@ -346,8 +346,27 @@ TestService
 
 
 onCreate()方法是在服务第一次创建的时候调用的,而 onStartCommand()方法则在 每次启动服务的时候都会调用,由于刚才我们是第一次点击 Start Service 按钮,服务此时还 未创建过,所以两个方法都会执行,之后如果你再连续多点击几次 Start Service 按钮,你就 会发现只有onStartCommand()方法可以得到执行了。  
+
+### 3.3 活动和服务进行通信
+在活动中指挥服务去干什么,服务就去干什么。需要借助 onBind()方法，比如在 MyService 里提供一个下载功能,然后在活动中可以决定何时开 始下载,以及随时查看下载进度。实现这个功能的思路是创建一个专门的Binder对象来对下载功能进行管理,修改 MyService 中的代码,如下所示:
+
+    private DownloadBinder mBinder = new DownloadBinder();
+        class DownloadBinder extends Binder {
+            public void startDownload() {
+                Log.d("MyService", "startDownload executed");
+            }
+            public int getProgress() {
+                Log.d("MyService", "getProgress executed");
+                return 0;
+            }
+        }
+        @Override
+        public IBinder onBind(Intent intent) {
+            return mBinder;
+        }
       
-      
+可以看到,这里我们新建了一个 DownloadBinder 类,并让它继承自 Binder,然后在它的内部提供了开始下载以及查看下载进度的方法。当然这只是两个模拟方法,并没有实现真 正的功能,我们在这两个方法中分别打印了一行日志。
+接着,在 MyService 中创建了 DownloadBinder 的实例,然后在 onBind()方法里返回了这个实例,这样 MyService 中的工作就全部完成了。在活动中**调用服务里的这些方法**。首先需要在布局文件里新 增两个按钮,修改 activity_main.xml 中的代码,如下所示:
       
       
       
