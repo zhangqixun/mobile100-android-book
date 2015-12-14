@@ -116,6 +116,11 @@ android {
      .......
     }
 }```
+在AndroidManifest中添加权限请求：
+```
+<uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+<uses-permission android:name="android.permission.LOCATION_HARDWARE"/>```
 在我们的天气预报程序中，需要访问网络、获取网络状态和定位的权限，前两项权限可以直接声明而不需特殊的处理，而定位权限属于敏感权限，需要在应用执行的过程中进行判断和申请。
 
 
