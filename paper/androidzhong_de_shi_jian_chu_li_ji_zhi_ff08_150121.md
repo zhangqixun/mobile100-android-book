@@ -116,3 +116,26 @@ public class MainActivity extends Activity {
     }
 }
 ```
+
+## 1.3 Activity本身作为事件监听器
+这种形式非常简洁，直接在Activity类中定义事件处理器的方法。但这种做法有两个缺点：
+
+* 可能造成程序结构混乱，Activity主要职责应该是完成界面初始化工作，但此时还需包含事件处理器的方法，从而引起混乱。
+* 如果Activity界面类需要实现监听器接口，让人感觉比较怪异。
+
+```
+public class MainActivity extends Activity implements View.OnClickListener{
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Button button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(this);
+    }
+    @Override
+    public void onClick(View v) {
+        Toast.makeText(this,"单击了按钮",Toast.LENGTH_SHORT).show();
+    }
+}
+```
+程序中，Activity类实现了OnClickListner事件监听器接口。当为某个组件注册事件监听器对象时，直接使用this作为事件监听器对象即可。
