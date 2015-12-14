@@ -107,8 +107,42 @@
 可以看到,我们在 Change Text 按钮的点击事件里面开启了一个子线程,然后在子线程 中调用 TextView 的 setText()方法将显示的字符串改成 Nice to meet you。代码的逻辑非常简 单,只不过我们是在子线程中更新 UI 的。现在运行一下程序,并点击Change Text 按钮,程序果然崩溃了,如图 
 ![](QQ20151214-2@2x.png)
 ![](QQ20151214-1@2x.png)
-由此证实了 Android 确实是不允许在子线程中进行 UI 操作的。但是有些时候,我们必 须在子线程里去执行一些耗时任务,然后根据任务的执行结果来更新相应的 UI 控件,这该 如何是好呢?
-对于这种情况,Android 提供了一套异步消息处理机制,完美地解决了在子线程中进行 UI 操作的问题。本小节中我们先来学习一下异步消息处理的使用方法,下一小节中再去分 析它的原理。
+由此证实了 Android 确实是不允许在子线程中进行 UI 操作的。但是有些时候,我们必 须在子线程里去执行一些耗时任务,然后根据任务的执行结果来更新相应的 UI 控件，对于这种情况,Android 提供了一套异步消息处理机制,完美地解决了在子线程中进行 UI 操作的问题。
+
+修改 MainActivity 中的代码,如下所示:
+
+    
+    public class MainActivity extends Activity implements OnClickListener {
+        public static final int UPDATE_TEXT = 1;
+        private TextView text;
+        private Button changeText;
+        private Handler handler = new Handler() {
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                case UPDATE_TEXT:
+    // 在这里可以进行UI操作 text.setText("Nice to meet you"); break;
+                default:
+                    break;
+    } }
+    };
+    ......
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+            case R.id.change_text:
+                new Thread(new Runnable() {
+                    @Override
+        public void run() {
+            Message message = new Message();
+            message.what = UPDATE_TEXT; handler.sendMessage(message); // 将Message对象发送出去
+                    }
+                }).start();
+                break;
+            default:
+                break;
+             }
+        }
+    }
 
 
 
