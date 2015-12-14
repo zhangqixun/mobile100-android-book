@@ -98,3 +98,5 @@ UI：请求数据，使用唯一的Key值索引Memory Cache中的Bitmap。
 内存缓存：缓存索引，如果能找到Key值对应的Bitmap，则返回数据。否则执行第三步。
 1. 
 硬盘存储：使用唯一的Key值对应的文件名，检索SDCard上的文件。
+1. 
+如果有对应的文件，使用BitmapFactory.decode*方法，解码Bitmap并返回数据，同时将数据写入缓存。如果没有对应文件，执行第五步。
