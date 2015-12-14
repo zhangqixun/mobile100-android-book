@@ -17,4 +17,11 @@ Android提供了强大的事件处理机制，包括两套事件处理机制：
 * Event（事件）：事件封装了界面组件上发生的特定事情，通常就是一次用户操作。如果程序需要获得界面组件上所发生事件的相关信息，一般通过Event对象取得。
 * Event Listener（事件监听器）：负责监听事件源发生的事件，并对各种事件做出相应的响应。
 
+在基于事件监听的处理模型中，事件监听器必须实现事件监听器接口，Android为不同的界面组件提供了不同的监听器接口，这些接口通常以内部类的形式存在。以View类为例，它包含了如下几个内部类接口：
+* View.onClickListener：单击事件的事件监听器必须实现的接口。
+* View.onCreateContextMenuListener：创建上下文菜单事件的事件监听器必须实现的接口。
+* View.onFocusChangedListener：焦点改变事件的事件监听器必须实现的接口。
+* View.onKeyListener：按键事件的时间监听器必须实现的接口。
+* View.onLangClickListener：长单击事件的事件监听器必须实现的接口。
+* View.onTouchListener：触摸屏事件的事件监听器必须实现的接口。
 
