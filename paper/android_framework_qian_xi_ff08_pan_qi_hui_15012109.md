@@ -65,16 +65,16 @@
      3）启动Android系统的各种系统服务：
      调用函数init2()实现，该函数首先创建了一个ServerThread对象，该对象是一个线程，然后直接运行该线程，如以下代码所示：
 
-   public static final void init2() {
-        Slog.i(TAG, "Entered the Android system server!");
-        Thread thr = new ServerThread();
-        thr.setName("android.server.ServerThread");
-        thr.start();
-    }
-     从ServerThread的run()方法内部开始真正启动各种服务线程。
-         ---创建Android系统服务对象,并注册到ServiceManager
-         ---在SystemServer进程中建立Looper消息循环：通过Looper.prepare和Looper.loop来实现
-　　 ---系统就绪通知：调用systemReady()通知各个服务
+       public static final void init2() {
+            Slog.i(TAG, "Entered the Android system server!");
+            Thread thr = new ServerThread();
+            thr.setName("android.server.ServerThread");
+            thr.start();
+        }
+         从ServerThread的run()方法内部开始真正启动各种服务线程。
+             ---创建Android系统服务对象,并注册到ServiceManager
+             ---在SystemServer进程中建立Looper消息循环：通过Looper.prepare和Looper.loop来实现
+    　　 ---系统就绪通知：调用systemReady()通知各个服务
 
       System Server进程启动过程中最核心的一步是“启动Android系统的各种系统服务”，这些系统服务构成了整个Android框架的基础（如图所示），通过Binder IPC为上层应用提供各种功能。介绍下几个重要系统服务的功能。
 
@@ -110,3 +110,11 @@
              电话服务管理，用于监听和上报电话状态，包括来电、通话、信号变化等。
 
        到这里，Android Framework的启动已经完成，框架中提供的各种服务也已经就绪，可以正常运行并响应处理应用的各种操作请求。
+       
+**android Framework中几个重要的服务**
+    
+    ActivityManagerService 简称AMS ，是Android核心功能之一，在上面简单列出了它的功能，，主要功能包括：
+        ---统一管理和调度各应用程序的Activity，维护系统中运行的所有应用Task和Activity
+        ---内存管理：应用程序关闭时对应进程还在运行，当系统内存不足时根据策略kill掉优先级较低进程
+        ---进程管理：维护和管理系统中运行的所有进程，并提供了查询进程信息的API
+        ---Provider、Service和Broadcast管理和调度
