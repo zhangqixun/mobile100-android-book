@@ -398,19 +398,24 @@ onCreate()方法是在服务第一次创建的时候调用的,而 onStartCommand
 oncreate里
     
     bindService = (Button) findViewById(R.id.bind_service);
-        unbindService = (Button) findViewById(R.id.unbind_service);
-        bindService.setOnClickListener(this);
-        unbindService.setOnClickListener(this);
+    unbindService = (Button)findViewById(R.id.unbind_service);
+    bindService.setOnClickListener(this);
+    unbindService.setOnClickListener(this);
         
 onclick事件
 
-            case R.id.bind_service:
-                Intent bindIntent = new Intent(this, MyService.class);
-                bindService(bindIntent, connection, BIND_AUTO_CREATE); // 绑定服务
-                break;
-            case R.id.unbind_service:
-                unbindService(connection); // 解绑服务
-                break;      
+    case R.id.bind_service:
+        Intent bindIntent = new Intent(this, MyService.class);
+        bindService(bindIntent, connection, BIND_AUTO_CREATE); // 绑定服务
+        break;
+    case R.id.unbind_service:
+        unbindService(connection); // 解绑服务
+        break;   
+        
+可以看到,首先创建了一个 ServiceConnection 的匿名类,在里面重写了 onServiceConnected()方法和 onServiceDisconnected()方法,这两个方法分别会在活动与服务 成功绑定以及解除绑定的时候调用。在 onServiceConnected()方法中,我们又通过向下转型 得到了 DownloadBinder 的实例,有了这个实例,活动和服务之间的关系就变得非常紧密了。 现在我们可以在活动中根据具体的场景来调用 DownloadBinder 中的任何 public 方法,即实 现了指挥服务干什么,服务就去干什么的功能。这里仍然只是做了个简单的测试,在 onServiceConnected()方法中调用了 DownloadBinder 的 startDownload()和 getProgress()方法。
+当然,现在活动和服务其实还没进行绑定呢,这个功能是在 Bind Service 按钮的点击事 件里完成的。可以看到,这里我们仍然是构建出了一个 Intent 对象,然后调用 bindService() 方法将 MainActivity 和 MyService 进行绑定。bindService()方法接收三个参数,第一个参数就 是刚刚构建出的 Intent 对象,第二个参数是前面创建出的 ServiceConnection 的实例,第三个 参数则是一个标志位,这里传入 BIND_AUTO_CREATE 表示在活动和服务进行绑定后自动 创建服务。这会使得 MyService 中的 onCreate()方法得到执行,但 onStartCommand()方法不 会执行。
+然后如果我们想解除活动和服务之间的绑定该怎么办呢?调用一下 unbindService()方法 就可以了,这也是 Unbind Service 按钮的点击事件里实现的功能。
+现在让我们重新运行一下程序吧,界面如图 9.9 所示。
       
       
       
