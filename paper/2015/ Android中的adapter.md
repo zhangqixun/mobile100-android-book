@@ -54,7 +54,7 @@ getView可以返回的View的类型数量。
 ArrayAdapter列表的显示需要三个元素：  
 a．ListVeiw 用来展示列表的View。  
 b．适配器 用来把数据映射到ListView上的中介。  
-c．数据 具体的将被映射的字符串，图片，或者基本组件。
+c．数据 具体的将被映射的字![](303CD086-0005-4C3F-9C70-FDD8AAE25ADF.png)符串，图片，或者基本组件。
 主要讲解ArrayAdapter的创建方法，我把ArrayAdapter分为三种:简单的、样式丰富的但内容简单的、内容丰富的。
 默认的，ArrayAdapter期望接受的样式文件里只含有一个textview，然后它把接受到的数据toString后（即调用数据对象的toString方法）展示在textview里。
 ## 3、1简单的
@@ -66,5 +66,5 @@ layout下的online_user_list_item.xml内容如下：![](1.png)
 里面含有的textview是我们想要展示内容的地方。那么构建ArrayAdapter时，应该这样写：![](AFD72B67-EEE9-4C1F-A113-20C22C7DF0C2.png)
 ### 3、3内容丰富的（自定义ArrayAdapter）
 这就需要写一个类继承自ArrayAdapter并且重写getView方法。
- 
+ ![](5ECEA836-EBDB-4FAF-961F-3016564D03B1.png)
 activity里就这样写
