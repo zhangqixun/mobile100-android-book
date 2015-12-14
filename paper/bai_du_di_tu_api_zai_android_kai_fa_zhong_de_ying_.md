@@ -13,10 +13,10 @@ Key的申请地址为：http://lbsyun.baidu.com/apiconsole/key
 
     申请密钥主要步骤如下：   
     访问API控制台页面，若您未登录百度账号，将会进入百度账号登录页面，如下图：
-    
+    ![](key1.png)
     登陆API控制台
     登录会跳转到API控制台服务，具体如下图：
-    key2.png![](key1.png)
+    key2.png
     创建应用
     点击"创建应用"，进入创建AK页面，输入应用名称，将应用类型改为：“Android SDK”：
     key3.png
