@@ -41,3 +41,11 @@
       4）rild:启动radio interface layer daemon服务，处理电话相关的事件和请求
       5）mediaserver:启动AudioFlinger,MediaPlayerService and CameraService，负责多媒体播放相关的功能，包括音视频解码、显示输出
       6）zygote:进程孵化器，启动Android Java VMRuntime和启动systemserver，负责Android应用进程的孵化工作
+3、zygote服务启动
+
+      zygote进程孵化了所有的Android应用进程，是Android Framework的基础，该进程的启动也标志着Framework框架初始化启动的开始。zygote服务进程的主要功能：
+
+       1）注册底层功能的JNI函数到虚拟机
+       2）预加载java类和资源
+       3）fork并启动System Server核心进程
+       4）作为守护进程监听处理“孵化新进程”的请求
