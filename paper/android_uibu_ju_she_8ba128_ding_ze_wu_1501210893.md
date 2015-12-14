@@ -98,7 +98,8 @@
                 </FrameLayout>
                ```
             3.截图
-            ![](1298207998@chatroom_1450078205212_75.png)
+            ![](dingzewu001.png)
+            
             
     
         *  RelativeLaout
