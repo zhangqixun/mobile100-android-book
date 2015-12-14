@@ -126,4 +126,10 @@ WeakMemoryCache：缓存Bitmap的总大小没有限制，唯一不足的地方�
 在这里，我们主要介绍UIL的默认内存缓存 --强引用缓存LruMemoryCache。
 
 
+# 
+
+
+# LruMemoryCache解析
+
+
 
