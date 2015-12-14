@@ -78,3 +78,10 @@ LoadAndDisplayImageTask：用于加载并显示图片的任务。
 ProcessAndDisplayImageTask：用于处理并显示图片的任务。
 * 
 DisplayBitmapTask：用于显示图片的任务。
+
+
+## 
+
+
+## UIL图片缓存及加载流程
+
