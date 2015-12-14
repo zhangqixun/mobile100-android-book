@@ -216,12 +216,13 @@ public class MainActivity extends Activity{
 Android为所有GUI组件都提供了一些事件处理的回调方法，以View为例，包含以下方法：
 
 功能：该方法是接口KeyEvent.Callback中的抽象方法，所有的View全部实现了该接口并重写了该方法，该方法用来捕捉手机键盘被按下的事件。
-（1）onKeyDown：
+（1）onKeyDown：当用户在该组件上按下某个键时触发的方法。
 
-声明：public boolean onKeyDown (int keyCode, KeyEvent event)  
-参数说明： 
+声明：public boolean onKeyDown(int keyCode, KeyEvent event)
+
+参数说明：
 * 
-参数keyCode：该参数为被按下的键值即键盘码，手机键盘中每个按钮都会有其单独的键盘码，在应用程序都是通过键盘码才知道用户按下的是哪个键。 
+参数keyCode：该参数为被按下的键值即键盘码，手机键盘中每个按钮都会有其单独的键盘码，在应用程序都是通过键盘码才知道用户按下的是哪个键。
 * 
 参数event：该参数为按键事件的对象，其中包含了触发事件的详细信息，例如事件的状态、事件的类型、事件发生的时间等。当用户按下按键时，系统会自动将事件封装成KeyEvent对象供应用程序使用。
 
