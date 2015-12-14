@@ -227,3 +227,378 @@ Frame动画是按照一系列的帧顺序播放展示出来的动画效果，而
                 animationDrawable.start();
 ```
 * 由此，完成了FrameAnimation的实战，FrameAnimation可以理解为一个定制的GIF动画，一般使用频度不高，同时需要注意的是FrameAnimation在不同的API Level时运行结果可能不一致。
+* 
+
+# 5 PropertyAnimation 基础
+
+## 5.1 FrameAnimation 基础
+
+前文介绍的ViewAnimation和FrameAnimation都属于比较简单的那一类动画，他们能够实现的效果有限，当我们需要设计复杂绚丽的动画效果时，前两者就会表现出很大的局限性。ViewAnimation并不能应用于非View的子类，也就是说，对一个Button、TextView、甚至是LinearLayout、或者其它任何继承自View的组件都能进行动画操作，但是如果我们想要对一个非View的对象进行动画操作，ViewAnimation就不能使用了。
+
+当然，还有一个问题，ViewAnimation本身只是对动画的绘制，对View的一个绘制而已，并不会去改变真正的View属性，如果我们希望通过动画绘制一些控件的移动，并呈现动画效果，那么ViewAnimation就不太管用了。
+
+为了解决这个问题，从Android 3.0后，Google提出了Property Animation，通过动画的方式改变对象的属性，其本质也是不间断的对值进行操作，可以是任意对象的任意属性，我们只需要指定一些属性就好了，从而实现了动画效果。比如以下的属性就是一些比较常见的可以更改的属性或类别：
+
+
+```
+Duration：动画的持续时间
+Time interpolation：时间差值，定义了间隔多少时间执行下一个动画操作，比如线性时间，加速时间等，通过这个时间差值的定义可以让我们的动画呈现不同的变化速率，更加符合我们肉眼的直觉。
+Repeat count and behavior：动画的重复次数和方式
+Animator sets:可以定义一系列的动画的集合
+Frame refresh delay：刷新延迟
+
+```
+
+以上属性请认真地对待，之后的动画属性的设置，会和这个挂钩很多。
+
+
+同时，需要注意注意的是，本部分出现的参考代码，均来自网络，和后文实战部分的代码并不相同（也不放在Github上），我的工作在于代码整理和注释，仅供学习。
+
+
+## 5.2 ValueAnimator 基础
+
+ValueAnimator是整个属性动画机制当中最核心的一个类，从前文的介绍，我们已经知道属性动画的运作机制，其实就是不断的改变属性的值，而ValueAnimator的作用就是负责我们设定对象初始的值和最终的值之间的过度，ValueAnimator会根据我们提供的动画持续时间（Duration）和时间差值变化方式（Time interpolation），播放模式（Repeat count and behavior）等关键参数，那么ValueAnimation就会帮我们自动设定值得变化。可以看得出来的是，ValueAnimator的作用确实十分大。同时我们也可以在动画变化的时候设定一个动画监听器，帮助我们实现更多的动画-动作写作操作。
+
+说了那么多，可能有人会认为ValueAnimator的操作会很复杂，但其实ValueAnimator的操作是十分简单的，下面给出一个动画的实例代码，恩可以看到其实非常简单的：
+
+
+```
+//设定一个从0到1的过度，ofFloat可以传入多个参数，他会自动实现过度，类似的还有ofInt等
+ValueAnimator anim = ValueAnimator.ofFloat(0f, 1f);
+//设定我们的动画播放时间
+anim.setDuration(500);
+//可以增加一个监听器，当每次值发生变动的时候，可以打印出来，帮助验证到底有变化没
+anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+    @Override
+    public void onAnimationUpdate(ValueAnimator animation) {
+        float currentValue = (float) animation.getAnimatedValue();
+        Log.d("TAG", "cuurent value is " + currentValue);
+    }
+});
+anim.start();
+
+
+```
+
+在这里面需要特别讲解的就是ofFloat，注释里提到了可以传入过个参数，比如ofFloat（0f,1f,0f,5f)那么就会自动在这些区间内变化，总之你可以自由的设定。而同时如果只需要在整数之间变化，那么使用ofInt就可以，只要注意传入的参数的时候注意传入整数的值就可以了。
+
+初次以外，我们还有如下常用的方法，可以去设定ValueAnimator对象的功能：
+
+
+```
+setStartDelay()：设置动画延迟播放的时间
+setRepeatCount()：设置重复次数
+setRepeatMode()：设置循环播放的模式，包括重复和反向模式
+
+```
+
+## 5.3 ObjectAnimator 基础
+
+ValueAnimator允许我们通过一个值，从而实现动画的过度，但是功能相对简单，仅仅是实现一个过度的值得效果而已，就只是比之前提到的ValueAnimation多了那么一点自主性而已。
+
+而ObjectAnimator则可以直接对任意对象的任意属性进行操作了，其本身是继承与ValueAnimator的，底层的实现也是通过他实现的。在使用方式上，他们二者也十分近似，但是也略有不同。例如对于ofFloat来说，其创建如下：
+
+
+```
+
+ObjectAnimator.ofFloat(view,type,value...)
+view：操作的对象，比起ValueAnimator多的一个参数
+type：动画执行操作的属性的名称，比起ValueAnimator多的一个参数，可以选择aplha，rorate，scaleY等一系列对象所具有的属性名，因此，你需要改变什么属性，就写在这里就好，这点非常重要！！！！！
+value...：可以传入一系列的参数，和ValueAnimator的一样
+
+例如我们要对一个TextView做一个360的旋转，可以使用如下的代码：
+
+//定义一个旋转操作，针对textView，设定时间维5S
+ObjectAnimator animator = ObjectAnimator.ofFloat(textview, "rotation", 0f, 360f);  
+animator.setDuration(5000);  
+animator.start();  
+
+```
+
+这里有个特别需要注意的地方，关于type的传递，其使用的对应的get和set方法，只要有这一对方法，就能操作变更属性，但如果没有这一对方法，就不能操作，能传递的type的种类和对象有没有这个属性关系不大。
+
+
+## 5.4 动画组合基础
+
+之前我们已经介绍了实现动画的两个基本的类，但是其能够实现的不过只是单个动画，而实际的应用中，显然不可能那么简单，更多的情况下是需要多个动画组合出现的。
+
+实现组合动画功能主要需要借助AnimatorSet这个类，这个类提供了一个play()方法，如果我们向这个方法中传入一个Animator对象(ValueAnimator或ObjectAnimator)将会返回一个AnimatorSet.Builder的实例，AnimatorSet.Builder中包括以下四个方法：
+
+
+```
+after(Animator anim)   将现有动画插入到传入的动画之后执行
+after(long delay)   将现有动画延迟指定毫秒后执行
+before(Animator anim)   将现有动画插入到传入的动画之前执行
+with(Animator anim)   将现有动画和传入的动画同时执行
+
+```
+
+通过这几个逻辑，我们就能组合出来自己的动画执行顺序了，例如：
+
+
+```
+//首先创建三个动画
+ObjectAnimator moveIn = ObjectAnimator.ofFloat(textview, "translationX", -500f, 0f);
+ObjectAnimator rotate = ObjectAnimator.ofFloat(textview, "rotation", 0f, 360f);
+ObjectAnimator fadeInOut = ObjectAnimator.ofFloat(textview, "alpha", 1f, 0f, 1f);
+//设定一个集合，并且设定各个动画的执行顺序
+AnimatorSet animSet = new AnimatorSet();
+animSet.play(rotate).with(fadeInOut).after(moveIn);
+animSet.setDuration(5000);
+animSet.start();
+
+```
+
+## 5.5 Animation监听器基础
+
+在ValueAnimation当中，我们已经定义过了一次监听器，在这里将正式介绍一下。无论是ValueAnimation还是ObjectAnimation都能够添加监听器，使得我们能够在动画执行的不同时间段，完成不同的操作。其包含如下的方法：
+
+
+
+```
+
+//动画开始的时候
+    public void onAnimationStart(Animator animation) {  
+    }  
+  
+ //动画重复的时候
+    public void onAnimationRepeat(Animator animation) {  
+    }  
+ //动画结束的时候 
+
+    public void onAnimationEnd(Animator animation) {  
+    }  
+  
+ //动画被取消的时候
+    public void onAnimationCancel(Animator animation) {  
+
+
+```
+
+其具体的使用方式，和其他类的监听器没有太多区别，这段的意思就是告知有这么一个存在。
+
+
+## 5.6 XML编写动画
+
+到目前为止，本文所介绍的属性动画都是基于代码的，其实他也可以使用XML的方式编写，首先他允许三种标签，分别对应我们之前介绍过的两种动画类和几何
+
+```
+
+<animator>  对应代码中的ValueAnimator
+<objectAnimator>  对应代码中的ObjectAnimator
+<set>  对应代码中的AnimatorSet
+
+
+```
+
+这里直接给出一个复杂的动画示例：
+
+
+
+```
+<!-- 设定一个集合 -->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:ordering="sequentially" >
+    <!-- 定义一个动画 -->
+    <objectAnimator
+        android:duration="2000"
+        android:propertyName="translationX"
+        android:valueFrom="-500"
+        android:valueTo="0"
+        android:valueType="floatType" >
+    </objectAnimator>
+    <!-- 嵌套一个动画集合，和上一个动画一同执行-->
+    <set android:ordering="together" >
+        <objectAnimator
+            android:duration="3000"
+            android:propertyName="rotation"
+            android:valueFrom="0"
+            android:valueTo="360"
+            android:valueType="floatType" >
+        </objectAnimator>
+	<!-- 嵌套一个动画集合，在上一个动画之后执行-->
+        <set android:ordering="sequentially" >
+            <objectAnimator
+                android:duration="1500"
+                android:propertyName="alpha"
+                android:valueFrom="1"
+                android:valueTo="0"
+                android:valueType="floatType" >
+            </objectAnimator>
+            <objectAnimator
+                android:duration="1500"
+                android:propertyName="alpha"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType" >
+            </objectAnimator>
+        </set>
+    </set>
+
+</set>
+
+
+
+随后使用如下代码既可以调用了：
+Animator animator = AnimatorInflater.loadAnimator(context, R.animator.anim_file);  
+animator.setTarget(view);  
+animator.start();  
+
+
+```
+
+## 5.6 Animator 进阶用法-TypeEvaluator
+
+在这一章节中，我们主要解决两个问题，上面我们提到了能够实现int和float的平滑过渡，但是如何实现过渡的呢？还有针对任意对象呢？
+
+* 自定义过渡
+
+为了知道怎么从stratvalue过渡到endvalue，我们需要知道TypeEvaluator的通途，TypeEvaluator的作用就是告诉系统值怎么变换，其是一个接口，下面我们将通过一个例子实际体验一下：
+
+
+```
+
+//自定一个TypeEvaluator，需要实现evaluate方法
+public class FloatEvaluator implements TypeEvaluator {
+	//自定义值得输出
+    public Object evaluate(float fraction, Object startValue, Object endValue) {
+        float startFloat = ((Number) startValue).floatValue();
+        return startFloat + fraction * (((Number) endValue).floatValue() - startFloat);
+    }
+}
+
+在例子上FloatEvaluator实现了TypeEvaluator接口，然后重写evaluate()方法。
+evaluate()方法当中传入了三个参数：
+fraction：用于表示动画的完成度的，我们应该根据它来计算当前动画的值应该是多少
+第二第三个参数分别表示动画的初始值和结束值。那么上述代码的逻辑就比较清晰了，用结束值减去初始值，算出它们之间的差值，然后乘以fraction这个系数，再加上初始值，那么就得到当前动画的值了
+
+```
+
+
+* 自定义类的变换
+
+之前我们只提到过了ofInt和ofValue的，但其实还有一个ofObject的方法，但是要实现对自定义类的，首先需要针对这个类编写一个TypeEvaluator，方式就是上边的，而操作的时候采用如下的方式进行：
+
+
+```
+ValueAnimator anim = ValueAnimator.ofObject(new MyEvaluator(), ValueA，ValueB);  
+
+```
+
+## 5.7 Animator 进阶用法-Interpolator
+
+Interpolator直译过来的话是补间器的意思，它的主要作用是可以控制动画的变化速率，比如去实现一种非线性运动的动画效果。那么什么叫做非线性运动的动画效果呢？就是说动画改变的速率不是一成不变的，像加速运动以及减速运动都属于非线性运动。
+
+不过Interpolator并不是属性动画中新增的技术，实际上从Android 1.0版本开始就一直存在Interpolator接口了，而之前的补间动画当然也是支持这个功能的。只不过在属性动画中新增了一个TimeInterpolator接口，这个接口是用于兼容之前的Interpolator的，这使得所有过去的Interpolator实现类都可以直接拿过来放到属性动画当中使用，那么我们来看一下现在TimeInterpolator接口的所有实现类
+
+TimeInterpolator接口已经有非常多的实现类了，这些都是Android系统内置好的并且我们可以直接使用的Interpolator。每个Interpolator都有它各自的实现效果，比如说AccelerateInterpolator就是一个加速运动的Interpolator，而DecelerateInterpolator就是一个减速运动的Interpolator。
+
+
+具体使用方式，可以通过如下的方式：
+
+```
+anim.setInterpolator(自定义的Interpolator)
+
+```
+
+最后为大家整理了一下Interpolator的常见种类：
+
+AccelerateDecelerateInterpolator 在动画开始与结束的地方速率改变比较慢，在中间的时候加速
+
+  AccelerateInterpolator  在动画开始的地方速率改变比较慢，然后开始加速
+
+  AnticipateInterpolator 开始的时候向后然后向前甩
+
+  AnticipateOvershootInterpolator 开始的时候向后然后向前甩一定值后返回最后的值
+
+  BounceInterpolator   动画结束的时候弹起
+
+  CycleInterpolator 动画循环播放特定的次数，速率改变沿着正弦曲线
+
+  DecelerateInterpolator 在动画开始的地方快然后慢
+
+  LinearInterpolator   以常量速率改变
+
+  OvershootInterpolator    向前甩一定值后再回到原来位置
+
+
+
+如果android定义的interpolators不符合你的效果也可以自定义interpolators
+
+
+
+# 6 属性动画实战
+
+之前关于属性动画讲了很多理论内容，下面我们就来实践一下，和之前一样的，在原有的项目上增加按钮，为每个按钮执行不同的动画。按钮增加的操作就不给出了，直接上关键代码：
+
+* 动画A
+
+动画A主要为了演示基本的操作，这里为绑定的按钮事件执行如下代码，单机执行后就可以观察到一系列变化，这些代码都可以在Github上找到
+
+```
+
+  			//首先创建三个动画
+            ObjectAnimator moveIn = ObjectAnimator.ofFloat(this.img, "translationX", -500f, 0f);
+            //重复操作，设定不同的模式
+            moveIn.setRepeatCount(2);
+            moveIn.setRepeatMode(ObjectAnimator.REVERSE);
+            //合并两个曹总一同执行
+            ObjectAnimator rotate = ObjectAnimator.ofFloat(this.img, "rotation", 0f, 360f);
+            ObjectAnimator fadeInOut = ObjectAnimator.ofFloat(this.img, "alpha", 1f, 0f, 1f);
+            //设定一个集合，并且设定各个动画的执行顺序
+            AnimatorSet animSet = new AnimatorSet();
+            animSet.play(rotate).with(fadeInOut).after(moveIn);
+            animSet.setDuration(5000);
+            animSet.start();
+
+```
+
+
+* 动画B
+
+动画A主要为了演示自定义的Interpolator，这里将选用一个Movein，然后来观察不同的方式进入效果如何。
+
+```
+
+  			//设定了不同的速率的方式，可以自由组合查看
+                ObjectAnimator moveInDefault = ObjectAnimator.ofFloat(this.img, "translationX", -500f, 0f);
+                ObjectAnimator moveInAccDec = ObjectAnimator.ofFloat(this.img, "translationX", -500f, 0f);
+                moveInAccDec.setInterpolator(new AccelerateDecelerateInterpolator());
+                ObjectAnimator moveInAcc = ObjectAnimator.ofFloat(this.img, "translationX", -500f, 0f);
+                moveInAcc.setInterpolator(new AccelerateInterpolator());
+                ObjectAnimator moveInAos = ObjectAnimator.ofFloat(this.img, "translationX", -500f, 0f);
+                moveInAos.setInterpolator(new AnticipateOvershootInterpolator());
+                ObjectAnimator moveInB = ObjectAnimator.ofFloat(this.img, "translationX", -500f, 0f);
+                moveInB.setInterpolator(new BounceInterpolator());
+                ObjectAnimator moveInC = ObjectAnimator.ofFloat(this.img, "translationX", -500f, 0f);
+                moveInC.setInterpolator(new CycleInterpolator(1));
+                ObjectAnimator moveInL = ObjectAnimator.ofFloat(this.img, "translationX", -500f, 0f);
+                moveInL.setInterpolator(new LinearInterpolator());
+
+                //设定一个集合，并且设定各个动画的执行顺序
+                AnimatorSet animSet = new AnimatorSet();
+                animSet.play(moveInDefault).after(moveInAccDec).after(moveInAcc).after(moveInAos).after(moveInB).after(moveInC).after(moveInL);
+                animSet.setDuration(1000);
+                animSet.start();
+
+```
+
+# 7 总结
+
+本文的工作仅仅只展示出了Animation很小一部分的特性，还有更多的使用技巧，参数有待去发掘。不过，相信的目的就是让大家都能了解，原来Animation 那么容易实现，原来安卓自定义动画的过程那么容易，让大家了解当需要自定义动画时，需要从什么方向下手。本文的不少材料都来自于网络，更多内容，请参详参考文献。
+
+
+# 8 参考文献
+
+```
+
+1、Android动画学习笔记-Android Animation http://www.cnblogs.com/angeldevil/archive/2011/12/02/2271096.html
+2、Android动画之Tween动画实战 http://www.cnblogs.com/obullxl/archive/2011/06/13/android-animation-tween-lady.html
+3、 详解Android动画之Frame Animation http://blog.csdn.net/liuhe688/article/details/6657776
+4、Android_AnimationDrawable介绍及使用 http://blog.csdn.net/zqiang_55/article/details/8142785
+5、Android 属性动画（Property Animation） 完全解析 （上） http://blog.csdn.net/lmj623565791/article/details/38067475
+6、Android属性动画完全解析(上)，初识属性动画的基本用法 http://blog.csdn.net/guolin_blog/article/details/43536355
+7、android之interpolator的用法详解 http://blog.csdn.net/jason0539/article/details/16370405
+
+```
+
