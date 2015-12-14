@@ -59,3 +59,7 @@ ImageLoaderEngine：
 * 
 ImageAware:显示图片对象，可以使ImageView等。
 * 
+ImageDownloader：图片下载器，负责从图片的各个来源获取输入流。
+* 
+Cache：图片缓存，主要分为MemoryCache和DiskCache两部分。
+* 
