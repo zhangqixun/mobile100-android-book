@@ -53,11 +53,8 @@ Eclipse工程配置方法
 第一步：在工程里新建libs文件夹，将开发包里的baidumapapi_vX_X_X.jar拷贝到libs根目录下，将libBaiduMapSDK_vX_X_X.so拷贝到libs\armeabi目录下（官网demo里已有这两个文件，如果要集成到自己的工程里，就需要自己添加），拷贝完成后的工程目录如下图所示；  
 ![](1.jpg)  
 第二步：在工程属性->Java Build Path->Libraries中选择“Add External JARs”，选定baidumapapi_vX_X_X.jar，确定后返回。
-通过以上两步操作后，您就可以正常使用百度地图SDK为您提供的全部功能了。
-注意：由于adt插件升级，若您使用Eclipse adt 22的话，需要对开发环境进行相应的设置，方法如下：
-1. 在Eclipse 中选中工程，右键选 Properties->Java Build Path->Order and Export 使 Android Private Libraries处于勾选状态；
-2. Project -> clean-> clean all .
-
+通过以上两步操作后，您就可以正常使用百度地图SDK为您提供的全部功能了。  
+Android Studio工程配置方法
 3. 
 百度地图ＡＰＩ的优与
 4. 百度地图ＡＰＩ的优与劣
