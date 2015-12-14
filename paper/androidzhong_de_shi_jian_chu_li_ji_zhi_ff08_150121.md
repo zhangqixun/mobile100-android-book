@@ -252,7 +252,7 @@ Android为所有GUI组件都提供了一些事件处理的回调方法，包含�
 详细说明：
 该方法并不像之前介绍过的方法只处理一种事件，一般情况下以下三种情况的事件全部由onTouchEvent方法处理，只是三种情况中的动作值不同。
 * 
-屏幕被按下：当屏幕被按下时，会自动调用该方法来处理事件，此时MotionEvent.getAction()的值为MotionEvent.ACTION_DOWN，如果在应用程序中需要处理屏幕被按下的事件，只需重新该回调方法，然后在方法中进行动作的判断即可。
+屏幕被按下：当屏幕被按下时，会自动调用该方法来处理事件，此时MotionEvent.getAction()的值为MotionEvent.ACTION_DOWN，如果在应用程序中需要处理屏幕被按下的事件，只需重写该回调方法，然后在方法中进行动作的判断即可。
 * 
 屏幕被抬起：当触控笔离开屏幕时触发的事件，该事件同样需要onTouchEvent方法来捕捉，然后在方法中进行动作判断。当MotionEvent.getAction()的值为MotionEvent.ACTION_UP时，表示是屏幕被抬起的事件。
 * 
@@ -272,9 +272,10 @@ Android为所有GUI组件都提供了一些事件处理的回调方法，包含�
 
 返回值：该方法的返回值与前面介绍的各个回调方法的返回值机制完全相同，因本书篇幅有限，不再赘述。
 
-轨迹球与手机键盘的区别如下所示：
+轨迹球与手机键盘的区别如下：
 
 １）某些型号的手机设计出的轨迹球会比只有手机键盘时更美观，可增添用户对手机的整体印象。
+
 ２）轨迹球使用更为简单，例如在某些游戏中使用轨迹球控制会更为合理。
 
 ３）使用轨迹球会比键盘更为细化，即滚动轨迹球时，后台的表示状态的数值会变化得更细微、更精准。
@@ -285,7 +286,7 @@ Android为所有GUI组件都提供了一些事件处理的回调方法，包含�
 
 功能：前面介绍的各个方法都可以在View及Activity中重写，接下来介绍的onFocusChanged却只能在View中重写。该方法是焦点改变的回调方法，当某个控件重写了该方法后，当焦点发生变化时，会自动调用该方法来处理焦点改变的事件。
 
-声明：protected void onFocusChanged(boolean gainFocus, int direction, Rect previously FocusedRect)
+声明：protected void onFocusChanged(boolean gainFocus, int direction, Rect previouslyFocusedRect)
 
 参数说明：
 * 
