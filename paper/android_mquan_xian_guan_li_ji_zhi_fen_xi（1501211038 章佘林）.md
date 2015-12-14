@@ -93,6 +93,6 @@ com.android.launcher.permission.UNINSTALL_SHORTCUT
     用户在应用运行时可以随时地取消应用已获取的权限，这种操作并不会通知应用，所以如第一条所述，在进行一些有限制性的操作时要总是去检查应用是不是已经获取了相应的权限
     
 
-# Android M 应用开发建议
+# 三 Android M 应用开发建议
 
 
