@@ -92,3 +92,6 @@ DisplayBitmapTask：用于显示图片的任务。
 ## UIL图片缓存机制
 UIL中缓存机制的主体有三个，分别是UI、缓存模块和数据源（网络），他们之间的关系如下图所示：
 ![3](xl_im3.png)
+1. 
+UI：请求数据，使用唯一的Key值索引Memory Cache中的Bitmap。
+1. 
