@@ -110,7 +110,15 @@ UI：请求数据，使用唯一的Key值索引Memory Cache中的Bitmap。
 
 ### UIL内存缓存机制
 1. 
-强引用缓存：LruMemoryCache 开源框架默认的内存缓存类，缓存的是Bitmap的强引用
+1、	强引用缓存:
+LruMemoryCache 开源框架默认的内存缓存类，缓存的是Bitmap的强引用
+1. 
+强引用和弱引用相结合的缓存：
+UsingFreqLimitedMemoryCache：如果缓存额图片总量超过限定值，先删除使用频率最小的Bitmap；
+LRULimitedMemoryCache：使用lru算法，与LruMemroyCache不同的是，他缓存的是Bitmap的弱引用
+FIFOLimitedMemoryCache：先进先出缓存策略。当超过设定值，先删除最先加入缓存的Bitmap。
+LargestLimitedMemoryCache：删除最大的Bitmap对象
+LimitedAgeMemeoryCache：当Bitmap加入缓存中的时间超过我们设定的值，将其删除
 1. 
 
 
