@@ -252,6 +252,13 @@ Android 中的异步消息处理主要由四个部分组成,Message、Handler、
             }
         } 
     }
+    
+在这个 DownloadTask 中,我们在 doInBackground()方法里去执行具体的下载任务。这个 方法里的代码都是在子线程中运行的,因而不会影响到主线程的运行。注意这里虚构了一个 doDownload()方法,这个方法用于计算当前的下载进度并返回,我们假设这个方法已经存在 了。在得到了当前的下载进度后,下面就该考虑如何把它显示到界面上了,由于 doInBackground()方法是在子线程中运行的,在这里肯定不能进行 UI 操作,所以我们可以调 用 publishProgress()方法并将当前的下载进度传进来,这样 onProgressUpdate()方法就会很快 被调用,在这里就可以进行 UI 操作了。
+当下载完成后,doInBackground()方法会返回一个布尔型变量,这样 onPostExecute()方 法就会很快被调用,这个方法也是在主线程中运行的。然后在这里我们会根据下载的结果来 弹出相应的 Toast 提示,从而完成整个 DownloadTask 任务。
+简单来说,使用 AsyncTask 的诀窍就是,在 doInBackground()方法中去执行具体的耗时 任务,在 onProgressUpdate()方法中进行 UI 操作,在 onPostExecute()方法中执行一些任务的 收尾工作。
+  如果想要启动这个任务,只需编写以下代码即可:
+    new DownloadTask().execute();
+以上就是 AsyncTask 的基本用法,怎么样,是不是感觉简单方便了许多?我们并不需要 去考虑什么异步消息处理机制,也不需要专门使用一个 Handler 来发送和接收消息,只需要 调用一下 publishProgress()方法就可以轻松地从子线程切换到 UI 线程了。
         
       
       
