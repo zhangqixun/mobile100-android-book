@@ -179,7 +179,7 @@
                 
                 ```
             3.截图
-            
+            ![](dingzewu004.png)
 
         
         *  LinearLayout
@@ -230,7 +230,15 @@
         *  GridLayout
             
             1.详解
-            
+                1.1定义
+                如果你想实现计算器这样的Table形式的应用UI，可以考虑使用Grid网格布局。可以轻松的将界面设置为N*M部分。
+                1.2属性
+                列举几个重要的属性
+                android:orientation 方向
+                android:rowCount 定义行数
+                android:columnCount 定义列数
+                layout_columnSpan 占用几列
+                layout_rowSpan 占用几行
             2.应用
         
         *  AbsoluteLayout
