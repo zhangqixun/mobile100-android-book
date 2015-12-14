@@ -128,3 +128,23 @@ Activity的调度：
     — 在Home程序中单击一个应用图标，启动新的Activity。
     — 按“Back”键，结束当前Activity，自动启动上一个Activity。
     — 长按“Home”键，显示出当前任务列表，从中选择一个启动。
+
+首先对模型中可能运到的类做一个介绍：
+
+     ActivityThread.java    路径位于：\frameworks\base\core\java\android\app\ActivityThread.java
+         说明： 该类为应用程序(即APK包)所对应进程(一个进程里可能有多个应用程序)的主线程类，即我们通常所说的UI线程。
+           一个ActivityThread类对应于一个进程。最重要的是，每个应用程序的入口是该类中的static main()函数 。
+      Activity.java   路径位于：\frameworks\base\core\java\android\app\Activity.java
+        说明：该类是与用户交互的对象，同时也是APK应用程序运行的最小单元。ActivityThread类会根据用户的操作选择运行
+          哪个Activity。当前运行的Activity是出于resume状态(有且仅有一个)，其他Activity出于pause或stop状态。
+      Instrumentation.java  路径位于 ：\frameworks\base\core\java\android\app\ActivityThread.java
+         说明： 该类用于具体操作某个Activity的功能----单向(oneway)调用AMS以及统计、测量该应用程序的所有开销。
+            一个Instrumentation类对应于一个进程。每个Activity内部都有一个该Instrumentation对象的引用。
+      举个例子吧。
+           我们将我们应用程序比作一个四合院，那么Activity对应于四合院的人，ActivithThread对应于院子的主人----管理所有人，
+    Instrumentation对应于管家------受气的命，接受来自人(Activity/ActivithThread)的命令 ，去单向(oneway)调用AMS 。
+     ApplicationThread类是ActivityThread的内部类：
+      说明：该类是一个Binder类，即可实现跨进程通信。主要用于接受从AMS传递过来的消息，继而做相应处理。
+    ActivityManagerService.java 路径位于：        
+    \frameworks\base\services\java\com\android\server\am\ActivityManagerService.java
+      说明：该类是一个Binder类，即可实现跨进程通信。因此可以接受从客户端，例如Instrumentation、Context等调用过来的信息。ActivityManagerService提供了全局的代理对象，供IPC调用。
