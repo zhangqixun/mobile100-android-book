@@ -300,15 +300,15 @@ Android为所有GUI组件都提供了一些事件处理的回调方法，包含�
 * 
 焦点：焦点描述了按键事件（或者是屏幕事件等）的承受者，每次按键事件都发生在拥有焦点的View上。在应用程序中，我们可以对焦点进行控制，例如从一个View移动另一个View。下面列出一些与焦点有关的常用方法：
 
-setFocusable方法：设置View是否可以拥有焦点。
+ * setFocusable方法：设置View是否可以拥有焦点。
 
-isFocusable方法：监测此View是否可以拥有焦点。
+ * isFocusable方法：监测此View是否可以拥有焦点。
 
-setNextFocusDownId方法：设置View的焦点向下移动后获得焦点View的ID。
+ * setNextFocusDownId方法：设置View的焦点向下移动后获得焦点View的ID。
 
-hasFocus方法：返回了View的父控件是否获得了焦点。
+ * hasFocus方法：返回了View的父控件是否获得了焦点。
 
-requestFocus方法：尝试让此View获得焦点。
+ * requestFocus方法：尝试让此View获得焦点。
 
-isFocusableTouchMode方法：设置View是否可以在触摸模式下获得焦点，在默认情况下是不可用获得的。
+ * isFocusableTouchMode方法：设置View是否可以在触摸模式下获得焦点，在默认情况下是不可用获得的。
 
