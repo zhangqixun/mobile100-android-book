@@ -143,7 +143,15 @@ android{
 ```
 上面是替换默认配置中的占位符，如果只需替换debug版本，则：
 ``` GRADLE
-
+android{
+    buildTypes {
+        debug {
+	          manifestPlaceholders = [app_label:"xixihaha"]
+        }
+        release {
+        }
+    }
+}
 ```
 
 ## 独立配置签名信息
