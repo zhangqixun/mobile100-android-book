@@ -7,7 +7,7 @@
 
 前言
 
-一、SharedPreferences存储数据
+一.SharedPreferences存储数据
 
 二.文件存储数据
 
