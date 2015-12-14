@@ -193,8 +193,7 @@ UnlimitedDiscCache：无任何限制
 
 接下来我们就分析一下BaseDiscCache是如何解决这三个问题的。
 
-针对因重名导致文件被覆盖的情况，UIL提供三种文件名命名策略，这里我们只对默认的文件命名策略进行分析。默认的文件名命名策略在DefaultConfigurationFactory.createFile
-NameGenerator()方法中实现，主要是通过String.hashCode()方法来进行文件名的生成，因为hashCode()针对每一个对象可以产生一个独一无二的Hash Code，从而可以避免出现文件命名重名而带来的图片覆盖的问题。
+针对因重名导致文件被覆盖的情况，UIL提供三种文件名命名策略，这里我们只对默认的文件命名策略进行分析。默认的文件名命名策略在DefaultConfigurationFactory.createFileNameGenerator()方法中实现，主要是通过String.hashCode()方法来进行文件名的生成，因为hashCode()针对每一个对象可以产生一个独一无二的Hash Code，从而可以避免出现文件命名重名而带来的图片覆盖的问题。
 
 解决图片重复下载问题。图片在磁盘上的下载保存是通过BaseDiscCache.save(…)方法来实现的。其源码如下图所示。
 ![12](xl_im12.png)
