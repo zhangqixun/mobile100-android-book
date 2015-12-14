@@ -145,3 +145,6 @@ LruMemoryCache的缓存实现方法我们已经了解了，在LinkedHashMap.get(
 ![5](xl_im5.png)
 
 从上图的put()方法方法我们可以看出，其核心在于trimToSize(maxSize)方法，通过该方法来实现用户限定的缓存大小。由于调用put()方法，插入的Bitmap都是位于双链表的尾部，而调用get()方法后，最近被使用的Bitmap也会移动到双链表的尾部，可以看出最新被使用的Bitmap都位于LinkedHashMap双链表的尾部，因此当缓存达到最大上限时，在trimToSize()方法中，只需遍历一下双链表，将头部的元素删除，直到满足要求即可。其具体实现源码如下图所示。其中toEvict即为多余（长时间不被访问）需要被删除的项。
+
+![6](xl_im6.png)
+
