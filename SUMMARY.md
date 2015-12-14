@@ -102,7 +102,7 @@
    * [从计算机底层看待android应用程序的优化（1501210370 邓中洋）](paper/1501210370.md)
    * [Android应用开发内存优化技术（1501210983  司方豪）](paper/androidying_yong_kai_fa_nei_cun_you_hua_ji_zhu_ff0.md)
    * [Android中的事件处理机制（1501210707 王可颖）](paper/androidzhong_de_shi_jian_chu_li_ji_zhi_ff08_150121.md)
-   * [Android 5种数据存储方式解析](paper/android_5zhong_shu_ju_cun_chu_fang_shi_jie_xi.md)
+   * [Android 5种数据存储方式解析（1501210903 宫翠峰）](paper/android_5zhong_shu_ju_cun_chu_fang_shi_jie_xi.md)
 * [常见面试题目](question/index.md)
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
