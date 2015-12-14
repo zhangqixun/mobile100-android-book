@@ -246,7 +246,79 @@ android {
 ```
 
 ## 基本的混淆方法
+混淆能让反编译的代码可读性变的很差，而且还能显著的减少APK包的大小。相信很多朋友对混淆都觉得麻烦，甚至说，非常乱。因为添加混淆规则需要查询官方说明文档，甚至有的官方文档还没说明。当你引用了太多库后，添加混淆规则将使一场噩梦。
+这里介绍一个技巧，不用查官方文档，不用逐个库考虑添加规则。
+首先，除了默认的混淆配置(android-sdk/tools/proguard/proguard-android.txt), 自己的代码肯定是要自己配置的：
 
+``` XML
+## 位于module下的proguard-rules.pro
+#####################################
+######### 主程序不能混淆的代码 #########
+#####################################
+
+-dontwarn xxx.model.**
+-keep class xxx.model.** { *; }
+
+## 等等，自己的代码自己清楚
+
+#####################################
+########### 不优化泛型和反射 ##########
+#####################################
+
+-keepattributes Signature
+
+```
+
+接下来是麻烦的第三方库，一般来说，如果是极光推的话，它的包名是cn.jpush, 添加如下代码即可：
+
+``` XML
+-dontwarn cn.jpush.**
+-keep class cn.jpush.** { *; }
+
+```
+
+其他的第三库也是如此，一个一个添加，太累！其实可以用第三方反编译工具（比如jadx：https://github.com/skylot/jadx ），打开apk后，一眼就能看到引用的所有第三方库的包名，把所有不想混淆或者不确定能不能混淆的，直接都添加又有何不可：
+
+```XML
+#####################################
+######### 第三方库或者jar包 ###########
+#####################################
+
+-dontwarn cn.jpush.**
+-keep class cn.jpush.** { *; }
+
+-dontwarn com.squareup.**
+-keep class com.squareup.** { *; }
+
+-dontwarn com.octo.**
+-keep class com.octo.** { *; }
+
+-dontwarn de.**
+-keep class de.** { *; }
+
+-dontwarn javax.**
+-keep class javax.** { *; }
+
+-dontwarn org.**
+-keep class org.** { *; }
+
+-dontwarn u.aly.**
+-keep class u.aly.** { *; }
+
+-dontwarn uk.**
+-keep class uk.** { *; }
+
+-dontwarn com.baidu.**
+-keep class com.baidu.** { *; }
+
+-dontwarn com.facebook.**
+-keep class com.facebook.** { *; }
+
+-dontwarn com.google.**
+-keep class com.google.** { *; }
+
+## ... ...
+```
 
 ## 自定义导出APK的名称
 
