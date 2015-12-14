@@ -174,3 +174,56 @@ Translate:
 
 * 由此，完成了ViewAnimation的实战，ViewAnimation简单易懂，操作方便，大家不妨在自己的项目中多多使用。
 
+
+# 4 FrameAnimation 实战
+
+## 4.1 FrameAnimation 基础
+Frame动画是按照一系列的帧顺序播放展示出来的动画效果，而这些帧都是一系列的图片。为此我们可以将Frame动画的展示过程定义在XML文件当中，如果是采用代码编写，则是使用到AnimationDrawable对象。Drawable Animation可以加载Drawable资源实现帧动画，而AnimationDrawable是实现Drawable Animations的基本类，但是因为Frame Animation的特殊性，通常的做法都是采用XML的方式实现，不推荐使用代码的方式实现这个动画，所以在这里也就不做介绍了。
+
+
+当我们需要使用FrameAnimation的时候可以采用如下的方式定义XML文件：
+```
+<?xml version="1.0" encoding="utf-8"?>  
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"  
+    android:oneshot=["true" | "false"] >  
+    <item  
+        android:drawable="@[package:]drawable/drawable_resource_name"  
+        android:duration="integer" />  
+</animation-list>  
+<animation-list>元素是必须的，并且必须要作为根元素，可以包含一或多个<item元素；android:onshot如果定义为true的话，此动画只会执行一次，如果为false则一直循环。
+<item>元素代表一帧动画，android:drawable指定此帧动画所对应的图片资源，android:druation代表此帧持续的时间，整数，单位为毫秒。
+```
+
+## 4.2 FrameAnimation 实战
+
+在这一部分，我们将继续3中的那一个工程，在原有的基础上增加代码，直接展示FrameAnimation的效果
+
+* 首先在准备好你的过度动画，放在drawable文件夹下，接着在drawable(请注意这次的动画是放在drawable中，而不是anima中)文件当中新建一个XML文件，内容包含你需要过渡的帧，在这里我准备了5张从正常亮度渐变到黑色的图像，XML（我的这里为mebiuw_drawable_frame）大致形式如下
+
+
+```
+
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true">
+    <!-- 一下图片请按照顺序自行替换，这里是我对原图做了后期，依次变暗的图片 -->
+    <item android:drawable="@drawable/psb" android:duration="200" />
+    <item android:drawable="@drawable/psb1" android:duration="200" />
+    <item android:drawable="@drawable/psb2" android:duration="200" />
+    <item android:drawable="@drawable/psb3" android:duration="200" />
+    <item android:drawable="@drawable/psb4" android:duration="200" />
+    <item android:drawable="@drawable/psb5" android:duration="200" />
+</animation-list>
+
+```
+* 完成上述的代码后，就代表我们已经写完了一个动画的XML文件，随后我们需要对其调用。根据材料，他有两种调用方式，因为FrameAnimation本身就是Drawable资源，所以可以直接设置为某个View的背景。当然，更为常见的是在Java中编写代码，调用这个XML文件所描述的动画。这里将演示在Java下的方式，所以我们在原有的Activity上新增加一个Button，命名为Frame，编写该按钮的事件，用作Frame动画的处罚，关键代码如下：
+
+```
+ //首先设置背景为我们设置的XML
+                this.img=(ImageView) this.findViewById(R.id.testImg);
+                this.img.setBackgroundResource(R.drawable.mebiuw_drawable_frame);
+                //获得AnimationDrawable对象，并且开始触发
+                AnimationDrawable animationDrawable = (AnimationDrawable) this.img.getBackground();
+                animationDrawable.start();
+```
+* 由此，完成了FrameAnimation的实战，FrameAnimation可以理解为一个定制的GIF动画，一般使用频度不高，同时需要注意的是FrameAnimation在不同的API Level时运行结果可能不一致。
