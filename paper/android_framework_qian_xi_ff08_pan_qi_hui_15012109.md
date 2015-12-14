@@ -113,8 +113,8 @@
        
 **android Framework中几个重要的服务**
     
-    ActivityManagerService 简称AMS ，是Android核心功能之一，在上面简单列出了它的功能，，主要功能包括：
-        ---统一管理和调度各应用程序的Activity，维护系统中运行的所有应用Task和Activity
-        ---内存管理：应用程序关闭时对应进程还在运行，当系统内存不足时根据策略kill掉优先级较低进程
-        ---进程管理：维护和管理系统中运行的所有进程，并提供了查询进程信息的API
-        ---Provider、Service和Broadcast管理和调度
+ActivityManagerService 简称AMS ，是Android核心功能之一，在上面简单列出了它的功能，，主要功能包括：
+    ---统一管理和调度各应用程序的Activity，维护系统中运行的所有应用Task和Activity
+    ---内存管理：应用程序关闭时对应进程还在运行，当系统内存不足时根据策略kill掉优先级较低进程
+    ---进程管理：维护和管理系统中运行的所有进程，并提供了查询进程信息的API
+    ---Provider、Service和Broadcast管理和调度
