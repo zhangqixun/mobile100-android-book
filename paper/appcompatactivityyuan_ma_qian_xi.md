@@ -13,7 +13,7 @@ Activity 发展到3.0左右，就可以使用fragment了，但是support v4 提�
 AppCompatActivity类是对于使Activity能够使用ActionBar的基础类。ActionBar位于Activity的顶部，可用来显示activity的标题、Icon、Actions和一些用于交互的View。它也可被用于应用的导航。ActionBar 是在Android 3.0(API 11）中加入到SK中的，想在低版本中使用ActionBar有两种选择：使用http://actionbarsherlock.com 或者使用Support Library v7。
 
 下面是一张使用ActionBar的界面截图：
-![](actionbar@2x.png)
+![](AppcompatActivity源码浅析/actionbar@2x.png)
     
     其中，[1]是ActionBar的图标，[2]是两个action按钮，[3]是overflow按钮
     
@@ -221,12 +221,12 @@ protected void onCreate(Bundle savedInstanceState) {
 
     更多关于实现导航返回（up navigation）的详细信息
     请查阅Android/sdk/docs/training/implementing-navigation/ancestral.html。
-    
+    ![](AppCompatActivity类继承关系.bmp)
 
 
 ---
 
-###更多关于ac![![](AppCompatActivity类继承关系.bmp)](AppCompatActivity类继承关系.bmp)tion bar的资料请参阅Google给的官方文档。
+###更多关于ac!(AppCompatActivity类继承关系.bmp)tion bar的资料请参阅Google给的官方文档。
 
 
 ---
