@@ -366,7 +366,7 @@ onCreate()方法是在服务第一次创建的时候调用的,而 onStartCommand
         }
       
 可以看到,这里我们新建了一个 DownloadBinder 类,并让它继承自 Binder,然后在它的内部提供了开始下载以及查看下载进度的方法。当然这只是两个模拟方法,并没有实现真 正的功能,我们在这两个方法中分别打印了一行日志。
-接着,在 MyService 中创建了 DownloadBinder 的实例,然后在 **onBind()方法里返回了这个实例**,这样 MyService 中的工作就全部完成了。在活动中**调用服务里的这些方法**。首先需要在布局文件里新增两个按钮,修改 activity_main.xml 中的代码,设计两个按钮
+接着,在 MyService 中创建了 DownloadBinder 的实例,然后在 **onBind()方法里返回了这个实例**,这样 MyService 中的工作就全部完成了。在活动中**调用服务里的这些方法**。首先需要在布局文件里新增两个按钮,修改 activity_main.xml 中的代码,加入两个按钮
 
         <Button
             android:id="@+id/bind_service"
@@ -378,7 +378,39 @@ onCreate()方法是在服务第一次创建的时候调用的,而 onStartCommand
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Unbind Service" />
-          
+这两个按钮分别是用于绑定服务和取消绑定服务的,那到底谁需要去和服务绑定呢?当然就是活动了。当一个活动和服务绑定了之后,就可以调用该服务里的 Binder 提供的方法了。 修改 TestService 中的代码,如下所示:
+
+    private Button bindService;
+    private Button unbindService;
+    private MyService.DownloadBinder downloadBinder;
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+        }
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            downloadBinder = (MyService.DownloadBinder) service;
+            downloadBinder.startDownload();
+            downloadBinder.getProgress();
+        }
+    };
+    
+oncreate里
+    
+    bindService = (Button) findViewById(R.id.bind_service);
+        unbindService = (Button) findViewById(R.id.unbind_service);
+        bindService.setOnClickListener(this);
+        unbindService.setOnClickListener(this);
+        
+onclick事件
+
+            case R.id.bind_service:
+                Intent bindIntent = new Intent(this, MyService.class);
+                bindService(bindIntent, connection, BIND_AUTO_CREATE); // 绑定服务
+                break;
+            case R.id.unbind_service:
+                unbindService(connection); // 解绑服务
+                break;      
       
       
       
