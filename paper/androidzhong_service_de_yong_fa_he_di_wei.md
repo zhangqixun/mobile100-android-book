@@ -288,7 +288,7 @@ Android 中的异步消息处理主要由四个部分组成,Message、Handler、
     public void onDestroy() {
         super.onDestroy();
     }
-可以看到,这里我们又重写了 onCreate()、onStartCommand()和 onDestroy()这三个方法, 它们是每个服务中最常用到的三个方法了。其中 onCreate()方法会在服务创建的时候调用, onStartCommand()方法会在每次服务启动的时候调用,onDestroy()方法会在服务销毁的时候 调用。
+可以看到,这里我们又重写了 onCreate()、onStartCommand()和 onDestroy()这三个方法, 它们是每个服务中最常用到的三个方法了。其中 onCreate()方法会在**服务创建**的时候调用, onStartCommand()方法会在每次**服务启动**的时候调用,onDestroy()方法会在**服务销毁**的时候调用。
 通常情况下,如果我们希望服务一旦启动就立刻去执行某个动作,就可以将逻辑写在 onStartCommand()方法里。而当服务销毁时,我们又应该在 onDestroy()方法中去回收那些不 再使用的资源。
 另外需要注意,每一个服务都需要在 AndroidManifest.xml 文件中进行注册才能生效,不知 道你有没有发现,这是 Android 四大组件共有的特点。于是我们还应该修改 AndroidManifest.xml 文件,代码如下所示:
       
