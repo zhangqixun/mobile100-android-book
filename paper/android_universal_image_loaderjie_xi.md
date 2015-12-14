@@ -138,3 +138,4 @@ LruMemoryCache算法使用的是LRU算法，即Least Recently Used，近期最�
 LinkedHashMap维护着一个运行于所有条目的双重链接列表，此链接列表定义了迭代顺序，该迭代顺序可以是插入顺序或者是访问顺序。LinkedHashMap通过accessOrder属性来控制迭代顺序，accessOrder值为true，表示按照访问顺序迭代，则在调用get方法后，会将这次访问的元素移至链表尾部，不断访问可以形成按访问顺序排序的链表；若accessOrder值为false，则默认是按插入顺序排序。
 
 因此，当accessOrder的值为“true”时，LinkedHashMap中的get()方法返回所匹配的值，并且在返回前还会将所匹配的key对应的entry调整在列表中的顺序，让其处于列表的最后。其实现源码如下图所示。
+![4](xl_im4.png)
