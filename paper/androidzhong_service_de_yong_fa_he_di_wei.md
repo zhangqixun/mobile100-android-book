@@ -25,10 +25,13 @@
             // 处理具体的逻辑 
             }
         }
+        
 * 那么该如何启动这个线程呢?其实也很简单,只需要 new 出 MyThread 的实例,然后调 用它的 start()方法,这样 run()方法中的代码就会在子线程当中运行了,如下所示:
+
 
         new MyThread().start();
 当然,使用继承的方式耦合性有点高,更多的时候我们都会选择使用实现 Runnable 接 口的方式来定义一个线程,如下所示:
+
         class MyThread implements Runnable {
         @Override
             public void run() {
@@ -36,8 +39,10 @@
             }
         }
 如果使用了这种写法,启动线程的方法也需要进行相应的改变,如下所示:
-    MyThread myThread = new MyThread();
-    new Thread(myThread).start();
+
+        MyThread myThread = new MyThread();
+        new Thread(myThread).start();
+        
 可以看到,Thread 的构造函数接收一个 Runnable 参数,而我们 new 出的 MyThread 正是 一个实现了 Runnable 接口的对象,所以可以直接将它传入到 Thread 的构造函数里。接着调
 
 
