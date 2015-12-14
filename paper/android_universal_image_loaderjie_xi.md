@@ -197,3 +197,4 @@ UnlimitedDiscCache：无任何限制
 NameGenerator()方法中实现，主要是通过String.hashCode()方法来进行文件名的生成，因为hashCode()针对每一个对象可以产生一个独一无二的Hash Code，从而可以避免出现文件命名重名而带来的图片覆盖的问题。
 
 解决图片重复下载问题。图片在磁盘上的下载保存是通过BaseDiscCache.save(…)方法来实现的。其源码如下图所示。
+![12](xl_im12.png)
