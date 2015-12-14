@@ -18,4 +18,4 @@
    3、zygote服务启动
    4、System Server进程启动
    5、Home应用启动
-   
+  ![](c092061c-e1ae-3901-985d-0b5f411b6857.jpg)
