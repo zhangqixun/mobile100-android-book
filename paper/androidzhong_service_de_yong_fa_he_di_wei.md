@@ -44,7 +44,16 @@
         MyThread myThread = new MyThread();
         new Thread(myThread).start();
         
-可以看到,Thread 的构造函数接收一个 Runnable 参数,而我们 new 出的 MyThread 正是 一个实现了 Runnable 接口的对象,所以可以直接将它传入到 Thread 的构造函数里。接着调
+可以看到,Thread 的构造函数接收一个 Runnable 参数,而我们 new 出的 MyThread 正是 一个实现了 Runnable 接口的对象,所以可以直接将它传入到 Thread 的构造函数里。接着调用 Thread 的 start()方法,run()方法中的代码就会在子线程当中运行了。 当然,如果你不想专门再定义一个类去实现 Runnable 接口,也可以使用匿名类的方式,
+这种写法更为常见,如下所示:
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+            // 处理具体的逻辑 
+            }
+        }).start();
+
 
 
 
