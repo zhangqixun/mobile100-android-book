@@ -1,4 +1,4 @@
 # Android framework 浅析 （潘启慧 1501210967）
 
 
-    每一个控制类程序都需要一个入口，如在java和c中都以main函数作为起始函数，d
+    Android手机系统本质上是一个基于Linux的应用程序，它以Linux系统为内核。系统的启动过程包括Linux内核启动和Android框架启动两个阶段
