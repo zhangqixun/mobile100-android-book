@@ -34,3 +34,10 @@
 
      init.rc文件是Android系统的重要配置文件，位于/system/core/rootdir/目录中。主要功能是定义了系统启动时需要执行的一系列action及service：执行特定动作、设置环境变量和属性和执行特定的service。该脚本在init进程的init.c:main函数中解析并启动。
      需要重点说明的是init.rc脚本文件配置了一些重要的服务，init进程通过创建子进程启动这些服务，这里创建的service都属于native服务，运行在Linux空间，通过socket向上层提供特定的服务，并以守护进程的方式运行在后台。
+     通过init.rc脚本系统启动了以下几个重要的服务：
+      1）servicemanager:启动binder IPC，管理所有的Android系统服务
+      2）mountd:设备安装Daemon，负责设备安装及状态通知
+      3）debuggerd:启动debug system，处理调试进程的请求
+      4）rild:启动radio interface layer daemon服务，处理电话相关的事件和请求
+      5）mediaserver:启动AudioFlinger,MediaPlayerService and CameraService，负责多媒体播放相关的功能，包括音视频解码、显示输出
+      6）zygote:进程孵化器，启动Android Java VMRuntime和启动systemserver，负责Android应用进程的孵化工作
