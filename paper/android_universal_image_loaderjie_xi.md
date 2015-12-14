@@ -154,3 +154,5 @@ LruMemoryCache的缓存实现方法我们已经了解了，在LinkedHashMap.get(
 首先初始化LinkedHashMap，并设定按照访问顺序来排序，即accessOrder=true。
 ![7](xl_im7.png)
 
+1. 
+调用put()方法，向缓存池中放入bitmap1和bitmap2两个对象。
