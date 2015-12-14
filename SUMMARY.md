@@ -92,6 +92,7 @@
    * [android多线程编程机制(1501210929赖涛)](paper/1501210929.md)
    * [android UI布局设计(丁泽武 1501210893)](paper/android_uibu_ju_she_8ba128_ding_ze_wu_1501210893.md)
    * [Android内存优化（刘亚迪 1501210954）](paper/androidnei_cun_you_hua_ff08_liu_ya_di_1501210954.md)
+   * Android M权限管理机制分析
 * [常见面试题目](question/index.md)
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
