@@ -315,8 +315,35 @@ Android为所有GUI组件都提供了一些事件处理的回调方法，包含�
 
 下面，用一个简单的事例，师范基于回调的事件处理机制，通过自定义View来实现，重写该View的事件处理方法即可。
 
+```
+public class MyButton extends Button {
+    public MyButton(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        super.onKeyDown(keyCode, event);
+        Log.d("app","onKeyDown in MyButton");
+        return true;
+    }
+}
+```
 
 
+---
 
+```
+ <com.example.king.eventdemo.MyButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:text="单击我" />
+```
 
+运行程序，先把焦点定位到按钮，单击模拟器任意键，可看到LogCat上的输出。
+
+![](jiemian.png)
+
+![](logcat.png)
 
