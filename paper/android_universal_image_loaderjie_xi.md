@@ -109,6 +109,9 @@ UI：请求数据，使用唯一的Key值索引Memory Cache中的Bitmap。
 
 
 ### UIL内存缓存机制
+1. 
+强引用缓存：LruMemoryCache 开源框架默认的内存缓存类，缓存的是Bitmap的强引用
+1. 
 
 
 
