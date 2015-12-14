@@ -124,8 +124,18 @@ android {
 在我们的天气预报程序中，需要访问网络、获取网络状态和定位的权限，前两项权限可以直接声明而不需特殊的处理，而定位权限属于敏感权限，需要在应用执行的过程中进行判断和申请。如果不申请的话，默认不会获得定位权限：
 ![](一开始没获得.PNG)
 在主函数的监听事件中添加对位置按钮的监听事件，一旦点击了该按钮，就查看是否有定位权限。
+```
+if(view.getId()==R.id.title_location){
+            int hasPermission = checkSelfPerssion(Manifest.permission.ACCESS_FINE_LOCATION);
+            if (hasPermission != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        REQUEST_CODE_ASK_PERMISSIONS);
+                return;
+            }
+        }```
 
 假设用户禁止了程序获取该权限，并选择了“不再提醒”，那么应用程序就无法获取该权限。为了避免无法获取权限时程序崩溃，需要添加无法获取权限时的处理办法，比如弹窗提醒或者不执行接下来的操作。
+
 ---
 
     
@@ -139,6 +149,7 @@ android {
 ![](旧版本提醒.PNG)
 
 ### 2. 一次获取多项权限。
+
 
 
 
