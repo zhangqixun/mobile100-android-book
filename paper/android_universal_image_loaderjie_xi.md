@@ -107,3 +107,9 @@ UI：请求数据，使用唯一的Key值索引Memory Cache中的Bitmap。
 
 # 
 
+
+### UIL内存缓存机制
+
+
+
+
