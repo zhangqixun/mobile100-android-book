@@ -67,4 +67,4 @@ layout下的online_user_list_item.xml内容如下：![](1.png)
 ### 3、3内容丰富的（自定义ArrayAdapter）
 这就需要写一个类继承自ArrayAdapter并且重写getView方法。
  ![](5ECEA836-EBDB-4FAF-961F-3016564D03B1.png)
-activity里就这样写
+activity里就这样写![](313CD086-0005-4C3F-9C70-FDD8AAE25ADF.png)
