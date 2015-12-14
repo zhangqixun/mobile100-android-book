@@ -36,7 +36,7 @@ Key的申请地址为：http://lbsyun.baidu.com/apiconsole/key
     ![](and_key8.png)
     第3步：输入keytool -list -v -keystore debug.keystore，会得到三种指纹证书，选取SHA1类型的证书（密钥口令是android），例如：
     其中keytool为jdk自带工具；keystorefile为Android 签名证书文件
-    and_key9.png
+    
     and_key10.png
     第二种方法：在adt 22中直接查看
     如果使用adt 22，可以在eclipse中直接查看：windows -> preferance -> android -> build。 如下图示：
