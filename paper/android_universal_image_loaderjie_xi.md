@@ -168,3 +168,5 @@ LruMemoryCache的缓存实现方法我们已经了解了，在LinkedHashMap.get(
 
 1. 
 bitmap1对象被GC回收。
+![11](xl_im11.png)
+
