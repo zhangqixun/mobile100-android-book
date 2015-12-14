@@ -98,6 +98,7 @@
    * [详解Android中的广播机制（1501210974 屈中山）](paper/xiang_jie_android_zhong_de_guang_bo_ji_zhi_ff08_15.md)
    * [安卓app和耗电（李少斐1501210939）](paper/an_zhuo_app_he_hao_dian_ff08_li_shao_fei_150121093.md)
    * [AppcompatActivity源码浅析](paper/appcompatactivityyuan_ma_qian_xi.md)
+   * Android中的消息传递
 * [常见面试题目](question/index.md)
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
