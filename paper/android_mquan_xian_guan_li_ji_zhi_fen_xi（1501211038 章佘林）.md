@@ -168,8 +168,8 @@ if (ActivityCompat.shouldShowRequestPermissionRationale(this,
     if (!addPermission(permissionsList, Manifest.permission.WRITE_CONTACTS))
         permissionsNeeded.add("Write Contacts");```
         
-        ![](肌肤包.PNG)
-
+    
+![](shjd.PNG)
 
 
 
