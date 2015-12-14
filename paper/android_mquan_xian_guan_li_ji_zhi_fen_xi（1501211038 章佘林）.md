@@ -98,7 +98,23 @@ com.android.launcher.permission.UNINSTALL_SHORTCUT
 
 
 # 三 天气预报程序针对Android M进行优化 
+```
+android {
+    useLibrary 'org.apache.http.legacy'
+    compileSdkVersion 23
+    buildToolsVersion "23.0.0"
 
+    defaultConfig {
+        applicationId "cn.ed.pku.sean.weather"
+        minSdkVersion 19
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+     .......
+    }
+}```
 
 
 
