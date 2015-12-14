@@ -148,4 +148,4 @@ Activity的调度：
     ActivityManagerService.java 路径位于：        
     \frameworks\base\services\java\com\android\server\am\ActivityManagerService.java
       说明：该类是一个Binder类，即可实现跨进程通信。因此可以接受从客户端，例如Instrumentation、Context等调用过来的信息。ActivityManagerService提供了全局的代理对象，供IPC调用。
-    
+![](0_13293978108wND.gif)
