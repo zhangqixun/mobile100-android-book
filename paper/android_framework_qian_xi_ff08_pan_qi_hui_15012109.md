@@ -111,7 +111,7 @@
 
        到这里，Android Framework的启动已经完成，框架中提供的各种服务也已经就绪，可以正常运行并响应处理应用的各种操作请求。
        
-**android Framework中几个重要的服务**
+**android Framework核心功能**
     
 **ActivityManagerService** 简称AMS ，是Android核心功能之一，在上面已经简单列出了它的功能，主要功能包括：
 
