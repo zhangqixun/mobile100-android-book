@@ -59,7 +59,8 @@ public class MainActivity extends Activity {
 ```
 
 
-## 1.2 外部类作为事件监听器类
+
+###1.2 外部类作为事件监听器类
 
 使用顶级类定义事件监听器类的形式比较少见，主要因为一下两个原因：
 
@@ -117,7 +118,8 @@ public class MainActivity extends Activity {
 }
 ```
 
-## 1.3 Activity本身作为事件监听器
+
+### 1.3 Activity本身作为事件监听器
 这种形式非常简洁，直接在Activity类中定义事件处理器的方法。但这种做法有两个缺点：
 
 * 可能造成程序结构混乱，Activity主要职责应该是完成界面初始化工作，但此时还需包含事件处理器的方法，从而引起混乱。
@@ -141,7 +143,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
 程序中，Activity类实现了OnClickListner事件监听器接口。当为某个组件注册事件监听器对象时，直接使用this作为事件监听器对象即可。
 
 
-## 1.4 匿名内部类作为事件监听器类
+
+###  1.4 匿名内部类作为事件监听器类
 
 大部分时候，事件处理器没有什么复用价值（可复用代码通常被抽象成业务逻辑方法），因此大部分只临时使用一次，所以使用匿名内部类形式的事件监听器更合适。这种形式也是目前使用最广泛的事件监听器形式。
 
@@ -170,7 +173,8 @@ public class MainActivity extends Activity{
 “new监听器接口”或“new事件适配器”的形式就是用于创建匿名内部类形式的事件监听器。
 
 
-## 1.5 直接绑定到标签
+
+### 1.5 直接绑定到标签
 
 Android中还可以直接在界面布局文件中为指定标签绑定事件处理方法。
 
@@ -201,3 +205,6 @@ public class MainActivity extends Activity{
     }
 }
 ```
+
+
+## 2 基于回调的事件处理
