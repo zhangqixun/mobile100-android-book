@@ -170,7 +170,7 @@
                         android:text="button1"
                         android:id="@+id/button1"/>
                     <Button
-                        android:layout_width="fill_parent"
+                        android:layout![](dingzewu003.png)_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="button2"
                         android:layout_below="@id/button1"
@@ -178,7 +178,8 @@
                 </RelativeLayout>
                 
                 ```
-
+            3.截图
+            
 
         
         *  LinearLayout
