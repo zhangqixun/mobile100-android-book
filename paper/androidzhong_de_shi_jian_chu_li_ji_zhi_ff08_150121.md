@@ -164,5 +164,10 @@ public class MainActivity extends Activity{
 “new监听器接口”或“new事件适配器”的形式就是用于创建匿名内部类形式的事件监听器。
 
 
+## 1.5 直接绑定到标签
+
+Android中还可以直接在界面布局文件中为指定标签绑定事件处理方法。
+
+对于很多Android界面组件标签而言，它们都支持onClick等属性，属性值就是形如xxx(View source)的方法的方法名。
 
 
