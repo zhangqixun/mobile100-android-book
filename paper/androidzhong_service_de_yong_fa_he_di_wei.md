@@ -152,7 +152,7 @@
 这样就掌握了 Android 异步消息处理的基本用法,使用这种机制就可以出色地解 决掉在子线程中更新 UI 的问题。我们就来 分析一下 Android 异步消息处理机制到底是如何工作的。
 
 ### 2.3 异步消息处理机制
-Android 中的异步消息处理主要由四个部分组成,Message、Handler、MessageQueue 和 Looper。其中 Message 和 Handler 在上一小节中我们已经接触过了,而 MessageQueue 和 Looper 对于你来说还是全新的概念,下面我就对这四个部分进行一下简要的介绍。
+Android 中的异步消息处理主要由四个部分组成,Message、Handler、MessageQueue 和 Looper。其中 Message 和 Handler 在上一小节中我们已经接触过了,而 MessageQueue 和 Looper 还是全新的概念,下面我就对这四个部分进行一下简要的介绍。
 1. Message
 Message 是在线程之间传递的消息,它可以在内部携带少量的信息,用于在不同线
 程之间交换数据。上一小节中我们使用到了 Message 的 what 字段,除此之外还可以使 用 arg1 和 arg2 字段来携带一些整型数据,使用 obj 字段携带一个 Object 对象。
