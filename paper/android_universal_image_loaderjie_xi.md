@@ -72,3 +72,9 @@ ImageDecoder：图片解码器，负责将图片输入流InputStream转换为Bit
 BitmapProcessor：图片处理器，负责从缓存读取或写入前对图片进行处理。
 * 
 BitmapDisplayer：将Bitmap对象显示在相应的控件ImageAware上。
+* 
+LoadAndDisplayImageTask：用于加载并显示图片的任务。
+* 
+ProcessAndDisplayImageTask：用于处理并显示图片的任务。
+* 
+DisplayBitmapTask：用于显示图片的任务。
