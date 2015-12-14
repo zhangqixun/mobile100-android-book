@@ -23,7 +23,7 @@ Key的申请地址为：http://lbsyun.baidu.com/apiconsole/key
     ![](key4.png)
     配置应用
     在应用类型选为“Android SDK”后，需要配置应用的安全码，如下图所示：
-    
+    ![](key5.png)
     获取安全码
     安全码的组成规则为：Android签名证书的sha1值+packagename例如：
     SHA1：BB:0D:AC:74:D3:21:E1:43:67:71:9B:62:91:AF:A1:66:6E:44:5D:75
@@ -31,9 +31,9 @@ Key的申请地址为：http://lbsyun.baidu.com/apiconsole/key
     Android签名证书的sha1值获取方式有两种：
     第一种方法：使用keytool
     第1步：运行进入控制台
-    and_key6.png and_key7.png
+    ![](and_key6.png) ![](and_key7.png)
     第2步：定位到.android文件夹下，输入cd .android
-    and_key8.png
+    ![](and_key8.png)
     第3步：输入keytool -list -v -keystore debug.keystore，会得到三种指纹证书，选取SHA1类型的证书（密钥口令是android），例如：
     其中keytool为jdk自带工具；keystorefile为Android 签名证书文件
     and_key9.png
