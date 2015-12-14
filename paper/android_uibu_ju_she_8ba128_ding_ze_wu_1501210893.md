@@ -158,6 +158,26 @@
             
             
             2. 应用 
+            
+                下面通过一个例子来说明相对布局的应用。显示的是两个Button的相对布局，如果是在LinearLayout中button2会因为排在界面外面而不显示出来。在FrameLayout中会将前一个视图覆盖。即button2会覆盖button1.
+                ```
+                <?xml version="1.0" encoding="utf-8"?>
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent" android:layout_height="match_parent">
+                    <Button
+                        android:layout_width="fill_parent"
+                        android:layout_height="100dip"
+                        android:text="button1"
+                        android:id="@+id/button1"/>
+                    <Button
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="button2"
+                        android:layout_below="@id/button1"
+                        android:id="@+id/button2"/>
+                </RelativeLayout>
+                
+                ```
 
 
         
