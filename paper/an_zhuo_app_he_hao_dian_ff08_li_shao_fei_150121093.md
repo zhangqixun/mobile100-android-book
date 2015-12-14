@@ -48,6 +48,7 @@ PowerUsageSummary.java的源码可以通过http://androidxref.com/4.0.3_r1/xref/
 
  在上一节的软件耗电中，排名最高的Android系统是一系列系统软件的集合，而之后的微信和Weather两个软件占的比例相当高。
 以Weather为例：
+
 ![](scolphew_4.png)
  
 Weather APP只在前台运行了10秒，但在后台占用了40分钟的CPU时间。主要是因为weather的桌面控件需要调用服务，每秒回执行一次桌面空间的刷新，导致占用大量的CPU时间。Service的滥用导致了CPU的无效运算。
