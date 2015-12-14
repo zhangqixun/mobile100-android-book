@@ -123,6 +123,7 @@ LimitedAgeMemeoryCache：当Bitmap加入缓存中的时间超过我们设定的�
 弱引用缓存
 WeakMemoryCache：缓存Bitmap的总大小没有限制，唯一不足的地方就是不稳定，缓存的图片容易被回收掉。
 
+在这里，我们主要介绍UIL的默认内存缓存 --强引用缓存LruMemoryCache。
 
 
 
