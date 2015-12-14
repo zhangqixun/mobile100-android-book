@@ -204,3 +204,10 @@ NameGenerator()方法中实现，主要是通过String.hashCode()方法来进行
 最后，我们来看一下BaseDiscCache.get(…)方法。该方法内部调用了BaseDiscCache
 .getFile(…)方法，通过fileNameGenerator生成一个唯一的文件名，然后指定缓存路径。缓存路径有两种：cacheDir，文件缓存目录；reserveCacheDir，备用的文件缓存目录，可以为null。这两种文件缓存路径的使用原则是，只有当cacheDir不能使用时才使用reserveCacheDir最为缓存目录。最后，getFile(…)函数会返回一个指向文件的对象。需要注意的是，当File烈性的对象指向的文件不存在时，file会为空，而不是报错。
 
+
+## 
+
+
+## 运行效果
+
+
