@@ -68,3 +68,5 @@ MemoryCache：内存图片缓存，可以向内存缓存图片或从内存缓存
 DiskCache：本地图片缓存，可向本地磁盘缓存保存图片或从本地磁盘读取图片。
 * 
 ImageDecoder：图片解码器，负责将图片输入流InputStream转换为Bitmap对象。
+* 
+BitmapProcessor：图片处理器，负责从缓存读取或写入前对图片进行处理。
