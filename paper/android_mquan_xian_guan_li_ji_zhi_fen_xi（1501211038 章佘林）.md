@@ -98,6 +98,7 @@ com.android.launcher.permission.UNINSTALL_SHORTCUT
 
 
 # 三 天气预报程序针对Android M进行优化 
+首先，在build.gradle中将SDK修改为23
 ```
 android {
     useLibrary 'org.apache.http.legacy'
