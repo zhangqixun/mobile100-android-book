@@ -49,3 +49,64 @@
        2）预加载java类和资源
        3）fork并启动System Server核心进程
        4）作为守护进程监听处理“孵化新进程”的请求
+4、System Server进程启动       
+
+     SystemServer进程在Android的运行环境中扮演了“神经中枢”的作用，Android应用能够直接交互的大部分系统服务都在该进程中运行，如WindowManagerServer、ActivityManagerSystemService、PackageManagerServer等，这些系统服务都是以独立线程的方式存在于SystemServer进程中。System Server进程的主要功能：
+
+     1）加载android servers底层函数库
+     2）启动android系统中的native服务
+     3）创建、注册并启动Android的系统服务，在独立线程中运行
+     4）创建Looper消息循环，处理System Server进程中的事件消息
+
+     在zygote进程中调用函数startSystemServer()创建和启动Server进程，进程首先执行的函数是SystemServer.java:main()。该函数函数实现的主要逻辑为：
+     1）加载android_servers函数库
+     2）启动native服务：
+      调用本地函数init1()实现，该函数的源码位于文件frameworks/base/services/jni/com_android_server_systemService.cpp中，涉及的函数system_init()实现在文件frameworks/base/cmds/system_server/library/system_init.cpp中。
+     3）启动Android系统的各种系统服务：
+     调用函数init2()实现，该函数首先创建了一个ServerThread对象，该对象是一个线程，然后直接运行该线程，如以下代码所示：
+
+   public static final void init2() {
+        Slog.i(TAG, "Entered the Android system server!");
+        Thread thr = new ServerThread();
+        thr.setName("android.server.ServerThread");
+        thr.start();
+    }
+     从ServerThread的run()方法内部开始真正启动各种服务线程。
+         ---创建Android系统服务对象,并注册到ServiceManager
+         ---在SystemServer进程中建立Looper消息循环：通过Looper.prepare和Looper.loop来实现
+　　 ---系统就绪通知：调用systemReady()通知各个服务
+
+      System Server进程启动过程中最核心的一步是“启动Android系统的各种系统服务”，这些系统服务构成了整个Android框架的基础（如图所示），通过Binder IPC为上层应用提供各种功能。介绍下几个重要系统服务的功能。
+
+       1）ActivityManagerService
+
+            Activity管理服务，主要功能包括：
+            ---统一管理和调度各应用程序的Activity，维护系统中运行的所有应用Task和Activity
+            ---内存管理：应用程序关闭时对应进程还在运行，当系统内存不足时根据策略kill掉优先级较低进程
+            ---进程管理：维护和管理系统中运行的所有进程，并提供了查询进程信息的API
+            ---Provider、Service和Broadcast管理和调度
+
+      2）WindowManagerService
+
+            窗口管理服务，主要功能包括为应用程序分配窗口，并管理这些窗口。包括分配窗口的大小、调节各窗口的叠放次序、隐藏或者显示窗口，程序退出时删除窗口。
+
+      3）PackageManagerService
+
+            程序包管理服务，主要功能为：
+             ---根据intent查找匹配的Activity、Provider以及Service
+             ---进行权限检查，即当应用程序调用某个需要一定权限的函数时，系统能够判断调用者是否具备该权限
+             ---提供安装、删除应用程序的API
+
+      4）NotificationManagerService
+
+            通知管理服务，负责管理和通知后台事件的发生等，这个和statusbar服务结合在一起，一般会在statusbar上添加响应图标。用户可以通过这知道系统后台发生了什么事情。
+
+      5）AudioService
+
+            音频管理服务，AudioFlinger的上层管理封装，主要是音量、音效、声道及铃声等的管理。
+
+      6）TelephonyRegistry
+
+             电话服务管理，用于监听和上报电话状态，包括来电、通话、信号变化等。
+
+       到这里，Android Framework的启动已经完成，框架中提供的各种服务也已经就绪，可以正常运行并响应处理应用的各种操作请求。
