@@ -152,3 +152,5 @@ LruMemoryCache的缓存实现方法我们已经了解了，在LinkedHashMap.get(
 
 1. 
 首先初始化LinkedHashMap，并设定按照访问顺序来排序，即accessOrder=true。
+![7](xl_im7.png)
+
