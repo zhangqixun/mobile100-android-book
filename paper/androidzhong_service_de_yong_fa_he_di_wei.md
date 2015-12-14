@@ -289,9 +289,53 @@ Android 中的异步消息处理主要由四个部分组成,Message、Handler、
         super.onDestroy();
     }
 可以看到,这里我们又重写了 onCreate()、onStartCommand()和 onDestroy()这三个方法, 它们是每个服务中最常用到的三个方法了。其中 onCreate()方法会在**服务创建**的时候调用, onStartCommand()方法会在每次**服务启动**的时候调用,onDestroy()方法会在**服务销毁**的时候调用。
-通常情况下,如果我们希望服务一旦启动就立刻去执行某个动作,就可以将逻辑写在 onStartCommand()方法里。而当服务销毁时,我们又应该在 onDestroy()方法中去回收那些不 再使用的资源。
-另外需要注意,每一个服务都需要在 AndroidManifest.xml 文件中进行注册才能生效,不知 道你有没有发现,这是 Android 四大组件共有的特点。于是我们还应该修改 AndroidManifest.xml 文件,代码如下所示:
+通常情况下,如果我们希望服务一旦启动就立刻去执行某个动作,就可以将逻辑写在 onStartCommand()方法里。而当服务销毁时,我们又应该在 onDestroy()方法中去回收那些不再使用的资源。
+另外需要注意,每一个服务都需要在 AndroidManifest.xml 文件中进行注册才能生效,AndroidManifest.xml文件,代码如下所示:
+
+    <service android:name=".MyService" >
+    </service>
       
+### 3.2 启动和停止服务
+定义好了服务之后,接下来就应该考虑如何去启动以及停止这个服务。主要是借助 Intent 来实现的,修改 activity_test_service.xml 中的代码,如下所示:
+    
+    <Button
+        android:id="@+id/start_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start Service" />
+    <Button
+        android:id="@+id/stop_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stop Service" />
+TestService
+
+    public class TestService extends Activity implements View.OnClickListener {
+        private Button startService;
+        private Button stopService;
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_test_service);
+            startService = (Button) findViewById(R.id.start_service);
+            stopService = (Button) findViewById(R.id.stop_service);
+            startService.setOnClickListener(this);
+            stopService.setOnClickListener(this);
+        }
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.start_service:
+                    Intent startIntent = new Intent(this, MyService.class); startService(startIntent); // 启动服务
+                    break;
+                case R.id.stop_service:
+                    Intent stopIntent = new Intent(this, MyService.class); stopService(stopIntent); // 停止服务
+                    break;
+                default:
+                    break;
+            } 
+        }
+    }
       
       
       
