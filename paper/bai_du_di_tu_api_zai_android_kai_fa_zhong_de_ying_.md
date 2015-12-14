@@ -49,12 +49,14 @@ Key的申请地址为：http://lbsyun.baidu.com/apiconsole/key
     在输入安全码后，点击“确定”完成应用的配置工作，您将会得到一个创建的Key，请妥善保管您所申请的Key。到这您就可以使用新Key来完成您的开发工作了。
 2. **配置环境及发布**  
 百度地图API的开发欢迎配置方法一般都一样，这里那百度地图API为例来进行说明。Android开发工具很多，在这我们推荐各位开发者使用Eclipse和Android Studio作为自己的开发工具。下面我们将分别针对Eclipse和Android Studio介绍一下地图SDK的工程配置方法。  
-Eclipse工程配置方法   
+**Eclipse工程配置方法**   
 第一步：在工程里新建libs文件夹，将开发包里的baidumapapi_vX_X_X.jar拷贝到libs根目录下，将libBaiduMapSDK_vX_X_X.so拷贝到libs\armeabi目录下（官网demo里已有这两个文件，如果要集成到自己的工程里，就需要自己添加），拷贝完成后的工程目录如下图所示；  
 ![](1.jpg)  
 第二步：在工程属性->Java Build Path->Libraries中选择“Add External JARs”，选定baidumapapi_vX_X_X.jar，确定后返回。
 通过以上两步操作后，您就可以正常使用百度地图SDK为您提供的全部功能了。  
-Android Studio工程配置方法
+**Android Studio工程配置方法**  
+第一步：在工程app/libs目录下放入baidumapapi_vX_X_X.jar包,在src/main/目录下新建jniLibs目录，放入libBaiduMapSDK_vX_X_X_X.so如下图所示，注意jar和so的前3位版本号必须一致，并且保证使用一次下载的文件夹中的两个文件，不能不同功能组件的jar或so交叉使用。     第二步：导入jar包。菜单栏选择File->Project Structor->Modules->Dependencies,点击+号，选择File dependency，选择jar包导入。
+通过以上两步操作后，您就可以正常使用百度地图SDK为您提供的全部功能了。
 3. 
 百度地图ＡＰＩ的优与
 4. 百度地图ＡＰＩ的优与劣
