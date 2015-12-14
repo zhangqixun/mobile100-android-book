@@ -131,5 +131,5 @@ WeakMemoryCache：缓存Bitmap的总大小没有限制，唯一不足的地方�
 
 # LruMemoryCache解析
 
-
+LruMemoryCache，一种使用强引用来保存有数量限制的Bitmap的缓存。每次Bitmap被访问时，它就被移动到一个队列的头部。当Bitmap被添加到一个空间已满的缓存中时，在队列末尾的Bitmap会被挤出去，并变成适合被GC（Garbage Collection，垃圾回收）回收的状态。因此，该缓存机制在空间有限的情况下，保留的是最近使用过的Bitmap。那么LruMemoryCache又是如何实现该机制呢？
 
