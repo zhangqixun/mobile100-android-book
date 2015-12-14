@@ -19,7 +19,7 @@ Key的申请地址为：http://lbsyun.baidu.com/apiconsole/key
     ![](key2.png)
     创建应用
     点击"创建应用"，进入创建AK页面，输入应用名称，将应用类型改为：“Android SDK”：
-    key3.png
+    ![key3.png](key3.png)
     key4.png
     配置应用
     在应用类型选为“Android SDK”后，需要配置应用的安全码，如下图所示：
