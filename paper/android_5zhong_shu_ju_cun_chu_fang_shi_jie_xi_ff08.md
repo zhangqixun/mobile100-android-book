@@ -60,11 +60,11 @@ File getFilesDir():获取该应用程序的数据文件夹得绝对路径
  String[] fileList():返回该应用数据文件夹的全部文件 
 代码示例：
 
-publicvoid save() 
-{ 
+public void save()
+{
 
-       try { 
-           FileOutputStream outStream=this.openFileOutput("a.txt",Context.MODE_WORLD_READABLE); 
+ try{
+ FileOutputStream outStream=this.openFileOutput("a.txt",Context.MODE_WORLD_READABLE); 
            outStream.write(text.getText().toString().getBytes()); 
            outStream.close(); 
            Toast.makeText(MyActivity.this,"Saved",Toast.LENGTH_LONG).show(); 
