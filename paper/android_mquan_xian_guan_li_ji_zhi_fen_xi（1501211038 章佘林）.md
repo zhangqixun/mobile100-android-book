@@ -156,7 +156,17 @@ if (ActivityCompat.shouldShowRequestPermissionRationale(this,
 ![](旧版本提醒.PNG)
 
 ### 2. 一次获取多个权限
-
+有的应用程序需要获取多项权限才能够得到运行，而一遍又一遍的请求用户授予权限显然对用户不够友好，因而，开发者可以用一个ArrayList包装所有的权限请求，统一的向用户发起请求：
+```
+ List<String> permissionsNeeded = new ArrayList<String>();
+ 
+    final List<String> permissionsList = new ArrayList<String>();
+    if (!addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION))
+        permissionsNeeded.add("GPS");
+    if (!addPermission(permissionsList, Manifest.permission.READ_CONTACTS))
+        permissionsNeeded.add("Read Contacts");
+    if (!addPermission(permissionsList, Manifest.permission.WRITE_CONTACTS))
+        permissionsNeeded.add("Write Contacts");```
 
 
 
