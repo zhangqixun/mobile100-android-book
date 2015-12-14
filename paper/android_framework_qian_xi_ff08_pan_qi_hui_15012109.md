@@ -140,9 +140,8 @@ Activity的调度：
       Instrumentation.java  路径位于 ：\frameworks\base\core\java\android\app\ActivityThread.java
          说明： 该类用于具体操作某个Activity的功能----单向(oneway)调用AMS以及统计、测量该应用程序的所有开销。
             一个Instrumentation类对应于一个进程。每个Activity内部都有一个该Instrumentation对象的引用。
-      举个例子吧。
-           我们将我们应用程序比作一个四合院，那么Activity对应于四合院的人，ActivithThread对应于院子的主人----管理所有人，
-    Instrumentation对应于管家------受气的命，接受来自人(Activity/ActivithThread)的命令 ，去单向(oneway)调用AMS 。
+      
+    Instrumentation接受来自Activity/ActivithThread的命令 ，去单向(oneway)调用AMS 。
      ApplicationThread类是ActivityThread的内部类：
       说明：该类是一个Binder类，即可实现跨进程通信。主要用于接受从AMS传递过来的消息，继而做相应处理。
     ActivityManagerService.java 路径位于：        
