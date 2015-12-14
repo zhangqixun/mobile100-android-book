@@ -34,7 +34,7 @@ UIL的主要功能
 
 UIL主要由五部分构成，分别为ImageLoaderEngine、Cache（MemoryCache和DiskCache）、ImageDownloader、ImageDecoder、BitmapDisplayer以及BitmapProcessor具体见下图。
 
-![](xl_im1.png)
+![1](xl_im1.png)
 
 # 
 
