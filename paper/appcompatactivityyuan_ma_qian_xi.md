@@ -57,7 +57,7 @@ actionBar.hide();```
 ## 添加Action Item
 ActionBar为我们提供了两种action item，一种是与当前页面联系紧密且较为重要的action，Google建议我们把它放在按钮中；另一种则是下拉列表，用于放入一些不适于直接放置在ActionBar中或者不那么重要的action。具体如下图所示：
 
-![](actionbar-item-withtext.png)
+![](AppcompatActivity源码浅析/actionbar-item-withtext.png)
     
     上图显示的ActionBar包含了三个按钮和一个下拉列表。
     
@@ -134,7 +134,7 @@ public boolean onOptionsItemSelected(MenuItem item) {
 ## 使用split action bar
 split action bar为那些运行在窄屏的activity中的难以显示的action item提供了一块底部区域用于显示它们。
 
-![](actionbar-splitaction@2x.png)
+![](AppcompatActivity源码浅析/actionbar-splitaction@2x.png)
 
     带标签（tab）的action bar（左）；split action bar（中）；去除导航栏的split action bar（右）
 
@@ -167,7 +167,7 @@ split action bar为那些运行在窄屏的activity中的难以显示的action i
 
 下图为Gmail中的返回按钮：
 
-![](actionbar-up.png)
+![](AppcompatActivity源码浅析/actionbar-up.png)
 
 我们要想使一个应用图标成为导航返回按钮，就需要调用setDisplayHomeAsUpEnabled()函数，例如：
 ```
@@ -221,12 +221,12 @@ protected void onCreate(Bundle savedInstanceState) {
 
     更多关于实现导航返回（up navigation）的详细信息
     请查阅Android/sdk/docs/training/implementing-navigation/ancestral.html。
-    ![](AppCompatActivity类继承关系.bmp)
+    
 
 
 ---
 
-###更多关于ac!(AppCompatActivity类继承关系.bmp)tion bar的资料请参阅Google给的官方文档。
+###更多关于action bar的资料请参阅Google给的官方文档。
 
 
 ---
