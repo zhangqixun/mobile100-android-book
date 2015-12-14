@@ -120,6 +120,8 @@ FIFOLimitedMemoryCache：先进先出缓存策略。当超过设定值，先删�
 LargestLimitedMemoryCache：删除最大的Bitmap对象
 LimitedAgeMemeoryCache：当Bitmap加入缓存中的时间超过我们设定的值，将其删除
 1. 
+弱引用缓存
+WeakMemoryCache：缓存Bitmap的总大小没有限制，唯一不足的地方就是不稳定，缓存的图片容易被回收掉。
 
 
 
