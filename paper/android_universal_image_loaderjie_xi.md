@@ -148,3 +148,5 @@ LruMemoryCache的缓存实现方法我们已经了解了，在LinkedHashMap.get(
 
 ![6](xl_im6.png)
 
+下面我们以图示的方式更详细的介绍一下LruMemoryCache实现保存最新被访问元素的过程。在这里为了方便起见，我们假设内存缓存设置的阈值只够存储两个Bitmap对象，当put第三个Bitmap对象时，将近期最少使用的Bitmap对象移除。
+
