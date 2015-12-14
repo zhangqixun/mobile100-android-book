@@ -16,4 +16,21 @@
 下面程序代码是关于是几种常用传感器的用法：
 
 
+1.Activity实现SensorEventListener接口并实现onSensorChanged(Sensor arg0)方法。
+
+![](技术文章1.png)
+
+2.在onCreate方法内获取传感器管理服务对象。
+
+![](技术文章2.png)
+3.onResume()中注册相关传感器的监听器。
+
+![](技术文章3.png)
+4.onStop()和onPause()中取消注册传感器监听器。
+
+![](技术文章4.png)
+
+5.效果图
+
+![](技术文章5.png)
 
