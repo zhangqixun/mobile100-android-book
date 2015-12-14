@@ -129,7 +129,7 @@ Activity的调度：
     — 按“Back”键，结束当前Activity，自动启动上一个Activity。
     — 长按“Home”键，显示出当前任务列表，从中选择一个启动。
 
-首先对模型中可能运到的类做一个介绍：
+模型中可能运用到的类：
 
      ActivityThread.java    路径位于：\frameworks\base\core\java\android\app\ActivityThread.java
          说明： 该类为应用程序(即APK包)所对应进程(一个进程里可能有多个应用程序)的主线程类，即我们通常所说的UI线程。
