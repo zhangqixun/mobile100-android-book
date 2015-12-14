@@ -208,6 +208,6 @@ UnlimitedDiscCache：无任何限制
 ## 运行效果
 
 UIL为我们提供了一个样例安装包，其运行效果如下：
-
+![13](xl_im13.png)
 
 
