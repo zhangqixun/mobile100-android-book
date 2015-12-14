@@ -150,4 +150,4 @@ Activity的调度：
 AMS与ActivityThread的通信模型图如下：
 ![](0_13293978108wND.gif)
 
-**WindowManagerService**
+**WindowManagerService** WmS是Android中图形用户接口的引擎，它管理着所有的窗口。所谓的管理大致包含创建、删除、设置焦点等操作。因为涉及内容太多，我只讲一讲WindowManagerService与Activity的连接。
