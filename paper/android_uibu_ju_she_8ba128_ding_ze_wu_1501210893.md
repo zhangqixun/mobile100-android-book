@@ -240,6 +240,7 @@
                 layout_columnSpan 占用几列
                 layout_rowSpan 占用几行
             2.应用
+                以一个计算器来展示Grid布局。笔者认为计算器这类的UI设计使用Grid布局是最佳了。方便快速又理想。
         
         *  AbsoluteLayout
         
