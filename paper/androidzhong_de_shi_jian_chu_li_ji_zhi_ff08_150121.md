@@ -93,4 +93,26 @@ public class MySendListener implements View.OnLongClickListener {
 }
 ```
 然后，在MainActivity中，为指定按钮的长单击事件绑定监听器，当用户长单击按钮时，程序触发监听器，其中包含的事件处理方法向指定手机发送短信。
-
+```
+public class MainActivity extends Activity {
+    private Activity act;
+    private EditText address;
+    private EditText content;
+    public MainActivity(Activity act, EditText address, EditText content) {
+        this.act = act;
+        this.address = address;
+        this.content = content;
+    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        // 获取页面中收件人地址、短信内容
+        address = (EditText)findViewById(R.id.address);
+        content = (EditText)findViewById(R.id.content);
+        Button bn = (Button)findViewById(R.id.send);
+        // 使用外部类的实例作为事件监听器
+        bn.setOnLongClickListener(new MySendListener(this, address, content));
+    }
+}
+```
