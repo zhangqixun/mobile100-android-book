@@ -66,3 +66,5 @@ Cache：图片缓存，主要分为MemoryCache和DiskCache两部分。
 MemoryCache：内存图片缓存，可以向内存缓存图片或从内存缓存中读取图片。
 * 
 DiskCache：本地图片缓存，可向本地磁盘缓存保存图片或从本地磁盘读取图片。
+* 
+ImageDecoder：图片解码器，负责将图片输入流InputStream转换为Bitmap对象。
