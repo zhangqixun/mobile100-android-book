@@ -34,12 +34,12 @@ UIL的主要功能
 
 UIL主要由五部分构成，分别为ImageLoaderEngine、Cache（MemoryCache和DiskCache）、ImageDownloader、ImageDecoder、BitmapDisplayer以及BitmapProcessor。 具体可参见下图。 
 
-
+[](paper/img1.png)
 由上图可以看出UIL的处理流程：
 1. 
 ImageLoader收到加载及显示图片的任务，并将任务提交给ImageLoaderEngine；
 1. 
 ImageLoaderEngine分发任务到具体的线程池去执行；
 1. 
-任务通过Cache及ImageDownloader获取图片，根据情况，中间可能需要BitmapProcessor和ImageDecoder处理，最终转换为Bitmap交给BitmapDisplayer在ImageAware中显示。
+任务通过Cache及ImageDownloader获取图片。根据情况，中间可能需要BitmapProcessor和ImageDecoder处理，最终转换为Bitmap交给BitmapDisplayer在ImageAware中显示。
 每一个图片的加载和显示任务都运行在独立的线程中除非这个图片缓存在内存中，这种情况下图片会立即显示。如果需要的图片缓存在本地，他们会开启一个独立的线程队列。如果在缓存中没有正确的图片，任务线程会从线程池中获取，因此，快速显示缓存图片时不会有明显的障碍。
