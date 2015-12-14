@@ -106,7 +106,7 @@ com.android.launcher.permission.UNINSTALL_SHORTCUT
 
     
 
-# 三 Android M 应用开发建议
+# 四 Android M 应用开发建议
 
 
 ### 1. 旧版本程序在marshmallow上的兼容运行
