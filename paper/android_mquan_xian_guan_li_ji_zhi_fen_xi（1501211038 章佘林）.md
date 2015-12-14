@@ -135,13 +135,13 @@ if(view.getId()==R.id.title_location){
             }
         }```
 
-为了避免用户因为不理解获取权限的目的而拒绝授予权限，开发者可以调用方法，在获取权限界面阐明获取权限的目的：
+为了避免用户因为不理解获取权限的目的而拒绝授予权限，开发者可以调用shouldShowRequestPermission方法，在获取权限界面阐明获取权限的目的：
 ```
 if (ActivityCompat.shouldShowRequestPermissionRationale(this,
     Manifest.permission.READ_EXTERNAL_STORAGE)) {
         new AlertDialog.Builder(PhotoPickActivity.this)
             .setMessage("我们需要获取位置信息为您提供准确的当地天气状况")......```
-假设用户禁止了程序获取该权限，并选择了“不再提醒”，那么应用程序就无法获取该权限。为了避免无法获取权限时程序崩溃，需要添加无法获取权限时的处理办法，比如弹窗提醒或者不执行接下来的操作。
+假设用户禁止了程序获取该权限，并选择了“不再提醒”，那么应用程序就无法获取该权限，此时，shouldShowRequestPermission方法也会得到执行。而为了避免无法获取权限时程序崩溃，需要添加无法获取权限时的处理办法，比如弹窗提醒或者不执行接下来的操作。
 
 ---
 
