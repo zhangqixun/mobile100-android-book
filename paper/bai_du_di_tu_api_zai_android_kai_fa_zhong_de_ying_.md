@@ -48,7 +48,10 @@ Key的申请地址为：http://lbsyun.baidu.com/apiconsole/key
     成功创建KEY
     在输入安全码后，点击“确定”完成应用的配置工作，您将会得到一个创建的Key，请妥善保管您所申请的Key。到这您就可以使用新Key来完成您的开发工作了。
 2. **配置环境及发布**  
-百度地图API的开发欢迎配置方法一般都一样，这里那百度地图API为例来进行说明
+百度地图API的开发欢迎配置方法一般都一样，这里那百度地图API为例来进行说明。Android开发工具很多，在这我们推荐各位开发者使用Eclipse和Android Studio作为自己的开发工具。下面我们将分别针对Eclipse和Android Studio介绍一下地图SDK的工程配置方法。  
+Eclipse工程配置方法   
+第一步：在工程里新建libs文件夹，将开发包里的baidumapapi_vX_X_X.jar拷贝到libs根目录下，将libBaiduMapSDK_vX_X_X.so拷贝到libs\armeabi目录下（官网demo里已有这两个文件，如果要集成到自己的工程里，就需要自己添加），拷贝完成后的工程目录如下图所示；
+
 
 3. 
 百度地图ＡＰＩ的优与
