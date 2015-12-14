@@ -44,6 +44,31 @@
     
         *  FrameLayout
             1. 详解
+                1.1定义
+                FrameLayout是帧布局，整个界面对于FrameLayout来说是一块备用的空白区域，区域的大小由最大的子视图决定，换句话说，如果各个视图的大小一样，则只显示最后一个加载的子视图，前面的全部被覆盖。
+                1.2属性
+                FrameLayout是比较简单的布局，所以属性比较少。如下
+                    * layout_width
+                        组件的宽度：可以是fill-parent或者是warp-content
+                    * layout_height
+                        组件的高度：可以是fill-parent或者是warp-content
+                    * layout_marginLeft
+                        组件跟左边缘的距离
+                    * layout_marginTop
+                        组件跟顶部的距离
+                    * layout_marginRight
+                        组件跟右边缘的距离
+                    * layout_marginBottom
+                        组件跟底部的距离
+                    * layout_gravity
+                        组件内部的位置
+
+
+
+
+
+
+                    
             
             
             
