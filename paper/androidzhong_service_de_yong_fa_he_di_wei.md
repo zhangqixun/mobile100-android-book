@@ -367,7 +367,18 @@ onCreate()方法是在服务第一次创建的时候调用的,而 onStartCommand
       
 可以看到,这里我们新建了一个 DownloadBinder 类,并让它继承自 Binder,然后在它的内部提供了开始下载以及查看下载进度的方法。当然这只是两个模拟方法,并没有实现真 正的功能,我们在这两个方法中分别打印了一行日志。
 接着,在 MyService 中创建了 DownloadBinder 的实例,然后在 **onBind()方法里返回了这个实例**,这样 MyService 中的工作就全部完成了。在活动中**调用服务里的这些方法**。首先需要在布局文件里新增两个按钮,修改 activity_main.xml 中的代码,设计两个按钮
-      
+
+        <Button
+            android:id="@+id/bind_service"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bind Service" />
+        <Button
+            android:id="@+id/unbind_service"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Unbind Service" />
+          
       
       
       
