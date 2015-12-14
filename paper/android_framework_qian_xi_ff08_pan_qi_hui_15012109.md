@@ -119,14 +119,6 @@ ActivityManagerService 简称AMS ，是Android核心功能之一，在上面已�
     ---内存管理：应用程序关闭时对应进程还在运行，当系统内存不足时根据策略kill掉优先级较低进程
     ---进程管理：维护和管理系统中运行的所有进程，并提供了查询进程信息的API
     ---Provider、Service和Broadcast管理和调度
-Activity Manager的组成主要分为以下几个部分：
 
-   1.服务代理：由ActivityManagerProxy实现，用于与Server端提供的系统服务进行进程间通信
-
-  2.服务中枢：ActivityManagerNative继承自Binder并实现IActivityManager，它提供了服务接口和Binder接口的相互转化功能，并在内部存储服务代理对像，并提供了getDefault方法返回服务代理
-
-  3.Client：由ActivityManager封装一部分服务接口供Client调用。ActivityManager内部通过调用ActivityManagerNative的getDefault方法，可以得到一个ActivityManagerProxy对像的引用，进而通过该代理对像调用远程服务的方法
-
-   4.Server:由ActivityManagerService实现，提供Server端的系统服务
-
-框架图：
+Activity的调度：
+    各应用进程要启动新的Activity或者停止当前的Activity，都要首先报告给AmS
