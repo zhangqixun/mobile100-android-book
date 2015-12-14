@@ -261,6 +261,17 @@ Android 中的异步消息处理主要由四个部分组成,Message、Handler、
 以上就是 AsyncTask 的基本用法,怎么样,是不是感觉简单方便了许多?我们并不需要 去考虑什么异步消息处理机制,也不需要专门使用一个 Handler 来发送和接收消息,只需要 调用一下 publishProgress()方法就可以轻松地从子线程切换到 UI 线程了。
 ## 3.服务的基本用法
 
+### 3.1 定义一个服务
+
+新建一个项目,然后在这个项目中
+新增一个名为 MyService 的类,并让它继承自Service,代码如下所示:
+
+    public class MyService extends Service {
+            @Override
+            public IBinder onBind(Intent intent) {
+                return null;
+            }
+    }
 
         
       
