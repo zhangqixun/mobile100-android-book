@@ -40,11 +40,11 @@ Key的申请地址为：http://lbsyun.baidu.com/apiconsole/key
     ![](and_key10.png)
     第二种方法：在adt 22中直接查看
     如果使用adt 22，可以在eclipse中直接查看：windows -> preferance -> android -> build。 如下图示：
-    
+    ![](and_key11.png)
     其中“SHA1 fingerprint”值即为Android签名证书的sha1值
     获取包名
     包名是Android应用程序本身在AndroidManifest.xml 中定义的名称，例如：
-    and_key12.png
+    
     成功创建KEY
     在输入安全码后，点击“确定”完成应用的配置工作，您将会得到一个创建的Key，请妥善保管您所申请的Key。到这您就可以使用新Key来完成您的开发工作了。
     
