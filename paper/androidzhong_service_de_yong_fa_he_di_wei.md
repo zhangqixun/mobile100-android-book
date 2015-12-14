@@ -167,7 +167,17 @@ Android 中的异步消息处理主要由四个部分组成,Message、Handler、
 
     Looper 是每个线程中的 MessageQueue 的管家,调用 Looper 的 loop()方法后,就会 进入到一个无限循环当中,然后每当发现 MessageQueue 中存在一条消息,就会将它取出,并传递到 Handler 的 handleMessage()方法中。每个线程中也只会有一个 Looper 对象。 
     
-了解了 Message、Handler、MessageQueue 以及 Looper 的基本概念后,我们再来对异步消息处理的整个流程梳理一遍。首先需要在主线程当中创建一个 Handler 对象,并重写 handleMessage()方法。然后当子线程中需要进行 UI 操作时,就创建一个 Message 对象,并 通过 Handler 将这条消息发送出去。之后这条消息会被添加到 MessageQueue 的队列中等待 被处理,而 Looper 则会一直尝试从 MessageQueue 中取出待处理消息,最后分发回 Handler 的 handleMessage()方法中。由于 Handler 是在主线程中创建的,所以此时 handleMessage()方 法中的代码也会在主线程中运行,于是我们在这里就可以安心地进行 UI 操作了。整个异步 消息处理机制的流程示意图如图 9.4 所示。
+了解了 Message、Handler、MessageQueue 以及 Looper 的基本概念后,我们再来对异步消息处理的整个流程梳理一遍。
+* 
+需要在主线程当中创建一个 Handler 对象,并重写 handleMessage()方法。
+* 
+当子线程中需要进行 UI 操作时,就创建一个 Message 对象,并 通过 Handler 将这条消息发送出去。
+* 
+这条消息会被添加到 MessageQueue 的队列中等待被处理,而 Looper 则会一直尝试从 MessageQueue 中取出待处理消息
+* 
+分发回 Handler 的 handleMessage()方法中。
+
+由于 Handler 是在**主线程**中创建的,所以此时 handleMessage()方 法中的代码也会在主线程中运行,于是我们在这里就可以安心地进行 UI 操作了。整个异步 消息处理机制的流程示意图如图 9.4 所示。
 
 
 
