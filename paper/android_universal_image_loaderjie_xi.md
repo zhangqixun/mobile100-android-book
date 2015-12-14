@@ -224,6 +224,9 @@ Android Universal Image Loader是一个强大的、高度可定制的图片缓�
 ## 参考文章
 1. 
 http://www.tuicool.com/articles/UNJNryz
+1. 
+http://blog.csdn.net/xiaanming/article/details/26810303
+1. 
 
 
 
