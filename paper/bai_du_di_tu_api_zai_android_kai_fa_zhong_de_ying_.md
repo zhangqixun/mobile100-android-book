@@ -60,7 +60,7 @@ Key的申请地址为：http://lbsyun.baidu.com/apiconsole/key
 通过以上两步操作后，您就可以正常使用百度地图SDK为您提供的全部功能了。
 3. 
 **百度地图API介绍**   
-经过上述步骤之后我们就可以开始自己的Android开发了。百度地图为Android开发提供了Android地图SDK、Android定位SDK、Android鹰眼轨迹SDK、Android导航SDK和Android全景SDK等五种SDK
+经过上述步骤之后我们就可以开始自己的Android开发了。百度地图为Android开发提供了Android地图SDK、Android定位SDK、Android鹰眼轨迹SDK、Android导航SDK和Android全景SDK等五种SDK。开发者使用其中一种或几种可以灵活开发出自己的地图应用
 4. 百度地图ＡＰＩ的优与劣
 
 
