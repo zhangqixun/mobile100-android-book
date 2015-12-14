@@ -175,4 +175,4 @@ AMS与ActivityThread的通信模型图如下：
 
        从图1还可以知道，Window Stack中的WindowState是按照它们所描述的窗口的Z轴位置从低到高排列的。
 
-       以上就是WindowManagerService服务组织系统中的窗口的抽象模型，接下来我们将分析AppWindowToken、WindowToken和WindowState的一些增加、移动和删除等操作，以便可以对这个抽象模型有一个更深刻的认识。
+       以上就是WindowManagerService服务组织系统中的窗口的抽象模型。
