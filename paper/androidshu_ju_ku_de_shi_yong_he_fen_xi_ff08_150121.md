@@ -265,8 +265,305 @@ public class MainActivity extends Activity implements View.OnClickListener{
 }
 在更新按钮的点击事件里面构建了一个ContentValues对象，并且只给它指定了一组数据，只是把价格这一列的数据更新成10.99，然后调用了SQLiteDatabase的update()方法去执行具体的更新操作，第三、第四个参数来指定具体更新哪几行。第三个参数对应的是SQL语句的where部分，表示去更新所有name等于？的行，而？是一个占位符，可以通过第四个参数提供的一个字符串数组为第三个参数中的每个占位符指定相应的内容。上述代码的意图就是，将名字是The android code的这本书的价格改成10.99。
 第三步：重新运行程序
-运行界面：
+运行界面：![](sqL5.png)
+2.5 删除数据
+SQLiteDatabase提供了一个delete()方法用来删除数据，这个方法接收三个参数，第一个参数是表名，第二、第三个参数用于去约束删除某一行或某几行的数据，不指定的话默认就是删除所有行。
+第一步：修改activity_main.xml中的代码，添加一个按钮
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+     >
+......
+   <Button
+    android:id="@+id/delete_data"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="delete data"
+    />
+</LinearLayout>
+第二步：修改MainActivity中的代码
+public class MainActivity extends Activity implements View.OnClickListener{
+    private MyDatabaseHelper dbHelper;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        dbHelper=new MyDatabaseHelper(this,"BookStore.db",null,6);
+	......
+        Button deleteButton=(Button)findViewById(R.id.delete_data);
+        deleteButton.setOnClickListener(this);
+    }
+ public void onClick(View view){
+        if(view.getId()==R.id.create_database){
+            dbHelper.getWritableDatabase();
+
+        }
+        if(view.getId()==R.id.add_data){
+	......                  
+	 }
+        if(view.getId()==R.id.update_data){
+           ......      
+ 	 }
+        if(view.getId()==R.id.delete_data){
+            SQLiteDatabase db=dbHelper.getWritableDatabase();
+            db.delete("Book","pages>?",new String[]{"500"});
+            Toast.makeText(this,"delete date succeeded",Toast.LENGTH_LONG).show();
+        }
+    }
+}
+在删除按钮的点击事件里指明去删除Book表中的数据，并且通过第二、第三个参数来指定仅删除那些页数超过500页的书籍。
+第三步：重新运行程序
+运行界面：![](sqL6.png)
+2.6 查询数据
+SQLiteDatabase提供了一个query()方法用于对数据进行查询，这个方法的参数非常复杂，因为关于数据的操作，查询是最主要的，所以它的参数非常复杂，最短的一个方法重载也需要传入七个参数。第一个参数是表名；第二个参数用于指定去查询哪几列，如果不指定则默认查询所有列；第三、第四个参数用于去约束查询某一行或某几行的数据，不指定则默认是查询所有行的数据；第五个参数用于指定需要去groupby的列，不指定则表示不对查询结果进行groupby操作；第六个参数用于对groupby之后的数据进行进一步的过滤，不指定则不过滤；第七个参数用于指定查询结果的排序方式，不指定则表示使用默认的排序方式。
+query()方法参数	对应SQL部分	描述
+table	from table_name 	指定查询的表名
+columns	Select column1,column2	指定查询的列名
+selection	Where column=value	指定where的约束条件
+selectionArgs	-	为where中的占位符提供具体的值
+groupBy	Group by column	指定需要groupby的列
+having	Having column=value	对groupby后的结果进一步约束
+orderBy	Order by column1,column2	指定查询结果的排序方式
+虽然query()方法的参数非常多，我们不必为每条查询语句都指定上所有的参数，多数情况下只需要传入少数几个参数就可以完成查询操作了，调用query()方法后会返回一个Cursor对象，查询到的所有数据都将从这个对象中取出。
+第一步：修改activity_main.xml中的代码，添加一个按钮
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+     >
+......
+<Button
+    android:id="@+id/query_data"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Query data"
+    />
+</LinearLayout>
+第二步：修改MainActivity中的代码
+public class MainActivity extends Activity implements View.OnClickListener{
+    private MyDatabaseHelper dbHelper;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        dbHelper=new MyDatabaseHelper(this,"BookStore.db",null,6);
+	......
+        Button queryButton=(Button)findViewById(R.id.query_data);
+        queryButton.setOnClickListener(this);
+    }
+ public void onClick(View view){
+        if(view.getId()==R.id.create_database){
+            dbHelper.getWritableDatabase();
+
+        }
+        if(view.getId()==R.id.add_data){
+	......                  
+	 }
+        if(view.getId()==R.id.update_data){
+           ......      
+ 	 }
+        if(view.getId()==R.id.delete_data){
+            .......
+        }
+if(view.getId()==R.id.query_data){
+    SQLiteDatabase db=dbHelper.getWritableDatabase();
+    Cursor cursor=db.query("Book",null,null,null,null,null,null);
+    Toast.makeText(this,"delete date succeeded",Toast.LENGTH_LONG).show();
+    while(cursor.moveToNext()){
+        String name=cursor.getString(cursor.getColumnIndex("name"));
+        String author=cursor.getString(cursor.getColumnIndex("author"));
+        int pages=cursor.getInt(cursor.getColumnIndex("pages"));
+        double price=cursor.getDouble(cursor.getColumnIndex("price"));
+        Log.d("MainActivity","book name is"+name);
+        Log.d("MainActivity","book author is"+author);
+        Log.d("MainActivity","book pages is"+pages);
+        Log.d("MainActivity","book price is"+price);
+      }
+    cursor.close();
+    Toast.makeText(this,"query data succeeded",Toast.LENGTH_LONG).show();
+    }
+  }
+}
+我们首先在查询按钮的点击事件中调用了SQLiteDatabase的query()方法去查询数据，我们只传入了第一个参数，Book表名，其它的都传入了null，这表明需要查询这张表中的所有数据。查询完后得到了Cursor对象，然后我们调用它的moveToNext()方法，将数据的指针移到第一行，如果不为空，即这一行有数据，就把这条数据查询出来，然后数据的指针移到下一行，循环查询，直到把表遍历一遍。在查询的时候，我们调用了Cursor的getColumnIndex()方法获取到某一列在表中对应的位置索引，然后把这个索引传到相应的取值方法中，就可以得到从数据库中读取到的数据了，然后把读到数据库的数据打印出来。
+首先，会把数据库中符合要求的所有数据读取到Cursor对象中，然后再从Cursor对象中读取出数据。
+第三步：运行程序，查看结果![](sqL7.png)
 
 
+![](sqL8.png)
+我们把数据库中Book表的所有数据都查询出来了，如果你有一些限制条件，你需要设置其它的参数。
+3.使用SQL操作数据
+虽然Android已经提供了很多非常方便的API用于操作数据库，不过可能有人不习惯去使用这些辅助性方法，而更喜欢直接使用SQL来操作数据库，Android提供了一系列的方法，可以直接通过SQL来操作数据库。
+3.1 添加数据
+     db.execSQL("insert into Book(name,author,pages,price) values(?,?,?,?)",new String[]{"The java code","yu","340","18.8"})；
+3.2 更新数据
+     db.execSQL("update Book set price=?Where name=?",new String[]{"38","The java code"});
+3.3 删除数据
+     db.execSQL("delete from Book where pages > ?", new String[]{"500"});
+3.4 查询数据
+     db.rawQuery("select * from Book",null);
+4.使用事物
+SQLite数据库是支持事务的，事务的特性可以保证让某一系列的操作要么全部完成，要么一个都不会完成，比如你正在进行一次转账操作，银行会将转账的金额先从你的账户中扣除，然后再向收款方的账户中添加等量的金额。如果当你账户中的金额刚刚被扣除，这时由于一些异常原因导致对方收款失败，这一部分钱就凭空消失了。银行必须保证扣钱和收款的操作要么一起成功，要么都不会成功，这就要使用事务。
+假设现在Book表中的数据已经很老了，现在准备全部废弃掉替换成新数据，可以先使用delete()方法将Book表中的数据删除，然后再使用insert()方法将新的数据添加到表中。要保证删除数据和添加数据的操作必须一起完成，否则就还要继续保留原来的旧数据。
+第一步：修改activity_main.xml中的代码，添加一个按钮
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+     >
+......
+<Button
+    android:id="@+id/replace_data"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Replace data"
+    />
+</LinearLayout>
+第二步：修改MainActivity中的代码
+public class MainActivity extends Activity implements View.OnClickListener{
+    private MyDatabaseHelper dbHelper;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        dbHelper=new MyDatabaseHelper(this,"BookStore.db",null,6);
+	......
+        Button replaceButton=(Button)findViewById(R.id.replace_data);
+        replaceButton.setOnClickListener(this);
+    }
+ public void onClick(View view){
+        if(view.getId()==R.id.create_database){
+            dbHelper.getWritableDatabase();
 
+        }
+        if(view.getId()==R.id.add_data){
+	......                  
+	 }
+        if(view.getId()==R.id.update_data){
+           ......      
+ 	 }
+        if(view.getId()==R.id.delete_data){
+            .......
+        }
+      if(view.getId()==R.id.query_data){
+          ......
+         }
+      if(view.getId()==R.id.replace_data){
+            SQLiteDatabase db=dbHelper.getWritableDatabase();
+            db.beginTransaction();//开启事务
+            try{
+                db.delete("Book",null,null);
+//                if(true){//手动抛出一个异常，让事务失败
+//                    throw new NullPointerException();
+//                }
+                ContentValues values=new ContentValues();
+                values.put("name","the c++ develop");
+                values.put("author","bill");
+                values.put("pages",720);
+                values.put("price",28.8);
+                db.insert("Book",null,values);
+                db.setTransactionSuccessful();//事务已经成功执行
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally {
+                db.endTransaction();
+            }
+        }
+     }
+}
+上述代码就是Android中事务的标准用法，首先调用SQLiteDatabase的beginTransaction()方法来开启一个事务，然后在一个异常捕获的代码块中去执行具体的数据库操作，当所有的操作都完成之后，调用setTransactionSuccessful()表示事务已经执行成功了，最后在finally代码块中调用endTransaction()来结束事务。
+上述代码，在删除旧数据的操作完成后手动抛出了一个NullPointerException,这样添加新数据的代码就执行不到了。不过由于事务的存在，中途出现异常会导致事务的失败，此时旧数据应该是删除不掉的。把手动抛出异常的代码去掉，发现数据已经变成最新的了。
+5.升级数据库的最佳方法
+前面我们升级数据库的方式是非常粗暴的，为了保证数据库中的表是最新的，我们只是简单地在onUpgrade()方法中删除掉了当前所有的表，然后强制重新执行了一遍onCreate()方法。这种方式在产品的开发阶段确实可以用，但是当产品真正上线了之后就绝对不行了。比如你编写的某个应用已经成功上线，并且还拥有了不错的下载量，现在由于添加了新功能，需要对数据库进行一次升级，如果按上面学到的升级数据库的方法，用户更新版本后发现以前存储的本地数据全部丢失了，所以这种升级方法不行。
+每一个数据库版本都会对应一个版本号，当指定的数据库版本号大于当前数据库版本号的时候，就会进入到onUpgrade()方法中去执行更新操作。为每一个版本号赋予它各自改变的内容，然后在onUpgrade()方法中对当前数据库的版本号进行判断，再执行相应的改变，通过一个例子来看看如何正确地升级数据库。
+第一版本的程序：在数据库中只创建一张Book表
+public class MyDatabaseUpgradeHelper extends SQLiteOpenHelper {
+    public static final String CREATE_BOOK="create table Book("
+            +"id integer primary key autoincrement,"
+            +"author text,"
+            +"price real,"
+            +"pages integer,"
+            +"name text)";
+    public MyDatabaseUpgradeHelper(Context context,String name,SQLiteDatabase.CursorFactory factory,int version) {
+        super(context, name, factory, version);
+}
+    @Override
+    public void onCreate(SQLiteDatabase db){
+        db.execSQL(CREATE_BOOK);
+    }
+    @Override
+    public void onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion){
+         }
+}
+第二版本的程序：需要向数据库中添加一张Category表
+public class MyDatabaseUpgradeHelper extends SQLiteOpenHelper {
+    public static final String CREATE_BOOK="create table Book("
+            +"id integer primary key autoincrement,"
+            +"author text,"
+            +"price real,"
+            +"pages integer,"
+            +"name text)";
+public static final String CREATE_CATEGORY="create table Category("
+        +"id integer primary key autoincrement,"
+        +"category_name text,"
+        +"category_code integer)";
 
+    public MyDatabaseUpgradeHelper(Context context,String name,SQLiteDatabase.CursorFactory factory,int version) {
+        super(context, name, factory, version);
+}
+    @Override
+    public void onCreate(SQLiteDatabase db){
+        db.execSQL(CREATE_BOOK);
+   db.execSQL(CREATE_CATEGORY);
+    }
+    @Override
+    public void onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion){
+	switch (oldVersion){
+  	  case 1:
+     	   db.execSQL(CREATE_CATEGORY);
+    	  default:
+	}
+       }
+}
+在onCreate()方法里新增了一条建表语句，然后又在onUpgrade()方法中添加了一个switch判断。如果用户使用第二版的程序覆盖安装的第一版的程序时，就会调用onUpgrade()进行升级，当前已经安装的数据库的版本号是1，说明Book表已经存在了，只创建一张Category表。当用户是直接安装的第二版的程序时，会调用onCreate()方法，将两张表一起创建。
+第三个版本：在Book表中增加一个catagory_id的字段
+public class MyDatabaseUpgradeHelper extends SQLiteOpenHelper {
+    public static final String CREATE_BOOK="create table Book("
+        +"id integer primary key autoincrement,"
+        +"author text,"
+        +"price real,"
+        +"pages integer,"
+        +"name text,"
+        +"category_id integer)";
+public static final String CREATE_CATEGORY="create table Category("
+        +"id integer primary key autoincrement,"
+        +"category_name text,"
+        +"category_code integer)";
+    public MyDatabaseUpgradeHelper(Context context,String name,SQLiteDatabase.CursorFactory factory,int version) {
+        super(context, name, factory, version);
+}
+    @Override
+    public void onCreate(SQLiteDatabase db){
+        db.execSQL(CREATE_BOOK);
+   db.execSQL(CREATE_CATEGORY);
+    }
+    @Override
+    public void onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion){
+	switch (oldVersion){
+  	  case 1:
+     	   db.execSQL(CREATE_CATEGORY);
+	  case 2:
+    	   db.execSQL("alter table Book add column category_id integer");
+            default:
+	}
+       }
+}
+首先在Book表的建表语句中添加了一个category_id列，这样当用户直接安装第三版的程序时，这个新增的列就已经自动添加成功了。如果用户之前已经安装了某一版本的程序，现在需要覆盖安装，就会进入到升级数据库的操作中。在onUpgrade()方法里，添加了一个新的case,如果当前数据库的版本号是2，就会执行alter命令来为Book表新增一个category_id列。
+需要注意的是，switch中每一个case的最后都是没有使用break的，这是为了保证在跨版本升级的时候，每一次的数据库修改都能被全部执行到。比如用户当前是从第二版程序升级到第三版程序，那么case2中的逻辑就会执行。而如果用户直接从第一版程序升级到第三版程序，那么case1和case2中的逻辑都会执行。使用这种方式来维护数据库的升级，不管版本怎样更新，都可以保证数据库的表结构是最新的，而且表中的数据也完全不会丢失。
