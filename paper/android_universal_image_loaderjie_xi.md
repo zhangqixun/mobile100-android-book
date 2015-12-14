@@ -32,10 +32,10 @@ UIL的主要功能
 
 ## UIL总体架构
 
-UIL主要由五部分构成，分别为ImageLoaderEngine、Cache（MemoryCache和DiskCache）、ImageDownloader、ImageDecoder、BitmapDisplayer以及BitmapProcessor。  
+UIL主要由五部分构成，分别为ImageLoaderEngine、Cache（MemoryCache和DiskCache）、ImageDownloader、ImageDecoder、BitmapDisplayer以及BitmapProcessor。 具体可参见下图。 
 
 
-由下图可以看出UIL的处理流程：
+由上图可以看出UIL的处理流程：
 1. 
 ImageLoader收到加载及显示图片的任务，并将任务提交给ImageLoaderEngine；
 1. 
