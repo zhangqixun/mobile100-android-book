@@ -184,3 +184,6 @@ UnlimitedDiscCache：无任何限制
 在UIL中有着比较完整的存储策略，根据预先制定的控件大小，使用频率（生命命周期）以及文件个数的约束条件，都有着对应的实现机制。下面我们仅对UIL的默认磁盘缓存处理UnlimitedDiscCache进行介绍。因为其继承自BaseDiscCache，并且大多数直接使用BaseDiscCache中的方法，因此我们以BaseDiscCache为主对UnlimitedDiscCache进行介绍。
 
 首先，要实现一个磁盘缓存，我们需要做到：
+1. 
+保证图片的命名不会重复。因为没有办法知道用户下载的图片原始的文件名是怎么样的，因此很可能因为文件重名而出现图片被覆盖。
+1. 
