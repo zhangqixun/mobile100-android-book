@@ -64,7 +64,7 @@
                         组件内部的位置
             
             2. 应用
-                下面的实例通过
+                下面的实例通过四个视图来展示FrameLayout的基本用法。通过实例我们可以发现，视图默认都是在左上角。
                 
                ```
                <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -97,6 +97,7 @@
                 android:text="第四层视图"/>
                 </FrameLayout>
                ```
+               通过下面的第一个截图可以看到UI的设计情况，这个时候我们没有使用layout_gravity，现在我们给第四个视图增加一个layout_gravity属性值为right.会发现视图在parent的宽度大小的右边。因为第四层视图的android:layout_width="fill_parent"的宽度是fill_parent。
             3.截图
             ![](dingzewu001.png)
             
@@ -115,8 +116,47 @@
         *  LinearLayout
         
             1.详解
+                1.1定义
+                    * LinearLayout是线性布局控件，它包含的子控件将以横向或竖向的方式排列，根据XM组件排列的顺序流水排列。
+                1.2属性
+                    *android:layout_width
+                    *android:layout_height
+                    *android:layout_weight
+                        相比FrameLayout,LinearLayout多了一个android:layout_weight，这个属性是干嘛的呢？当水平排放的时候，显示了各组件的比例问题。android:layout_weight属性可以解决，在下面的应用中我们对这个不同点进行解析。
+                    *android:layout_gravity
+                    *android:layout_margin
+                    *android:layout_marginLeft
+                    *android:layout_marginTop
+                    *android:layout_marginRight
+                    *android:layout_marginBottom
             
             2.应用
+                下面通过一个小例子来说明android:layout_weight的作用，比如两个TextView，比例需求为1：2.这样就可以使用。
+                ```
+                <?xml version="1.0" encoding="utf-8"?>
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="#f77700"/>
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="2"
+                android:background="#f6666f"/>
+                </LinearLayout>
+                
+                ```
+                在上面的代码中，第一个TextView的weight值为1，第二个值为2.这样就将水平的界面分为3份，第一个占用一份，第二个占两份。
+            3.截图
+                ![](dingzewu002.png)
+            
+            4.关于android:layout_weight的扩展应用
+                *比如在搜索框之类的组件。我们不难发现，左边或者右边缘是一个搜索按钮，其余部分全是搜索框。这样就可以用到android:layout_weight属性来分配位置。使得达到目的。
          
         *  GridLayout
             
