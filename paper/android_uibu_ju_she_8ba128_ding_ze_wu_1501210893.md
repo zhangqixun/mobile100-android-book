@@ -62,19 +62,40 @@
                         组件跟底部的距离
                     * layout_gravity
                         组件内部的位置
-
-
-
-
-
-
-                    
-            
-            
-            
             
             2. 应用
-            
+                
+               ```
+               <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+                <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="100sp"
+                android:textColor="#000ff0"
+                android:text="最底下的视图"/>
+                <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="70sp"
+                android:textColor="#f77700"
+                android:text="第二层视图"/>
+                <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:textColor="#f6666f"
+                android:text="第三层视图"/>
+                <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="50sp"
+                android:textColor="#000000"
+                android:text="第四层视图"/>
+                </FrameLayout>
+               ```
             
             
             
