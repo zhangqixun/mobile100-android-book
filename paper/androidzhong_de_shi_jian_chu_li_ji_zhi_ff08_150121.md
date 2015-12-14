@@ -139,3 +139,30 @@ public class MainActivity extends Activity implements View.OnClickListener{
 }
 ```
 程序中，Activity类实现了OnClickListner事件监听器接口。当为某个组件注册事件监听器对象时，直接使用this作为事件监听器对象即可。
+
+
+## 1.4 匿名内部类作为事件监听器类
+
+大部分时候，事件处理器没有什么复用价值（可复用代码通常被抽象成业务逻辑方法），因此大部分只临时使用一次，所以使用匿名内部类形式的事件监听器更合适。这种形式也是目前使用最广泛的事件监听器形式。
+
+```
+public class MainActivity extends Activity{
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Button button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this,"单击了按钮",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+}
+```
+“new监听器接口”或“new事件适配器”的形式就是用于创建匿名内部类形式的事件监听器。
+
+
+
+
