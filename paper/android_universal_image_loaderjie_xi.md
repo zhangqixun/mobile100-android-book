@@ -151,8 +151,9 @@ LruMemoryCache的缓存实现方法我们已经了解了，在LinkedHashMap.get(
 下面我们以图示的方式更详细的介绍一下LruMemoryCache实现保存最新被访问元素的过程。在这里为了方便起见，我们假设内存缓存设置的阈值只够存储两个Bitmap对象，当put第三个Bitmap对象时，将近期最少使用的Bitmap对象移除。
 
 1. 
-首先初始化LinkedHashMap，并设定按照访问顺序来排序，即accessOrder=true。
+首先初始化LinkedHashMap，并设定按照访问顺序来排序，即accessOrder=“true”。
 ![7](xl_im7.png)
 
 1. 
 调用put()方法，向缓存池中放入bitmap1和bitmap2两个对象。
+![8](xl_im8.png)
