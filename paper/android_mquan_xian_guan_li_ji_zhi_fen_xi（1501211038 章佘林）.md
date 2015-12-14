@@ -96,3 +96,7 @@ com.android.launcher.permission.UNINSTALL_SHORTCUT
 # 三 Android M 应用开发建议
 
 
+### 1. 每次需要使用权限时都应当先检查是否获得了权限
+
+
+
