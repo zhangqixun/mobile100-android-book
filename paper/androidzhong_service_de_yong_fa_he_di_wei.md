@@ -259,6 +259,9 @@ Android 中的异步消息处理主要由四个部分组成,Message、Handler、
   如果想要启动这个任务,只需编写以下代码即可:
     new DownloadTask().execute();
 以上就是 AsyncTask 的基本用法,怎么样,是不是感觉简单方便了许多?我们并不需要 去考虑什么异步消息处理机制,也不需要专门使用一个 Handler 来发送和接收消息,只需要 调用一下 publishProgress()方法就可以轻松地从子线程切换到 UI 线程了。
+## 3.服务的基本用法
+
+
         
       
       
