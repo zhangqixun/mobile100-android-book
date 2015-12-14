@@ -23,7 +23,7 @@ Android应用的进程都是从一个叫做Zygote的进程fork出来的。Zygote
 ## 1.2	分配与回收内存
 每一个进程的Dalvik Heap都反映了使用内存的占用范围。这就是通常逻辑意义上提到的Dalvik Heap Size，它可以随着需要进行增长，但是增长行为会有一个系统为它设定上限。逻辑上讲的Heap Size和实际物理意义上使用的内存大小是不对等的，Proportional Set Size(PSS)记录了应用程序自身占用以及与其他进程进行共享的内存。
 Android系统并不会对Heap中空闲内存区域做碎片整理。系统仅仅会在新的内存分配之前判断Heap的尾端剩余空间是否足够，如果空间不够会触发GC操作，从而腾出更多空闲的内存空间。在Android的高级系统版本里面针对Heap空间有一个Generational Heap Memory的模型，最近分配的对象会存放在Young Generation区域。当这个对象在该区域停留的时间达到一定程度，它会被移动到Old Generation，最后累积一定时间再移动到Permanent Generation区域。系统会根据内存中不同的内存数据类型分别执行不同的GC操作。例如，刚分配到Young Generation区域的对象通常更容易被销毁回收，同时在Young Generation区域的GC操作速度会比Old Generation区域的GC操作速度更快（如图1所示）。
-![图1 根据不同内存数据类型执行不同GC操作](1.jpg)
+![图1 根据不同内存数据类型执行不同GC操作](lyd1.jpg)
 
 
 每一个Generation的内存区域都有固定的大小。随着新的对象陆续被分配到此区域，当对象总的大小临近这一级别内存区域的阀值时，会触发GC操作，以便腾出空间来存放其他新的对象（如图2所示）。
@@ -99,7 +99,8 @@ decode format：解码格式，选择ARGB_8888/RBG_565/ARGB_4444/ALPHA_8，存�
 ### 3.2.1 复用系统自带的资源
 Android系统本身内置了很多的资源，比如字符串、颜色、图片、动画、样式以及简单布局等，这些资源都可以在应用程序中直接引用。这样做不仅能减少应用程序的自身负重，减小APK的大小，还可以在一定程度上减少内存的开销，复用性更好。但是也有必要留意Android系统的版本差异性，对那些不同系统版本上表现存在很大差异、不符合需求的情况，还是需要应用程序自身内置进去。
 
-注意ListView/GridView等出现大量重复子组件的视图里对ConvertView的复用。如图3。![图3 View对象的重复利用](lyd3.png)
+注意ListView/GridView等出现大量重复子组件的视图里对ConvertView的复用。如图3。
+![图3 View对象的重复利用](lyd3.png)
 
 
 ### 3.2.2 Bitmap对象的复用
@@ -118,7 +119,7 @@ Android系统本身内置了很多的资源，比如字符串、颜色、图片�
 对于大部分非必须使用Activity Context的情况（Dialog的Context就必须是Activity Context），我们都可以考虑使用Application Context而不是Activity的Context，这样可以避免不经意的Activity泄露。
 ### 3.3.3 注意临时Bitmap对象的及时回收
 虽然在大多数情况下，我们会对Bitmap增加缓存机制，但是在某些时候，部分Bitmap是需要及时回收的。例如临时创建的某个相对比较大的bitmap对象，在经过变换得到新的bitmap对象之后，应该尽快回收原始的bitmap，这样能够更快释放原始bitmap所占用的空间。需要特别留意的是Bitmap类里面提供的createBitmap()方法，如图5所示：
-![图5 createBitmap()方法 ](lyd5.png)
+![图5 createBitmap()方法](lyd5.png)
 
 该函数返回的bitmap有可能和source bitmap是同一个，在回收的时候，需要特别检查source bitmap与return bitmap的引用是否相同，只有在不等的情况下，才能够执行source bitmap的recycle方法。
 
@@ -144,7 +145,7 @@ Android设备根据硬件与软件的设置差异而存在不同大小的内存�
 #### （5）页面图片被访问的频率？是否存在其中的一部分比其他的图片具有更高的访问频繁？如果是，也许你想要保存那些最常访问的到内存中，或者为不同组别的位图(按访问频率分组)设置多个LruCache容器。
 ### 3.4.3 onLowMemory()与onTrimMemory()
 Android用户可以随意在不同的应用之间进行快速切换。为了让background的应用能够迅速的切换到forground，每一个background的应用都会占用一定的内存。Android系统会根据当前的系统的内存使用情况，决定回收部分background的应用内存。如果background的应用从暂停状态直接被恢复到forground，能够获得较快的恢复体验，如果background应用是从Kill的状态进行恢复，相比之下就显得稍微有点慢，如图6所示。
-![图6  从Kill状态进行恢复体验更慢 ](lyd6.jpg)
+![图6  从Kill状态进行恢复体验更慢](lyd6.jpg)
 
 * onLowMemory()：Android系统提供了一些回调来通知当前应用的内存使用情况，通常来说，当所有的background应用都被kill掉的时候，forground应用会收到onLowMemory()的回调。在这种情况下，需要尽快释放当前应用的非必须的内存资源，从而确保系统能够继续稳定运行。
 * onTrimMemory(int)：Android系统从4.0开始还提供了onTrimMemory()的回调，当系统内存达到某些条件的时候，所有正在运行的应用都会收到这个回调，同时在这个回调里面会传递以下的参数，代表不同的内存使用情况，收到onTrimMemory()回调的时候，需要根据传递的参数类型进行判断，合理的选择释放自身的一些内存占用，一方面可以提高系统的整体运行流畅度，另外也可以避免自己被系统判断为优先需要杀掉的应用。
@@ -192,7 +193,7 @@ Protocol buffers是由Google为序列化结构数据而设计的，一种语言�
 ### 3.4.12 谨慎使用依赖注入框架
 使用类似Guice或者RoboGuice等框架注入代码，在某种程度上可以简化你的代码。图9是使用RoboGuice前后的对比图：
 
-![图9  使用RoboGuice前后对比图 ](lyd9.jpg)
+![图9  使用RoboGuice前后对比](lyd9.jpg)
 
 
 使用RoboGuice之后，代码是简化了不少。然而，那些注入框架会通过扫描你的代码执行许多初始化的操作，这会导致你的代码需要大量的内存空间来mapping代码，而且mapped pages会长时间的被保留在内存中。除非真的很有必要，建议谨慎使用这种技术。
