@@ -41,8 +41,7 @@
 下面通过一个模仿实战，展示基本的ListView的使用方法。我们选取的模仿对象是淘宝app中展示查询宝贝的ListView。
 第一步，编写列表项的布局文件。
 首先要仿照淘宝app的界面，编写一个布局文件。在项目的layout里面创建一个taobao_listitem.xml文件。源代码如下：
-
-<?xml version="1.0" encoding="utf-8"?>
+```<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
@@ -167,7 +166,8 @@
                 <!--android:background="@color/divide_line"/>-->
         </RelativeLayout>
     </RelativeLayout>
-</LinearLayout>
+</LinearLayout>```
+
 展示效果：
  
 可以看到，单个列表项的还原度还是很高的。
