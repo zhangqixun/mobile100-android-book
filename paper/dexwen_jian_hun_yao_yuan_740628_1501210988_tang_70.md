@@ -105,9 +105,31 @@ struct DexStringData {
 ```
 
 typeIdsSize和typeIdsOff字段中存放的是DEX中所有使用到的类型，其中包括了一些类。而经过typeIds索引得到的数据类型中保存着一个字符串索引号，该索引用来简要的描述这个数据类型。
-
+```
+struct DexTypeId {
+    u4  descriptorIdx;     
+};
+```
 protoIdsSize和protoIdsOff字段中存放的是方法原型，其数据结构中也包含着一些类型列表和字符串索引号。
-
+```
+struct DexProtoId {
+    u4  shortyIdx;       
+    u4  returnTypeIdx;   
+    u4  parametersOff;    
+};
+```
 fieldIdsSize和fieldIdsOff以及methodIdsSize和methodIdsOff都与protoIdsSize和protoIdsOff类似，存放着变量和方法相关的索引。
+```
+struct DexFieldId {
+    u2  classIdx;        
+    u2  typeIdx;        
+    u4  nameIdx;       
+};
 
-classDefsSize和classDefsOff
+struct DexMethodId {
+    u2  classIdx;          
+    u2  protoIdx;        
+    u4  nameIdx;       
+};
+```
+classDefsSize和classDefsOff字段
