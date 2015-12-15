@@ -464,7 +464,9 @@ public class PPTControler {
 运行效果截图：
 
 开启服务端程序
+
 ![](4.png)
+
 打开App时
 
 服务端
