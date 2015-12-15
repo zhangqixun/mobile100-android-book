@@ -41,16 +41,14 @@ LinearLayout是线性布局控件：要么横向排布，要么竖向排布
 
 线性布局的整体布局方式包括了垂直和水平，这个也是必须指定的呢。
 
-android:orientation：vertical (垂直方向) 、horizontal(水平方向)
+android:orientation：vertical (垂直方向) ：
+ ![](../20115783413658.png)
+   
+ horizontal(水平方向)：
+ ![](../201212301731329293735.png)
 
 
-线性布局里面的常用属性：
-
-android:gravity------------设置的是控件自身上面的内容位置
-
-android:layout_gravity-----设置控件本身相对于父控件的显示位置
-
-android:layout_weight----- 给控件分配剩余空间
+接下来请看一个例子：
 
 ```   
 <?xml version="1.0" encoding="utf-8"?>
@@ -59,28 +57,6 @@ android:layout_weight----- 给控件分配剩余空间
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<!--  
-		代码编辑提示快捷键:	Alt+/
-
-		id="@+id/edtInput",ID 是连接UI 与代码的桥梁
-		layout_width="fill_parent" ，自动填充至屏幕宽度
-		layout_width="wrap_content" ，自动填充为控件大小
-		
-		在LinearLayout 里面的控件，按照水平或者垂直排列：
-			orientation="horizontal" ：水平排列；
-			orientation=" vertical" ：垂直排列
-			
-		android:id  —— 为控件指定相应的ID
-		android:text —— 指定控件当中显示的文字，需要注意的是，这里尽量使用strings.xml文件当中的字符串
-		android:grivity —— 指定控件的基本位置，比如说居中，居右等位置
-		android:textSize —— 指定控件当中字体的大小
-		android:background —— 指定该控件所使用的背景色,RGB命名法 
-		android:width —— 指定控件的宽度
-		android:height —— 指定控件的高度
-		android:padding* —— 指定控件的内边距，也就是说控件当中的内容
-		android:sigleLine —— 如果设置为真的话，则将控件的内容在同一行当中进行显示
-						
--->
    <EditText
        android:id="@+id/edtInput"
        android:layout_width="fill_parent"
@@ -118,10 +94,9 @@ android:layout_weight----- 给控件分配剩余空间
 
 ```
 
+运行效果：
 
-
-
-
+![](../13633282439959.png)
 
 
 
@@ -131,8 +106,7 @@ android:layout_weight----- 给控件分配剩余空间
 
 
    ②
-   、
-   、、
+   
     。
     自定义布局 (custom-layout)
 
