@@ -863,7 +863,7 @@ viewHolder.same.setOnClickListener(new View.OnClickListener()
 ### 2.2 基本使用
 
 
-<p>&#160;&#160;&#160;&#160;使用RecyclerView的基本步骤总结如下：
+<p>&#160;&#160;&#160;&#160;使用RecyclerView的基本步骤总结如下：![](RecyclerView.jpg)
  
 <p>&#160;&#160;&#160;&#160;第一步，在gradle中添加支持库。
 ```
@@ -994,7 +994,7 @@ public class PlanItemInfo
 </android.support.v7.widget.CardView>
 ```
 <p>&#160;&#160;&#160;&#160;第五步，编写RecyclerView.Adapter。
-<p>&#160;&#160;&#160;&#160;RecyclerView.Adapter中需要重写的三个方法如下：
+<p>&#160;&#160;&#160;&#160;RecyclerView.Adapter中需要重写的三个方法如下：![](三个方法.jpg)
  
 <p>&#160;&#160;&#160;&#160;具体实现代码：
 ```
@@ -1070,7 +1070,7 @@ public class MyAdapter extends RecyclerView.Adapter implements ItemTouchHelperAd
         // 为mRecyclerView设置适配器
         mRecyclerView.setAdapter(myAdapter);
 ```
-<p>&#160;&#160;&#160;&#160;至此，我们已经完成了RecyclerView的基本使用，结果图如下：
+<p>&#160;&#160;&#160;&#160;至此，我们已经完成了RecyclerView的基本使用。
 
 
 
@@ -1099,30 +1099,39 @@ itemView.setOnClickListener(new OnClickListener(){
     listener.onItemClick(v, getLayoutPosition());
 }
 });
-通过上面的程序，将视图的点击事件交给接口中的方法去实现。而接口中具体的方法，则需要到主程序中去实现。让主Activity实现我们的接口，并实现：
+```
+<p>&#160;&#160;&#160;&#160;通过上面的程序，将视图的点击事件交给接口中的方法去实现。而接口中具体的方法，则需要到主程序中去实现。让主Activity实现我们的接口，并实现：
+```
 @Override
     public void onItemClick(View itemView, int position)
     {
         Toast.makeText(this,"点击了："+((TextView)itemView.findViewById (R.id.card_name)).getText().toString(),Toast.LENGTH_LONG).show();
     }
-完成，点击效果如下：
+```
+<p>&#160;&#160;&#160;&#160;完成，点击效果如下：![](小计划.png)
  
-2.4 交互深入
-像上面讲ListView一样，我们希望给Recycler加上丰富的交互。在这个实例中，我们需要实现的是左右滑动删除一个Item，上下拖动可以改变Item的位置。
-Android为我们提供了便捷的操作方法，因此我们不用像修改ListView那样去重写onInterceptTouchEvent()和onTouchEvent()。Android为我们提供的类是ItemTouchHelper。接下来我们继续在刚才的实例上进行添加。
-首先我们需要编写一个SimpleItemTouchHelperCallback继承自ItemTouchHelper.Callback。我们需要重写几个方法，以便ItemTouchHelper在处理滑动和拖动时进行回调。
-isLongPressDragEnabled()：是否允许长按拖动。
-isItemViewSwipeEnabled()：是否允许滑动Item。
-int getMovementFlags()：设置可以操作的动作。
-boolean onMove()：拖动时调用。
-void onSwiped()：滑动时调用。
-在重写这两个回调时，我们希望实际的操作应该在Adapter中进行。因此我们写一个接口，让Adapter实现这个接口，实现接口注入。
-接口：
+
+### 2.4 交互深入
+
+
+<p>&#160;&#160;&#160;&#160;像上面讲ListView一样，我们希望给Recycler加上丰富的交互。在这个实例中，我们需要实现的是左右滑动删除一个Item，上下拖动可以改变Item的位置。
+<p>&#160;&#160;&#160;&#160;Android为我们提供了便捷的操作方法，因此我们不用像修改ListView那样去重写onInterceptTouchEvent()和onTouchEvent()。Android为我们提供的类是ItemTouchHelper。接下来我们继续在刚才的实例上进行添加。
+<p>&#160;&#160;&#160;&#160;首先我们需要编写一个SimpleItemTouchHelperCallback继承自ItemTouchHelper.Callback。我们需要重写几个方法，以便ItemTouchHelper在处理滑动和拖动时进行回调。
+<p>&#160;&#160;&#160;&#160;isLongPressDragEnabled()：是否允许长按拖动。
+<p>&#160;&#160;&#160;&#160;isItemViewSwipeEnabled()：是否允许滑动Item。
+<p>&#160;&#160;&#160;&#160;int getMovementFlags()：设置可以操作的动作。
+<p>&#160;&#160;&#160;&#160;boolean onMove()：拖动时调用。
+<p>&#160;&#160;&#160;&#160;void onSwiped()：滑动时调用。
+<p>&#160;&#160;&#160;&#160;在重写这两个回调时，我们希望实际的操作应该在Adapter中进行。因此我们写一个接口，让Adapter实现这个接口，实现接口注入。
+<p>&#160;&#160;&#160;&#160;接口：
+```
 public interface ItemTouchHelperAdapter {
     boolean onItemMove(int fromPosition, int toPosition);
     void onItemDismiss(int position);
 }
+```
 Adapter中的实现：
+```
 @Override
     public void onItemDismiss(int position) {
         plans.remove(position);
@@ -1135,7 +1144,9 @@ Adapter中的实现：
         notifyItemMoved(fromPosition, toPosition);
         return true;
     }
-再编写：
+```
+<p>&#160;&#160;&#160;&#160;再编写：
+```
 public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     public static final float ALPHA_FULL = 1.0f;
@@ -1202,15 +1213,25 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
         super.clearView(recyclerView, viewHolder);
  }
 }
-最后一步，我们将ItemTouchHelper绑定到RecyclerView：
+```
+<p>&#160;&#160;&#160;&#160;最后一步，我们将ItemTouchHelper绑定到RecyclerView：
+```
 ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(myAdapter);
 mItemTouchHelper = new ItemTouchHelper(callback);
 mItemTouchHelper.attachToRecyclerView(mRecyclerView);
-至此，我们的小型计划表可以实现左右滑动删除Item，上下拖动改变Item位置。
-2.5 添加动画效果
-RecyclerView的一大优点就是添加动画非常方便。我们使用一个开源的动画库：
+```
+<p>&#160;&#160;&#160;&#160;至此，我们的小型计划表可以实现左右滑动删除Item，上下拖动改变Item位置。
+
+### 2.5 添加动画效果
+
+
+<p>&#160;&#160;&#160;&#160;RecyclerView的一大优点就是添加动画非常方便。我们使用一个开源的动画库：
+```
 compile 'jp.wasabeef:recyclerview-animators:2.1.0'
-再将动画设置成新的动画即可：
+```
+<p>&#160;&#160;&#160;&#160;再将动画设置成新的动画即可：
+```
 mRecyclerView.setItemAnimator(new SlideInLeftAnimator());
-最终效果显示如下：
+```
+<p>&#160;&#160;&#160;&#160;最终效果显示如下：
  
