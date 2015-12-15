@@ -563,6 +563,43 @@ db.close();
 最后，让我们看一下如何使用这些数据操作方法来显示数据，下面是MainActivity.java的布局文件和代码：
 
 ```
+<?xml version="1.0" encoding="utf=8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent">
+<Button
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:text="add"
+android:onClick="add"/>
+<Button
+android:layout_width="fill_parent"
+android:layout_heigth="wrap_content"
+android:text="update"
+android:onClick="update"/>
+<Button
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:text="delete"
+android:onClick="delete"/>
+<Button
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:text="query"
+android:onClick="query"/>
+<Button
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:text="queryTheCursor"
+android:onClick="queryTheCursor"/>
+<ListView
+android:id="@+id/listView"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"/>
+</LinearLayout>
+
+
 
 ```
 
