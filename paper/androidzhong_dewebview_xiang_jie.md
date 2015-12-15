@@ -500,5 +500,5 @@ public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
 
 可以看到点击load page之后会打开secondActivity，证明自定义协议的例子已经成功了。
-其实自定义协议主要用于约束于前端人员与客户端人员的通信方式，至于协议具体定义成什么样可以根据实际需求去制定。
+其实自定义协议主要用于约束于前端人员与客户端人员的通信方式，至于协议具体定义成什么样可以根据实际需求去制定。 
 
