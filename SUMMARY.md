@@ -113,7 +113,7 @@
    * [ListView与RecyclerView实战详解（1501210885陈俊文）](paper/listview_yu_recyclerview_shi_zhan_xiang_jie_ff08_15.md)
    * [Android无线网络技术——Bluetooth&WiFi编程（1501211015 杨超）](androidartical_1501211015.md)
    * [使用Kotlin进行Android开发（1501210909 胡光洲）](paper/shi_yong_kotlin_jin_xing_android_kai_fa.md)
-   * Android UI组件使用及分析（1501211017  杨宗睿）
+   * Android UI组件使用及分析
 * [常见面试题目](question/index.md)
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
