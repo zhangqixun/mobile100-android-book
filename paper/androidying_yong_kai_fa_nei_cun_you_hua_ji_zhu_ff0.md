@@ -58,10 +58,11 @@ OnTrimMemory是Android在4.0之后加入的一个回调，任何实现了Compone
 
 为了避免涉及到context的内存泄露，可以遵循以下几条原则：
 
-1) 注意引用Context对象的生命周期，如果是长生命周期那么不能引用Activity Context，应该使用Application 
+* 注意引用Context对象的生命周期，如果是长生命周期那么不能引用Activity Context，应该使用Application 
 Context。
 
-2) 避免静态对象引用短生命周期的Context。
+* 避免静态对象引用短生命周期的Context。
+
 ####2.2.2  资源没有关闭引起的内存泄漏
 程序中用到外部资源时候一般会把资源缓存在内存中，而这些资源在使用过之后如果没有及时释放就会造成内存资源的浪费，常见的情况有一下几种：
 
