@@ -932,6 +932,131 @@ default:
 
 
 ```
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import andorid.widget.AdapterView;
+import andorid.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
+public class ResolverDemoActivity extends Activity{
+private SimpleCursorAdapter adapter;
+private ListView listView;
+private Button button_insert;
+private Button button_query;
+private Button button_query_one;
+private EditText edittext_query;
+private Button button_update_one;
+private EditText edittext_update;
+private Button button_update;
+private Button button_delete;
+private Button button_delete_one;
+private EditText edittext_delete;
+public void onCreate(Bundle savedInstanceState){
+super.onCreate(savedInstanceState);
+setContentView(R.layout.main);
+listView=(ListView)this.findViewById(R.id.listView);
+ContentResolver contentResolver=getContentResolver();
+Uri selectUri=Uri.parse("content://cn.com.karl.personProvider/person");
+Cursor cursor=contentResolver.query(selectUri,null,null,null,null);
+adapter=new SimpleCursorAdapter(this,R.layout.item,cursor,new String[]{"_id","name","age"},new int[]{R.id.id,R.id.name,R.id.age});
+listView.setAdapter(adapter);
+listView.setOnItemClickListener(new OnIntemClickListener(){
+public void onItemClick(AdapterView<?>parent,View view,int position,long id){
+ListView lView=(ListView)parent;
+Cursor data=(Cursor)lView.getItemAtPosition(position);
+int _id=data.getInt(data.getColumnIndex("_id"));
+Toast.makeText(ResolverDemoActivity.this,_id+"",1).show();
+}
+});
+button_insert=(Button)this.findViewById(R.id.insertbutton);
+button_insert.setOnClickListener(new OnClickListener(){
+public void onClick(View v){
+ContentResolver contentResolver=getContentResolver();
+Uri insertUri=Uri.parse("content://cn.com.karl.personProvider/person");
+ContentValues values=new ContentValues();
+values.put("name","wangkuifeng");
+values.put("age",23);
+Uri uri=contentResolver.insert(insertUri,values);
+Toast.makeText(ResolverDemoActivity.this,"添加完成",1).show();
+}
+});
+button_query=(Button)this.findViewById(R.id.querybutton);
+button_query.setOnClickListener(new OnClickListener(){
+public void onClick(View v){
+ContentResolver contentResollver=getContentResolver();
+Uri selectUri=Uri.parse("content://cn.com.karl.personProvider/person");
+Cursor cursor=contentResolver.query(selectUri,null,null,null,null);
+SimpleCursorAdapter adapter=new SimpleCursorAdapter(ResolverDemoActivity.this,R.layout.item,cursor,new String[]{"_id","name","age"},new int[]{R.id.id,R.id.name,R.id.age});
+listView.setAdapter(adapter);
+Toast.makeText(ResolveDemoActivity.this,"查询完成",1).show();}});
+button_query_one=(Button)this.findViewById(R.id.queryonebutton);
+edittext_query=(EdiText)this.findViewById(R.id.queryone_et);
+button_query_one.setOnClickListener(new OnClickListener(){
+public void onClick(View v){
+String num = edittext_query.getText().toString();
+ContentResolver contentResolver=getContentResolver();
+Uri selectUri=Uri.parse("content://cn.com.karl.personProvider/person"+"/"+num);
+Cursor cursor=contentResolver.query(selectUri,null,null,null,null);
+SimpleCursorAdapter adapter=new SimpleCursorAdapter(ResolverDemoActivity.this,R.layout.item,cursor,new String[]{"_id","name","age"},new int[]{R.id.id,R.id.name,R.id.age});
+listView.setAdapter(adapter);
+Toast.makeText(ResolveDemoActivity.this,"查询完成",1).show();}});
+edittext_update=(EditText)this.findViewById(R.id.update_et);
+button_update_one=(Button)this.findViewById(R.id.updateonebutton);
+button_update_one.setOnClickListener(new OnClickListener(){
+public void onClick(View v){
+String num = edittext_update.getText().toString();
+ContentResolver contentResolver=getContentResolver();
+Uri updateUri=Uri.parse("content://cn.com.karl.personProvider/person"+"/"+num);
+ContentValues values=new ContentValues();
+values.put("name","superjunjin");
+values.put("age",26);
+int count=contentResolver.update(updateUri,values,null,null);
+Toast.makeText(ResolveDemoActivity.this,"更新完成",1).show();}});
+button_update=(Button)this.findViewById(R.id.updatebutton);
+button_update.setOnClickListener(new OnClickListener(){
+public void onClick(View v){
+ContentResolver contentResolver=getContentResolver();
+Uri updateUri=Uri.parse("content://cn.com.karl.personProvider/person");
+ContentValues values=new ContentValues();
+values.put("name","superjunjin");
+values.put("age",26);
+int count=contentResolver.update(updateUri,values,null,null);
+Toast.makeText(ResolveDemoActivity.this,"更新完成",1).show();}});
+button_delete=(Button)this.findViewById(R.id.deletebutton);
+button_delete.setOnClickListener(new OnClickListener(){
+public void onClick(View v){
+ContentResolver contentResolver=getContentResolver();
+Uri deleteUri=Uri.parse("content://cn.com.karl.personProvider/person");
+contentResolver.delete(deleteUri,null,null);
+Toast.makeText(ResolverDemoActivity.this,"删除完成",1).show();}});
+
+edittext_delete=(Button)this.findViewById(R.id.delete_et);
+button_delete_one=(Button)this.findViewById(R.id.deleteonebutton);
+button_delete_one.setOnClickListener(new OnClickListener(){
+public void onClick(View v){
+String num=edittext_delete.getText().toString();
+ContentResolver contentResolver=getContentResolver();
+Uri deleteUri=Uri.parse("content://cn.com.karl.personProvider/person"+"/"+num);
+contentResolver.delete(deleteUri,null,null);
+Toast.makeText(ResolverDemoActivity.this,"删除完成",1).show();}});
+}
+}
+
+
+
+
+
+
+
 
 ```
 # **五.网络存储数据**
