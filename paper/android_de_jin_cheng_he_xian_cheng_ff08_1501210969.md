@@ -3,7 +3,7 @@
 　　为了方便程序员学习和开发安卓程序，google在设计安卓的时候，刻意淡化了进程和线程的概念，给开发人员提供的是使用组件进行快速开发带UI界面的程序的开发模式。一般开发人员常用的android四大组件，Activity、Service、Broadcast Receiver、Content Provider，便是这种形式。Android开发，强调通过图形界面与用户进行交换。因此，很多开发人员，对于安卓进程和线程，都没有一个全面而具体的掌握。本文的目的就是对安卓进程和线程进行一些基础性的介绍，帮助大家在日后能够更好地进行安卓开发。
 
 
-### android进程的基本知识
+### Android进程的基本知识
 
 　　对于Android中的进程运行的基本情况，通过几个实验来进行简单的介绍。
 
@@ -30,8 +30,8 @@ Android的UI操作被称为UI单线程模式。因为UI线程的操作不是线�
 
 在android系统中，应用程序的进程一般都是通过Zygote进程fork出来的子进程，zygote进程的主体就是ZygoteInit。
 ![](http://7xp7x0.com1.z0.glb.clouddn.com/GBThread_zygoteinit.png)
-在android系统启动后，就会创建zygote进程,然后由zygote进程fork出ActivityManagerService系统进程，用于管理Activity和其他的组件的运行状态，在需要启动一个应用程序时，系统会去调用ActivityManagerService去启动该应用程序。
-![](http://7xp7x0.com1.z0.glb.clouddn.com/GBThread_activitymanagerservice.png)由ActivityManagerService与zygote进程通信之后，zygote才会fork出一个新的子进程，作为该应用程序的主进程。
+在android系统启动后，就会创建zygote进程,然后由zygote进程fork出ActivityManagerService系统进程。ActivityManagerService用于管理Activity和其他的组件的运行状态，包括组件的开启，关闭等一系列操作。在需要启动一个应用程序时，系统首先会调用ActivityManagerService，由ActivityManagerService与Zygote进程进行通信，请求Zygote进程fork一个子进程出来，作为这个即将要启动的应用程序的进程。
+![](http://7xp7x0.com1.z0.glb.clouddn.com/GBThread_activitymanagerservice.png)当主进程创立后，再通过ActivityThread创建应用程序的主线程，由ActivityThread.main打开应用程序的消息循环。
 
 观察ZygoteInit的main方法，它主要作了三件事情，
 
@@ -42,4 +42,63 @@ Android的UI操作被称为UI单线程模式。因为UI线程的操作不是线�
 3.调用 runSelectLoopMode函数进入一个无限循环在前面创建的socket接口上等待ActivityManagerService请求创建新的应用程序进程。
 ![](http://7xp7x0.com1.z0.glb.clouddn.com/GBThread_zygoteinitmain_2.png)
 
+ActivityThread管理应用进程的主线程的执行，并根据AMS的要求（通过IApplicationThread接口，AMS为Client、ActivityThread.ApplicationThread为Server）负责调度和执行activities、broadcasts和其它操作。
+### Android进程的管理
 
+
+Android的组件运行在哪个进程中是可以被配置的。组件一般会运行在当前进程中，但是也可以通过AndroidManifest.xml文件，设置组件被运行在哪个进程中。
+
+查询android官方文档，可以看到，有一个 process属性来指定组件运行在哪个进程之中。通过设置这个属性，可以配置不同的组件运行在不同的进程之中，也可以让不同的组件运行在相同的进程中。application元素也有一个process属性，用来指定所有的组件的默认属性。
+![](http://7xp7x0.com1.z0.glb.clouddn.com/GBThread_androidprocess.png)
+通过设置AndroidManifest.xml文件中的process属性，启动一个独立的service，可以看到系统中现在存在2个进程。
+![](http://7xp7x0.com1.z0.glb.clouddn.com/GBThread_twoprocess.png)
+调用stopservice函数，把运行在独立进程的service关闭。可以观察到，虽然服务已经被Destory，但是运行服务的进程仍然独立存在，并没有被销毁。
+![](http://7xp7x0.com1.z0.glb.clouddn.com/GBThread_stopservice.png)
+Android会尽量保留一个正在运行进程，在内存资源出现不足时，Android会尝试停止一些进程从而释放足够的资源给其他新的进程使用。
+
+Android会根据进程中运行的组件类别以及组件的状态来判断该进程的重要性，Android会首先停止那些不重要的进程。按照重要性从高到低一共有五个级别：
+
+ 
+
+　　前台进程
+
+　　前台进程是用户当前正在使用的进程。只有一些前台进程可以在任何时候都存在。他们是最后一个被结束的，当内存低到根本连他们都不能运行的时候。一般来说， 在这种情况下，设备会进行内存调度，中止一些前台进程来保持对用户交互的响应。
+
+ 
+
+　　如果有以下的情形的那么就是前台进程：  
+
+　　这个进程运行着一个正在和用户交互的Activity（这个Activity的onResume()方法被调用）。
+
+　　这个进程里有绑定到当前正在和用户交互的确Activity的一个service。
+
+　　这个进程里有一个service对象，这个service对象正在执行一个它的生命周期的回调函数(onCreate(), onStart(), onDestroy())
+
+　　这个进程里有一个正在的onReceive()方法的BroadCastReiver对象。
+
+　　可见进程
+
+　　可见进程不包含前台的组件但是会在屏幕上显示一个可见的进程是的重要程度很高，除非前台进程需要获取它的资源，不然不会被中止。
+
+　　如果有如下的一种情形就是可见进程： 
+
+　　这个进程中含有一个不位于前台的Activity，但是仍然对用户是可见的(这个Activity的onPause()方法被调用)，这是很可能发生的，例如，如果前台Activity是一个对话框的话，就会允许在它后面看到前一个Activity。
+
+　　这个进程里有一个绑定到一个可见的Activity的Service。
+
+　　服务进程
+
+　　运行着一个通过startService() 方法启动的service，这个service不属于上面提到的2种更高重要性的。service所在的进程虽然对用户不是直接可见的，但是他们执行了用户非常关注的任务（比如播放mp3，从网络下载数据）。只要前台进程和可见进程有足够的内存，系统不会回收他们。
+ 
+
+　　后台进程
+
+　　运行着一个对用户不可见的activity（调用过 onStop() 方法).这些进程对用户体验没有直接的影响，可以在服务进程、可见进程、前台进 程需要内存的时候回收。通常，系统中会有很多不可见进程在运行，他们被保存在LRU (least recently used) 列表中，以便内存不足的时候被第一时间回收。如果一个activity正 确的执行了它的生命周期，关闭这个进程对于用户体验没有太大的影响。
+
+　　空进程
+
+　　未运行任何程序组件。运行这些进程的唯一原因是作为一个缓存，缩短下次程序需要重新使用的启动时间。系统经常中止这些进程，这样可以调节程序缓存和系统缓存的平衡。
+
+　　Android 对进程的重要性评级的时候，选取它最高的级别。例如，如果一个进程含有一个service和一个可视activity，进程将被归入一个可视进程而不是service进程。
+
+　　另外，当被另外的一个进程依赖的时候，某个进程的级别可能会增高。一个为其他进程服务的进程永远不会比被服务的进程重要级低。因为服务进程比后台activity进程重要级高，因此一个要进行耗时工作的activity最好启动一个service来做这个工作，而不是开启一个子进程――特别是这个操作需要的时间比activity存在的时间还要长的时候。例如，在后台播放音乐，向网上上传摄像头拍到的图片，使用service可以使进程最少获取到“服务进程”级别的重要级，而不用考虑activity目前是什么状态。broadcast receivers做费时的工作的时候，也应该启用一个服务而不是开一个线程。
