@@ -191,39 +191,25 @@ SDCard是干什么的？你可以把它看作是移动硬盘或U盘。 在模拟
 <!--往SDCard写入数据权限-->
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 ```
-   要往SDCard存放文件，程序必须先判断手机是否装有SDCard，并且可以进行读写。
+ 要往SDCard存放文件，程序必须先判断手机是否装有SDCard，并且可以进行读写。
 注意：访问SDCard必须在AndroidManifest.xml中加入访问SDCard的权限。
- 
-if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
-{  
-    
-    File sdCardDir = Environment.getExternalStorageDirectory();
-    
-    
-    //获取SDCard目录          
-
-    File saveFile = new File(sdCardDir, “a.txt”); 
-        FileOutputStream outStream = new FileOutputStream(saveFile); 
-        outStream.write("test".getBytes()); 
-        outStream.close(); 
-
+```
+if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+File sdCardDir = Environment.getExternalStorageDirectory();//获取SDCard目录
+File saveFile = new File(sdCardDir,"a.txt");
+FileOutputStream outStream = new FileOutputStream(saveFile);
+outStream.write("test".getBytes());
+outStream.close();
 }
+```
 
-   Environment.getExternalStorageState()方法用于获取SDCard的状态，如果手机装有SDCard，并且可以进行读写，那么方法返回的状态等于Environment.MEDIA_MOUNTED。
-   Environment.getExternalStorageDirectory()方法用于获取SDCard的目录，当然要获取SDCard的目录，你也可以这样写：
-File sdCardDir = new File("/sdcard"); //获取SDCard目录  
+* 
+Environment.getExternalStorageState()方法用于获取SDCard的状态，如果手机装有SDCard，并且可以进行读写，那么方法返回的状态等于Environment.MEDIA_MOUNTED。
+* 
+Environment.getExternalStorageDirectory()方法用于获取SDCard的目录，当然要获取SDCard的目录，你也可以这样写：
+```
 
-    File saveFile = new File(sdCardDir, "itcast.txt");  
-
-    //上面两句代码可以合成一句：  
-
-    File saveFile = new File("/sdcard/a.txt");  
-
-    FileOutputStream outStream = new FileOutputStream(saveFile);  
-
-    outStream.write("test".getBytes());  
-
-    outStream.close();
+```
 
 # **三、SQLite数据库存储数据 **
 
