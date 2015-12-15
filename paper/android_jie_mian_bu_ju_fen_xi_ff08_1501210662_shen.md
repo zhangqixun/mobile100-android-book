@@ -6,7 +6,13 @@
 
 学院：北京大学软件与微电子学院
 
-  相信大家对andriod界面都不陌生呢。一款漂亮的软件必然是需要界面优雅、交互友好的UI的呢。今天主要跟大家讲一讲两个方面的内容，一是UI界面布局的几种方式，二是浅谈一下Android布局优化的信息，希望对您有所帮助。
+  相信大家对andriod界面都不陌生呢。一款漂亮的软件必然是需
+  
+  要界面优雅、交互友好的UI的呢。今天主要跟大家讲一讲两个方
+  
+  面的内容，一是UI界面布局的几种方式，二是浅谈一下Android布
+  
+  局优化的信息，希望对您有所帮助。
   
 
 
@@ -18,9 +24,101 @@
 ##  ③.表格布局(TableLayout)
 ##  ④.相对布局(RelativeLayout)
 ##  ⑤.绝对布局(AbsoluteLayout)
-##  ⑥.自定义布局 (custom-layout) 
+##  ⑥.和网格布局(GridLayout)
+##  ⑦.自定义布局 (custom-layout) 
 
 # 2.Android布局优化
+
+
+---
+
+##一、线性布局(LinearLayout)
+先看图：
+
+![](../07202223-88e65fa588fb4b1e8aad7fb027608cd6.png)
+
+LinearLayout是线性布局控件：要么横向排布，要么竖向排布
+
+线性布局的整体布局方式包括了垂直和水平，这个也是必须指定的呢。
+
+android:orientation：vertical (垂直方向) 、horizontal(水平方向)
+
+
+线性布局里面的常用属性：
+
+android:gravity------------设置的是控件自身上面的内容位置
+
+android:layout_gravity-----设置控件本身相对于父控件的显示位置
+
+android:layout_weight----- 给控件分配剩余空间
+
+```   
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+<!--  
+		代码编辑提示快捷键:	Alt+/
+
+		id="@+id/edtInput",ID 是连接UI 与代码的桥梁
+		layout_width="fill_parent" ，自动填充至屏幕宽度
+		layout_width="wrap_content" ，自动填充为控件大小
+		
+		在LinearLayout 里面的控件，按照水平或者垂直排列：
+			orientation="horizontal" ：水平排列；
+			orientation=" vertical" ：垂直排列
+			
+		android:id  —— 为控件指定相应的ID
+		android:text —— 指定控件当中显示的文字，需要注意的是，这里尽量使用strings.xml文件当中的字符串
+		android:grivity —— 指定控件的基本位置，比如说居中，居右等位置
+		android:textSize —— 指定控件当中字体的大小
+		android:background —— 指定该控件所使用的背景色,RGB命名法 
+		android:width —— 指定控件的宽度
+		android:height —— 指定控件的高度
+		android:padding* —— 指定控件的内边距，也就是说控件当中的内容
+		android:sigleLine —— 如果设置为真的话，则将控件的内容在同一行当中进行显示
+						
+-->
+   <EditText
+       android:id="@+id/edtInput"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:text="@+string/hello_world"
+       />
+
+    <Button
+        android:id="@+id/myButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+		android:id="@+id/firstText"
+		android:text="TextView第一行"
+		android:gravity="center_vertical"
+		android:textSize="15pt"
+		android:background="#aa0000"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="10000"
+        android:singleLine="true"/>
+	<TextView
+		android:id="@+id/secondText"
+		android:text="TextView第二行"
+		android:gravity="center_vertical"
+		android:textSize="15pt"
+		android:background="#0000aa"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"/>
+    
+</LinearLayout>
+
+```
+
+
 
 
 
@@ -35,7 +133,7 @@
    ②
    、
    、、
-    和网格布局(GridLayout)。
+    。
     自定义布局 (custom-layout)
 
 
