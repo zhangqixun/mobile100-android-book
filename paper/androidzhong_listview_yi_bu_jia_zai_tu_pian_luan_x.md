@@ -7,10 +7,6 @@
 
 package pku.ss.suncong.listviewtest;
 
-/**
- * Created by suc on 2015/12/14.
- */
-
 public class Images {
     public final static String[] imageUrls = new String[] {
             "http://img.my.csdn.net/uploads/201508/05/1438760758_3497.jpg",
