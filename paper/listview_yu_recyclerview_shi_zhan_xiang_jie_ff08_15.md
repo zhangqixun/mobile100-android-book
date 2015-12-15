@@ -14,25 +14,25 @@
 &#160;&#160;&#160;&#160;说到ListView，大家脑海里可能首先想到的是一个简单的列表形式的控件，还有几个adapter的使用。但事实上，ListView在实际的开发中几乎是随处可见，从简单的联系人，到复杂的信息展示，ListView的身影随处可见。比如说下面这些常用的app：![](qqlv.jpg)![](xc.jpg)![](朋友圈.jpg)![](淘宝.jpg)
   
   
-&#160;&#160;&#160;&#160;以上分别来自腾讯QQ、携程、淘宝、微信。可以看到ListView出现在比较重要的内容展示界面。ListView如此常用的一大原因在于客户端从后台获得的数据，往往是同样格式的不同内容的多条记录，每条记录用一个List Item展示，可以做到列表项的布局的复用。
+<p>&#160;&#160;&#160;&#160;以上分别来自腾讯QQ、携程、淘宝、微信。可以看到ListView出现在比较重要的内容展示界面。ListView如此常用的一大原因在于客户端从后台获得的数据，往往是同样格式的不同内容的多条记录，每条记录用一个List Item展示，可以做到列表项的布局的复用。
 因此，一句话总结ListView的重要性：得ListView者，得Android半壁江山~~。
 
 ### 1.2 Adapter介绍与简单使用
 
 
-&#160;&#160;&#160;&#160;想要使用基本的ListView功能，必须先理解Adapter。Adapter也就是我们常常听到的“适配器”，是一种很常见的设计模式。Adapter将数据源的数据按照用户指定的方式和ListView绑定。原理图如下：![](adapter.jpg)
+<p>&#160;&#160;&#160;&#160;想要使用基本的ListView功能，必须先理解Adapter。Adapter也就是我们常常听到的“适配器”，是一种很常见的设计模式。Adapter将数据源的数据按照用户指定的方式和ListView绑定。原理图如下：![](adapter.jpg)
  
-&#160;&#160;&#160;&#160;我们在Android Studio中选中Adapter，按下Ctrl+H就可以看到如下的Adapter继承关系：![](adapter继承图.jpg)
+<p>&#160;&#160;&#160;&#160;我们在Android Studio中选中Adapter，按下Ctrl+H就可以看到如下的Adapter继承关系：![](adapter继承图.jpg)
  
-&#160;&#160;&#160;&#160;可以看到主要的Adapter是BaseAdapter，其中有很多实现类，常用的有SimpleCursorAdapter、ArrayAdapter、SimpleAdapter。它们分别对应着不同类型的数据源。
-&#160;&#160;&#160;&#160;当我们的数据是从本地的SQLite中查询获得时，我们通常返回一个Cursor，此时应该使用CursorAdapter，因为CursorAdapter的数据源的类型是Cursor。再参照下图的参数介绍，我们可以定义一个CursorAdapter：![](SimpleCursorAdapter.jpg)
+<p>&#160;&#160;&#160;&#160;可以看到主要的Adapter是BaseAdapter，其中有很多实现类，常用的有SimpleCursorAdapter、ArrayAdapter、SimpleAdapter。它们分别对应着不同类型的数据源。
+<p>&#160;&#160;&#160;&#160;当我们的数据是从本地的SQLite中查询获得时，我们通常返回一个Cursor，此时应该使用CursorAdapter，因为CursorAdapter的数据源的类型是Cursor。再参照下图的参数介绍，我们可以定义一个CursorAdapter：![](SimpleCursorAdapter.jpg)
  
-&#160;&#160;&#160;&#160;更多的时候，我们的数据是从后台查询获得，此时当我们解析完Json或者XML后，通常将一个记录的数据保存在一个Map中或者一个信息类中。如果是以键值对保存在Map中，那我们应该使用SimpleAdapter，它接收的数据源的类型是：List<? extends Map< String,?>>。SimpleAdapter构造器的参数如下图：
+<p>&#160;&#160;&#160;&#160;更多的时候，我们的数据是从后台查询获得，此时当我们解析完Json或者XML后，通常将一个记录的数据保存在一个Map中或者一个信息类中。如果是以键值对保存在Map中，那我们应该使用SimpleAdapter，它接收的数据源的类型是：List<? extends Map< String,?>>。SimpleAdapter构造器的参数如下图：
 ![](SimpleAdapter.jpg)
  
-&#160;&#160;&#160;&#160;如果我们将一个记录的数据保存在一个信息类中，这个时候应该使用ArrayAdapter：![](ArrayAdapter.jpg)
+<p>&#160;&#160;&#160;&#160;如果我们将一个记录的数据保存在一个信息类中，这个时候应该使用ArrayAdapter：![](ArrayAdapter.jpg)
  
-&#160;&#160;&#160;&#160;介绍完Adapter，ListView的使用方法其实很简单。
+<p>&#160;&#160;&#160;&#160;介绍完Adapter，ListView的使用方法其实很简单。
 1.	像其他控件一样，先在布局文件写好ListView。
 2.	获取ListView的实例（findViewById）。
 3.	构造一个Adapter。
@@ -173,9 +173,9 @@
 </LinearLayout>
 ```
 
-&#160;&#160;&#160;&#160;展示效果：![](listitem.jpg)
+<p>&#160;&#160;&#160;&#160;展示效果：![](listitem.jpg)
  
-&#160;&#160;&#160;&#160;可以看到，单个列表项的还原度还是很高的。
+<p![](RecyclerView.gif)>&#160;&#160;&#160;&#160;可以看到，单个列表项的还原度还是很高的。
 第二步，编写信息类文件。这个信息类文件是用来描述一条记录里的信息。新建类GoodsInfo，源代码如下：
 
 ```
@@ -226,7 +226,7 @@ public class GoodsInfo
     }
 }
 ```
-&#160;&#160;&#160;&#160;第三步，编写自定义Adapter。这一步是重头戏。首先我们创建类GoodsAdapter，继承于ArrayAdapter。然后我们添加构造方法：
+<p>&#160;&#160;&#160;&#160;第三步，编写自定义Adapter。这一步是重头戏。首先我们创建类GoodsAdapter，继承于ArrayAdapter。然后我们添加构造方法：
 ```
 public GoodsAdapter(Context context, int resource, List objects)
 {
@@ -260,7 +260,7 @@ public GoodsAdapter(Context context, int resource, List objects)
         return view;
     }
 ```
-&#160;&#160;&#160;&#160;这里讲解一下这段代码。首先是参数convertView，文档里的解释是The old view to reuses, if possible。这里使用convertView是为了优化ListView。如果有旧的视图就直接使用旧的。下面还使用了另外一种优化方法，那就是ViewHolder。ViewHolder盛放需要去绑定数据的控件信息。我们用一个ViewHolder把这些控件全部放进去，再用view.setTag(viewHolder);这句代码，将ViewHolder存储在View中。再可重用的情况下通过viewHolder = (ViewHolder) view.getTag();来重新获取ViewHolder，从而重新获取相应的控件，而不用再去实例化新的控件。下面是ViewHolder的代码：
+<p>&#160;&#160;&#160;&#160;这里讲解一下这段代码。首先是参数convertView，文档里的解释是The old view to reuses, if possible。这里使用convertView是为了优化ListView。如果有旧的视图就直接使用旧的。下面还使用了另外一种优化方法，那就是ViewHolder。ViewHolder盛放需要去绑定数据的控件信息。我们用一个ViewHolder把这些控件全部放进去，再用view.setTag(viewHolder);这句代码，将ViewHolder存储在View中。再可重用的情况下通过viewHolder = (ViewHolder) view.getTag();来重新获取ViewHolder，从而重新获取相应的控件，而不用再去实例化新的控件。下面是ViewHolder的代码：
 ```
 class ViewHolder
 {
@@ -305,15 +305,15 @@ goodsLv.setAdapter(ga);
 ### 1.4 ListView的进一步深入
 
 
-&#160;&#160;&#160;&#160;当我们做出来一个这样的ListView以后，虽然美观程度已经不错，但是却是死的，还不会和用户进行交互。那么关于动态的交互，我们应该怎么做呢？再来学习一下典型的APP，看看它们是怎么做的：![](baiduyun.jpg)![](tb_scroll.jpg)
+<p>&#160;&#160;&#160;&#160;当我们做出来一个这样的ListView以后，虽然美观程度已经不错，但是却是死的，还不会和用户进行交互。那么关于动态的交互，我们应该怎么做呢？再来学习一下典型的APP，看看它们是怎么做的：![](baiduyun.jpg)![](tb_scroll.jpg)
              
-&#160;&#160;&#160;&#160;上面第一个例子是百度云的ListView，它的交互功能是：长按列表项，会出现打钩的图标，并在屏幕上方和下方显示工具栏，用来对文件夹进行操作。这个功能在实际使用过程中是很常见并且很实用的。第二个例子还是来自淘宝，当我们将列表项往左滑动时，会出现用户对该宝贝的评分还有搜索相似等功能，用起来十分方便，并且显得更加美观。
+<p>&#160;&#160;&#160;&#160;上面第一个例子是百度云的ListView，它的交互功能是：长按列表项，会出现打钩的图标，并在屏幕上方和下方显示工具栏，用来对文件夹进行操作。这个功能在实际使用过程中是很常见并且很实用的。第二个例子还是来自淘宝，当我们将列表项往左滑动时，会出现用户对该宝贝的评分还有搜索相似等功能，用起来十分方便，并且显得更加美观。
 <p>&#160;&#160;&#160;&#160;下面我们就在刚才的基础上，继续实现仿淘宝的ListView的滑动功能。
 <p>&#160;&#160;&#160;&#160;这里我们需要自定义一个SwipeListView继承于ListView，捕捉它的滑动事件，并进行处理。在实际动手演练之前，需要先介绍一下View的屏幕事件传递机制。最重要的两个方法，就是onInterceptTouchEvent()和onTouchEvent()。安卓的屏幕事件，先由最外层的父容器接收，一层层往下传，处理的时候相反，由最底层的子视图处理，一层层往上传。在往下传的过程中，如果父容器想要自己处理事件，不想传给子视图，就可以拦截事件；同样在上传的过程中，子视图可以自己把事件处理完，继而父容器便不需要再去处理。
 <p>&#160;&#160;&#160;&#160;具体实现起来，就是当你在屏幕上按下以后，首先第一个会调用最外层父容器的onInterceptTouchEvent()方法。如果一个父容器想自己处理，不想让子视图插手，他可以返回true，即拦截了这个事件。如果返回false，事件会继续传递给子视图。当事件传递结束开始执行时，会调用最底层的子视图的onTouchEvent()方法来处理事件。如果子视图认为自己已经完全处理好了这个事件，不希望父容器再插手，则可以返回true，即已经处理完了。如果返回false，还需继续调用父容器的onTouchEvent()方法。
 原理图如下：![](原理.png)
  
-&#160;&#160;&#160;&#160;介绍完补充知识，我们开始实现我们的自定义ListView。
+<p>&#160;&#160;&#160;&#160;介绍完补充知识，我们开始实现我们的自定义ListView。
 <p>&#160;&#160;&#160;&#160;第一步，先定义一些要用到的变量。相应的解释见注解：
 ```
 //记录是否是水平滑动
@@ -1234,4 +1234,5 @@ compile 'jp.wasabeef:recyclerview-animators:2.1.0'
 mRecyclerView.setItemAnimator(new SlideInLeftAnimator());
 ```
 <p>&#160;&#160;&#160;&#160;最终效果显示如下：
+<p>![](RecyclerView.gif)
  
