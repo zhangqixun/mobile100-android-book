@@ -76,6 +76,7 @@ public class Images {
 }
 
 之后，我们就要来设置布局，在activity_main.xml布局中的LinearLayout中新添加一个ListView，用来存放所有的图片信息：
+
 ![](sun.png)
 
 
