@@ -487,6 +487,70 @@ db.close();
  在getReadableDatabase()方法中，首先判断是否已存在数据库实例并且是打开状态，如果是，则直接返回该实例，否则试图获取一个可读写模式的数据库实例，如果遇到磁盘空间已满等情况获取失败的话，再以只读模式打开数据库，获取数据库实例并返回，然后为mDatabase赋值为最新打开的数据库实例。既然有可能调用到getWritableDatabase()方法，我们就要看一下了：
 
 ```
+public synchronized SQLiteDatabase getWritableDatabase(){
+if(mDatabase!=null&&mDatabase.isOpen()&&!mDatabase.isReadOnly()){
+//如果mDatabase不为空已打开并且不是只读模式，则返回该实例
+return mDatabase;
+}
+if(mIsInitializing){
+throw new IllegalStateException("getWritableDatabase called recursively");
+}
+boolean success = false;
+SQLiteDatabase db=null;
+//如果mDatabase不为空则加锁阻止其他的操作
+if(mDatabase!=null)
+mDatabase.lock();
+try{
+mIsInitializing = true;
+if(mName==null){
+db=SQLiteDatabase.create(null);
+}else{
+//打开或创建数据库
+db=mContext.openOrCreateDatabase(mName,0,mFactory);
+}
+//获取数据库版本（如果刚创建的数据库版本为0）
+int version = db.getVersion();
+//比较版本（我们代码中的版本mNewVersion 为1）
+if(version!=mNewVersion){
+db.beginTransaction();//开始事务
+try{
+if(version==0){
+//执行我们的onCreate方法
+onCreate(db);
+}else{
+//如果我们应用升级了mNewVersion为2，而原版本为1则执行onUpgrade方法
+onUpgrade(db,version,mNewVersion);
+}
+db.setVersion(mNewVersion);//设置最新版本
+db.setTransactionSuccessful();//设置事务成功
+}finally{
+db.endTransaction();//结束事务
+}
+}
+onOpen(db);
+success=true;
+return db;//返回可读写模式的数据库实例
+}finally{
+mIsInitializing = false;
+if(success){
+//打开成功
+if(mDatabase!=null){
+//如果mDatabase有值则先关闭
+try{
+mDatabase.close();
+}catch(Exception e){
+}
+mDatabase.unlock();//解锁
+}
+mDatabase=db;//赋值给mDatabase
+}else{
+//打开失败的情况：解锁、关闭
+if(mDatabase!=null)
+mDatabase.unlock();
+if(db!=null)
+db.close();
+}
+}
 
 ```
 大家可以看到，几个关键步骤是，首先判断mDatabase如果不为空已打开并不是只读模式则直接返回，否则如果mDatabase不为空则加锁，然后开始打开或创建数据库，比较版本，根据版本号来调用相应的方法，为数据库设置新版本号，最后释放旧的不为空的mDatabase并解锁，把新打开的数据库实例赋予mDatabase，并返回最新实例。
