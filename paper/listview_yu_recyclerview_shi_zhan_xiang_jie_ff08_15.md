@@ -1,6 +1,12 @@
 # ListView与RecyclerView实战详解（1501210885陈俊文）
 
 
+**姓名：陈俊文**
+
+**学号：1501210885
+**
+# 
+
 
 ##第一部分 ListView详解
 
@@ -49,7 +55,7 @@
 &#160;&#160;&#160;&#160;下面通过一个模仿实战，展示基本的ListView的使用方法。我们选取的模仿对象是淘宝app中展示查询宝贝的ListView。
 第一步，编写列表项的布局文件。
 首先要仿照淘宝app的界面，编写一个布局文件。在项目的layout里面创建一个taobao_listitem.xml文件。源代码如下：
-```
+``` xml
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
@@ -184,7 +190,7 @@
 <p>&#160;&#160;&#160;&#160;可以看到，单个列表项的还原度还是很高的。
 <p>&#160;&#160;&#160;&#160;第二步，编写信息类文件。这个信息类文件是用来描述一条记录里的信息。新建类GoodsInfo，源代码如下：
 
-```
+``` java
 /**
  * Created by cer on 2015/12/3.
  */
@@ -233,14 +239,14 @@ public class GoodsInfo
 }
 ```
 <p>&#160;&#160;&#160;&#160;第三步，编写自定义Adapter。这一步是重头戏。首先我们创建类GoodsAdapter，继承于ArrayAdapter。然后我们添加构造方法：
-```
+```java
 public GoodsAdapter(Context context, int resource, List objects)
 {
     super(context, resource, objects);
 }
 ```
 接下来是最重要的一步，就是重写getView()方法。先看源代码：
-```
+```java
 @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
@@ -269,7 +275,7 @@ public GoodsAdapter(Context context, int resource, List objects)
     }
 ```
 <p>&#160;&#160;&#160;&#160;这里讲解一下这段代码。首先是参数convertView，文档里的解释是The old view to reuses, if possible。这里使用convertView是为了优化ListView。如果有旧的视图就直接使用旧的。下面还使用了另外一种优化方法，那就是ViewHolder。ViewHolder盛放需要去绑定数据的控件信息。我们用一个ViewHolder把这些控件全部放进去，再用view.setTag(viewHolder);这句代码，将ViewHolder存储在View中。再可重用的情况下通过viewHolder = (ViewHolder) view.getTag();来重新获取ViewHolder，从而重新获取相应的控件，而不用再去实例化新的控件。下面是ViewHolder的代码：
-```
+```java
 class ViewHolder
 {
     ImageView tmall;
@@ -278,7 +284,7 @@ class ViewHolder
 }
 ```
 <p>&#160;&#160;&#160;&#160;第三步，在Activity中初始化列表信息。
-```
+```java
 void initGoodsInfo()
 {
     GoodsInfo g1 = new GoodsInfo("特厚塑料整理箱收纳箱储物箱周转箱全国包邮",true,"包邮   上海");
@@ -302,7 +308,7 @@ void initGoodsInfo()
 }
 ```
 最后一步，初始化ListView和Adapter，再将Adapter与ListView绑定：
-```
+```java
 initGoodsInfo();
 GoodsAdapter ga = new GoodsAdapter(this,R.layout.taobao_listitem,goodsInfoList);
 ListView goodsLv = (ListView)findViewById(R.id.good_lv);
@@ -329,7 +335,7 @@ goodsLv.setAdapter(ga);
  
 <p>&#160;&#160;&#160;&#160;介绍完补充知识，我们开始实现我们的自定义ListView。
 <p>&#160;&#160;&#160;&#160;第一步，先定义一些要用到的变量。相应的解释见注解：
-```
+```java
 //记录是否是水平滑动
 private Boolean mIsHorizontal;
 //上一次的列表项视图
@@ -358,7 +364,7 @@ private boolean mIsShown;
 <p>&#160;&#160;&#160;&#160;情况四：左右划当前item，隐藏右视图。
 <p>&#160;&#160;&#160;&#160;情况五：假设此时右视图没有显示，如果左划距离过短，重新隐藏右视图。
 <p>&#160;&#160;&#160;&#160;onInterceptTouchEvent源代码：
-```
+```java
  * 如果返回true，则将事件拦截，由listView自己处理；
 如果返回false，则将事件继续传给listView的子视图。
  */
@@ -414,7 +420,7 @@ public boolean onInterceptTouchEvent(MotionEvent ev)
 ```
 <p>&#160;&#160;&#160;&#160;再解读一下这里的代码，首先是记录按下时的初始坐标和移动时的当前坐标。然后要判断滑动是否是误操作，再决定是否将事件拦截。
 <p>&#160;&#160;&#160;&#160;第三步，重写onTouchEvent()方法。
-```
+```java
 /**
  * 返回false：不能移动任何方向
  * 返回true：只能移动水平方向
@@ -533,7 +539,7 @@ public boolean onTouchEvent(MotionEvent ev)
 ```
 <p>&#160;&#160;&#160;&#160;这段代码主要是判断了之前所说的可能出现的多种情况，再决定是隐藏右视图还是显示右视图。
 <p>&#160;&#160;&#160;&#160;第四步，同样非常重要。编写实现隐藏右视图的hiddenRight()和显示右视图的showRight()，以及它们调用的实际实现滑动动画内容的Handler。
-```
+```java
 /**
  * 显示右视图
  * @param view
@@ -648,7 +654,7 @@ class MoveHandler extends Handler
 ```
 <p>&#160;&#160;&#160;&#160;Handler接收的信息中，包含滑动的起始坐标和中点坐标。并计算显示的帧数。每次通过view.scrollTo()方法实现一帧的移动，移动完一帧后，又会调用sendEmptyMessageDelayed(0, mDurationStep)方法，间隔一小段时间再移动下一帧。如此反复，实现拖动的动画。
 第五步，编写其他需要的函数。
-```
+```java
 public int getRightViewWidth()
 {
     return mRightViewWidth;
@@ -689,7 +695,7 @@ private boolean judgeScrollDirection(float dx, float dy)
 }
 ```
 <p>&#160;&#160;&#160;&#160;经过上面的五步操作，我们就写好了一个自定义的ListView。接下来，需要在原来的布局文件中，加入右边视图的代码：
-```
+```xml
 <!--右侧滑动时出现的图像-->
 <LinearLayout
     android:layout_width="wrap_content"
@@ -822,7 +828,7 @@ private boolean judgeScrollDirection(float dx, float dy)
 </LinearLayout>
 ```
 <p>&#160;&#160;&#160;&#160;下面还需改写Adapter。加入：
-```
+```java
 viewHolder.item_right = (View) view.findViewById(R.id.item_right);
 
 LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(mRightWidth, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -830,7 +836,7 @@ viewHolder.item_right.setLayoutParams(lp2);
 ```
 <p>&#160;&#160;&#160;&#160;在VieHolder中加入：View item_right;
 最后还要修改MainActivity：
-```
+```java
 GoodsAdapter ga = new GoodsAdapter(this,R.layout.taobao_listitem,goodsInfoList);
 SwipeListView goodsLv = (SwipeListView)findViewById(R.id.good_lv);
 ga.setmRightWidth(goodsLv.getRightViewWidth());
@@ -840,7 +846,7 @@ goodsLv.setAdapter(ga);
 <p>&#160;&#160;&#160;&#160;![](scroll.jpg)
  
 <p>&#160;&#160;&#160;&#160;最后，我们考虑为listView加上点击事件。这里的事件应该在adapter中的getView()方法里加上。代码如下：
-```
+```java
 viewHolder.similar.setOnClickListener(new View.OnClickListener()
 {
     @Override
@@ -887,12 +893,12 @@ viewHolder.same.setOnClickListener(new View.OnClickListener()
 <p>&#160;&#160;&#160;&#160;![](RecyclerView.jpg)
  
 <p>&#160;&#160;&#160;&#160;第一步，在gradle中添加支持库。
-```
+```gradle
 compile 'com.android.support:recyclerview-v7:23.1.1'
 compile 'com.android.support:cardview-v7:23.1.1'
 ```
 <p>&#160;&#160;&#160;&#160;第二步，定义数据模型。
-```
+```java
 public class PlanItemInfo
 {
     private String name;
@@ -938,7 +944,7 @@ public class PlanItemInfo
 }
 ```
 <p>&#160;&#160;&#160;&#160;第三步，定义RecyclerView的布局文件：
-```
+```xml
 <android.support.v7.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
@@ -946,7 +952,7 @@ public class PlanItemInfo
         tools:context=".MyActivity" />
 ```
 <p>&#160;&#160;&#160;&#160;第四步，编写Item的布局，此处使用CardView：
-```
+```xml
 	<android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -1019,7 +1025,7 @@ public class PlanItemInfo
 <p>&#160;&#160;&#160;&#160;![](三个方法.jpg)
  
 <p>&#160;&#160;&#160;&#160;具体实现代码：
-```
+```java
 public class MyAdapter extends RecyclerView.Adapter implements ItemTouchHelperAdapter
 {
     private List plans;
@@ -1079,7 +1085,7 @@ public class MyAdapter extends RecyclerView.Adapter implements ItemTouchHelperAd
 }
 ```
 <p>&#160;&#160;&#160;&#160;最后一步，将Adapter绑定到RecyclerView。
-```
+```java
         mRecyclerView = (RecyclerView) findViewById(R.id.list);
         // 设置LinearLayoutManager
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -1102,17 +1108,21 @@ public class MyAdapter extends RecyclerView.Adapter implements ItemTouchHelperAd
 
 <p>&#160;&#160;&#160;&#160;ReclerView并没有像ListView一样有自带的OnItemClickListener。想要实现类似的功能，我们需要借用监听者模式，手动添加。
 <p>&#160;&#160;&#160;&#160;首先在Adapter中添加接口OnItemClickListener：
-```
+```java
 public interface OnItemClickListener
     {
         void onItemClick(View itemView, int position);
     }
-并写好setter：
+```
+<p>&#160;&#160;&#160;&#160;并写好setter：
+```java
 public void setOnItemClickListener(OnItemClickListener listener)
     {
         this.listener = listener;
     }
-在ViewHolder中为视图绑定系统的OnClickListener：
+```
+<p>&#160;&#160;&#160;&#160;在ViewHolder中为视图绑定系统的OnClickListener：
+```java
 itemView.setOnClickListener(new OnClickListener(){
 	@Override
 	public void OnClick(View v)
@@ -1123,7 +1133,7 @@ itemView.setOnClickListener(new OnClickListener(){
 });
 ```
 <p>&#160;&#160;&#160;&#160;通过上面的程序，将视图的点击事件交给接口中的方法去实现。而接口中具体的方法，则需要到主程序中去实现。让主Activity实现我们的接口，并实现：
-```
+```java
 @Override
     public void onItemClick(View itemView, int position)
     {
@@ -1147,14 +1157,14 @@ itemView.setOnClickListener(new OnClickListener(){
 <p>&#160;&#160;&#160;&#160;void onSwiped()：滑动时调用。
 <p>&#160;&#160;&#160;&#160;在重写这两个回调时，我们希望实际的操作应该在Adapter中进行。因此我们写一个接口，让Adapter实现这个接口，实现接口注入。
 <p>&#160;&#160;&#160;&#160;接口：
-```
+```java
 public interface ItemTouchHelperAdapter {
     boolean onItemMove(int fromPosition, int toPosition);
     void onItemDismiss(int position);
 }
 ```
 Adapter中的实现：
-```
+```java
 @Override
     public void onItemDismiss(int position) {
         plans.remove(position);
@@ -1169,7 +1179,7 @@ Adapter中的实现：
     }
 ```
 <p>&#160;&#160;&#160;&#160;再编写SimpleItemTouchHelperCallback：
-```
+```java
 public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     public static final float ALPHA_FULL = 1.0f;
@@ -1238,7 +1248,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 }
 ```
 <p>&#160;&#160;&#160;&#160;最后一步，我们将ItemTouchHelper绑定到RecyclerView：
-```
+```java
 ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(myAdapter);
 mItemTouchHelper = new ItemTouchHelper(callback);
 mItemTouchHelper.attachToRecyclerView(mRecyclerView);
@@ -1249,11 +1259,11 @@ mItemTouchHelper.attachToRecyclerView(mRecyclerView);
 
 
 <p>&#160;&#160;&#160;&#160;RecyclerView的一大优点就是添加动画非常方便。我们使用一个开源的动画库：
-```
+```gradle
 compile 'jp.wasabeef:recyclerview-animators:2.1.0'
 ```
 <p>&#160;&#160;&#160;&#160;再将动画设置成新的动画即可：
-```
+```java
 mRecyclerView.setItemAnimator(new SlideInLeftAnimator());
 ```
 <p>&#160;&#160;&#160;&#160;最终效果显示如下：
