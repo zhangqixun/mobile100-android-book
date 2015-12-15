@@ -702,7 +702,17 @@ listView.setAdapter(adapter);
 如果手动去管理Cursor的话会非常的麻烦，还有一定的风险，处理不当的话运行期间就会出现异常，幸好Activity为我们提供了startManagingCursor(Cursor cursor)方法，它会根据Activity的生命周期去管理当前的Cursor对象，下面是该方法的说明：
 
 ```
-
+/**
+  *This method allows the activity to take care of managing the given
+  *{@link Cursor}'s lifecycle for you based on the activity's lifecycle.
+  *That is,when the activity is stopped it will automatically call
+  *{@link Cursor#deactivate} on the given Cursor, and when it is later restarted
+  *it will call {@link Cursor#requery} for you.When the activity is
+  *destroyed,all managed Cursors will be closed automatically.
+  *@param c The Cursor to be managed.
+  *@see #managedQuery(android.net.Uri,String[],String,String[],String)
+  *@see #stopManagingCursor
+  */
 ```
 
 文中提到，startManagingCursor方法会根据Activity的生命周期去管理当前的Cursor对象的生命周期，就是说当Activity停止时他会自动调用Cursor的deactivate方法，禁用游标，当Activity重新回到屏幕时它会调用Cursor的requery方法再次查询，当Activity摧毁时，被管理的Cursor都会自动关闭释放。
