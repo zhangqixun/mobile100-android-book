@@ -53,3 +53,19 @@ fileSize字段保存着整个DEX文件的大小，如果我们在修改的过程
 headerSize字段保存着DEX文件头部的大小，此项数值一般为0x70，因为在DEX文件的头部中，所有上述字段都是必须的。因此，此字段的数值并不会改变。但是，DEX文件存在着一个优化版本，在优化版本中，这个数值可能会改变。
 
 endianTag字段可以显示出该DEX文件是针对大端机器编译的还是针对小端机器。图中显示的是小端存储。
+
+linkSize和linkOff字段中储存着链接的大小和链接的偏移量。
+
+mapOff字段所存放的偏移量是数据类型DexMapList的偏移量，这个数据类型在整个文件中只出现一次，用来存放DEX文件中每一个数据块的类型、大小和偏移量。
+```
+struct DexMapItem {
+    u2 type;            
+    u2 unused;
+    u4 size;            
+    u4 offset;         
+};
+
+struct DexMapList {
+    u4  size;             
+    DexMapItem list[1];  
+};```
