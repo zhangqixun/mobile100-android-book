@@ -82,20 +82,11 @@ public class Images {
 
 然后，定义一个image_item.xml布局来表示ListView中每一个子View的布局，其中只有一个ImageView控件来显示图片，默认情况下会显示一个默认图片，这样所有的布局就OK了：
 
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+![](cong.png)
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:src="@drawable/empty_photo"
-        android:scaleType="fitXY"/>
-
-</LinearLayout>
 
 数据源已经有了，布局也设好了，接下来，我们要新建ListView的适配器ImageAdapter，这样数据源和ListView之间才能进行数据交互。ImageAdapter类中有一个getView()方法，该方法先依据当前的位置信息拿到图片的URL地址，然后再使用inflate()这个方法将图片加载到image_item.xml布局中，并获得ImageView控件的实例，接着启动一个BitmapWorkerTask异步任务用于从网络上下载图片，最终将图片设置到ImageView上面。这个过程中为了避免图片占用过大的内存空间，我们采用了LruCache技术来进行内存控制管理，具体代码如下：
+
 package pku.ss.suncong.listviewtest;
 
 import android.content.Context;
@@ -113,10 +104,6 @@ import android.widget.ListView;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-/**
- * Created by suc on 2015/12/14.
- */
 public class ImageAdapter extends ArrayAdapter<String> {
     /**
      * 图片缓存技术的核心类，用于缓存所有下载好的图片，在程序内存达到设定值时会将最少最近使用的图片移除掉。
@@ -237,7 +224,9 @@ public class ImageAdapter extends ArrayAdapter<String> {
 
     }
 }
+
 最后，修改MainActivity中代码：
+
 package pku.ss.suncong.listviewtest;
 
 import android.app.Activity;
@@ -280,14 +269,20 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 }
+
 还有在AndroidManifest.xml中要添加INTERNET权限：
-<uses-permission android:name="android.permission.INTERNET" />
+
+![](suncong.png)
+
 运行结果，我们会发现图片显示的位置有的有错误，而且图片会自动地变来变去，为什么会这样呢？
+
 二、导致问题的原因
 
 这是由ListView的工作原理导致的，因为不可能为每个图片都配置一个单独的ImageView控件，所以它借助RecycleBin机制实现了很好的生产者和消费者的模式，移出屏幕的子View将会很快被回收，并进入到RecycleBin当中进行缓存，然后新进入屏幕的子View则会优先利用从RecycleBin当中获取的缓存，这样的话不管我们有多少条数据需要显示，实际上屏幕上的子View其实也就来来回回那么几个。
 每当界面上有新进入的元素时，就会调用getView()方法，来启动请求异步地从网络上获取图片，但是网络操作通常是比较慢的，当我们快速滑动ListView时就有可能出现某个位置上的元素进入屏幕后还没等图片下载完成，它就又被移出了屏幕，但是此时刚刚发起的图片请求有了响应，就会显示到当前位置上，可是我们已经移出了刚刚那个图片，当前位置应该被屏幕新进入的元素重新利用起来，当前显示的并不是我们现在想要的图片了，虽然他们位置不一样，但是因为共用一个ImageView实例，就会导致这样的图片乱序问题。
+
 上面是移出元素时会发生图片乱序问题的解释，下面新进入元素也会有问题，屏幕上新进入的元素会发出一条网络请求来获取当前位置的图片，待图片下载完成后会配置到同样的ImageView上，所以就会出现先显示的是一张图片，一会儿又变成了另外一张图片的情况，也就是我们刚刚说的看到的图片会自动变来变去的情况。
+
 以上就是导致问题出现的解释，既然已经知道了问题的原因，那我们该怎么解决这个问题呢？
 
 三、解决办法
@@ -296,6 +291,7 @@ public class MainActivity extends Activity {
 
 采用findViewWithTag来避免图片出现乱序的情况是一种比较通俗易懂的做法，顾名思义，这个方法就是根据Tag的名字来获取具备该Tag名的控件，先调用控件的setTag()方法来给控件配置一个Tag，然后我们再调用ListView的findViewWithTag()这个方法使用相同的Tag名来找回该控件。因为ListView中的ImageView控件都是重用的，移出屏幕的子View会很快被屏幕新进入的图片重新利用起来，这时getView()方法就会被再一次得到执行，而在getView()方法中会为这个ImageView控件设置一个新的Tag，这样老的Tag就会被覆盖掉，于是这时再调用findVIewWithTag()方法并传入老的Tag，返回的就会是null，而我们判断只有ImageView不等于null时才会设置图片，这样图片乱序的问题也就解决了。
 方法确定了，那么我们来进行对问题的处理，我们只需要修改一下ImageAdapter类即可。需要定义一个mListView全局变量，然后修改getView()方法，在这个方法中判断全局变量mListView是否为空，若是就把参数parent赋值给它。getView()方法中还调用了ImageView的setTag()方法，并把当前位置图片的URL地址作为参数传了进去，这个是方便之后调用findViewWithTag()方法。之后需要修改BitmapWorkerTask的构造函数，这里不再是通过构造函数把ImageView的实例传进去了，而是在onPostExecute()方法当中通过ListView的findVIewWithTag()方法来去获取到ImageView控件的实例。判断下获取到的控件实例是否为空，若不为空就让图片显示到控件上。代码如下：
+
 public class ImageAdapter extends ArrayAdapter<String> {
 private ListView mListView;
     ......
@@ -353,14 +349,17 @@ class BitmapWorkerTask extends AsyncTask<String, Void, BitmapDrawable> {
         }
        ......
 对问题进行解决后，运行结果如下：
-
-   
-
+![](yunxing1.png)
+![](yunxing2.png)
+![](yunxing3.png)
 
 2.使用弱引用关联
+
 这种解决方案的本质是让ImageView和BitmapWorkerTask中建立一个双向关联，互相持有对方的引用，再通过适当的逻辑判断来解决图片乱序问题，这种双向关联为了防止内存泄露，采用弱引用的方式建立。
 如何建立双向弱引用关联呢？BitmapWorkerTask指向ImageView的弱引用关联可以通过在BitmapWorkerTask中增加一个构造函数，并以ImageView作为其中的一个参数然后使用WeakReference对ImageView进行了一层包装来间接持有ImageView的引用；而ImageView指向BitmapWorkerTask的弱引用关联需要借助自定义AsyncDrawable类的方式来实现，它继承自BitmapDrawable，重写AsyncDrawable的构造函数，并将BitmapWorkerTask传入，这样就有了AsyncDrawable指向BitmapWorkerTask的关联，而AsyncDrawable可以通过ImageView的setImageDrawable()方法设置到ImageView中，这样ImageView就和AsyncDrawable关联起来了，这样通过AsyncDrawable就有了ImageView指向BitmapWorkerTask的弱引用关联。
+
 有了关联了，现在要通过逻辑判断来防止出现图片乱序的情况，我们可以通过两个方法，一个是用getBitmapWorkerTask()方法，该方法可以依据传入的ImageView来获得它相对应的BitmapWorkerTask，内部的逻辑就是先获取ImageView相对应的AsyncDrawable，再通过AsyncDrawable获取对应的BitmapWorkerTask。另外一个是getAttachedImageView()方法，该方法直接通过BitmapWorkerTask获取当前所关联的ImageView，然后调用getBitmapWorkerTask()方法来获得该ImageView所对应的BitmapWorkerTask，最后判断，若获得的BitmapWorkerTask等于this，即若是当前的BitmapWorkerTask，则将ImageView返回，否则返回null。最后，在onPostExecute()方法当中，只需使用getAttachedImageView()方法获得的ImageView来显示图片就OK了。需要修改ImageAdapter后的代码如下：
+
 public class ImageAdapter2 extends ArrayAdapter<String> {
 
         private ListView mListView;
