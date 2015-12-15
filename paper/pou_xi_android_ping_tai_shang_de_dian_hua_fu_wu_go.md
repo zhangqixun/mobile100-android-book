@@ -59,7 +59,6 @@ startActivity(whoyougonnacall);
 String srvcName = Context.TELEPHONE_SERVICE;
 TelephonyMagager telephonyManager=(TelephonyMagager)getSystemService(srvcName);
 
-	Telephony Magager提供了许多电话服务属性的直接访问，包括设备、网络、客户识别模块（SIM）以及数据状态的详细信息。
 	
 （1）	读取电话设备的详细信息
 
