@@ -48,14 +48,15 @@ b）另外一个是当从输入的数据的集合来读取所以需要的内容�
 
 static是Java中的一个关键字，当用它来修饰成员变量时，那么该变量就属于该类，而不是该类的实例。所以用static修饰的变量，它的生命周期是很长的，如果用它来引用一些资源耗费过多的实例（Context的情况最多），这时就要谨慎对待了。
 
-1.public class ClassName{
-
-2.private static Context mContext;  
+``````
+1.public class ClassName {  
+2.     private static Context mContext;  
 3.     //省略  
-4.}  ```
+4.}  
+``````
 以上的代码是很危险的，如果将Activity赋值到么mContext的话。那么即使该Activity已经onDestroy，但是由于仍有对象保存它的引用，因此该Activity依然不会被释放。
-    我们举Android文档中的一个例子。
-
+我们举Android文档中的一个例子。
+``````
 1.private static Drawable sBackground;  
 2.     
 3. @Override  
@@ -71,16 +72,29 @@ static是Java中的一个关键字，当用它来修饰成员变量时，那么�
 13.   label.setBackgroundDrawable(sBackground);  
 14.     
 15.   setContentView(label);  
-16. }  ```
-    sBackground, 是一个静态的变量，但是我们发现，我们并没有显式的保存Contex的引用，但是，当Drawable与View连接之后，Drawable就将View设置为一个回调，由于View中是包含Context的引用的，所以，实际上我们依然保存了Context的引用。这个引用链如下：
+16. }  
+``````
+sBackground 是一个静态的变量，但是我们发现，我们并没有显式的保存Contex的引用，但是，当Drawable与View连接之后，Drawable就将View设置为一个回调，由于View中是包含Context的引用的，所以，实际上我们依然保存了Context的引用。这个引用链如下：
+
     Drawable->TextView->Context
-    所以，最终该Context也没有得到释放，发生了内存泄露。
+    
+   所以，最终该Context也没有得到释放，发生了内存泄露。
     如何才能有效的避免这种引用的发生呢？
-    第一，应该尽量避免static成员变量引用资源耗费过多的实例，比如Context。
-    第二、Context尽量使用Application Context，因为Application的Context的生命周期比较长，引用它不会出现内存泄露的问题。
-    第三、使用WeakReference代替强引用。比如可以使用WeakReference mContextRef;
- 3.3注意线程的使用
+  * 
+第一，应该尽量避免static成员变量引用资源耗费过多的实例，比如Context。*
+
+* 
+第二、Context尽量使用Application Context，因为Application的Context的生命周期比较长，引用它不会出现内存泄露的问题。* 
+* 
+
+    第三、使用WeakReference代替强引用。比如可以使用WeakReference mContextRef;* 
+
+
+##  3.3注意线程的使用
+
+
   线程也是造成内存泄露的一个重要的源头。线程产生内存泄露的主要原因在于线程生命周期的不可控。我们来考虑下面一段代码。
+``````
 1.public class MyActivity extends Activity {  
 2.    @Override  
 3.    public void onCreate(Bundle savedInstanceState) {  
@@ -97,6 +111,7 @@ static是Java中的一个关键字，当用它来修饰成员变量时，那么�
 14.        }  
 15.    }  
 16.}  
+``````
     这段代码很平常也很简单，是我们经常使用的形式。我们思考一个问题：假设MyThread的run函数是一个很费时的操作，当我们开启该线程后，将设备的横屏变为了竖屏，一般情况下当屏幕转换时会重新创建Activity，按照我们的想法，老的Activity应该会被销毁才对，然而事实上并非如此。
     由于我们的线程是Activity的内部类，所以MyThread中保存了Activity的一个引用，当MyThread的run函数没有结束时，MyThread是不会被销毁的，因此它所引用的老的Activity也不会被销毁，因此就出现了内存泄露的问题。
     有些人喜欢用Android提供的AsyncTask，但事实上AsyncTask的问题更加严重，Thread只有在run函数不结束时才出现这种内存泄露问题，然而AsyncTask内部的实现机制是运用了ThreadPoolExcutor,该类产生的Thread对象的生命周期是不确定的，是应用程序无法控制的，因此如果AsyncTask作为Activity的内部类，就更容易出现内存泄露的问题。
@@ -104,6 +119,7 @@ static是Java中的一个关键字，当用它来修饰成员变量时，那么�
     第一、将线程的内部类，改为静态内部类。
     第二、在线程内部采用弱引用保存Context引用。
     解决的模型如下：
+``````
 1.public abstract class WeakAsyncTaskProgress, Result, WeakTarget> extends  
 2.        AsyncTaskProgress, Result> {  
 3.    protected WeakReference mTarget;  
@@ -151,12 +167,22 @@ static是Java中的一个关键字，当用它来修饰成员变量时，那么�
 45.        // No default action  
 46.    }  
 47.}  
+``````
   在使用了此种方法管理线程后，虽然会增加额外的代码量（代表着工作量的提高，但其实也有限），但是却会使得线程使用更加安全可靠，大大降低了内存泄露的风险
- 3.4高效地利用内存缓存技术
+ 
+## 3.4高效地利用内存缓存技术
+
+
 对于图片缓存的方式就是内存缓存技术。在Android中，开发中通常会有大量的图片，所以对于图片的处理也对性能有很大的改变，自带的有一个叫做LruCache类专门用处理来图片缓存的。这个类的特性是，当缓存的图片达到了预先设定的最大数量的时候，就会把近期比较少使用的图片给回收掉，步骤是这样的：
+
+* 
 a)第一步，设置缓存图片的内存大小，我的是设置为手机内存的1/0,手机内存的获取方式：int MAXMEMONRY = (int) (Runtime.getRuntime() .maxMemory() / 1024);
+* 
+
  b）LruCache里面的键值对对应的分别是URL和他的图片资源
- c）重写了一个叫做sizeOf的方法，这个方法返回出来图片的数字。
+* 
+c）重写了一个叫做sizeOf的方法，这个方法返回出来图片的数字。
+``````
 private LruCache<String, Bitmap> mMemoryCache;
 private LruCacheUtils() {
         if (mMemoryCache == null)
@@ -176,8 +202,11 @@ private LruCacheUtils() {
                 }
             };
     }
+``````
 
+* 
 d）对图片的处理分别有下面的方法，清空图片缓存、添加缓存、从缓存中获得图片、从缓存中移除图片。毫无疑问，移除缓冲和清除缓存是必不可少的，但是为了不内存溢出。
+``````
 public void clearCache() {
         if (mMemoryCache != null) {
             if (mMemoryCache.size() > 0) {
@@ -220,10 +249,15 @@ public void clearCache() {
             }
         }
     }
-3.5正确使用Cursor
+    ``````
+
+## 3.5正确使用Cursor
+
+
   Cursor是Android查询数据后得到的一个管理数据集合的类，正常情况下，如果查询得到的数据量较小时不会有内存问题，而且虚拟机能够保证Cusor最终会被释放掉。
     然而如果Cursor的数据量特表大，特别是如果里面有Blob信息时，应该保证Cursor占用的内存被及时的释放掉，而不是等待GC来处理。并且Android明显是倾向于编程者手动的将Cursor close掉，因为在源代码中我们发现，如果等到垃圾回收器来回收时，会给用户以错误提示。
     所以我们使用Cursor的方式一般如下：
+``````
 1.Cursor cursor = null;  
 2.try {  
 3.    cursor = mContext.getContentResolver().query(uri,null, null,null,null);  
@@ -237,8 +271,10 @@ public void clearCache() {
 11.    if (cursor != null) {  
 12.       cursor.close();  
 13.    }  
-14.}  
-    有一种情况下，我们不能直接将Cursor关闭掉，这就是在CursorAdapter中应用的情况，但是注意，CursorAdapter在Acivity结束时并没有自动的将Cursor关闭掉，因此，你需要在onDestroy函数中，手动关闭。
+14.}
+``````
+有一种情况下，我们不能直接将Cursor关闭掉，这就是在CursorAdapter中应用的情况，但是注意，CursorAdapter在Acivity结束时并没有自动的将Cursor关闭掉，因此，你需要在onDestroy函数中，手动关闭。
+``````
 1.@Override  
 2.protected void onDestroy() {        
 3.    if (mAdapter != null && mAdapter.getCurosr() != null) {  
@@ -246,10 +282,16 @@ public void clearCache() {
 5.    }  
 6.    super.onDestroy();   
 7.}  
-  CursorAdapter中的changeCursor函数，会将原来的Cursor释放掉，并替换为新的Cursor，所以你不用担心原来的Cursor没有被关闭。
-  你可能会想到使用Activity的managedQuery来生成Cursor，这样Cursor就会与Acitivity的生命周期一致了，多么完美的解决方法！然而事实上managedQuery也有很大的局限性。
-    managedQuery生成的Cursor必须确保不会被替换，因为可能很多程序事实上查询条件都是不确定的，因此我们经常会用新查询的Cursor来替换掉原先的Cursor。因此这种方法适用范围也是很小。
-3.5使用9-patch图片
+``````
+CursorAdapter中的changeCursor函数，会将原来的Cursor释放掉，并替换为新的Cursor，所以你不用担心原来的Cursor没有被关闭。
+
+你可能会想到使用Activity的managedQuery来生成Cursor，这样Cursor就会与Acitivity的生命周期一致了，多么完美的解决方法！然而事实上managedQuery也有很大的局限性。
+
+managedQuery生成的Cursor必须确保不会被替换，因为可能很多程序事实上查询条件都是不确定的，因此我们经常会用新查询的Cursor来替换掉原先的Cursor。因此这种方法适用范围也是很小。
+
+## 3.5使用9-patch图片
+
+
   android的.9.png是android系统中一种特殊的图片格式，专门用来用来处理图片大小变化后（如拉伸）的失真，不正常，如我们看到的qq聊天中的文字气泡，不管你输入的文字多少，发送后背景气泡四边的圆角是不会变样的。图片经过9patch处理后保存后名为：xxx.9.png,打开时边缘会有一圈空像素边框，上面有黑线或黑点。
   使用9-patch图片不仅能使得图片能够很好的适应屏幕显示，而且其避免了调用整张图片导致的内存占用过多。
 
