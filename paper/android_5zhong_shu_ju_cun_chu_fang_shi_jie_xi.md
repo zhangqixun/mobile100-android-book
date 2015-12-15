@@ -380,94 +380,62 @@ this.info=info;
 }
 ```
 然后，我们需要一个DBManager，来封装我们所有的业务方法，代码如下：
-1.import java.util.ArrayList;  
-2.import java.util.List;  
-3.import android.content.ContentValues;  
-4.import android.content.Context;  
-5.import android.database.Cursor;  
-6.import android.database.sqlite.SQLiteDatabase;  
-
-public class DBManager {  
-10.    private DBHelper helper;  
-11.    private SQLiteDatabase db;  
-12.      
-13.    public DBManager(Context context) {  
-14.        helper = new DBHelper(context);  
-15.        //因为getWritableDatabase内部调用了mContext.openOrCreateDatabase(mName, 0, mFactory);  
-16.        //所以要确保context已初始化,我们可以把实例化DBManager的步骤放在Activity的onCreate里  
-17.        db = helper.getWritableDatabase();  
-18.    }  
-19.      
-20.    /** 
-21.     * add persons 
-22.     * @param persons 
-23.     */  
-24.    public void add(List<Person> persons) {  
-25.        db.beginTransaction();  //开始事务  
-26.        try {  
-27.            for (Person person : persons) {  
-28.                db.execSQL("INSERT INTO person VALUES(null, ?, ?, ?)", new Object[]{person.name, person.age, person.info});  
-29.            }  
-30.            db.setTransactionSuccessful();  //设置事务成功完成  
-31.        } finally {  
-32.            db.endTransaction();    //结束事务  
-33.        }  
-34.    }  
-35.      
-36.    /** 
-37.     * update person's age 
-38.     * @param person 
-39.     */  
-40.    public void updateAge(Person person) {  
-41.        ContentValues cv = new ContentValues();  
-42.        cv.put("age", person.age);  
-43.        db.update("person", cv, "name = ?", new String[]{person.name});  
-44.    }  
-45.      
-46.    /** 
-47.     * delete old person 
-48.     * @param person 
-49.     */  
-50.    public void deleteOldPerson(Person person) {  
-51.        db.delete("person", "age >= ?", new String[]{String.valueOf(person.age)});  
-52.    }  
-53.      
-54.    /** 
-55.     * query all persons, return list 
-56.     * @return List<Person> 
-57.     */  
-58.    public List<Person> query() {  
-59.        ArrayList<Person> persons = new ArrayList<Person>();  
-60.        Cursor c = queryTheCursor();  
-61.        while (c.moveToNext()) {  
-62.            Person person = new Person();  
-63.            person._id = c.getInt(c.getColumnIndex("_id"));  
-64.            person.name = c.getString(c.getColumnIndex("name"));  
-65.            person.age = c.getInt(c.getColumnIndex("age"));  
-66.            person.info = c.getString(c.getColumnIndex("info"));  
-67.            persons.add(person);  
-68.        }  
-69.        c.close();  
-70.        return persons;  
-71.    }  
-72.      
-73.    /** 
-74.     * query all persons, return cursor 
-75.     * @return  Cursor 
-76.     */  
-77.    public Cursor queryTheCursor() {  
-78.        Cursor c = db.rawQuery("SELECT * FROM person", null);  
-79.        return c;  
-80.    }  
-81.      
-82.    /** 
-83.     * close database 
-84.     */  
-85.    public void closeDB() {  
-86.        db.close();  
-87.    }  
-.}  
-
+```
+import java.util.ArrayList;
+import java.util.List;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+public class DBManager{
+private DBHelper helper;
+private SQLiteDatabase db;
+public DBManager(Context context){
+helper=new DBHelper(context);//因为getWritableDatabase内部调用了mContext.openOrCreateDatabase(mName,0,mFactory);//所以要确保context已初始化，我们可以把实例化DBManager的步骤放在Activity的onCreate里
+db=helper.getWritableDatabase();
+}
+public void add(List<Person>person){
+db.beginTransaction();//开始事物
+try{
+for(Person person:person){
+db.execSQL("INSERT INTO person VALUES(null,?,?,?)",new Object[]{person.name,person.age,person.info});
+}
+db.setTransactionSuccessful();//设置事务成功完成
+}finally{
+db.endTransaction();//结束事务
+}
+}
+public void updateAge(Person person){
+ContentValues cv=new ContentValues();
+cv.put("age",person.age);
+db.update("person",cv,"name=?",new String[]{person.name});
+}
+public void deleteOldPerson(Person person){
+db.delete("person","age>=?",new String[]{String.valueOf(person.age)});
+}
+public List<Person>query(){
+ArrayList<Person> persons=new ArrayList<Person>();
+Cursor c = queryTheCursor();
+while(c.moveToNext()){
+Person person = new Person();
+Person._id=c.getInt(c.getColumnIndex("_id"));
+person.name=c.getString(c.getColumnIndex("name"));
+person.age=c.getInt(c.getColumnIndex("age"));
+person.info=c.getString(c.getColumnIndex("info"));
+person.add(person);
+}
+c.close();
+return person;
+}
+public Cursor queryTheCursor(){
+Cursor c=db.rawQuery("SELECT * FROM person",null);
+return c;
+}
+public void closeDB(){
+db.close();
+}
+}
+```
 . 我们在DBManager构造方法中实例化DBHelper并获取一个SQLiteDatabase对象，作为整个应用的数据库实例；在添加多个Person信息时，我们采用了事务处理，确保数据完整性；最后我们提供了一个closeDB方法，释放数据库资源，这一个步骤在我们整个应用关闭时执行，这个环节容易被忘记，所以朋友们要注意。
 
 . 我们获取数据库实例时使用了getWritableDatabase()方法，也许朋友们会有疑问，在getWritableDatabase()和getReadableDatabase()中，你为什么选择前者作为整个应用的数据库实例呢？在这里我想和大家着重分析一下这一点。
