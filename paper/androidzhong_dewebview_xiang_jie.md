@@ -275,6 +275,7 @@ startActivity(intent);
 });
 ```
 ![](xuuxin_9.png)
+
 还有一种方式是通过native布局去展示一个错误页面的布局，首先加入一个textview布局
 ```
 <TextView
