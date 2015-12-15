@@ -436,11 +436,14 @@ db.close();
 }
 }
 ```
-. 我们在DBManager构造方法中实例化DBHelper并获取一个SQLiteDatabase对象，作为整个应用的数据库实例；在添加多个Person信息时，我们采用了事务处理，确保数据完整性；最后我们提供了一个closeDB方法，释放数据库资源，这一个步骤在我们整个应用关闭时执行，这个环节容易被忘记，所以朋友们要注意。
+* 
+我们在DBManager构造方法中实例化DBHelper并获取一个SQLiteDatabase对象，作为整个应用的数据库实例；在添加多个Person信息时，我们采用了事务处理，确保数据完整性；最后我们提供了一个closeDB方法，释放数据库资源，这一个步骤在我们整个应用关闭时执行，这个环节容易被忘记，所以朋友们要注意。
 
-. 我们获取数据库实例时使用了getWritableDatabase()方法，也许朋友们会有疑问，在getWritableDatabase()和getReadableDatabase()中，你为什么选择前者作为整个应用的数据库实例呢？在这里我想和大家着重分析一下这一点。
+* 
+我们获取数据库实例时使用了getWritableDatabase()方法，也许朋友们会有疑问，在getWritableDatabase()和getReadableDatabase()中，你为什么选择前者作为整个应用的数据库实例呢？在这里我想和大家着重分析一下这一点。
 
-. 我们来看一下SQLiteOpenHelper中的getReadableDatabase()方法：
+* 
+我们来看一下SQLiteOpenHelper中的getReadableDatabase()方法：
 
 .public synchronized SQLiteDatabase getReadableDatabase() {  
 2.    if (mDatabase != null && mDatabase.isOpen()) {  
