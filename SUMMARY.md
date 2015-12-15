@@ -117,6 +117,7 @@
    * [Android源码编译流程（1501210942 李智博）](paper/2015/1501210942/androidyuan_ma_bian_yi_liu_cheng.md)
    * [Android UI布局和控件(1501210515董雪)](paper/android_uibu_ju_he_kong_4ef628_1501210515_dong_96e.md)
    * [Android的碎片机制浅析（1501211032_张凯云）](paper/androidde_sui_pian_ji_zhi_qian_xi_ff08_1501211032_.md)
+   * Android开发中的内存优化
 * [常见面试题目](question/index.md)
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
