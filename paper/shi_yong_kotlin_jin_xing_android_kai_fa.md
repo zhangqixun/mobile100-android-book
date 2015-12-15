@@ -1,6 +1,4 @@
-#使用Kotlin进行Android开发
-####作者：胡光洲
-####学号：1501210909
+#使用Kotlin进行Android开发 （作者：胡光洲 学号：1501210909）
 ![kotlin-logo](http://upload-images.jianshu.io/upload_images/620824-8ef93e15d5ef27c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 ##一、Kotlin是什么？
 [Kotlin](http://www.kotlinlang.org/)  是一个基于 JVM 的新的编程语言，由 [JetBrains](https://www.jetbrains.com/) 开发。
