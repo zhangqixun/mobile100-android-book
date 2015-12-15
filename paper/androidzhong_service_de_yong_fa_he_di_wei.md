@@ -516,7 +516,7 @@ onclick事件
 ![](QQ20151215-2@2x.png)
           
           
-          
+可以看到,不仅 MyIntentService 和 MainActivity 所在的线程 id 不一样,而且 onDestroy() 方法也得到了执行,说明MyIntentService在运行完毕后确实自动停止了。
           
           
           
