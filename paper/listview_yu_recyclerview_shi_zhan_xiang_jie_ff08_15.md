@@ -883,7 +883,8 @@ viewHolder.same.setOnClickListener(new View.OnClickListener()
 ### 2.2 基本使用
 
 
-<p>&#160;&#160;&#160;&#160;使用RecyclerView的基本步骤总结如下：![](RecyclerView.jpg)
+<p>&#160;&#160;&#160;&#160;使用RecyclerView的基本步骤总结如下：
+<p>&#160;&#160;&#160;&#160;![](RecyclerView.jpg)
  
 <p>&#160;&#160;&#160;&#160;第一步，在gradle中添加支持库。
 ```
@@ -1014,7 +1015,8 @@ public class PlanItemInfo
 </android.support.v7.widget.CardView>
 ```
 <p>&#160;&#160;&#160;&#160;第五步，编写RecyclerView.Adapter。
-<p>&#160;&#160;&#160;&#160;RecyclerView.Adapter中需要重写的三个方法如下：![](三个方法.jpg)
+<p>&#160;&#160;&#160;&#160;RecyclerView.Adapter中需要重写的三个方法如下：
+<p>&#160;&#160;&#160;&#160;![](三个方法.jpg)
  
 <p>&#160;&#160;&#160;&#160;具体实现代码：
 ```
@@ -1128,7 +1130,8 @@ itemView.setOnClickListener(new OnClickListener(){
         Toast.makeText(this,"点击了："+((TextView)itemView.findViewById (R.id.card_name)).getText().toString(),Toast.LENGTH_LONG).show();
     }
 ```
-<p>&#160;&#160;&#160;&#160;完成，点击效果如下：![](小计划.png)
+<p>&#160;&#160;&#160;&#160;完成，点击效果如下：
+<p>&#160;&#160;&#160;&#160;![](小计划.png)
  
 
 ### 2.4 交互深入
@@ -1165,7 +1168,7 @@ Adapter中的实现：
         return true;
     }
 ```
-<p>&#160;&#160;&#160;&#160;再编写：
+<p>&#160;&#160;&#160;&#160;再编写SimpleItemTouchHelperCallback：
 ```
 public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
@@ -1254,5 +1257,5 @@ compile 'jp.wasabeef:recyclerview-animators:2.1.0'
 mRecyclerView.setItemAnimator(new SlideInLeftAnimator());
 ```
 <p>&#160;&#160;&#160;&#160;最终效果显示如下：
-<p>![](RecyclerView.gif)
+<p>&#160;&#160;&#160;&#160;![](RecyclerView.gif)
  
