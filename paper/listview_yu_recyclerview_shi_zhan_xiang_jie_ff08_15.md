@@ -11,20 +11,23 @@
 ### 1.1简介
 
 
-说到ListView，大家脑海里可能首先想到的是一个简单的列表形式的控件，还有几个adapter的使用。但事实上，ListView在实际的开发中几乎是随处可见，从简单的联系人，到复杂的信息展示，ListView的身影随处可见。比如说下面这些常用的app：![](qqlv.jpg)![](xc.jpg)![](朋友圈.jpg)![](淘宝.jpg)
+&#160;&#160;&#160;&#160;说到ListView，大家脑海里可能首先想到的是一个简单的列表形式的控件，还有几个adapter的使用。但事实上，ListView在实际的开发中几乎是随处可见，从简单的联系人，到复杂的信息展示，ListView的身影随处可见。比如说下面这些常用的app：![](qqlv.jpg)![](xc.jpg)![](朋友圈.jpg)![](淘宝.jpg)
   
   
-以上分别来自腾讯QQ、携程、淘宝、微信。可以看到ListView出现在比较重要的内容展示界面。ListView如此常用的一大原因在于客户端从后台获得的数据，往往是同样格式的不同内容的多条记录，每条记录用一个List Item展示，可以做到列表项的布局的复用。
+&#160;&#160;&#160;&#160;以上分别来自腾讯QQ、携程、淘宝、微信。可以看到ListView出现在比较重要的内容展示界面。ListView如此常用的一大原因在于客户端从后台获得的数据，往往是同样格式的不同内容的多条记录，每条记录用一个List Item展示，可以做到列表项的布局的复用。
 因此，一句话总结ListView的重要性：得ListView者，得Android半壁江山~~。
-1.2 Adapter介绍与简单使用
-想要使用基本的ListView功能，必须先理解Adapter。Adapter也就是我们常常听到的“适配器”，是一种很常见的设计模式。Adapter将数据源的数据按照用户指定的方式和ListView绑定。原理图如下：![](adapter.jpg)
+
+### 1.2 Adapter介绍与简单使用
+
+
+&#160;&#160;&#160;&#160;想要使用基本的ListView功能，必须先理解Adapter。Adapter也就是我们常常听到的“适配器”，是一种很常见的设计模式。Adapter将数据源的数据按照用户指定的方式和ListView绑定。原理图如下：![](adapter.jpg)
  
-我们在Android Studio中选中Adapter，按下Ctrl+H就可以看到如下的Adapter继承关系：![](adapter继承图.jpg)
+&#160;&#160;&#160;&#160;我们在Android Studio中选中Adapter，按下Ctrl+H就可以看到如下的Adapter继承关系：![](adapter继承图.jpg)
  
-可以看到主要的Adapter是BaseAdapter，其中有很多实现类，常用的有SimpleCursorAdapter、ArrayAdapter、SimpleAdapter。它们分别对应着不同类型的数据源。
-当我们的数据是从本地的SQLite中查询获得时，我们通常返回一个Cursor，此时应该使用CursorAdapter，因为CursorAdapter的数据源的类型是Cursor。再参照下图的参数介绍，我们可以定义一个CursorAdapter：![](SimpleCursorAdapter.jpg)
+&#160;&#160;&#160;&#160;可以看到主要的Adapter是BaseAdapter，其中有很多实现类，常用的有SimpleCursorAdapter、ArrayAdapter、SimpleAdapter。它们分别对应着不同类型的数据源。
+&#160;&#160;&#160;&#160;当我们的数据是从本地的SQLite中查询获得时，我们通常返回一个Cursor，此时应该使用CursorAdapter，因为CursorAdapter的数据源的类型是Cursor。再参照下图的参数介绍，我们可以定义一个CursorAdapter：![](SimpleCursorAdapter.jpg)
  
-更多的时候，我们的数据是从后台查询获得，此时当我们解析完Json或者XML后，通常将一个记录的数据保存在一个Map中或者一个信息类中。如果是以键值对保存在Map中，那我们应该使用SimpleAdapter，它接收的数据源的类型是：List<? extends Map< String,?>>。SimpleAdapter构造器的参数如下图：
+&#160;&#160;&#160;&#160;更多的时候，我们的数据是从后台查询获得，此时当我们解析完Json或者XML后，通常将一个记录的数据保存在一个Map中或者一个信息类中。如果是以键值对保存在Map中，那我们应该使用SimpleAdapter，它接收的数据源的类型是：List<? extends Map< String,?>>。SimpleAdapter构造器的参数如下图：
 ![](SimpleAdapter.jpg)
  
 如果我们将一个记录的数据保存在一个信息类中，这个时候应该使用ArrayAdapter：![](ArrayAdapter.jpg)
