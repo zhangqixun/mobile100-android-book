@@ -89,6 +89,7 @@ public class Images {
 </LinearLayout>
 
 然后，定义一个image_item.xml布局来表示ListView中每一个子View的布局，其中只有一个ImageView控件来显示图片，默认情况下会显示一个默认图片，这样所有的布局就OK了：
+
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
