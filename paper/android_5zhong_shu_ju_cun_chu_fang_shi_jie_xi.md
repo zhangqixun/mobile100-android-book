@@ -1061,82 +1061,21 @@ Toast.makeText(ResolverDemoActivity.this,"删除完成",1).show();}});
 ```
 # **五.网络存储数据**
 
+* 
 前面介绍的几种存储都是将数据存储在本地设备上，除此之外，还有一种存储（获取）数据的方式，通过网络来实现数据的存储和获取。
 
-   我们可以调用WebService返回的数据或是解析HTTP协议实现网络数据交互。
+* 
+我们可以调用WebService返回的数据或是解析HTTP协议实现网络数据交互。
 具体需要熟悉java.net.*，Android.net.*这两个包的内容，在这就不赘述了，请大家参阅相关文档。
 
-   下面是一个通过地区名称查询该地区的天气预报，以POST发送的方式发送请求到webservicex.net站点，访问WebService.webservicex.net站点上提供查询天气预报的服务。
+* 
+下面是一个通过地区名称查询该地区的天气预报，以POST发送的方式发送请求到webservicex.net站点，访问WebService.webservicex.net站点上提供查询天气预报的服务。
  
 代码如下：
 
-```import java.util.ArrayList;
-
-import java.util.List;
-
-import org.apache.http.HttpResponse;
-
-import org.apache.http.NameValuePair;
-
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-
-import org.apache.http.client.methods.HttpPost;
-
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import org.apache.http.message.BasicNameValuePair;
-
-import org.apache.http.protocol.HTTP;
-
-import org.apache.http.util.EntityUtils;
-
-
-import android.app.Activity;
-
-import android.os.Bundle;
-
-
-public class MyAndroidWeatherActivity extends Activity {
-    //定义需要获取的内容来源地址
-    private static final String SERVER_URL = 
-        "http://www.webservicex.net/WeatherForecast.asmx/GetWeatherByPlaceName"; 
-    
-    
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        
-        HttpPost request = new HttpPost(SERVER_URL); //根据内容来源地址创建一个Http请求
-        // 添加一个变量 
-        List<NameValuePair> params = new ArrayList<NameValuePair>(); 
-        // 设置一个地区名称
-        params.add(new BasicNameValuePair("PlaceName", "NewYork"));  //添加必须的参数
-        
-        
-        try { 
-            //设置参数的编码
-            request.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8)); 
-            //发送请求并获取反馈
-            HttpResponse httpResponse = new DefaultHttpClient().execute(request);
-             
-            // 解析返回的内容
-            if(httpResponse.getStatusLine().getStatusCode() != 404){ 
-               String result = EntityUtils.toString(httpResponse.getEntity()); 
-               System.out.println(result);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-       } 
-    }
-}
 ```
- 
- 
-   别忘记了在配置文件中设置访问网络权限：
-``` <uses-permission android:name="android.permission.INTERNET"/>```
 
+```
 
 #*六. 小结*
 
