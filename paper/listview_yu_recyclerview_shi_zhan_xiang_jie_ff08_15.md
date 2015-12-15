@@ -840,26 +840,38 @@ viewHolder.same.setOnClickListener(new View.OnClickListener()
     }
 });
 ```
-<p>&#160;&#160;&#160;&#160;当然，之前要在ViewHolder里面加上这两个TextView，这里代码不赘述。注意一点，这里是在getView()方法中调用的。这个方法提供了当前的item的号码，但是getView()中绑定监听器的时候，由于是匿名类，不可以直接使用position这个参数。所以需要自定义一个final修饰的itemPosition保存position的值来使用。效果如下：![](同款.jpg)
+<p>&#160;&#160;&#160;&#160;当然，之前要在ViewHolder里面加上这两个TextView，这里代码不赘述。注意一点，这里是在getView()方法中调用的。这个方法提供了当前的item的号码，但是getView()中绑定监听器的时候，由于是匿名类，不可以直接使用position这个参数。所以需要自定义一个final修饰的itemPosition保存position的值来使用。效果如下：![](相似.jpg)![](同款.jpg)
                 
-至此ListView的实战就介绍到这里，但是称霸了多年的ListView拥有丰富的扩展，依然等着大家去实际动手演练。
-第二部分 RecyclerView详解
-2.1简介
-RecyclerView是android推出的“当红炸子鸡”。Android对它的期望是可以全面代替ListView和GridView。低于5.0版本的系统，可以下载support-v7的扩展包，来支持RecyclerView。RecyclerView之所以叫这个名字，是因为它的可重用性远比ListView要强，并且操作简单。具体区别如下：
-1.RecyclerView强制需要ViewHolder。在上面讲解ListView时，曾经提到可以使用ViewHolder的技巧来提高ListView的旧视图的回收利用率，但是这里只是推荐使用，并不是强制的。
-2.可以自定义的Item布局。ListView只能将Item布局在一个线性的竖直方向上；但是RecyclerView有一个RecyclerView.LayoutManager，它可以让Item的布局还可以是横向的列表或者是格子样式。
-3.更简单的Item动画。ListView并没有为Item专门提供动画。相反，RecyclerView有RecyclerView.ItemAnimation类，专门用来处理Item的动画。
-4.手动的数据源。如上文所述，ListView的Adapter有针对不同类型的数据源，但是RecyclerView只能手动地去实现数据源的提供。
-5.手动的Item装饰。ListView有android:divider属性用来满足简单的divider装饰。但RecyclerView需要一个RecyclerView.ItemDecoration对象来建立这样的装饰。
-6.手动的点击事件。ListView实现了AdapterView.OnItemClickListener接口来绑定点击事件和Item。但是RecyclerView只支持RecyclerView.OnItemTouchListener。
-下面，我们用RecyclerView和CardView做一个小型计划表，来感受RecyclerView的魅力。
-2.2 基本使用
-使用RecyclerView的基本步骤总结如下：
+<p>&#160;&#160;&#160;&#160;至此ListView的实战就介绍到这里，但是称霸了多年的ListView拥有丰富的扩展，依然等着大家去实际动手演练。
+
+## 第二部分 RecyclerView详解
+
+
+
+### 2.1简介
+
+
+<p>&#160;&#160;&#160;&#160;RecyclerView是android推出的“当红炸子鸡”。Android对它的期望是可以全面代替ListView和GridView。低于5.0版本的系统，可以下载support-v7的扩展包，来支持RecyclerView。RecyclerView之所以叫这个名字，是因为它的可重用性远比ListView要强，并且操作简单。具体区别如下：
+<p>&#160;&#160;&#160;&#160;1.RecyclerView强制需要ViewHolder。在上面讲解ListView时，曾经提到可以使用ViewHolder的技巧来提高ListView的旧视图的回收利用率，但是这里只是推荐使用，并不是强制的。
+<p>&#160;&#160;&#160;&#160;2.可以自定义的Item布局。ListView只能将Item布局在一个线性的竖直方向上；但是RecyclerView有一个RecyclerView.LayoutManager，它可以让Item的布局还可以是横向的列表或者是格子样式。
+<p>&#160;&#160;&#160;&#160;3.更简单的Item动画。ListView并没有为Item专门提供动画。相反，RecyclerView有RecyclerView.ItemAnimation类，专门用来处理Item的动画。
+<p>&#160;&#160;&#160;&#160;4.手动的数据源。如上文所述，ListView的Adapter有针对不同类型的数据源，但是RecyclerView只能手动地去实现数据源的提供。
+<p>&#160;&#160;&#160;&#160;5.手动的Item装饰。ListView有android:divider属性用来满足简单的divider装饰。但RecyclerView需要一个RecyclerView.ItemDecoration对象来建立这样的装饰。
+<p>&#160;&#160;&#160;&#160;6.手动的点击事件。ListView实现了AdapterView.OnItemClickListener接口来绑定点击事件和Item。但是RecyclerView只支持RecyclerView.OnItemTouchListener。
+<p>&#160;&#160;&#160;&#160;下面，我们用RecyclerView和CardView做一个小型计划表，来感受RecyclerView的魅力。
+
+### 2.2 基本使用
+
+
+<p>&#160;&#160;&#160;&#160;使用RecyclerView的基本步骤总结如下：
  
-第一步，在gradle中添加支持库。
+<p>&#160;&#160;&#160;&#160;第一步，在gradle中添加支持库。
+```
 compile 'com.android.support:recyclerview-v7:23.1.1'
 compile 'com.android.support:cardview-v7:23.1.1'
-第二步，定义数据模型。
+```
+<p>&#160;&#160;&#160;&#160;第二步，定义数据模型。
+```
 public class PlanItemInfo
 {
     private String name;
@@ -903,13 +915,17 @@ public class PlanItemInfo
         this.planTime = planTime;
     }
 }
-第三步，定义RecyclerView的布局文件：
+```
+<p>&#160;&#160;&#160;&#160;第三步，定义RecyclerView的布局文件：
+```
 <android.support.v7.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MyActivity" />
-第四步，编写Item的布局，此处使用CardView：
+```
+<p>&#160;&#160;&#160;&#160;第四步，编写Item的布局，此处使用CardView：
+```
 	<android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -976,10 +992,12 @@ public class PlanItemInfo
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>
-第五步，编写RecyclerView.Adapter
-RecyclerView.Adapter中需要重写的三个方法如下：
+```
+<p>&#160;&#160;&#160;&#160;第五步，编写RecyclerView.Adapter。
+<p>&#160;&#160;&#160;&#160;RecyclerView.Adapter中需要重写的三个方法如下：
  
-具体实现代码：
+<p>&#160;&#160;&#160;&#160;具体实现代码：
+```
 public class MyAdapter extends RecyclerView.Adapter implements ItemTouchHelperAdapter
 {
     private List plans;
@@ -1037,7 +1055,9 @@ public class MyAdapter extends RecyclerView.Adapter implements ItemTouchHelperAd
         }
     }
 }
-最后一步，将Adapter绑定到RecyclerView。
+```
+<p>&#160;&#160;&#160;&#160;最后一步，将Adapter绑定到RecyclerView。
+```
         mRecyclerView = (RecyclerView) findViewById(R.id.list);
         // 设置LinearLayoutManager
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -1049,13 +1069,18 @@ public class MyAdapter extends RecyclerView.Adapter implements ItemTouchHelperAd
         myAdapter = new MyAdapter(this, plans);
         // 为mRecyclerView设置适配器
         mRecyclerView.setAdapter(myAdapter);
-至此，我们已经完成了RecyclerView的基本使用，结果图如下：
+```
+<p>&#160;&#160;&#160;&#160;至此，我们已经完成了RecyclerView的基本使用，结果图如下：
 
 
 
-2.3 点击事件
-ReclerView并没有像ListView一样有自带的OnItemClickListener。想要实现类似的功能，我们需要借用监听者模式，手动添加。
-首先在Adapter中添加接口OnItemClickListener：
+
+### 2.3 点击事件
+
+
+<p>&#160;&#160;&#160;&#160;ReclerView并没有像ListView一样有自带的OnItemClickListener。想要实现类似的功能，我们需要借用监听者模式，手动添加。
+<p>&#160;&#160;&#160;&#160;首先在Adapter中添加接口OnItemClickListener：
+```
 public interface OnItemClickListener
     {
         void onItemClick(View itemView, int position);
