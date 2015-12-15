@@ -272,13 +272,16 @@ db.close();
    
 上面的代码中基本上囊括了大部分的数据库操作；对于添加、更新和删除来说，我们都可以使用。
 
-```1.db.executeSQL(String sql);  
-2.db.executeSQL(String sql, Object[] bindArgs);```//sql语句中使用占位符，然后第二个参数是实际的参数集  
+```
+db.executeSQL(String sql);
+db.executeSQL(String sql,Object[] bindArgs);//sql语句中使用占位符，然后第二个参数是实际的参数集
+```
 除了统一的形式之外，他们还有各自的操作方法：
 
-1.db.insert(String table, String nullColumnHack, ContentValues values);  
-2.db.update(String table, Contentvalues values, String whereClause, String whereArgs);  
-
+```
+db.insert(String table,String nullColumnHack,ContentValues values);
+db.update(String table,Contentvalues values,String whereClause,String whereArgs);
+```
 * 
 以上三个方法的第一个参数都是表示要操作的表名；insert中的第二个参数表示如果插入的数据每一列都为空的话，需要指定此行中某一列的名称，系统将此列设置为NULL，不至于出现错误；insert中的第三个参数是ContentValues类型的变量，是键值对组成的Map，key代表列名，value代表该列要插入的值；update的第二个参数也很类似，只不过它是更新该字段key为最新的value值，第三个参数whereClause表示WHERE表达式，比如“age > ? and age < ?”等，最后的whereArgs参数是占位符的实际参数值；delete方法的参数也是一样。
 
