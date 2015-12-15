@@ -30,9 +30,9 @@
 &#160;&#160;&#160;&#160;更多的时候，我们的数据是从后台查询获得，此时当我们解析完Json或者XML后，通常将一个记录的数据保存在一个Map中或者一个信息类中。如果是以键值对保存在Map中，那我们应该使用SimpleAdapter，它接收的数据源的类型是：List<? extends Map< String,?>>。SimpleAdapter构造器的参数如下图：
 ![](SimpleAdapter.jpg)
  
-如果我们将一个记录的数据保存在一个信息类中，这个时候应该使用ArrayAdapter：![](ArrayAdapter.jpg)
+&#160;&#160;&#160;&#160;如果我们将一个记录的数据保存在一个信息类中，这个时候应该使用ArrayAdapter：![](ArrayAdapter.jpg)
  
-介绍完Adapter，ListView的使用方法其实很简单。
+&#160;&#160;&#160;&#160;介绍完Adapter，ListView的使用方法其实很简单。
 1.	像其他控件一样，先在布局文件写好ListView。
 2.	获取ListView的实例（findViewById）。
 3.	构造一个Adapter。
@@ -41,10 +41,11 @@
 ### 1.3 实战演练
 
 
-下面通过一个模仿实战，展示基本的ListView的使用方法。我们选取的模仿对象是淘宝app中展示查询宝贝的ListView。
+&#160;&#160;&#160;&#160;下面通过一个模仿实战，展示基本的ListView的使用方法。我们选取的模仿对象是淘宝app中展示查询宝贝的ListView。
 第一步，编写列表项的布局文件。
 首先要仿照淘宝app的界面，编写一个布局文件。在项目的layout里面创建一个taobao_listitem.xml文件。源代码如下：
-```<?xml version="1.0" encoding="utf-8"?>
+```
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
@@ -169,11 +170,12 @@
                 <!--android:background="@color/divide_line"/>-->
         </RelativeLayout>
     </RelativeLayout>
-</LinearLayout>```
+</LinearLayout>
+```
 
-展示效果：
+&#160;&#160;&#160;&#160;展示效果：
  
-可以看到，单个列表项的还原度还是很高的。
+&#160;&#160;&#160;&#160;可以看到，单个列表项的还原度还是很高的。
 第二步，编写信息类文件。这个信息类文件是用来描述一条记录里的信息。新建类GoodsInfo，源代码如下：
 package com.applenob.cer.listviewdemo;
 
