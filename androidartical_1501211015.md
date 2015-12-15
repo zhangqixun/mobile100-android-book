@@ -100,6 +100,7 @@ if(!bluetoothAdapter.isEnabled()){
 }
 ```
 如下图：
+
 ![](1.png)
 
 在此之前同过BluetoothAdapter.getDefaultAdapter()方法获取蓝牙适配器对象
@@ -108,6 +109,7 @@ if(!bluetoothAdapter.isEnabled()){
 bluetoothAdapter.startDiscovery()
 
 如下图：
+
 ![](2.png)可以看到搜索到了四个蓝牙设备
 
 4、连接设备，连接设备时需要确保搜索过程已经结束，否则会出现异常。
