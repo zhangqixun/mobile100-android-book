@@ -1258,4 +1258,15 @@ mRecyclerView.setItemAnimator(new SlideInLeftAnimator());
 ```
 <p>&#160;&#160;&#160;&#160;最终效果显示如下：
 <p>&#160;&#160;&#160;&#160;![](RecyclerView.gif)
+## 参考
+
+### 参考网站
+
+[Android Developers](https://developer.android.com/index.html)
+
+[Using the RecyclerView](https://github.com/codepath/android_guides/wiki/Using-the-RecyclerView)
+
+[Drag and Swipe with RecyclerView](https://medium.com/@ipaulpro/drag-and-swipe-with-recyclerview-b9456d2b1aaf#.jho8jsfd1Drag and Swipe with RecyclerView)
  
+### 参考书籍
+[《Android群英传》](http://book.douban.com/subject/26599539/)
