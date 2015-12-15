@@ -336,33 +336,28 @@ c.getString(int columnIndex);//返回当前行指定列的值
 
 下面我们先来看一下DBHelper：
 
-1.import android.content.Context;  
-2.import android.database.sqlite.SQLiteDatabase;  
-3.import android.database.sqlite.SQLiteOpenHelper;  
-4.  
-5.public class DBHelper extends SQLiteOpenHelper {  
-6.  
-7.    private static final String DATABASE_NAME = "test.db";  
-8.    private static final int DATABASE_VERSION = 1;  
-9.      
-10.    public DBHelper(Context context) {  
-11.        //CursorFactory设置为null,使用默认值  
-12.        super(context, DATABASE_NAME, null, DATABASE_VERSION);  
-13.    }  
-14.  
-15.    //数据库第一次被创建时onCreate会被调用  
-16.    @Override  
-17.    public void onCreate(SQLiteDatabase db) {  
-18.        db.execSQL("CREATE TABLE IF NOT EXISTS person" +  
-19.                "(_id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, age INTEGER, info TEXT)");  
-20.    }  
-21.  
-22.    //如果DATABASE_VERSION值被改为2,系统发现现有数据库版本不同,即会调用onUpgrade  
-23.    @Override  
-24.    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {  
-25.        db.execSQL("ALTER TABLE person ADD COLUMN other STRING");  
-26.    }  
-27.}  
+```
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+public class DBHelper extends SQLiteOpenHelper{
+private static final String DATABASE_NAME = "test.db";
+private static final int DATABASE_VERSION=1;
+public DBHelper(Context context){
+//CursorFactory设置为null，使用默认值
+super(context,DATABASE_NAME,null,DATABASE_VERSION);
+}
+//数据库第一次被创建时onCreate会被调用
+public void onCreate(SQLiteDatabase db){
+db.execSQL("CREATE TABLE IF NOT EXISTS person"+"(_id INTEGER PRIMARY KEY AUTOINCREMENT,name VARCHAR,age INTEGER, info TEXT)");
+}
+//如果DATABASE_VERSION值被改为2，系统发现现有数据库版本不同，即会调用 onUpgrade
+public void onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion)
+{
+db.execSQL("ALTER TABLE person ADD COLUMN other STRING");
+}
+}
+```
 
 正如上面所述，数据库第一次创建时onCreate方法会被调用，我们可以执行创建表的语句，当系统发现版本变化之后，会调用onUpgrade方法，我们可以执行修改表结构等语句。
 
