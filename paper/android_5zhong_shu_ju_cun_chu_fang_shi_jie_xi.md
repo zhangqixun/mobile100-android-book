@@ -225,53 +225,48 @@ SQLite Database数据库。Android对数据库的支持很好，它本身集成�
 * 
 下面就向大家介绍一下SQLite常用的操作方法，为了方便，我将代码写在了Activity的onCreate中：
 
-.protected void onCreate(Bundle savedInstanceState) {  
-3.        super.onCreate(savedInstanceState);  
-4.          
-5.        //打开或创建test.db数据库  
-6.        SQLiteDatabase db = openOrCreateDatabase("test.db", Context.MODE_PRIVATE, null);  
-7.        db.execSQL("DROP TABLE IF EXISTS person");  
-8.        //创建person表  
-9.        db.execSQL("CREATE TABLE person (_id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, age SMALLINT)");  
-10.        Person person = new Person();  
-11.        person.name = "john";  
-12.        person.age = 30;  
-13.        //插入数据  
-14.        db.execSQL("INSERT INTO person VALUES (NULL, ?, ?)", new Object[]{person.name, person.age});  
-15.          
-16.        person.name = "david";  
-17.        person.age = 33;  
-18.        //ContentValues以键值对的形式存放数据  
-19.        ContentValues cv = new ContentValues();  
-20.        cv.put("name", person.name);  
-21.        cv.put("age", person.age);  
-22.        //插入ContentValues中的数据  
-23.        db.insert("person", null, cv);  
-24.          
-25.        cv = new ContentValues();  
-26.        cv.put("age", 35);  
-27.        //更新数据  
-28.        db.update("person", cv, "name = ?", new String[]{"john"});  
-29.          
-30.        Cursor c = db.rawQuery("SELECT * FROM person WHERE age >= ?", new String[]{"33"});  
-31.        while (c.moveToNext()) {  
-32.            int _id = c.getInt(c.getColumnIndex("_id"));  
-33.            String name = c.getString(c.getColumnIndex("name"));  
-34.            int age = c.getInt(c.getColumnIndex("age"));  
-35.            Log.i("db", "_id=>" + _id + ", name=>" + name + ", age=>" + age);  
-36.        }  
-37.        c.close();  
-38.          
-39.        //删除数据  
-40.        db.delete("person", "age < ?", new String[]{"35"});  
-41.          
-42.        //关闭当前数据库  
-43.        db.close();  
-44.          
-45.        //删除test.db数据库  
-46.//      deleteDatabase("test.db");  
-47.    }  
-48.    
+```
+protected void onCreate(Bundle savedInstanceState){
+super.onCreate(savedInstanceState);
+//打开或创建test.ddb数据库
+SQLiteDatabase db = openOrCreateDatabase(“test.db”,Context.MODE_PRIVATE,null);
+db.execSQL(“DROP TABLE IF EXISTS person”);
+//创建person表
+db.execSQL(“CREATE TABLE person(_id INTEGER PRIMARY KEY AUTOINCREMENT,name VARCHAR,age SMALLINT)”);
+Person person = new Person();
+person.name = “john”;
+person.age = 30;
+//插入数据
+db.execSQL(“INSERT INTO person VALUES(NULL,?,?)”,new Object[]{
+person.name,person.age});
+person.name = “david”;
+person.age = 33;
+//ContentValues以键值对的形式存放数据
+ContentValues cv = new ContentValues();
+cv.put(“name”,person.name);
+cv.put(“age”,person.age);
+//插入ContentValues中的数据
+db.insert(“person”,null,cv);
+cv = new ContentValues();
+cv.put(“age”,35);
+//更新数据
+db.update(“person”,cv,”name=?”,new String[]{“john”});
+Cursor c = db.rawQuery(“SELECT * FROM person WHERE age >=?”,new String[]{“33”});
+while(c.moveToNext()){
+int _id = c.getInt(c.getColumnIndex(“_id”));
+String name = c.getString(c.getColumnIndex(“name”));
+int age = c.getInt(c.getColumnIndex(“age”));
+Log.i(“db”,”_id=>”+_id+”,name=>”+name+”,age=>”+age);
+}
+c.close();
+//删除数据
+db.delete(“person”,”age<?”,new String[]{“35”});
+//关闭当前数据库
+db.close();
+//删除test.db数据库
+//deleteDatabase(“test.db”);
+}
+```
 
 在执行完上面的代码后，系统就会在/data/data/[PACKAGE_NAME]/databases目录下生成一个“test.db”的数据库文件　。
    
