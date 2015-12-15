@@ -18,9 +18,9 @@ Android应用程序显示的过程可以概括为一句话：Android应用程序
 **2.SurfaceFlinger服务**
 
    SurfaceFlinger服务运行在Android系统的System进程中，它负责管理Android系统的帧缓冲区。Android设备的显示屏被抽象为一个帧缓冲区，而SurfaceFlinger服务就是通过向这个帧缓冲区写入内容来绘制应用程序的用户界面的。Android应用程序窗口请求SurfaceFlinger服务创建了一个绘图表面之后，就可以接着请求为该绘图表面创建图形缓冲区，而当Android应用程序窗口往这些图形缓冲区填充好UI数据之后，就可以请求SurfaceFlinger服务将它们渲染到硬件帧缓冲区中去，这样我们就可以看到应用程序窗口的UI了。Android应用程序为了能够将自己的UI绘制在系统的帧缓冲区上，它们就必须要与SurfaceFlinger服务进行通信，它们之间的关系如下图所示：
-   
-   ![](liulu2.png)
-   
+
+ ![](liulu2.png)
+ 
  如上图所示，每一个Android应用程序和SurfaceFlinger服务有一个连接，这个连接是Binder对象来完成的。图中的Client对象是Android应用程序连接到SurfaceFlinger服务的时候由SurfaceFlinger服务创建的，当连接成功之后，Android应用程序就可以获得一个对应的Client对象的Binder接口，Android应用程序就可以通知其来绘制自己的UI了。
  
 要想让SurfaceBinder来绘制自己的UI,Android应用程序需要将UI数据传递给SurfaceFlinger，包括绘制的区域以及位置信息等等。一个应用程序会有多个窗口，就会有多个UI数据，Android系统提供了一种匿名共享内存机制，它以驱动程序的形式实现在内核空间中。它有两个特点，一是能够辅助内存管理系统来有效地管理不再使用的内存块，二是它通过Binder进程间通信机制来实现进程间的内存共享(详细的内容不再概述）。每一个Android应用程序与SurfaceFlinger服务之间，都会通过一块匿名共享内存来传递UI数据，如下图所示:
