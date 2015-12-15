@@ -42,8 +42,9 @@ BluetoothAdapter类
 
 获取BluetoothAdapter实例，在Android4、4.2.2（对应的API级别为17）及之前的版本使用getDefaultAdapter()方法获取，在Android4.3（对应的API级别为18）及其以后的版本中可以使用getSystemService()和BLUETOOTH_SERVICE方式获取。该类常用的方法如下表：
 
+|方法名|功能|
+|--|--|
 | BluetoothAdapter  getDefaultAdapter() |获取本地蓝牙适配器|
-| -- | -- |
 | boolean startDiscovery() | 开始搜索附近的蓝牙设备 |
 | Set&lt;bluetoothdevice&gt; getBondedDevice() | 获取已配过对的蓝牙设备集合 |
 | BluetoothServiceSocket listenUsingRfcommWithServiceRecord(String name, UUID uuid) | 建立监听请求的Socket(用作服务端)|
@@ -53,8 +54,9 @@ BluetoothDevice类
 
 该类表示一个远程的蓝牙设备，该对象包含了对蓝牙硬件的基本信息以及对蓝牙设备的操作，对于基本信息而言，这部分是硬件固有的属性，如MAC地址，其提供了外部访问的接口，另外还封装了一些逻辑操作，如建立通信连接、获取绑定状态等，这些都是与使用过程相关的信息。其提供的常用方法如下表：
 
-| BluetoothSocket createRfcommSocketToServiceRecord(UUID uuid) |创建一个蓝牙Socket通信连接。 |
+|方法名|功能|
 | -- | -- |
+| BluetoothSocket createRfcommSocketToServiceRecord(UUID uuid) |创建一个蓝牙Socket通信连接。 |
 | Int getBondState() |获取设备的绑定状态 |
 | String getName()| 获取设备的名称 |
 | String getAddress() | 获取设备的硬件地址 |
@@ -62,8 +64,9 @@ BluetoothSocket类
 
 与TCP通信的Socket类似，该类表示了蓝牙通信的逻辑连接，通过该类实现数据的读取与写入，控制通信过程。其提供的方法如下表：
 
-|BluetoothDevice getRemoteDevice()|	获取待连接或已连接的蓝牙设备|
+|方法名|功能|
 | -- | -- |
+|BluetoothDevice getRemoteDevice()|	获取待连接或已连接的蓝牙设备|
 |boolean isConnected()	|判断Socket的连接状态|
 |InputStream getInputStream()	|获取与Socket关联的输入流
 |OutputStream getOutputStream()	|获取与Socket关联的输出流|
@@ -73,8 +76,9 @@ BluetoothServerSocket类
 
 该类主要用于当设备作为服务端时的操作，服务端一般会被动的等待来自客户端的连接或服务请求，因此其功能与提供的方法也非常简单，如下表：
 
+|方法名|功能|
+| -- | -- |
 |BluetoothSocket accept(int timeout)|	等待建立连接，知道超过timeout规定的时间|
-|--|--|
 |BluetoothSocket accept()	|一直等待，直到建立连接|
 |Void close()	|关闭连接并释放资源|
 
@@ -261,8 +265,9 @@ WifiInfo类：用于描述已经建立连接的或正在建立连接的WiFi状�
 WifiManager类：提供针对WiFi连接的基本操作，管理WiFi连接。
 常用的方法如下表：
 
-|WifiManager.WifiLock createWifiLock()|	创建保持WiFi连接一直持续的锁|
+|方法名|功能|
 | -- | -- |
+|WifiManager.WifiLock createWifiLock()|	创建保持WiFi连接一直持续的锁|
 |boolean disconnect()	|断开wifi连接|
 |WifiInfo getConnectionInfo()	|获取连接状态信息|
 |List&lt;ScanResult> getScanResults()|	获取扫描结果集|
