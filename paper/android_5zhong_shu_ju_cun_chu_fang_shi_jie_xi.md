@@ -486,81 +486,9 @@ db.close();
 ```
  在getReadableDatabase()方法中，首先判断是否已存在数据库实例并且是打开状态，如果是，则直接返回该实例，否则试图获取一个可读写模式的数据库实例，如果遇到磁盘空间已满等情况获取失败的话，再以只读模式打开数据库，获取数据库实例并返回，然后为mDatabase赋值为最新打开的数据库实例。既然有可能调用到getWritableDatabase()方法，我们就要看一下了：
 
-.public synchronized SQLiteDatabase getWritableDatabase() {  
-2.    if (mDatabase != null && mDatabase.isOpen() && !mDatabase.isReadOnly()) {  
-3.        // 如果mDatabase不为空已打开并且不是只读模式 则返回该实例  
-4.        return mDatabase;  
-5.    }  
-6.  
-7.    if (mIsInitializing) {  
-8.        throw new IllegalStateException("getWritableDatabase called recursively");  
-9.    }  
-10.  
-11.    // If we have a read-only database open, someone could be using it  
-12.    // (though they shouldn't), which would cause a lock to be held on  
-13.    // the file, and our attempts to open the database read-write would  
-14.    // fail waiting for the file lock. To prevent that, we acquire the  
-15.    // lock on the read-only database, which shuts out other users.  
-16.  
-17.    boolean success = false;  
-18.    SQLiteDatabase db = null;  
-19.    // 如果mDatabase不为空则加锁 阻止其他的操作  
-20.    if (mDatabase != null)  
-21.        mDatabase.lock();  
-22.    try {  
-23.        mIsInitializing = true;  
-24.        if (mName == null) {  
-25.            db = SQLiteDatabase.create(null);  
-26.        } else {  
-27.            // 打开或创建数据库  
-28.            db = mContext.openOrCreateDatabase(mName, 0, mFactory);  
-29.        }  
-30.        // 获取数据库版本(如果刚创建的数据库,版本为0)  
-31.        int version = db.getVersion();  
-32.        // 比较版本(我们代码中的版本mNewVersion为1)  
-33.        if (version != mNewVersion) {  
-34.            db.beginTransaction();// 开始事务  
-35.            try {  
-36.                if (version == 0) {  
-37.                    // 执行我们的onCreate方法  
-38.                    onCreate(db);  
-39.                } else {  
-40.                    // 如果我们应用升级了mNewVersion为2,而原版本为1则执行onUpgrade方法  
-41.                    onUpgrade(db, version, mNewVersion);  
-42.                }  
-43.                db.setVersion(mNewVersion);// 设置最新版本  
-44.                db.setTransactionSuccessful();// 设置事务成功  
-45.            } finally {  
-46.                db.endTransaction();// 结束事务  
-47.            }  
-48.        }  
-49.  
-50.        onOpen(db);  
-51.        success = true;  
-52.        return db;// 返回可读写模式的数据库实例  
-53.    } finally {  
-54.        mIsInitializing = false;  
-55.        if (success) {  
-56.            // 打开成功  
-57.            if (mDatabase != null) {  
-58.                // 如果mDatabase有值则先关闭  
-59.                try {  
-60.                    mDatabase.close();  
-61.                } catch (Exception e) {  
-62.                }  
-63.                mDatabase.unlock();// 解锁  
-64.            }  
-65.            mDatabase = db;// 赋值给mDatabase  
-66.        } else {  
-67.            // 打开失败的情况：解锁、关闭  
-68.            if (mDatabase != null)  
-69.                mDatabase.unlock();  
-70.            if (db != null)  
-71.                db.close();  
-72.        }  
-73.    }  
-.}  
+```
 
+```
 大家可以看到，几个关键步骤是，首先判断mDatabase如果不为空已打开并不是只读模式则直接返回，否则如果mDatabase不为空则加锁，然后开始打开或创建数据库，比较版本，根据版本号来调用相应的方法，为数据库设置新版本号，最后释放旧的不为空的mDatabase并解锁，把新打开的数据库实例赋予mDatabase，并返回最新实例。
  
 看完上面的过程之后，大家或许就清楚了许多，如果不是在遇到磁盘空间已满等情况，getReadableDatabase()一般都会返回和getWritableDatabase()一样的数据库实例，所以我们在DBManager构造方法中使用getWritableDatabase()获取整个应用所使用的数据库实例是可行的。当然如果你真的担心这种情况会发生，那么你可以先用getWritableDatabase()获取数据实例，如果遇到异常，再试图用getReadableDatabase()获取实例，当然这个时候你获取的实例只能读不能写了。
