@@ -2,6 +2,10 @@
 
 
 ### 1501210986  孙晴
+参考：
+
+    《第一行代码》
+    http://www.cnblogs.com/qianxudetianxia/archive/2011/09/19/2068760.html
 
 ## 1.服务是什么
     
@@ -412,20 +416,93 @@ onclick事件
         unbindService(connection); // 解绑服务
         break;   
         
-可以看到,首先创建了一个 ServiceConnection 的匿名类,在里面重写了 onServiceConnected()方法和 onServiceDisconnected()方法,这两个方法分别会在活动与服务 成功绑定以及解除绑定的时候调用。在 onServiceConnected()方法中,我们又通过向下转型 得到了 DownloadBinder 的实例,有了这个实例,活动和服务之间的关系就变得非常紧密了。 现在我们可以在活动中根据具体的场景来调用 DownloadBinder 中的任何 public 方法,即实 现了指挥服务干什么,服务就去干什么的功能。这里仍然只是做了个简单的测试,在 onServiceConnected()方法中调用了 DownloadBinder 的 startDownload()和 getProgress()方法。
-当然,现在活动和服务其实还没进行绑定呢,这个功能是在 Bind Service 按钮的点击事 件里完成的。可以看到,这里我们仍然是构建出了一个 Intent 对象,然后调用 bindService() 方法将 MainActivity 和 MyService 进行绑定。bindService()方法接收三个参数,第一个参数就 是刚刚构建出的 Intent 对象,第二个参数是前面创建出的 ServiceConnection 的实例,第三个 参数则是一个标志位,这里传入 BIND_AUTO_CREATE 表示在活动和服务进行绑定后自动 创建服务。这会使得 MyService 中的 onCreate()方法得到执行,但 onStartCommand()方法不 会执行。
-然后如果我们想解除活动和服务之间的绑定该怎么办呢?调用一下 unbindService()方法 就可以了,这也是 Unbind Service 按钮的点击事件里实现的功能。
-现在让我们重新运行一下程序吧,界面如图 9.9 所示。
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+可以看到,首先创建了一个 **ServiceConnection** 的匿名类,在里面重写了 onServiceConnected()方法和 onServiceDisconnected()方法,这两个方法分别会在活动与服务 成功绑定以及解除绑定的时候调用。在 onServiceConnected()方法中,我们又通过**向下转型** 得到了 DownloadBinder 的实例,有了这个实例,活动和服务之间的关系就变得非常紧密了。 现在我们可以在活动中根据具体的场景来调用 DownloadBinder 中的任何 public 方法,即实 现了指挥服务干什么,服务就去干什么的功能。这里仍然只是做了个简单的测试,在 onServiceConnected()方法中调用了 DownloadBinder 的 startDownload()和 getProgress()方法。
+当然,现在活动和服务其实还没进行绑定呢,这个功能是在 Bind Service 按钮的点击事件里完成的。可以看到,这里我们仍然是构建出了一个 Intent 对象,然后调用 bindService() 方法将 MainActivity 和 MyService 进行绑定。bindService()方法接收**三个参数**,第一个参数就 是刚刚构建出的 **Intent 对象**,第二个参数是前面创建出的 **ServiceConnection 的实例**,第三个 参数则是一个**标志位**,这里传入 BIND_AUTO_CREATE 表示在活动和服务进行绑定后自动创建服务。这会使得 MyService 中的 **onCreate()方法得到执行,但 onStartCommand()方法不 会执行**。然后如果我们想解除活动和服务之间的绑定,调用一下 unbindService()方法 就可以了,这也是 Unbind Service 按钮的点击事件里实现的功能。运行结果：
+    
+        此处有图
+    
+可以看到,首先是 MyService 的 onCreate()方法得到了执行,然后 startDownload()和 getProgress()方法都得到了执行,说明我们确实已经在活动里成功调用了服务里提供的方法了。
+另外需要注意,任何一个服务在整个应用程序范围内都是通用的,即 MyService 还可以和任何一个其他的活动进行绑定,而且在绑定完成后它们都可以获取到相同的 DownloadBinder 实例。
+### 3.4 服务的生命周期
+服务也有自己的生命周期, 前面我们使用到的onCreate()、onStartCommand()、onBind()和onDestroy()等方法都是在服务的生命周期内可能回调的方法。
+一旦在项目的任何位置调用了 Context 的 startService()方法,相应的服务就会启动起来,
+并回调 onStartCommand()方法。如果这个服务之前还没有创建过,onCreate()方法会先于 onStartCommand()方法执行。服务启动了之后会一直保持运行状态,直到 stopService()或 stopSelf()方法被调用。注意虽然每调用一次 startService()方法,onStartCommand()就会执行 一次,但实际上每个服务都只会存在一个实例。所以不管你调用了多少次 startService()方法, 只需调用**一次** stopService()或 stopSelf()方法,服务就会停止下来了。
+另外,还可以调用 Context 的 bindService()来**获取一个服务的持久连接**,这时就会回调 服务中的 onBind()方法。类似地,如果这个服务之前还没有创建过,onCreate()方法会先于 onBind()方法执行。之后,调用方可以获取到 onBind()方法里返回的 IBinder 对象的实例,这 样就能自由地和服务进行通信了。只要调用方和服务之间的连接没有断开,服务就会一直保 持运行状态。
+当调用了 startService()方法后,又去调用 stopService()方法,这时服务中的 onDestroy() 方法就会执行,表示服务已经销毁了。类似地,当调用了 bindService()方法后,又去调用 unbindService()方法,onDestroy()方法也会执行,这两种情况都很好理解。但是需要注意, 我们是完全有可能对一个服务既调用了 startService()方法,又调用了 bindService()方法的, 这种情况下该如何才能让服务销毁掉呢?根据 Android 系统的机制,一个服务只要被启动或 者被绑定了之后,就会一直处于运行状态,必须要让以上两种条件同时不满足,服务才能被 销毁。所以,这种情况下要同时调用 stopService()和 unbindService()方法,onDestroy()方法才 会执行。
+
+
+### 3.5 服务的更多技巧
+
+### 3.5.1 使用前台服务
+服务几乎都是在后台运行的,但是服务的系统优先级还是比较低的,当系统出现内存不足的情况时,就有可能会**回收掉正在后台运行的服务**。如果希望服务可以一直保持运行状态,而不会由于系统内存不足的原因导致被回收,就可以考虑使用前台服务。前台服务和普通服务最大的区别就在于,它会一直有一个正在运行的图标在系统的状态栏显示,下拉状态栏后可以看到更加详细的信息,非常类似于通知的效果。当然有时候也可能不仅仅是为了防止服务被回收掉才使用前台服务的,有些项目由于特殊的需求会要求必须使用前台服务,比如说天气类app,它的服务在后台更新天气数据的
+同时,还会在系统状态栏一直显示当前的天气信息。
+创建一个前台服务吧，修改 MyService 中 的代码：
+
+    public void onCreate() {
+            super.onCreate();
+            Notification notification = new Notification(R.drawable.ic_launcher, "Notification comes", System. currentTimeMillis());
+            Intent notificationIntent = new Intent(this, MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                    notificationIntent, 0);
+            notification.setLatestEventInfo(this, "This is title", "This is content", pendingIntent);
+                    startForeground(1, notification);
+            Log.d("MyService", "onCreate executed");
+        }
+        
+
+构建出 Notification 对象调用了 startForeground()方法。 这个方法接收两个参数,第一个参数是通知的 id,第二个参数则是构建出的 Notification 对象。调用 startForeground()方法后就会让 MyService 变成 一个前台服务,并在系统状态栏显示出来。
+现在重新运行一下程序,并点击 Start Service 或 Bind Service 按钮,MyService 就会以前 台服务的模式启动了,并且在系统状态栏会显示一个通知图标,下拉状态栏后可以看到该通知的详细内容,如图
+    
+    此处有图
+
+### 3.5.2 使用前台服务
+
+服务中的代码都是默认运行在主线程当中的,如果直接在服务里去处理一些耗时的逻辑,就很容易出现 ANR(Application Not Responding)的情况。所以这个时候就需要用到 Android 多线程编程,我们应该在服务的每个具体的方法里开启一个子线程,然后在这里去处理那些耗时的逻辑。因此,一个比较标准的服务写成如下形式:
+
+     public class MyService extends Service {
+            @Override
+            public IBinder onBind(Intent intent) {
+                return mBinder;
+            }
+            @Override
+            public int onStartCommand(Intent intent, int flags, int startId) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() { 
+                        // 处理具体的逻辑
+                    }
+                }).start();
+                return super.onStartCommand(intent, flags, startId);
+            }
+    }
+这种服务一旦启动之后,就会一直处于运行状态,必须调用 stopService()或者stopSelf()方法才能让服务停止下来。所以,如果想要实现让一个服务在执行完毕后自动停止的功能,就可以这样写: 
+
+    public class MyService extends Service {
+            @Override
+            public IBinder onBind(Intent intent) {
+                return mBinder;
+            }
+           @Override
+            public int onStartCommand(Intent intent, int flags, int startId) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() { 
+                        // 处理具体的逻辑
+                        stopSelf();
+                    }
+                }).start();
+                return super.onStartCommand(intent, flags, startId);
+            }
+    }
+为了可以简单地创建一个异步的、会自动停止的服务,Android 专门提供了一个 IntentService类：
+
+          
+          
+          
+          
+          
+          
+          
       
       
       
