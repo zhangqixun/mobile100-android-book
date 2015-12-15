@@ -222,7 +222,8 @@ outStream.close();
 * 
 SQLite Database数据库。Android对数据库的支持很好，它本身集成了SQLite数据库，每个应用都可以方便的使用它，或者更确切的说，Android完全依赖于SQLite数据库，它所有的系统数据和用到的结构化数据都存储在数据库中。 它具有以下优点： a. 效率出众，这是无可否认的 b. 十分适合存储结构化数据 c. 方便在不同的Activity，甚至不同的应用之间传递数据。
 
-   *下面就向大家介绍一下SQLite常用的操作方法，为了方便，我将代码写在了Activity的onCreate中：
+* 
+下面就向大家介绍一下SQLite常用的操作方法，为了方便，我将代码写在了Activity的onCreate中：
 
 .protected void onCreate(Bundle savedInstanceState) {  
 3.        super.onCreate(savedInstanceState);  
