@@ -126,7 +126,7 @@
    * [Android中的Socket网络通信（1501211001 王宇）](paper/androidzhong_de_socket_wang_luo_tong_xin_ff08_1501.md)
    * [Android View解析(1501210892 丁文玲)](paper/android_viewjie_679028_1501210892_ding_wen_73b229.md)
    * [剖析Android平台上的电话服务功能](paper/pou_xi_android_ping_tai_shang_de_dian_hua_fu_wu_go.md)
-   * DEX文件混淆原理(1501210988 汤炀)
+   * [DEX文件混淆原理(1501210988 汤炀)](paper/dexwen_jian_hun_yao_yuan_740628_1501210988_tang_70.md)
 * [常见面试题目](question/index.md)
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
