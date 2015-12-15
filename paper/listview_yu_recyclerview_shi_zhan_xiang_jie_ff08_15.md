@@ -308,13 +308,14 @@ goodsLv.setAdapter(ga);
 &#160;&#160;&#160;&#160;当我们做出来一个这样的ListView以后，虽然美观程度已经不错，但是却是死的，还不会和用户进行交互。那么关于动态的交互，我们应该怎么做呢？再来学习一下典型的APP，看看它们是怎么做的：![](baiduyun.jpg)![](tb_scroll.jpg)
              
 &#160;&#160;&#160;&#160;上面第一个例子是百度云的ListView，它的交互功能是：长按列表项，会出现打钩的图标，并在屏幕上方和下方显示工具栏，用来对文件夹进行操作。这个功能在实际使用过程中是很常见并且很实用的。第二个例子还是来自淘宝，当我们将列表项往左滑动时，会出现用户对该宝贝的评分还有搜索相似等功能，用起来十分方便，并且显得更加美观。
-&#160;&#160;&#160;&#160;下面我们就在刚才的基础上，继续实现仿淘宝的ListView的滑动功能。
+<p>&#160;&#160;&#160;&#160;下面我们就在刚才的基础上，继续实现仿淘宝的ListView的滑动功能。
 <p>&#160;&#160;&#160;&#160;这里我们需要自定义一个SwipeListView继承于ListView，捕捉它的滑动事件，并进行处理。在实际动手演练之前，需要先介绍一下View的屏幕事件传递机制。最重要的两个方法，就是onInterceptTouchEvent()和onTouchEvent()。安卓的屏幕事件，先由最外层的父容器接收，一层层往下传，处理的时候相反，由最底层的子视图处理，一层层往上传。在往下传的过程中，如果父容器想要自己处理事件，不想传给子视图，就可以拦截事件；同样在上传的过程中，子视图可以自己把事件处理完，继而父容器便不需要再去处理。
 <p>&#160;&#160;&#160;&#160;具体实现起来，就是当你在屏幕上按下以后，首先第一个会调用最外层父容器的onInterceptTouchEvent()方法。如果一个父容器想自己处理，不想让子视图插手，他可以返回true，即拦截了这个事件。如果返回false，事件会继续传递给子视图。当事件传递结束开始执行时，会调用最底层的子视图的onTouchEvent()方法来处理事件。如果子视图认为自己已经完全处理好了这个事件，不希望父容器再插手，则可以返回true，即已经处理完了。如果返回false，还需继续调用父容器的onTouchEvent()方法。
-原理图如下：
+原理图如下：![](原理.png)
  
 &#160;&#160;&#160;&#160;介绍完补充知识，我们开始实现我们的自定义ListView。
-第一步，先定义一些要用到的变量。相应的解释见注解：
+<p>&#160;&#160;&#160;&#160;第一步，先定义一些要用到的变量。相应的解释见注解：
+```
 //记录是否是水平滑动
 private Boolean mIsHorizontal;
 //上一次的列表项视图
@@ -394,8 +395,10 @@ public boolean onInterceptTouchEvent(MotionEvent ev)
 
     return super.onInterceptTouchEvent(ev);
 }
-再解读一下这里的代码，首先是记录按下时的初始坐标和移动时的当前坐标。然后要判断滑动是否是误操作，再决定是否将事件拦截。
-第三步，重写onTouchEvent()方法。
+```
+<p>&#160;&#160;&#160;&#160;再解读一下这里的代码，首先是记录按下时的初始坐标和移动时的当前坐标。然后要判断滑动是否是误操作，再决定是否将事件拦截。
+<p>&#160;&#160;&#160;&#160;第三步，重写onTouchEvent()方法。
+```
 /**
  * 返回false：不能移动任何方向
  * 返回true：只能移动水平方向
@@ -511,8 +514,10 @@ public boolean onTouchEvent(MotionEvent ev)
     }
     return super.onTouchEvent(ev);
 }
-这段代码主要是判断了之前所说的可能出现的多种情况，再决定是隐藏右视图还是显示右视图。
-第四步，同样非常重要。编写实现隐藏右视图的hiddenRight()和显示右视图的showRight()，以及它们调用的实际实现滑动动画内容的Handler。
+```
+<p>&#160;&#160;&#160;&#160;这段代码主要是判断了之前所说的可能出现的多种情况，再决定是隐藏右视图还是显示右视图。
+<p>&#160;&#160;&#160;&#160;第四步，同样非常重要。编写实现隐藏右视图的hiddenRight()和显示右视图的showRight()，以及它们调用的实际实现滑动动画内容的Handler。
+```
 /**
  * 显示右视图
  * @param view
@@ -624,8 +629,10 @@ class MoveHandler extends Handler
         }
     }
 }
-Handler接收的信息中，包含滑动的起始坐标和中点坐标。并计算显示的帧数。每次通过view.scrollTo()方法实现一帧的移动，移动完一帧后，又会调用sendEmptyMessageDelayed(0, mDurationStep)方法，间隔一小段时间再移动下一帧。如此反复，实现拖动的动画。
+```
+<p>&#160;&#160;&#160;&#160;Handler接收的信息中，包含滑动的起始坐标和中点坐标。并计算显示的帧数。每次通过view.scrollTo()方法实现一帧的移动，移动完一帧后，又会调用sendEmptyMessageDelayed(0, mDurationStep)方法，间隔一小段时间再移动下一帧。如此反复，实现拖动的动画。
 第五步，编写其他需要的函数。
+```
 public int getRightViewWidth()
 {
     return mRightViewWidth;
@@ -795,20 +802,26 @@ private boolean judgeScrollDirection(float dx, float dy)
     </LinearLayout>
 
 </LinearLayout>
-下面还需改写Adapter。加入：
+```
+<p>&#160;&#160;&#160;&#160;下面还需改写Adapter。加入：
+```
 viewHolder.item_right = (View) view.findViewById(R.id.item_right);
 
 LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(mRightWidth, LinearLayout.LayoutParams.MATCH_PARENT);
 viewHolder.item_right.setLayoutParams(lp2);
-在VieHolder中加入：View item_right;
+```
+<p>&#160;&#160;&#160;&#160;在VieHolder中加入：View item_right;
 最后还要修改MainActivity：
+```
 GoodsAdapter ga = new GoodsAdapter(this,R.layout.taobao_listitem,goodsInfoList);
 SwipeListView goodsLv = (SwipeListView)findViewById(R.id.good_lv);
 ga.setmRightWidth(goodsLv.getRightViewWidth());
 goodsLv.setAdapter(ga);
-运行效果如下：
+```
+<p>&#160;&#160;&#160;&#160;运行效果如下：![](scroll.jpg)
  
-最后，我们考虑为listView加上点击事件。这里的事件应该在adapter中的getView()方法里加上。代码如下：
+<p>&#160;&#160;&#160;&#160;最后，我们考虑为listView加上点击事件。这里的事件应该在adapter中的getView()方法里加上。代码如下：
+```
 viewHolder.similar.setOnClickListener(new View.OnClickListener()
 {
     @Override
@@ -826,7 +839,8 @@ viewHolder.same.setOnClickListener(new View.OnClickListener()
         Toast.makeText(getContext(),"搜索与第" + itemPosition + "号同款的商品", Toast.LENGTH_LONG).show();
     }
 });
-当然，之前要在ViewHolder里面加上这两个TextView，这里代码不赘述。注意一点，这里是在getView()方法中调用的。这个方法提供了当前的item的号码，但是getView()中绑定监听器的时候，由于是匿名类，不可以直接使用position这个参数。所以需要自定义一个final修饰的itemPosition保存position的值来使用。效果如下：
+```
+<p>&#160;&#160;&#160;&#160;当然，之前要在ViewHolder里面加上这两个TextView，这里代码不赘述。注意一点，这里是在getView()方法中调用的。这个方法提供了当前的item的号码，但是getView()中绑定监听器的时候，由于是匿名类，不可以直接使用position这个参数。所以需要自定义一个final修饰的itemPosition保存position的值来使用。效果如下：![](同款.jpg)
                 
 至此ListView的实战就介绍到这里，但是称霸了多年的ListView拥有丰富的扩展，依然等着大家去实际动手演练。
 第二部分 RecyclerView详解
