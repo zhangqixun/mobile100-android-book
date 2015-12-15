@@ -105,6 +105,29 @@ Android会根据进程中运行的组件类别以及组件的状态来判断该�
 　　另外，当被另外的一个进程依赖的时候，某个进程的级别可能会增高。一个为其他进程服务的进程永远不会比被服务的进程重要级低。因为服务进程比后台activity进程重要级高，因此一个要进行耗时工作的activity最好启动一个service来做这个工作，而不是开启一个子进程――特别是这个操作需要的时间比activity存在的时间还要长的时候。例如，在后台播放音乐，向网上上传摄像头拍到的图片，使用service可以使进程最少获取到“服务进程”级别的重要级，而不用考虑activity目前是什么状态。broadcast receivers做费时的工作的时候，也应该启用一个服务而不是开一个线程。
 　　
 
+### Android的线程管理
+
+Android应用程序是通过消息来驱动的，在Android系统中，特地使用了消息队列方便线程的管理，通过Messge、Handler、Looper来实现消息循环机制。
+![](http://7xp7x0.com1.z0.glb.clouddn.com/GBThread_message.png)
+Message：消息，其中包含了消息ID，消息处理对象以及处理的数据等，由MessageQueue统一列队，终由Handler处理。
+
+Handler：处理者，负责Message的发送及处理。使用Handler时，需要实现handleMessage(Message msg)方法来对特定的Message进行处理，例如更新UI等。
+
+MessageQueue：消息队列，用来存放Handler发送过来的消息，并按照FIFO规则执行。当然，存放Message并非实际意义的保存，而是将Message以链表的方式串联起来的，等待Looper的抽取。
+
+Looper：消息泵，不断地从MessageQueue中抽取Message执行。因此，一个MessageQueue需要一个Looper。
+
+Thread：线程，负责调度整个消息循环，即消息循环的执行场所。
+
+Android系统在启动的时候会为Activity创建一个消息队列和消息循环（Looper）。
+
+Handler的作用是把消息加入特定的（Looper）消息队列中，并分发和处理该消息队列中的消息。构造Handler的时候可以指定一个Looper对象，如果不指定则利用当前线程的Looper创建。
+
+一个Activity中可以创建多个工作线程或者其他的组件，如果这些线程或者组件把他们的消息放入Activity的主线程消息队列，那么该消息就会在主线程中处理了。因为主线程一般负责界面的更新操作，并且Android系统中的weget不是线程安全的，所以这种方式可以很好的实现Android界面更新。在Android系统中这种方式有着广泛的运用。
+
+那么另外一个线程怎样把消息放入主线程的消息队列呢？答案是通过Handle对象，只要Handler对象以主线程的Looper创建，那么调用Handler的sendMessage等接口，将会把消息放入队列都将是放入主线程的消息队列。并且将会在Handler主线程中调用该handler的handleMessage接口来处理消息。
+
+
 以上就是android进程和线程的一些基础知识，个人认为，虽然在平时开发的适合这些基础知识可能并不能对编写应用程序带来显著性的提高，但是多了解一些android程序运行的原理和思想，对于我们日后进行程序的设计、优化和调试都是有帮助的。
 
 
@@ -118,3 +141,9 @@ http://blog.csdn.net/luoshengyang/article/details/6768304
 
 Android进程与线程基本知识
 http://www.cnblogs.com/hanyonglu/archive/2012/04/12/2443262.html
+
+Android中的Handler, Looper, MessageQueue和Thread
+http://www.cnblogs.com/xirihanlin/archive/2011/04/11/2012746.html
+
+Android消息处理机制(Handler、Looper、MessageQueue与Message)
+http://www.cnblogs.com/angeldevil/p/3340644.html
