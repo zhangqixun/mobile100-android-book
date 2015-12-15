@@ -1115,7 +1115,10 @@ e.printStackTrace();
 ```
 
 别忘记了在配置文件中设置访问网络权限：
-<uses-permission android:name="android.permission.INTERNET"/>
+```
+<uses-permission android：name="android.permission.INTERNET"/>
+```
+
 
 
 #*六. 小结*
