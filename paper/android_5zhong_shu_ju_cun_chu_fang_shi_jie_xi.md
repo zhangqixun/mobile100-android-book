@@ -445,51 +445,45 @@ db.close();
 * 
 我们来看一下SQLiteOpenHelper中的getReadableDatabase()方法：
 
-.public synchronized SQLiteDatabase getReadableDatabase() {  
-2.    if (mDatabase != null && mDatabase.isOpen()) {  
-3.        // 如果发现mDatabase不为空并且已经打开则直接返回  
-4.        return mDatabase;  
-5.    }  
-6.  
-7.    if (mIsInitializing) {  
-8.        // 如果正在初始化则抛出异常  
-9.        throw new IllegalStateException("getReadableDatabase called recursively");  
-10.    }  
-11.  
-12.    // 开始实例化数据库mDatabase  
-13.  
-14.    try {  
-15.        // 注意这里是调用了getWritableDatabase()方法  
-16.        return getWritableDatabase();  
-17.    } catch (SQLiteException e) {  
-18.        if (mName == null)  
-19.            throw e; // Can't open a temp database read-only!  
-20.        Log.e(TAG, "Couldn't open " + mName + " for writing (will try read-only):", e);  
-21.    }  
-22.  
-23.    // 如果无法以可读写模式打开数据库 则以只读方式打开  
-24.  
-25.    SQLiteDatabase db = null;  
-26.    try {  
-27.        mIsInitializing = true;  
-28.        String path = mContext.getDatabasePath(mName).getPath();// 获取数据库路径  
-29.        // 以只读方式打开数据库  
-30.        db = SQLiteDatabase.openDatabase(path, mFactory, SQLiteDatabase.OPEN_READONLY);  
-31.        if (db.getVersion() != mNewVersion) {  
-32.            throw new SQLiteException("Can't upgrade read-only database from version " + db.getVersion() + " to "  
-33.                    + mNewVersion + ": " + path);  
-34.        }  
-35.  
-36.        onOpen(db);  
-37.        Log.w(TAG, "Opened " + mName + " in read-only mode");  
-38.        mDatabase = db;// 为mDatabase指定新打开的数据库  
-39.        return mDatabase;// 返回打开的数据库  
-40.    } finally {  
-41.        mIsInitializing = false;  
-42.        if (db != null && db != mDatabase)  
-43.            db.close();  
-44.    }  
-.}  
+```
+public synchronized SQLiteDatabase getReadableDatabase(){
+if(mDatabase!=null&&mDatabase.isOpen()){
+//如果发现mDatabase不为空并且已经打开则直接返回
+return mDatabase;
+}
+if(mIsInitializing){
+//如果正在初始化则抛出异常
+throw new IllegalStateException("getReadableDatabase called recursively");
+}
+//开始实例化数据库mDatabase
+try{
+//注意这里是调用了getWritableDatabase()方法
+return getWritableDatabase();
+}catch(SQLiteException e){
+if(mName==null)
+throw e;//Can't open a temp database read-only!
+Log.e(TAG,"Couldn't open"+mName+"for writing(will try read-only):",e);
+}
+//如果无法以可读写模式打开数据库，则以只读方式打开
+SQLiteDatabase db=null;
+try{
+mIsInitializing=true;
+String path=mContext.getDatabasePath(mName).getPath();/*获取数据库路径以只读方式打开数据库*/
+db=SQLiteDatabase.openDatabase(path,mFactory,SQLiteDatabase.OPEN_READONLY);
+if(db.getVersion()!=mNewVersion){
+throw new SQLiteException("Can't upgrade read-only database from version"+db.getVersion()+"to"+mNewVersion+":"+path);
+}
+onOpen(db);
+Log.w(TAG,"Opened"+mName+"in read-only mode");
+mDatabase=db;//为mDatabase指定新打开的数据库
+return mDatabase;//返回打开的数据库
+}finally{
+mIsInitializing=false;
+if(db!=null&&db!=mDatabase)
+db.close();
+}
+}
+```
  在getReadableDatabase()方法中，首先判断是否已存在数据库实例并且是打开状态，如果是，则直接返回该实例，否则试图获取一个可读写模式的数据库实例，如果遇到磁盘空间已满等情况获取失败的话，再以只读模式打开数据库，获取数据库实例并返回，然后为mDatabase赋值为最新打开的数据库实例。既然有可能调用到getWritableDatabase()方法，我们就要看一下了：
 
 .public synchronized SQLiteDatabase getWritableDatabase() {  
