@@ -395,7 +395,7 @@ helper=new DBHelper(context);//因为getWritableDatabase内部调用了mContext.
 db=helper.getWritableDatabase();
 }
 public void add(List<Person>person){
-db.beginTransaction();//开始事物
+db.beginTransaction();//开始事务
 try{
 for(Person person:person){
 db.execSQL("INSERT INTO person VALUES(null,?,?,?)",new Object[]{person.name,person.age,person.info});
