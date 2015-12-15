@@ -73,6 +73,7 @@ public class Images {
 }
 
 之后，我们就要来设置布局，在activity_main.xml布局中的LinearLayout中新添加一个ListView，用来存放所有的图片信息：
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
