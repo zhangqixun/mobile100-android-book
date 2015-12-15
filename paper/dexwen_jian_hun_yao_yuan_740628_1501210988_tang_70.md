@@ -58,6 +58,27 @@ linkSize和linkOff字段中储存着链接的大小和链接的偏移量。
 
 mapOff字段所存放的偏移量是数据类型DexMapList的偏移量，这个数据类型在整个文件中只出现一次，用来存放DEX文件中每一个数据块的类型、大小和偏移量。
 ```
+enum {
+    kDexTypeHeaderItem               = 0x0000,
+    kDexTypeStringIdItem             = 0x0001,
+    kDexTypeTypeIdItem               = 0x0002,
+    kDexTypeProtoIdItem              = 0x0003,
+    kDexTypeFieldIdItem              = 0x0004,
+    kDexTypeMethodIdItem             = 0x0005,
+    kDexTypeClassDefItem             = 0x0006,
+    kDexTypeMapList                  = 0x1000,
+    kDexTypeTypeList                 = 0x1001,
+    kDexTypeAnnotationSetRefList     = 0x1002,
+    kDexTypeAnnotationSetItem        = 0x1003,
+    kDexTypeClassDataItem            = 0x2000,
+    kDexTypeCodeItem                 = 0x2001,
+    kDexTypeStringDataItem           = 0x2002,
+    kDexTypeDebugInfoItem            = 0x2003,
+    kDexTypeAnnotationItem           = 0x2004,
+    kDexTypeEncodedArrayItem         = 0x2005,
+    kDexTypeAnnotationsDirectoryItem = 0x2006,
+};
+
 struct DexMapItem {
     u2 type;            
     u2 unused;
