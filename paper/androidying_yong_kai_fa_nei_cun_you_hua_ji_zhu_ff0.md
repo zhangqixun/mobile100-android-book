@@ -80,73 +80,24 @@ Context。
 根据SDK的描述，调用recycle并不是必须的。但在实际使用时，Bitmap占用的内存是很大的，所以当我们不再使用时，尽量调用recycle()以释放资源。
 ####2.2.3  静态变量引起内存泄漏
 静态变量的生命周期从所属的类被加载直到程序结束，如果使用静态变量指向一个短生命周期的对象，比如Activity，那么这个对象占用的内存将不会被释放知道程序结束，引用一个Android官网提供的例子：
-```
-private static Drawable sBackground;
-@Override
-protected void onCreate(Bundle state) {
-super.onCreate(state);
 
-TextView label = new TextView(this);
-label.setText("Leaks are bad");
-
-if (sBackground == null) {
-sBackground = getDrawable(R.drawable.large_bitmap);
-}
-label.setBackgroundDrawable(sBackground);
-setContentView(label);
-}
-```
+![](sfh20.png)
 
 当一个Drawable附加到一个 View上时，View会将其作为一个callback设定到Drawable上，因此上述的代码片段，意味着Drawable拥有一个TextView的引用，而TextView又拥有Activity（Context类型）的引用，换句话说，Drawable拥有了更多的对象引用，但是这个对象是静态的，即使Activity被销毁，内存仍然不会被释放。因此当屏幕切换方向时候，原Activity被销毁，但是由于静态的Drawable仍然有指向这个Activity的引用，所以仍然占用内存，此后的Activity也有同样的问题。
 ####2.2.4  线程引起的内存泄漏
 因为运行中的线程是称之为垃圾回收根（GC Roots）对象的一种，不会被GC回收，所以线程中涉及的任何东西GC都不能回收（Anything reachable by a thread cannot be GC'd ），因此线程很容易造成内存泄露，考虑下面这段代码：
-```
-public class MyActivity extends Activity {      
-@Override      
-public void onCreate(Bundle savedInstanceState) {          
-  super.onCreate(savedInstanceState);          
-  setContentView(R.layout.main);          
-  new MyThread().start();      
-}        
-private class MyThread extends Thread{          
-@Override          
-  public void run() {              
-  super.run();    
-    }      
-  }  
-}   
-```
+
+![](sfh21.png)
+
 线程是以Activity的内部类形式实现的，所以MyThread中保存了Activity的一个引用，当MyThread的run函数没有结束时，MyThread是不会被销毁的，因此即使它所引用的Activity被销毁，这个Activity占用的内存也不会被释放。当我们开启该线程后，将设备的横屏变为了竖屏，一般情况下当屏幕转换时会重新创建Activity，这种情况下老的Activity仍然占用内存，就出现了内存泄露的问题。为了解决这种问题可以将将线程的内部类，改为静态内部类，或者在线程内部采用弱引用保存Activity引用。 
  	另外，Hanlder是线程与Activity通信的桥梁，如果处理不当，在程序结束时，线程并没有被销毁，而是一直在后台运行着，当我们重新启动应用时，又会重新启动一个线程，周而复始，你启动应用次数越多，开启的线程数就越多，你的机器就会变得越慢。 
-```
-public class ThreadDemo extends Activity {  
-    private static final String TAG = "ThreadDemo";  
-    private int count = 0;  
-    private Handler mHandler =  new Handler();  
-    private Runnable mRunnable = new Runnable() {    
-        public void run() {  
-            count++;  
-            setTitle("" +count); 
-            mHandler.postDelayed(mRunnable, 2000);  
-        }          
-    };  
-    @Override  
-    public void onCreate(Bundle savedInstanceState) {  
-        super.onCreate(savedInstanceState);  
-        setContentView(R.layout.main);   
-        //通过Handler启动线程   
-        mHandler.post(mRunnable);  
-    }        
-} 
-```
+
+![](sfh22.png)
+
 所以我们在应用退出时，要将线程销毁，我们只要在Activity中的，onDestory()方法处理一下就可以了，如下代码所示: 
-```
-@Override  
-  protected void onDestroy() {  
-    mHandler.removeCallbacks(mRunnable);  
-    super.onDestroy();  
-  } 
-```
+
+![](sfh23.png)
+
 ###2.3  优化对BitMap的操作
 1)	图片显示
 需要根据需求去加载图片的大小。例如在列表中仅用于预览时加载缩略图，只有当用户点击具体条目想看详细信息的时候，这时另启动一个控件去显示整个图片。
