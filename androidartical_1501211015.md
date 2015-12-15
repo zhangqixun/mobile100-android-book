@@ -464,18 +464,27 @@ public class PPTControler {
 开启服务端程序
 ![](4.png)
 打开App时
+
 服务端
-![](5.png)	
+
+![](5.png)
+
 App端
 
 ![](6.png)
 
 打开一个PPT文件	
+
 ![](7.png)
+
 在App端点击开始按钮
+
 ![](8.png)
+
 在App端点击下一张
+
 ![](9.png)
+
 其他操作过程类似，可以实现对PPT的播放控制。
 
 ### 2.3、WiFi开发小结
