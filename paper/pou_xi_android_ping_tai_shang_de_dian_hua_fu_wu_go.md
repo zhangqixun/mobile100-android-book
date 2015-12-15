@@ -114,7 +114,9 @@ telephoneManager.listen(phoneStateListener,PhoneStateListener.LISTEN_NONE);
 onCallStateChanged处理程序接收与传入的呼叫相关的电话号码，而state参数则使用以下三个值之一代表当前呼叫状态：
 
 TelephonyManager.CALL_STATE_IDLE当电话既不响铃也不在通话中时
+
 TelephonyManager.CALL_STATE_RINGING当电话响铃时
+
 TelephonyManager.CALL_STATE_OFFHOOK当电话正在通话中时
 
 注意，一旦状态变为TelephonyManager.CALL_STATE_RINGING，系统会显示来电屏幕，询问用户是否要接听电话。
@@ -124,38 +126,28 @@ TelephonyManager.CALL_STATE_OFFHOOK当电话正在通话中时
 ◇跟踪蜂窝位置变化
 
 通过重写PhoneStateListener实现的onCellLocationChanged方法，每当当前的蜂窝位置发生变化时，可以得到通知。在可以注册以便监听蜂窝位置变化之前，需要将ACCESS_COARSE_LOCATION权限添加到应用程序的manifest文件中。
-<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+![](搜狗截图20151216012057.png)
+
 onCellLocationChanged处理程序接收一个CellLocation对象，其中包含了基于电话网络类型提取不同的位置信息的方法。对于GSM网络，可以获得蜂窝ID（getCid）和当前位置区域代码（getLac）。对于CDMS网络，可以获得当前基站的ID（getBaseStationId）以及该基站的纬度（getBaseStationLatitude）和经度（getBaseStationLongitude）。
+
 下面的代码段显示了如何实现PhoneStateListener以监视蜂窝位置的变化，其中显示了一个包含收到的网络位置详细信息的Toast。
-CellLocationListener cellLocationListener = new CellLocationListener ();{
-Public void onCellLocationChanged（Celllocation location）{
-		If（location instanceof GsmCellLocation）{
-			Toast.makeText(getApplicationContext(),String.valueOf(gsmLocation.getCid()),Toast.LENGTH_LONG).show();
-		}
-		Else if（location instanceof CdmaCellLocation）{
-			CdmaCellLocation cdmaLocation = (CdmaCellLocation)location;
-			StringBuilder sb = new StringBuilder();
-			Sb.append(cdmaLocation.getBaseStationId());
-			Sb.append(“\n@”);
-			Sb.append(cdmaLocation. getBaseStationLatitude ());
-			Sb.append(cdmaLocation. getBaseStationLongitude ());
-			Toast.makeText(getApplicationContext(),sb.toString() ,Toast.LENGTH_LONG).show();
-		}
-		telephoneManager.listen(cellLocationListener, CellLocationListener.LISTEN_CELL_LOCATION);
+
+![](搜狗截图20151216012224.png)
+		
 ◇跟踪服务变化
 
 onServiceStateChanged处理程序跟踪设备的蜂窝服务的详细信息。使用ServiceState参数可查找当前服务状态的详细信息。
+
 Service State对象的getState方法将当前的服务状态作为下列任意一种ServiceState常量返回：
+
 STATE_IN_SERVICE正常电话服务是可用的
+
 STATE_EMERGENCY_ONLY电话服务仅能用于紧急呼叫
+
 STATE_OUT_OF_SERVICE当前没有电话服务可用
+
 STATE_POWER_OFF电话无线传输功能被关闭（通常是启用了飞行模式时）
+
 一系列getOperator*方法可用于检索提供了移动电话服务的运营商的详细信息，而getRoaming则告诉我们设备当前是否使用了一种漫游模式。
-PhoneStateListener serviceStateListener = new PhoneStateListener(){
-Public void onServiceStateChanged(ServiceState serviceState){
-		If(serviceState.getState()==ServiceState. STATE_IN_SERVICE){
-			String toastText = “Operator:”+ serviceState.getOperatorAlphaLong();
-		Toast.makeText(MyActivity.this,toastText,Toast.LENGTH_SHORT);
-		}
-}
-telephoneManager.listen(serviceStateListener, PhoneStateListener.LISTEN_CELL_LOCATION);
+
+![](搜狗截图20151216012335.png)
