@@ -132,4 +132,16 @@ struct DexMethodId {
     u4  nameIdx;       
 };
 ```
-classDefsSize和classDefsOff字段
+classDefsSize和classDefsOff字段中保存着类相关的数据结构的数量和偏移量，该数据结构中又向外索引出多个结构。
+```
+struct DexClassDef {
+    u4  classIdx;           
+    u4  accessFlags;
+    u4  superclassIdx;    
+    u4  interfacesOff;    
+    u4  sourceFileIdx;      
+    u4  annotationsOff;   
+    u4  classDataOff;  
+    u4  staticValuesOff;   
+};
+```
