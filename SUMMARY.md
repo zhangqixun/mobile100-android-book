@@ -92,7 +92,7 @@
    * [android多线程编程机制(1501210929赖涛)](paper/1501210929.md)
    * [android UI布局设计(丁泽武 1501210893)](paper/android_uibu_ju_she_8ba128_ding_ze_wu_1501210893.md)
    * [Android内存优化（刘亚迪 1501210954）](paper/androidnei_cun_you_hua_ff08_liu_ya_di_1501210954.md)
-   * [Android M权限管理机制分析（1501211038 章佘林）](paper/android_mquan_xian_guan_li_ji_zhi_fen_xi.md)
+   * Android M权限管理机制分析（1501211038 章佘林）
    * [Android Universal Image Loader解析](paper/android_universal_image_loaderjie_xi.md)
    * [详解Android中的重力感应](paper/xiang_jie_android_zhong_de_zhong_li_gan_ying.md)
    * [详解Android中的广播机制（1501210974 屈中山）](paper/xiang_jie_android_zhong_de_guang_bo_ji_zhi_ff08_15.md)
