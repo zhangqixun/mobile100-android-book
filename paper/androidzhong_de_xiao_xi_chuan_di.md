@@ -98,14 +98,17 @@ final boolean sendMessageDelayed(Message msg, long delayMillis)指定多少毫�
 首先将一个Message对象通过Handler发送到MessageQueue中，Looper负责从MessageQueue中取出Message，执行handleMessage中的方法体。
 下面是消息机制中几个重要成员的关系图：
 
+![](cjy_1.png)
  
-
+![](cjy_2.png)
  
 
 ### 三、基本原理及步骤
 
 
 前面提到，Android的消息队列和消息循环都是针对具体线程的，一个线程可以存在一个消息队列和消息循环，特定线程的消息只能分发给本线程，不能跨线程和跨进程通讯。但是创建的工作线程默认是没有消息队列和消息循环的，如果想让工作线程具有消息队列和消息循环，就需要在线程中先调用 Looper.prepare()来创建消息队列，然后调用Looper.loop()进入消息循环。下面是我们创建的工作线程：
+ 
+ ![](loop.prepare.PNG)
  
 这样一来，我们创建的工作线程就具有了消息处理机制了。
 
