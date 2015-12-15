@@ -51,6 +51,7 @@ Android的组件运行在哪个进程中是可以被配置的。组件一般会�
 查询android官方文档，可以看到，有一个 process属性来指定组件运行在哪个进程之中。通过设置这个属性，可以配置不同的组件运行在不同的进程之中，也可以让不同的组件运行在相同的进程中。application元素也有一个process属性，用来指定所有的组件的默认属性。
 ![](http://7xp7x0.com1.z0.glb.clouddn.com/GBThread_androidprocess.png)
 通过设置AndroidManifest.xml文件中的process属性，启动一个独立的service，可以看到系统中现在存在2个进程。
+![](http://7xp7x0.com1.z0.glb.clouddn.com/GBThread_androidprocessservice.png)
 ![](http://7xp7x0.com1.z0.glb.clouddn.com/GBThread_twoprocess.png)
 调用stopservice函数，把运行在独立进程的service关闭。可以观察到，虽然服务已经被Destory，但是运行服务的进程仍然独立存在，并没有被销毁。
 ![](http://7xp7x0.com1.z0.glb.clouddn.com/GBThread_stopservice.png)
@@ -102,3 +103,18 @@ Android会根据进程中运行的组件类别以及组件的状态来判断该�
 　　Android 对进程的重要性评级的时候，选取它最高的级别。例如，如果一个进程含有一个service和一个可视activity，进程将被归入一个可视进程而不是service进程。
 
 　　另外，当被另外的一个进程依赖的时候，某个进程的级别可能会增高。一个为其他进程服务的进程永远不会比被服务的进程重要级低。因为服务进程比后台activity进程重要级高，因此一个要进行耗时工作的activity最好启动一个service来做这个工作，而不是开启一个子进程――特别是这个操作需要的时间比activity存在的时间还要长的时候。例如，在后台播放音乐，向网上上传摄像头拍到的图片，使用service可以使进程最少获取到“服务进程”级别的重要级，而不用考虑activity目前是什么状态。broadcast receivers做费时的工作的时候，也应该启用一个服务而不是开一个线程。
+　　
+
+以上就是android进程和线程的一些基础知识，个人认为，虽然在平时开发的适合这些基础知识可能并不能对编写应用程序带来显著性的提高，但是多了解一些android程序运行的原理和思想，对于我们日后进行程序的设计、优化和调试都是有帮助的。
+
+
+参考：
+
+Android 之 zygote 与进程创建
+http://blog.csdn.net/xieqibao/article/details/6581975
+
+Android系统进程Zygote启动过程的源代码分析
+http://blog.csdn.net/luoshengyang/article/details/6768304
+
+Android进程与线程基本知识
+http://www.cnblogs.com/hanyonglu/archive/2012/04/12/2443262.html
