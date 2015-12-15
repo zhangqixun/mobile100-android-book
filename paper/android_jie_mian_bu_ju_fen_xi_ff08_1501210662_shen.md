@@ -524,7 +524,17 @@ android:layout_weight----- 给控件分配剩余空间
     android:stretchColumns：以第0行为序，尽量把指定的列填充空白部分
 
 
+    　1.android:collapseColumns：//隐藏指定的列
+            ①设置 TableLayout 内的 TableRow 中需要隐藏的列的列索引，多个用“,”隔开 
+            ②以第0行为序，隐藏指定的列：把android:collapseColumns=0,3 意思是把第0和第3列隐藏 
 
+      2.android:shrinkColumns：//收缩指定的列以适合屏幕、不会挤出屏幕          
+          ① 设置 TableLayout 内的 TableRow 中需要收缩（为了使其他列不会被挤到屏幕  外，此列会自动收缩）的列的列索引，多个用“,”隔开 
+          ②以第0行为序  
+           当LayoutRow里面的控件还没有布满布局时，shrinkColumns不起作用。
+      3.android:stretchColumns：//尽量把指定的列表填充空白部分                 
+         ①设置 TableLayout 内的 TableRow中需要拉伸（该列会拉伸到所有可用空间）的列的列索引，多列个用“,”隔开（多列 每列填充空隙大小一样）
+         ② 以第0行为序，尽量把指定的列填充空白部分:设置stretchColumns=2，5，第1，4列被尽量填充同时向右填充,直到2，5被压挤到最后边)。 
 
 
 ---
