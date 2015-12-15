@@ -724,15 +724,9 @@ listView.setAdapter(adapter);
 * 
 Cursor结果集需要注意些什么：一个最需要注意的是，在我们的结果集中必须要包含一个“_id”的列，否则SimpleCursorAdapter就会翻脸不认人，为什么一定要这样呢？因为这源于SQLite的规范，主键以“_id”为标准。解决办法有三：第一，建表时根据规范去做；第二，查询时用别名，例如：SELECT id AS _id FROM person；第三，在CursorWrapper里做文章：
 
-CursorWrapper cursorWrapper = new CursorWrapper(c) {  
-2.    @Override  
-3.    public int getColumnIndexOrThrow(String columnName) throws IllegalArgumentException {  
-4.        if (columnName.equals("_id")) {  
-5.            return super.getColumnIndex("id");  
-6.        }  
-7.        return super.getColumnIndexOrThrow(columnName);  
-8.    }  
-.};  
+```
+
+```
 
 如果试图从CursorWrapper里获取“_id”对应的列索引，我们就返回查询结果里“id”对应的列索引即可。
 
