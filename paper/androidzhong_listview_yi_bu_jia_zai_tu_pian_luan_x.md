@@ -294,7 +294,6 @@ public class MainActivity extends Activity {
 还有在AndroidManifest.xml中要添加INTERNET权限：
 <uses-permission android:name="android.permission.INTERNET" />
 运行结果，我们会发现图片显示的位置有的有错误，而且图片会自动地变来变去，为什么会这样呢？
-
 二、导致问题的原因
 
 这是由ListView的工作原理导致的，因为不可能为每个图片都配置一个单独的ImageView控件，所以它借助RecycleBin机制实现了很好的生产者和消费者的模式，移出屏幕的子View将会很快被回收，并进入到RecycleBin当中进行缓存，然后新进入屏幕的子View则会优先利用从RecycleBin当中获取的缓存，这样的话不管我们有多少条数据需要显示，实际上屏幕上的子View其实也就来来回回那么几个。
