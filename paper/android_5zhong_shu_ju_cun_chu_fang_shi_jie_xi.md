@@ -22,7 +22,7 @@
 前言
 ---
 
-作为一个完整的应用程序，数据存储操作是必不可少的。Android 提供了5种方式存储数据：使用SharedPreferences存储数据；文件存储数据；SQLite数据库存储数据；使用ContentProvider存储数据；网络存储数据。 无论是什么平台，什么开发环境，什么软件程序，数据都是核心。对于开发平台来讲，如果对数据的存储有良好的支持，那么对应用程序的开发将会有很大的促进作用。因此我们很有必要仔细研究下这5种数据存储方式
+作为一个完整的应用程序，数据存储操作是必不可少的。Android 提供了5种方式存储数据：使用SharedPreferences存储数据；文件存储数据；SQLite数据库存储数据；使用ContentProvider存储数据；网络存储数据。无论是什么平台，什么开发环境，什么软件程序，数据都是核心。对于开发平台来讲，如果对数据的存储有良好的支持，那么对应用程序的开发将会有很大的促进作用。因此我们很有必要仔细研究下这5种数据存储方式
 
 
 ### 一、SharedPreferences存储数据
@@ -48,47 +48,35 @@
 （四）、通过commit()方法提交数据。
 
  . 下面是用SharedPreferences存储数据的一个案例：
- `
- 
- `````````void ReadSharedPreferences()
-
+ ```
+ void ReadSharedPreferences()
 {
 String strName,strPassword;
-
 SharedPreferences user = getSharedPreferences(“user_info”,0);
 strName = user.getString(“NAME”,””);
-
 strPassword = user getString(“PASSWORD”,””);
-
 }
 
 void WriteSharedPreferences(String strName,String strPassword)
-
 {
 SharedPreferences user = getSharedPreferences(“user_info”,0);
 uer.edit();
-
 user.putString(“NAME”, strName);
-
 user.putString(“PASSWORD” ,strPassword);
-
 user.commit();
-
-}````````
-```
+}
+ ```
+ 
 `
-```以上面的数据存储结果为例，打开后可以看到一个user_info.xml的文件，打开后可以看到：
+以上面的数据存储结果为例，打开后可以看到一个user_info.xml的文件，打开后可以看到：
 
+```
 <?xml version=”1.0″ encoding=”UTF-8″?>
 <map>
-
-<string name="NAME">moandroid</string>
-
-
-<string name="PASSWORD">SharedPreferences</string>
-
-</map>```
-
+<string name=”NAME”>moandroid</string>
+<string name=” PASSWORD”>SharedPreferences</string>
+</map>
+```
 * 
 使用SharedPreferences是有些限制的：只能在同一个包内使用，不能在不同的包之间使用。
 
@@ -100,6 +88,7 @@ SharedPreferences存储免去了创建数据库，创建表，写SQL语句等诸
 ###二、文件存储数据
 
 
+* 
 核心原理: Context提供了两个方法来打开数据文件里的文件IO流 FileInputStream openFileInput(String name); FileOutputStream(String name , int mode),这两个方法第一个参数用于指定文件名，第二个参数指定打开文件的模式。具体有以下值可选：
 MODE_PRIVATE：为默认操作模式，代表该文件是私有数据，只能被应用本身访问，在该模式下，写入的内容会覆盖原文件的内容，如果想把新写入的内容追加到原文件中。可 以使用Context.MODE_APPEND
 MODE_APPEND：模式会检查文件是否存在，存在就往文件追加内容，否则就创建新文件。
@@ -111,84 +100,97 @@ File getFilesDir():获取该应用程序的数据文件夹得绝对路径
 String[] fileList():返回该应用数据文件夹的全部文件
 
 代码示例：
+```
+
 public void save()
 {
-
-       try { 
-           FileOutputStream outStream=this.openFileOutput("a.txt",Context.MODE_WORLD_READABLE); 
-           outStream.write(text.getText().toString().getBytes()); 
-           outStream.close(); 
-           Toast.makeText(MyActivity.this,"Saved",Toast.LENGTH_LONG).show(); 
-       } catch (FileNotFoundException e) { 
-           return; 
-       } 
-       catch (IOException e){ 
-           return ; 
-       } 
-
-
+try
+{ 
+FileOutputStream outStream=this.openFileOutput("a.txt",context.MODE_WORLD_READABLE);
+outStream.write(text.getText().toString().getBytes());
+outStream.close();
+Toast.makeText(MyActivity.this,"Saved",Toast.LENGTH_LONG).show();
+}catch(FileNotFoundException e)
+{return;
+}catch(IOException e)
+{return;
+}
+}
 
 
 
----
-
+```
+* 
 openFileOutput()方法的第一参数用于指定文件名称，不能包含路径分隔符“/” ，如果文件不存在，Android 会自动创建它。
 创建的文件保存在/data/data/<package name>/files目录，如： /data/data/cn.itcast.action/files/itcast.txt ，通过点击Eclipse菜单“Window”-“Show View”-“Other”，在对话窗口中展开android文件夹，选择下面的File Explorer视图，然后在File Explorer视图中展开/data/data/<package name>/files目录就可以看到该文件。
+* 
 openFileOutput()方法的第二参数用于指定操作模式，有四种模式，分别为：
 Context.MODE_PRIVATE = 0
 Context.MODE_APPEND = 32768
 Context.MODE_WORLD_READABLE = 1
 Context.MODE_WORLD_WRITEABLE = 2
+* 
 Context.MODE_PRIVATE：为默认操作模式，代表该文件是私有数据，只能被应用本身访问，在该模式下，写入的内容会覆盖原文件的内容，如果想把新写入的内容追加到原文件中。可以使用Context.MODE_APPEND
+* 
 Context.MODE_APPEND：模式会检查文件是否存在，存在就往文件追加内容，否则就创建新文件。
+* 
 Context.MODE_WORLD_READABLE和Context.MODE_WORLD_WRITEABLE用来控制其他应用是否有权限读写该文件。
+* 
 MODE_WORLD_READABLE：表示当前文件可以被其他应用读取；
+* 
 MODE_WORLD_WRITEABLE：表示当前文件可以被其他应用写入。
-   如果希望文件被其他应用读和写，可以传入： openFileOutput(“itcast.txt”, Context.MODE_WORLD_READABLE + Context.MODE_WORLD_WRITEABLE); android有一套自己的安全模型，当应用程序(.apk)在安装时系统就会分配给他一个userid，当该应用要去访问其他资源比如文件的时候，就需要userid匹配。默认情况下，任何应用创建的文件，sharedpreferences，数据库都应该是私有的（位于/data/data/<package name>/files），其他程序无法访问。
-   除非在创建时指定了Context.MODE_WORLD_READABLE或者Context.MODE_WORLD_WRITEABLE ，只有这样其他程序才能正确访问。
+   如果希望文件被其他应用读和写，可以传入： openFileOutput(“itcast.txt”, Context.MODE_WORLD_READABLE + Context.MODE_WORLD_WRITEABLE); * 
+* 
+android有一套自己的安全模型，当应用程序(.apk)在安装时系统就会分配给他一个userid，当该应用要去访问其他资源比如文件的时候，就需要userid匹配。默认情况下，任何应用创建的文件，sharedpreferences，数据库都应该是私有的（位于/data/data/<package name>/files），其他程序无法访问。
+   除非在创建时指定了Context.MODE_WORLD_READABLE或者Context.MODE_WORLD_WRITEABLE ，只有这样其他程序才能正确访问.
+* 
 读取文件示例:
 
 
-public void load() 
-
-{ 
-
-    try { 
-        FileInputStream inStream=this.openFileInput("a.txt"); 
-        ByteArrayOutputStream stream=new ByteArrayOutputStream(); 
-        byte[] buffer=new byte[1024]; 
-        int length=-1; 
-
-    while((length=inStream.read(buffer))!=-1)   { 
-            stream.write(buffer,0,length); 
-        } 
-
-        stream.close(); 
-        inStream.close(); 
-        text.setText(stream.toString()); 
-        Toast.makeText(MyActivity.this,"Loaded",Toast.LENGTH_LONG).show(); 
-    } catch (FileNotFoundException e) { 
-        e.printStackTrace(); 
-    } 
-    catch (IOException e){ 
-        return ; 
-    } 
-
+```
+public void load()
+{
+try{
+FileInputStream inStream=this.openFileInput("a.txt");
+ByteArrayOutputStream stream=new ByteArrayOutputStream();
+byte[] buffer=new byte[1024];
+int length=-1;
+while((length=inStream.read(buffer))!=-1){
+stream.write(buffer,0,length);
 }
+stream.close();
+inStream.close();
+text.setText(stream.toString());
+Toast.makeText(MyActivity.this,"Loaded",Toast.LENGTH_LONG).show();
+}catch(FileNotFoundException e){
+e.printStackTrace();
+}catch(IOException e){
+return;
+}
+}
+```
 
+* 
 对于私有文件只能被创建该文件的应用访问，如果希望文件能被其他应用读和写，可以在创建文件时，指定Context.MODE_WORLD_READABLE和Context.MODE_WORLD_WRITEABLE权限。
-    Activity还提供了getCacheDir()和getFilesDir()方法： getCacheDir()方法用于获取/data/data/<package name>/cache目录 getFilesDir()方法用于获取/data/data/<package name>/files目录。
+* 
+Activity还提供了getCacheDir()和getFilesDir()方法： getCacheDir()方法用于获取/data/data/<package name>/cache目录 getFilesDir()方法用于获取/data/data/<package name>/files目录。
+* 
 把文件存入SDCard：
    使用Activity的openFileOutput()方法保存文件，文件是存放在手机空间上，一般手机的存储空间不是很大，存放些小文件还行，如果要存放像视频这样的大文件，是不可行的。对于像视频这样的大文件，我们可以把它存放在SDCard。
+* 
 SDCard是干什么的？你可以把它看作是移动硬盘或U盘。 在模拟器中使用SDCard，你需要先创建一张SDCard卡（当然不是真的SDCard，只是镜像文件）。
-创建SDCard可以在Eclipse创建模拟器时随同创建，也可以使用DOS命令进行创建，如下： 在Dos窗口中进入android SDK安装路径的tools目录，输入以下命令创建一张容量为2G的SDCard，文件后缀可以随便取，建议使用.img： mksdcard 2048M D:\AndroidTool\sdcard.img 在程序中访问SDCard，你需要申请访问SDCard的权限。
+* 
+创建SDCard可以在Eclipse创建模拟器时随同创建，也可以使用DOS命令进行创建，如下： 在Dos窗口中进入android SDK安装路径的tools目录，输入以下命令创建一张容量为2G的SDCard，文件后缀可以随便取，建议使用.img： mksdcard 2048M D:\AndroidTool\sdcard.img * 
+* 
+在程序中访问SDCard，你需要申请访问SDCard的权限。
 在AndroidManifest.xml中加入访问SDCard的权限如下:
 
-<!-- 在SDCard中创建与删除文件权限 --> 
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/> 
-
-    <!-- 往SDCard写入数据权限 --> 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+```
+<!--在SDCard中创建与删除文件权限-->
+<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+<!--往SDCard写入数据权限-->
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+```
    要往SDCard存放文件，程序必须先判断手机是否装有SDCard，并且可以进行读写。
 注意：访问SDCard必须在AndroidManifest.xml中加入访问SDCard的权限。
  
