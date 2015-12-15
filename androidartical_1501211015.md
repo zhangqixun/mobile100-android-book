@@ -18,12 +18,6 @@
 BluetoothAdapter类
 表示本地蓝牙适配器，主要用来对蓝牙进行基本操作，它是所有蓝牙交互操作的入口，如搜索其他的蓝牙设备、查询可配对的设备集合、根据已知的MAC地址来初始化一个BluetoothDevice实例对象、创建一个BluetoothServerSocket类以监听其它设备对本机的连接请求等。
 获取BluetoothAdapter实例，在Android4、4.2.2（对应的API级别为17）及之前的版本使用getDefaultAdapter()方法获取，在Android4.3（对应的API级别为18）及其以后的版本中可以使用getSystemService()和BLUETOOTH_SERVICE方式获取。该类常用的方法如下表：
-| 0:0 | 1:0 |
-| -- | -- |
-| 0:2 | 1:2 |
-| 0:3 | 1:3 |
-| 0:4 | 1:4 |
-| 0:5 | 1:5 |
 BluetoothAdapter  getDefaultAdapter()	获取本地蓝牙适配器
 boolean startDiscovery()	开始搜索附近的蓝牙设备
 Set<BluetoothDevice> getBondedDevice()	获取已配过对的蓝牙设备集合
