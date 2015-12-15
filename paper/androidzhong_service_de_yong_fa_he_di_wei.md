@@ -419,7 +419,7 @@ onclick事件
 可以看到,首先创建了一个 **ServiceConnection** 的匿名类,在里面重写了 onServiceConnected()方法和 onServiceDisconnected()方法,这两个方法分别会在活动与服务 成功绑定以及解除绑定的时候调用。在 onServiceConnected()方法中,我们又通过**向下转型** 得到了 DownloadBinder 的实例,有了这个实例,活动和服务之间的关系就变得非常紧密了。 现在我们可以在活动中根据具体的场景来调用 DownloadBinder 中的任何 public 方法,即实 现了指挥服务干什么,服务就去干什么的功能。这里仍然只是做了个简单的测试,在 onServiceConnected()方法中调用了 DownloadBinder 的 startDownload()和 getProgress()方法。
 当然,现在活动和服务其实还没进行绑定呢,这个功能是在 Bind Service 按钮的点击事件里完成的。可以看到,这里我们仍然是构建出了一个 Intent 对象,然后调用 bindService() 方法将 MainActivity 和 MyService 进行绑定。bindService()方法接收**三个参数**,第一个参数就 是刚刚构建出的 **Intent 对象**,第二个参数是前面创建出的 **ServiceConnection 的实例**,第三个 参数则是一个**标志位**,这里传入 BIND_AUTO_CREATE 表示在活动和服务进行绑定后自动创建服务。这会使得 MyService 中的 **onCreate()方法得到执行,但 onStartCommand()方法不 会执行**。然后如果我们想解除活动和服务之间的绑定,调用一下 unbindService()方法 就可以了,这也是 Unbind Service 按钮的点击事件里实现的功能。运行结果：
     
-        此处有图
+![](QQ20151215-0@2x.png)
     
 可以看到,首先是 MyService 的 onCreate()方法得到了执行,然后 startDownload()和 getProgress()方法都得到了执行,说明我们确实已经在活动里成功调用了服务里提供的方法了。
 另外需要注意,任何一个服务在整个应用程序范围内都是通用的,即 MyService 还可以和任何一个其他的活动进行绑定,而且在绑定完成后它们都可以获取到相同的 DownloadBinder 实例。
@@ -452,8 +452,8 @@ onclick事件
 
 构建出 Notification 对象调用了 startForeground()方法。 这个方法接收两个参数,第一个参数是通知的 id,第二个参数则是构建出的 Notification 对象。调用 startForeground()方法后就会让 MyService 变成 一个前台服务,并在系统状态栏显示出来。
 现在重新运行一下程序,并点击 Start Service 或 Bind Service 按钮,MyService 就会以前 台服务的模式启动了,并且在系统状态栏会显示一个通知图标,下拉状态栏后可以看到该通知的详细内容,如图
-    
-    此处有图![](QQ20151215-0@2x.png)
+
+![](QQ20151215-1@2x.png)
 
 ### 3.5.2 使用前台服务
 
