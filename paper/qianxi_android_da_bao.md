@@ -362,4 +362,4 @@ getString(R.string.build_host)
 
 ## DEMO
 
-最后做了一个可以用Gradle批量打包APK的[demo](http://pan.baidu.com/s/1dEw5o1z)，整个项目一起打包了。导入项目后，如果Android Studio是默认安装路径应该就不用配置什么了，就可以用上述命令进行尝试。生成的APK文件位于*${project}\Dabao\app\build\outputs\apk*目录下（*Dabao*是项目名）。
+最后做了一个可以用Gradle批量打包APK的[demo](http://pan.baidu.com/s/1dEw5o1z)，整个项目一起打包了。导入项目后，如果Android Studio是默认安装路径应该就不用配置什么了，就可以用上述命令进行尝试。生成的APK文件位于*${project}\Dabao\app\build\outputs\apk*目录下（*${project}*是项目所处路径）。
