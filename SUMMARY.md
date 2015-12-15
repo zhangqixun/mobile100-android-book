@@ -55,7 +55,7 @@
    * [附加功能4：](mWeather/doc/mweather_22.md)
    * [附加功能5：](mWeather/doc/mweather_23.md)
    * [附加功能6：](mWeather/doc/mweather_24.md)
-* [Android中多线程下载原理](paper/index.md)
+* [技术文章](paper/index.md)
    * [Material Design与移动应用界面设计(1501210724 魏钊旸)](paper/2015/1501210724.md)
    * [剖析Android中的Context类(1501210406 叶振旭)](paper/2015/1501210406.md)
    * [Android ART模式详细分析与测试(1501210385 刘冶)](paper/2015/1501210385.md)
