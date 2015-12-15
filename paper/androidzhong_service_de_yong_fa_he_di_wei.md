@@ -453,7 +453,7 @@ onclick事件
 构建出 Notification 对象调用了 startForeground()方法。 这个方法接收两个参数,第一个参数是通知的 id,第二个参数则是构建出的 Notification 对象。调用 startForeground()方法后就会让 MyService 变成 一个前台服务,并在系统状态栏显示出来。
 现在重新运行一下程序,并点击 Start Service 或 Bind Service 按钮,MyService 就会以前 台服务的模式启动了,并且在系统状态栏会显示一个通知图标,下拉状态栏后可以看到该通知的详细内容,如图
     
-    此处有图
+    此处有图![](QQ20151215-0@2x.png)
 
 ### 3.5.2 使用前台服务
 
