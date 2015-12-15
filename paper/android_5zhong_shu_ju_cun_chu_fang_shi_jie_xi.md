@@ -364,22 +364,21 @@ db.execSQL("ALTER TABLE person ADD COLUMN other STRING");
    
   为了方便我们面向对象的使用数据，我们建一个Person类，对应person表中的字段，如下：
   
-public class Person {  
-2.    public int _id;  
-3.    public String name;  
-4.    public int age;  
-5.    public String info;  
-6.      
-7.    public Person() {  
-8.    }  
-9.      
-10.    public Person(String name, int age, String info) {  
-11.        this.name = name;  
-12.        this.age = age;  
-13.        this.info = info;  
-14.    }  
-15.}  
-
+```
+public class Person{
+public int _id;
+public String name;
+public int age;
+public String info;
+public Person(){
+}
+public Person(String name,int age,String info){
+this.name=name;
+this.age=age;
+this.info=info;
+}
+}
+```
 然后，我们需要一个DBManager，来封装我们所有的业务方法，代码如下：
 1.import java.util.ArrayList;  
 2.import java.util.List;  
