@@ -1070,7 +1070,7 @@ Toast.makeText(ResolverDemoActivity.this,"删除完成",1).show();}});
 
 * 
 下面是一个通过地区名称查询该地区的天气预报，以POST发送的方式发送请求到webservicex.net站点，访问WebService.webservicex.net站点上提供查询天气预报的服务。
- 
+
 代码如下：
 
 ```
