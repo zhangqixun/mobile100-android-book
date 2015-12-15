@@ -9,6 +9,10 @@ DEX文件是安卓系统中JAVA虚拟机的可执行文件。在安卓中，APK�
 
 DEX文件的格式的定义保存在安卓源代码中的platform/dalvik文件夹中，属于dalvik虚拟机的一部分。
 
+1.1  DEX文件头
+
+类似于Windows平台下的PE程序，DEX文件拥有自己的文件头，并以文件头为线索，向下索引DEX文件的各个部分，每个部分都有相应的作用。
+
 ```
 struct DexHeader {
     u1  magic[8];          
@@ -38,3 +42,5 @@ struct DexHeader {
 
 ```
 
+magic字段中显示的是DEX文件的魔数以及版本号，前三个字符为dex，后续还存放着版本号035。
+checksum字段中存放着DEX文件的较验和，一旦我们修改了DEX文件，这个字段中的数值必须要重新进行计算，否则虚拟机在载入DEX文件时将会报错。
