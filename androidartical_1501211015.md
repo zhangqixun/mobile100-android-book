@@ -24,7 +24,6 @@ BluetoothAdapter类
 | 0:3 | 1:3 |
 | 0:4 | 1:4 |
 | 0:5 | 1:5 |
-
 BluetoothAdapter  getDefaultAdapter()	获取本地蓝牙适配器
 boolean startDiscovery()	开始搜索附近的蓝牙设备
 Set<BluetoothDevice> getBondedDevice()	获取已配过对的蓝牙设备集合
