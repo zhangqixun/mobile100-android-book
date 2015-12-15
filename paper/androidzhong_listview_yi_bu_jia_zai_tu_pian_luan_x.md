@@ -350,6 +350,7 @@ class BitmapWorkerTask extends AsyncTask<String, Void, BitmapDrawable> {
        ......
 对问题进行解决后，运行结果如下：
 
+
 ![](yunxing1.png)
 ![](yunxing2.png)
 ![](yunxing3.png)
