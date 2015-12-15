@@ -155,15 +155,59 @@ android:layout_weight----- 给控件分配剩余空间
 运行效果图:
 
   ![](../0130319903014ri.png)
+  
+ - One是相对于button而言是居中排列的，而button相对于大的view来说又是靠右排列的呢。
 
-接下来笔者想重点介绍下
+###  layout_weight属性
+
+这个属性比较有趣：如果感兴趣建议看一下：
+[android:layout_weight的真实含义](http://blog.csdn.net/yanzi1225627/article/details/24667299)
+
+    一般来讲Google官方推荐，当使用weight属性时，将width设为0dip即可，
+
+     效果跟设成wrap_content是一样的。这样weight就可以理解为占比了！
+
+##另需要注意的是:
+
+    当 android:orientation="vertical"  时，只有水平方向的设置才起作用，垂直方向的设置不起作用。
+    即：left，right，center_horizontal 是生效的。
+    当 android:orientation="horizontal" 时， 只有垂直方向的设置才起作用，水平方向的设置不起作用。
+    即：top，bottom，center_vertical 是生效的。
+
+## 二、框架布局(FrameLayout)
+
+简单来说，框架布局管理器(FrameLayout)是将组件都放在屏幕的左上角，所有的组件是层叠显示的.
+
+我们先来看一个例子：
+```
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="这是一个图片"
+        android:src="@drawable/ic_launcher" />
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="这是提示文字" />
+    <Button android:id="@+id/btn" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="这是按钮"/>
+</FrameLayout>
+
+```
 
 
 
 
-
-
-
+结束语
 [sdfsdfdsf](www.daidu.com)
 # sdfdsf 
 
