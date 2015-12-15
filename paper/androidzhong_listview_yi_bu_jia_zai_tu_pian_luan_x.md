@@ -76,7 +76,8 @@ public class Images {
 }
 
 之后，我们就要来设置布局，在activity_main.xml布局中的LinearLayout中新添加一个ListView，用来存放所有的图片信息：
-![](SJB4~EOWW9{}M][FUHIHAEC.png)
+![](sun.png)
+
 
 然后，定义一个image_item.xml布局来表示ListView中每一个子View的布局，其中只有一个ImageView控件来显示图片，默认情况下会显示一个默认图片，这样所有的布局就OK了：
 
