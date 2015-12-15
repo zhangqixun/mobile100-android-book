@@ -367,7 +367,162 @@ android:layout_weight----- 给控件分配剩余空间
  ![](../011114495121680.png)
  
  
-可以看出此计算器的布局是6行4列的，一个<TableRow>......</TableRow>整体是一行，而列数是其中所有<TableRow>中列数最多的数目 。
+    可以看出此计算器的布局是6行4列的，一个<TableRow>......</TableRow>
+    整体是一行，而列数是其中所有<TableRow>中列数最多的数目 。
+    如果没有<TableRow>，则占一行，请对应上图分析。
+
+
+###我们接下来再看一个例子：
+
+```
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AndroidTableLayoutActivity" >
+ 
+    <!-- 定义第一个表格，指定第2列允许收缩，第3列允许拉伸 -->
+ 
+    <TableLayout
+        android:id="@+id/tablelayout01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:shrinkColumns="1"
+        android:stretchColumns="2" >
+ 
+        <!-- 直接添加按钮，自己占用一行 -->
+ 
+        <Button
+            android:id="@+id/btn01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="独自一行" >
+        </Button>
+ 
+        <TableRow>
+ 
+            <Button
+                android:id="@+id/btn02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="普通" >
+            </Button>
+ 
+            <Button
+                android:id="@+id/btn03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="允许被收缩允许被收缩允许被收缩允许被收缩" >
+            </Button>
+ 
+            <Button
+                android:id="@+id/btn04"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="允许被拉伸允许被拉伸允许被拉伸" >
+            </Button>
+        </TableRow>
+    </TableLayout>
+    <!-- 定义第2个表格，指定第2列隐藏 -->
+ 
+    <TableLayout
+        android:id="@+id/tablelayout02"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:collapseColumns="1" >
+ 
+        <TableRow>
+ 
+            <Button
+                android:id="@+id/btn05"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="普通" >
+            </Button>
+ 
+            <Button
+                android:id="@+id/btn06"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="被隐藏列" >
+            </Button>
+ 
+            <Button
+                android:id="@+id/btn07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="允许被拉伸" >
+            </Button>
+        </TableRow>
+    </TableLayout>
+    <!-- 定义第3个表格，指定第2列填满空白 -->
+ 
+    <TableLayout
+        android:id="@+id/tablelayout03"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1" >
+ 
+        <TableRow>
+ 
+            <Button
+                android:id="@+id/btn08"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="普通" >
+            </Button>
+ 
+            <Button
+                android:id="@+id/btn09"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="填满剩余空白" >
+            </Button>
+        </TableRow>
+    </TableLayout>
+    <!-- 定义第3个表格，指定第2列横跨2列 -->
+ 
+    <TableLayout
+        android:id="@+id/tablelayout04"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+ 
+        <TableRow>
+ 
+            <Button
+                android:id="@+id/btn10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="普通" >
+            </Button>
+ 
+            <Button
+                android:id="@+id/btn11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:text="填满剩余空白" >
+            </Button>
+        </TableRow>
+    </TableLayout>
+ 
+</LinearLayout>
+
+```
+运行效果图：
+
+![](../101556s5p9_1418901.png)
+
+
+    主要是注意三个属性：
+    
+    android:collapseColumns：以第0行为序，隐藏指定的列
+    
+    android:shrinkColumns：以第0行为序，自动延伸指定的列填充可用部分
+    
+    android:stretchColumns：以第0行为序，尽量把指定的列填充空白部分
+
 
 
 
