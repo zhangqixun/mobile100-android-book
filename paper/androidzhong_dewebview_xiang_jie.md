@@ -245,7 +245,7 @@ if(url.endsWith(".apk")){
     new HttpThread(url).start();
 }
 ```
-![](xuxin_7.png)
+![](xuxin_77.png)
 
 可以查看结果，文件已经开始正常下载：
 
