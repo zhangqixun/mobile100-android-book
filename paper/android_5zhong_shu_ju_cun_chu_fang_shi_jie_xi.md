@@ -294,29 +294,18 @@ db.query(String table,String[] columns,String selection,String[] selectionArgs,S
 db.query(String distinct,String table,String[] columns,String selection,String[] selectionArgs,String groupBy,String having,String orderBy,String limit);
 
 ```
-上面几种都是常用的查询方法，第一种最为简单，将所有的SQL语句都组织到一个字符串中，使用占位符代替实际参数，selectionArgs就是占位符实际参数集；下面的几种参数都很类似，columns表示要查询的列所有名称集，selection表示WHERE之后的条件语句，可以使用占位符，groupBy指定分组的列名，having指定分组条件，配合groupBy使用，orderBy指定排序的列名，limit指定分页参数，distinct可以指定“true”或“false”表示要不要过滤重复值。需要注意的是，selection、groupBy、having、orderBy、limit这几个参数中不包括“WHERE”、“GROUP BY”、“HAVING”、“ORDER BY”、“LIMIT”等SQL关键字。
+* 
+上面几种都是常用的查询方法，第一种最为简单，将所有的SQL语句都组织到一个字符串中，使用占位符代替实际参数，selectionArgs就是占位符实际参数集；下面的几种参数都很类似，columns表示要查询的列所有名称集，selection表示WHERE之后的条件语句，可以使用占位符，groupBy指定分组的列名，having指定分组条件，配合groupBy使用，orderBy指定排序的列名，limit指定分页参数，distinct可以指定“true”或“false”表示要不要过滤重复值。
+* 
+需要注意的是，selection、groupBy、having、orderBy、limit这几个参数中不包括“WHERE”、“GROUP BY”、“HAVING”、“ORDER BY”、“LIMIT”等SQL关键字。
 * 
 最后，他们同时返回一个Cursor对象，代表数据集的游标，有点类似于JavaSE中的ResultSet。
 
 下面是Cursor对象的常用方法：
 
-1.c.move(int offset); //以当前位置为参考,移动到指定行  
-2.c.moveToFirst();    //移动到第一行  
-3.c.moveToLast();     //移动到最后一行  
-4.c.moveToPosition(int position); //移动到指定行  
-5.c.moveToPrevious(); //移动到前一行  
-6.c.moveToNext();     //移动到下一行  
-7.c.isFirst();        //是否指向第一条  
-8.c.isLast();     //是否指向最后一条  
-9.c.isBeforeFirst();  //是否指向第一条之前  
-10.c.isAfterLast();    //是否指向最后一条之后  
-11.c.isNull(int columnIndex);  //指定列是否为空(列基数为0)  
-12.c.isClosed();       //游标是否已关闭  
-13.c.getCount();       //总数据项数  
-14.c.getPosition();    //返回当前游标所指向的行数  
-15.c.getColumnIndex(String columnName);//返回某列名对应的列索引值  
-16.c.getString(int columnIndex);   //返回当前行指定列的值  
+```
 
+```
 * 
 在上面的代码示例中，已经用到了这几个常用方法中的一些，关于更多的信息，大家可以参考官方文档中的说明。
 
