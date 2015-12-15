@@ -203,7 +203,17 @@ android:layout_weight----- 给控件分配剩余空间
 </FrameLayout>
 
 ```
+运行效果：
 
+![](../8f81d100-4a57-3194-b03d-44665a08095a.png)
+
+可以看的出来，是按照顺序依次将控件显示在左上角的呢。似乎framelayout的动态效果，比如动画的时候能体现出其作用。
+
+可以参考：[Android应用开发之FrameLayout （帧布局）+小鸟飞翔案例
+](http://www.linuxidc.com/Linux/2011-12/49200p2.htm)
+
+
+## 三、表格布局(TableLayout)
 
 
 
