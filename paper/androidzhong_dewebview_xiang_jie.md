@@ -321,6 +321,7 @@ webcontent.loadUrl（" content://com.android.htmlfileprovider/sdcard/kris.html "
 # WebView如何同步Cookie
 在我们平常开发的过程中，经常会有这样的需求，客户端在用户登陆完之后会保存一个cookie信息，有些界面需要通过WebView去展示，这种情况下只需要将登录信息的cookie传给服务器，让服务器做一个标识，避免我们再次登录的情况。如果不把默认的cookie传给服务器，服务器就会让用户重新登陆，这样让用户在登陆完之后还要重新登陆会降低用户体验。为了解决此类问题，就需要实现客户端和WebView同步。Cookie是服务器端给存储客户端的一些信息，例如用户登录的时间、购物车等都是通过Cookie的方式去存储的。
 在本地创建一个index网页，可以模拟登陆操作：
+
 ![](xuxin_11.png)
 
 首先搭建一个取Cookie的接口类，继承一个Thread，该类的作用主要是模拟登陆
