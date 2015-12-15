@@ -567,3 +567,5 @@ public class ImageAdapter2 extends ArrayAdapter<String> {
         }
 
     } 
+    
+    以上就是关于ListView异步加载图片乱序的问题。谢谢！
