@@ -24,7 +24,7 @@
 ##  ③.表格布局(TableLayout)
 ##  ④.相对布局(RelativeLayout)
 ##  ⑤.绝对布局(AbsoluteLayout)
-##  ⑥.和网格布局(GridLayout)
+##  ⑥.网格布局(GridLayout)
 ##  ⑦.自定义布局 (custom-layout) 
 
 # 2.Android布局优化
@@ -214,8 +214,165 @@ android:layout_weight----- 给控件分配剩余空间
 
 
 ## 三、表格布局(TableLayout)
+  先看一个例子：
+  ```
+  <?xml version="1.0" encoding="utf-8"?>
+  <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:stretchColumns="*"
+    >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="0" 
+        
+        android:gravity="right|center_vertical"
+
+        />
+
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/" />
+
+    </TableRow>
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4" />
+
+        <Button
+            android:id="@+id/button6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5" />
+
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6" />
+
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="*" />
+
+    </TableRow>
+     <TableRow
+        android:id="@+id/tableRow3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/button9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1" />
+
+        <Button
+            android:id="@+id/button10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2" />
+
+        <Button
+            android:id="@+id/button11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3" />
+
+        <Button
+            android:id="@+id/button12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-" />
+
+    </TableRow>
+     <TableRow
+        android:id="@+id/tableRow4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/button13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0" />
+
+        <Button
+            android:id="@+id/button14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="." />
+
+        <Button
+            android:id="@+id/button15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+" />
+
+        <Button
+            android:id="@+id/button16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="=" />
+
+    </TableRow>
+
+     <Button
+         android:id="@+id/button17"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="clear" />
+
+</TableLayout>
+  ```
+ 运行效果:
+ 
+ ![](../011114495121680.png)
+ 
+ 
+可以看出此计算器的布局是6行4列的，一个<TableRow>......</TableRow>整体是一行，而列数是其中所有<TableRow>中列数最多的数目 。
 
 
+
+
+---
 
 结束语
 [sdfsdfdsf](www.daidu.com)
