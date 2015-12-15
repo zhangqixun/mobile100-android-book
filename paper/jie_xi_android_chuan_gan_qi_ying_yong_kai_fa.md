@@ -11,7 +11,15 @@
 
 2.调用SensorManager的getDefaultSensor(int type)方法获得指定类型的传感器。
 
-3.在Activity的onResume()方法中调用SensorManager的registerListener()为指定传感器注册监听即可。应用程序通过实现监听器即可获得传感器传回的数据。
+3.在Activity的onResume()方法中调用SensorManager的registerListener(SensorEventListener listener,Sensor sensor,int rate)为指定传感器注册监听即可。应用程序通过实现监听器即可获得传感器传回的数据。
+
+该方法三个参数作用如下：
+
+listener:监听传感器事件的监听器。该监听器需要实现SensorEventListener接口。
+
+sensor:传感器对象。
+
+rate:指定获取传感器数据的频率。
 
 下面程序代码是关于是几种常用传感器的用法：
 
