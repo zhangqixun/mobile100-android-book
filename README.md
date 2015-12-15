@@ -1,5 +1,5 @@
 
-# Android中animation的简介
+# Android中animation的简介（1501210900 高鸿宾）
 
 
 ## 一、animation简介
