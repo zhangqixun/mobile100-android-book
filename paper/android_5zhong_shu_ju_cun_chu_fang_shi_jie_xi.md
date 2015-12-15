@@ -797,7 +797,24 @@ Content Provider增删改查实例（通过listview显示操作过的数据）
 
 
 ```
-
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+public class DBOpenHelper extends SQLiteOpenHelper{
+private static final String DATABASE_NAME="person.db";//数据库名称
+private static final int DATABASE_VERSION=1;//数据库版本
+public DBOpenHelper(Context context){
+super(context,DATABASE_NAME,null,DATABSE_VERSION);
+}
+public void onCreate(SQLiteDatabase db){
+db.execSQL("CREATE TABLE person(_id integer primary key autoincrement,name varchar(20),age varchar(10))");
+}
+public void onUpgrage(SQLiteDatabse db,int oldVersion,int newVersion)
+{
+db.execSQL("DROP TABLE IF EXISTS person");
+onCreate(db);
+}
+}
 ```
 
 ### 2，自定义Content Provider类，增删改查的方法
