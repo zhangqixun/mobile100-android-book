@@ -427,7 +427,7 @@ fuction call(){
 已经调用成功，说明javascript已经能够调用本地的callJs。
 接下来叙述混淆包的问题，需要把演示事例项目webView_01整个项目打成一个混淆包，在cmd中执行命令ant clean relase，把之前的文件进行清空， 
 
-![](xuxin_15.png)
+![](xuxin_155.png)
 
 然后执行ant clean release就打成了一个release包
 
