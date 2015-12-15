@@ -82,63 +82,47 @@ TelephonyMagager telephonyManager=(TelephonyMagager)getSystemService(srvcName);
 如果在应用程序的manifest文件中包含了READ_PHONE_STATE uses-permission，那么当SIM处于就绪状态是，还可以使用getSimSerialNumber方法获得当前SIM的序列号。
 
 在能够使用这些方法中的任何一种之前，必须确保SIM处于就绪状态。可以使用getSimState方法来确定这一点：
-
-Int simState = telephonyManager.getSimState();
-Switch(simState){
-	Case(TelephonyManager.SIM_STATE_ABSENT):break;
-	Case(TelephonyManager.SIM_STATE_NETWORK_LOCKED):break;
-    Case(TelephonyManager.SIM_STATE_PIN_REQUIRED):break;
-    Case(TelephonyManager.SIM_STATE_PUK_REQUIRED):break;
-    Case(TelephonyManager.SIM_STATE_UNKNOWN):break;
-    Case(TelephonyManager.SIM_STATE_READY):{
-	//获得SIM的ISO国家代码
-	String simCountry = telephonyManager.getSimCountryIso();
-	//获得活动SIM的运营商代码
-	String simOperatorCode = telephonyManager.getSimOperator();
-	//获得SIM的运用商名称
-	String simOperatorName = telephonyManager.getSimOperatorName();
-	//获得SIM的序列号
-	String simSerial = telephonyManager.getSimSerialNumber();
-	Break;
-}
-Default:break;
+![](搜狗截图20151216011342.png)
 
 四、	使用PhoneStateListener监视电话状态的变化
+
 Android电话服务API可以用来监视电话状态和相关信息（如来电）的变化。
 使用PhoneStateListener类来监视电话状态的变化。有一些状态的变化也作为Intent广播出去。
+
 为了监视并管理电话状态，应用程必须READ_PHONE_STATE uses-permission
-<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+![](搜狗截图20151216011448.png)
+
 创建一个实现了PhoneStateListener的新类以监听并响应电话状态变化事件，包括呼叫状态（响铃、装机等）、蜂窝位置变化、语音邮件和呼叫转移状态、电话服务变化以及移动信号强度的变化。
+
 在PhoneStateListener的实现中，重写想要响应的事件的事件处理程序。每个处理程序会接收指示新电话状态的参数，例如，当前的蜂窝位置，呼叫状态或者信号强度。
+
 创建了自己的PhoneStateListener以后，将它注册到TelephonyManager中，使用位掩码指示想要监听的事件。
-telephoneManager.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_FORWARDING_INDICATOR|PhoneStateListener.LISTEN_CALL_STATE|PhoneStateListener.LISTEN_CELL_LOCATION|PhoneStateListener.LISTEN_DATA_ACTIVITY| PhoneStateListener.LISTEN_DATA_CONNECTION_STATE| PhoneStateListener.LISTEN_MESSAGE_WAITING_INDICATOR| PhoneStateListener.LISTEN_SERVICE_STATE| PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+
+![](搜狗截图20151216011534.png)
+
 为了注销一个监听器，需要调用listen方法并将PhoneStateListener.LISTEN_NONE作为掩码参数传入，如下所示：
-telephoneManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
-1.	监视传入的电话呼叫
+
+telephoneManager.listen(phoneStateListener,PhoneStateListener.LISTEN_NONE);
+
+◇监视传入的电话呼叫
+
 如果你的应用程序只应该在运行的时候响应传入的电话呼叫，就应该在PhoneStateListener的实现中重写onCallStateChanged方法并进行注册，以便在呼叫状态发生变化时接收通知。
-CallStateListener callStateListener = new CallStateListener ();{
-Public void onCallStateChanged(int state,String incomingNumber){
-		String callStateStr = “unknown”;
-		Switch (state){
-			Case TelephonyManager.CALL_STATE_IDLE:
-			callStateStr = “idle”;break;
-Case TelephonyManager.CALL_STATE_OFFHOOK:
-			callStateStr = “offhook”;break;
-Case TelephonyManager.CALL_STATE_RINGING:
-			callStateStr = “ring.incoming number is:”+ incomingNumber;
-break;
-					default:break;
-				}
-				Toast.makeText(MyActivity.this,callStateStr,Toast.LENGTH_LONG).show();
-			}
-telephoneManager.listen(callStateListener, CallStateListener.LISTEN_CALL_STATE);
+
+![](搜狗截图20151216011720.png)
+
 onCallStateChanged处理程序接收与传入的呼叫相关的电话号码，而state参数则使用以下三个值之一代表当前呼叫状态：
+
 TelephonyManager.CALL_STATE_IDLE当电话既不响铃也不在通话中时
 TelephonyManager.CALL_STATE_RINGING当电话响铃时
 TelephonyManager.CALL_STATE_OFFHOOK当电话正在通话中时
+
 注意，一旦状态变为TelephonyManager.CALL_STATE_RINGING，系统会显示来电屏幕，询问用户是否要接听电话。
+
 应用程序必须处于运行状态才能接收这个回调。如果每当电话状态变化时，就应该启动应用程序，那么可以注册一个IntentReceiver，用于监听表示电话状态发生变化的Broadcast Intent。
-2.	跟踪蜂窝位置变化
+
+◇跟踪蜂窝位置变化
+
 通过重写PhoneStateListener实现的onCellLocationChanged方法，每当当前的蜂窝位置发生变化时，可以得到通知。在可以注册以便监听蜂窝位置变化之前，需要将ACCESS_COARSE_LOCATION权限添加到应用程序的manifest文件中。
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 onCellLocationChanged处理程序接收一个CellLocation对象，其中包含了基于电话网络类型提取不同的位置信息的方法。对于GSM网络，可以获得蜂窝ID（getCid）和当前位置区域代码（getLac）。对于CDMS网络，可以获得当前基站的ID（getBaseStationId）以及该基站的纬度（getBaseStationLatitude）和经度（getBaseStationLongitude）。
@@ -158,7 +142,8 @@ Public void onCellLocationChanged（Celllocation location）{
 			Toast.makeText(getApplicationContext(),sb.toString() ,Toast.LENGTH_LONG).show();
 		}
 		telephoneManager.listen(cellLocationListener, CellLocationListener.LISTEN_CELL_LOCATION);
-3.	跟踪服务变化
+◇跟踪服务变化
+
 onServiceStateChanged处理程序跟踪设备的蜂窝服务的详细信息。使用ServiceState参数可查找当前服务状态的详细信息。
 Service State对象的getState方法将当前的服务状态作为下列任意一种ServiceState常量返回：
 STATE_IN_SERVICE正常电话服务是可用的
