@@ -347,3 +347,9 @@ public class MyButton extends Button {
 
 ![](logcat.png)
 
+
+### 参考资源：
+
+* 疯狂Android讲义
+* http://wenku.baidu.com/view/b75706808762caaedd33d4e3.html?re=view
+* http://www.cnblogs.com/android-html5/archive/2012/05/24/2533942.html
