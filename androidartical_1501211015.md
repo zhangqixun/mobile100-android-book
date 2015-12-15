@@ -87,12 +87,12 @@ BluetoothServerSocket类
 本实例实现了两部Android手机利用蓝牙互相发送消息的功能。
 开发客户端应用：
 1、在AndroidManifest.xml中申请蓝牙相关操作权限
-
-&lt;uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-&lt;uses-permission android:name="android.permission.BLUETOOTH" />
-
-2、请求用户开启蓝牙设备
+```xml
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+<uses-permission android:name="android.permission.BLUETOOTH" />
 ```
+2、请求用户开启蓝牙设备
+```java
 if(!bluetoothAdapter.isEnabled()){
     Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
     intent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,600);
@@ -114,7 +114,7 @@ bluetoothAdapter.startDiscovery()
 另外利用createRfcommSocketToServiceRecord(UUID)的方式可能会连接异常，可以使用Method m = device.getClass().getMethod("createRfcommSocket", new Class[] {int.class});
 bluetoothSocket = (BluetoothSocket) m.invoke(device, Integer.valueOf(1));
 的方式获取bluetoothSocket对象。
-```
+```java
 protected void connect(final BluetoothDevice device){
     new Thread(){
         @Override
@@ -140,7 +140,7 @@ protected void connect(final BluetoothDevice device){
 ```
 5、发送信息，其数据的传递是通过字节流的方式进行的。
 
-```
+```java
 try {
     outputStream = bluetoothSocket.getOutputStream();
     byte[] buf = str.getBytes();
@@ -153,7 +153,7 @@ try {
 ```
 开发服务端应用：
 与客户端一样也需要申请蓝牙相关的权限、开启蓝牙设备等。不同的是在服务端需要监听来自客户端的请求。主要代码如下：
-```
+```java
 new Thread(){
     @Override
     public void run() {
@@ -182,7 +182,7 @@ new Thread(){
 ```
 
 由于bluetoothServerSocket的accept方法会阻塞主线程，因此需要另外开辟新的线程来处理来自客户端的连接请求，在accept方法成功返回后，会得到一个与客户端连接的bluetoothSocket对象，通过该对象可以获取客户端传递过来的数据，也可以通过该对象想客户端发送数据，这样就实现了双方的互相通信。主要代码如下：
-```
+```java
 try {
     String name = bluetoothSocket.getRemoteDevice().getName();
     System.out.println(name+"设备连接");
@@ -279,13 +279,13 @@ WifiManager类：提供针对WiFi连接的基本操作，管理WiFi连接。
 App端
 
 申请网络权限
-```
+```xml
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 <uses-permission android:name="android.permission.INTERNET"/>
 
 ```
 主要代码：
-```
+```java
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btn_open,btn_close,btn_last,btn_next;
@@ -361,7 +361,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 可以看到在App端，通过传递String的方式传递操作命令，在测试时手机与PC在同一个局域网内，但如有需要，也可以改为远端设备的IP地址，通信的端口设置为8888.
 布局文件内容：
 
-```
+```xml
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -406,7 +406,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 服务端的代码为：
 
-```
+```java
 public class PPTControler {
 
     private static ObjectInputStream inputStream;
