@@ -513,4 +513,5 @@ public class MainActivity extends Activity {
 }
 
 然后整个例子的代码我们就完成了，运行程序，如下：
+
 ![](ding5.png)
