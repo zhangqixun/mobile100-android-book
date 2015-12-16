@@ -384,7 +384,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     public void onClick(View view){
         ValueAnimator anim = ValueAnimator.ofFloat(0f, 1f);
-        //通过ofFloat,ofInt,ofObject方法生成一个ValueAnimator实例。
+        //通过ofFloat,ofInt,ofObject生成一个ValueAnimator实例。
         anim.setDuration(500);
 
         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {//设置监听器
