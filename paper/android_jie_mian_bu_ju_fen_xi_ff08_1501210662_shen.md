@@ -763,7 +763,144 @@ RelativeLayout用到的一些重要的属性：
     
 效果图如下：
 
+![](../20140628160425750.png)
 
+
+
+## 五、绝对布局(AbsoluteLayout)
+
+绝对布局相对来说非常简单，只要在控件中用android:layout_x和android:layout_y属性
+
+指定控件横纵坐标就可以了
+
+常用属性：
+
+android:layout_x  --------组件x坐标
+
+android:layout_y ---------组件y坐标
+
+用的很少，几乎已经淘汰啦。
+
+我们简单的一起来看一个例子:
+
+    <?xml version="1.0" encoding="utf-8"?>
+
+     <AbsoluteLayout android:id="@+id/AbsoluteLayout01" 
+         android:layout_width="match_parent" 
+         android:layout_height="match_parent" 
+         xmlns:android="http://schemas.android.com/apk/res/android">
+         <TextView android:id="@+id/label"
+             android:layout_x="40dip" 
+             android:layout_y="40dip" 
+             android:layout_height="wrap_content"
+             android:layout_width="wrap_content" 
+             android:text="用户名：">
+         </TextView>
+         <EditText android:id="@+id/entry"
+             android:layout_x="40dip" 
+             android:layout_y="60dip" 
+             android:layout_height="wrap_content"
+             android:layout_width="150dip">
+         </EditText>
+         <Button android:id="@+id/ok"
+             android:layout_width="70dip"
+             android:layout_height="wrap_content"
+             android:layout_x="40dip" 
+             android:layout_y="120dip" 
+             android:text="确认">
+         </Button>
+         <Button android:id="@+id/cancel" 
+             android:layout_width="70dip"
+             android:layout_height="wrap_content" 
+             android:layout_x="120dip" 
+             android:layout_y="120dip" 
+             android:text="取消">
+         </Button>
+     </AbsoluteLayout> 
+
+运行效果图：
+
+![](../3g133.png)
+
+
+## 六、网格布局(GridLayout)
+网格布局(GridLayout)是Android 4.0以后引入的一个新的布局,
+
+和前面介绍的TableLayout(表格布局) 有点类似,不过他有很多前者没有的东西,
+
+也相对来说更好使用。
+
+
+我们先一起来看一个例子先：
+
+    <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/GridLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="4"
+        android:orientation="horizontal"
+        android:rowCount="6" >
+    
+        <TextView
+            android:layout_columnSpan="4"
+            android:layout_gravity="fill"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="#FFCCCC"
+            android:text="0"
+            android:textSize="50sp" />
+    
+        <Button
+            android:layout_columnSpan="2"
+            android:layout_gravity="fill"
+            android:text="回退" />
+    
+        <Button
+            android:layout_columnSpan="2"
+            android:layout_gravity="fill"
+            android:text="清空" />
+    
+        <Button android:text="+" />
+    
+        <Button android:text="1" />
+    
+        <Button android:text="2" />
+    
+        <Button android:text="3" />
+    
+        <Button android:text="-" />
+    
+        <Button android:text="4" />
+    
+        <Button android:text="5" />
+    
+        <Button android:text="6" />
+    
+        <Button android:text="*" />
+    
+        <Button android:text="7" />
+    
+        <Button android:text="8" />
+    
+        <Button android:text="9" />
+    
+        <Button android:text="/" />
+    
+        <Button
+            android:layout_width="wrap_content"
+            android:text="." />
+    
+        <Button android:text="0" />
+    
+        <Button android:text="=" />
+    
+    </GridLayout> 
+
+
+运行效果图：
+
+![](../1425127995574.png)
 
 ---
 
