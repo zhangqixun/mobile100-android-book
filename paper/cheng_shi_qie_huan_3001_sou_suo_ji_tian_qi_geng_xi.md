@@ -110,7 +110,7 @@ Activity之间数据的传输：
             }
         });
         
-当用户点击了一个Item之后，根据Item的位置，在数据源相应位置把数据取出来，在天气预报项目中，也就是在listItems中把相应位置的城市信息取出来，放到intent中返回，由MainActivity中的onActivityResult进行处理。
+当用户点击了一个Item之后，根据Item的位置，在数据源相应位置把数据取出来，在天气预报项目中，也就是在listItems中把相应位置的城市信息取出来，放到intent中返回，由MainActivity中的onActivityResult进行处理。startActivity( ) 仅仅是跳转到目标页面，若是想跳回当前页面，则必须再使用一次startActivity( )。startActivityForResult( ) 可以一次性完成这项任务，当程序执行到这段代码的时候，跳转目标Activity调用了finish()方法以后，程序会自动跳转回MainActivity，并调用MainActivity中的onActivityResult( )方法。
 
 
       protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -367,6 +367,8 @@ Activity能进行绑定得益于Service的接口onBind()。Service和Activity的
       intent.putExtras(bundle);
       sendBroadcast(intent);
 MainActivity接收数据的代码就不再赘述了。
+
+
 
 
 
