@@ -20,7 +20,7 @@
 
 2  几个基本问题	
     2.1 Android平台网络相关API接口	
-        2.1.1 java.net.*(标准Java接口)	
+        2.1.1 java.net.*(标准java接口)	
         2.1.2 Org.apache接口	
         2.1.3 Android.net.*(Android网络接口)	
     2.2 网络架构主要有两种模式B/S,C/S	
