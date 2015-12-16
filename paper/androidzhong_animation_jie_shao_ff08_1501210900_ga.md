@@ -243,9 +243,47 @@ public class MainActivity extends Activity {
 
 下面依次对四种动画的参数进行解析：
 
-alpha	表示渐变透明度动画效果：
+alpha：	表示渐变透明度动画效果，参数如下：
+```
+<?xml version="1.0" encoding="utf-8"?>   
+<set xmlns:android="http://schemas.android.com/apk/res/android">   
+<alpha   
+    android:fromAlpha="0.0" <!--表示开始时透明度，0.0表示完全透明，取值0-1之间-->   
+    android:toAlpha="1.0"     <!--表示结束时透明度，1.0表示不透明，取值0-1之间-->
+    android:duration="500"  />  
+    <!--duration表示效果作用时间-->
+</set>   
 
-scale	表示渐变尺寸伸缩动画效果，
+```
+
+scale：	表示渐变尺寸伸缩动画效果，参数如下：
+```
+<?xml version="1.0" encoding="utf-8"?>   
+<set xmlns:android="http://schemas.android.com/apk/res/android">   
+<scale     
+    android:interpolator= "@android:anim/decelerate_interpolator"         
+    android:fromXScale="0.0"
+    <!--fromXScale表示开始时X坐标的缩放倍数，0表示不显示-->
+    android:toXScale="1.5"
+    <!--toXScale表示结束时X坐标的缩放倍数，1.5表示X坐标最终为正常值得1.5倍-->
+    android:fromYScale="0.0"     
+    android:toYScale="1.5"     
+    android:pivotX="50%" 
+    <!--pivotX表示动画起始位置，相对于屏幕的百分比,50%表示x方向上动画从屏幕中间开始-->
+    android:pivotY="50%"     
+    android:startOffset="0" 
+    <!--startOffset表示每次动画执行前停顿的时间，单位毫秒-->     
+    android:duration="10000" 
+    <!--duration动画效果的总共执行时间，但为毫秒-->
+    android:repeatCount="1"     
+    <!--repeatCount动画执行的次数 -->
+    android:repeatMode="reverse"
+    <!-- repeatMode，动画重复的模式，reverse为反向，当第偶次执行时，动画方向会相反.restart为重新执行，方向不变-->
+     />   
+</set>   
+  
+
+```
 translate	表示画面转换位置移动动画效果，
 rotate	表示画面转移旋转动画效果。
 
