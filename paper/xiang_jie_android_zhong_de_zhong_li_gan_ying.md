@@ -107,3 +107,58 @@ SensorManager类是Android感应检测管理类,再进行重力感应开发时�
 
 取消注册，调用SensorManager.unregisterListener(SensorEventListener listener)实现。
 
+4.重力感应开发实战
+
+实现一个简单的重力感应应用，在屏幕上返回当前的x，y，z三轴坐标值
+
+    public class MyActivity extends Activity implements SensorEventListener {
+        private SensorManager msensorManager;
+        private Sensor msensor;
+        private TextView testx;
+        private TextView testy;
+        private TextView testz;
+    
+        @Override
+        public void onCreate(Bundle savedInstanceState){
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+            testx=(TextView)findViewById(R.id.testx);
+            testy=(TextView)findViewById(R.id.testy);
+            testz=(TextView)findViewById(R.id.testz);
+            msensorManager=(SensorManager)this.getSystemService(SENSOR_SERVICE);//获取SensorManager
+            msensor= msensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);//获取Sensor
+            if(msensorManager==null){
+                Log.d("ppaabb","Not Find device");
+            }
+            msensorManager.registerListener(this,msensor,SensorManager.SENSOR_DELAY_GAME);//注册监听器
+        }
+        @Override
+        public void onAccuracyChanged(Sensor sensor,int accuracy){
+
+        }
+        @Override
+        public void onSensorChanged(SensorEvent event){//实现感应检测的监听功能
+            if(event.sensor==null){
+                return;
+            }
+            if(event.sensor.getType()==Sensor.TYPE_ACCELEROMETER){
+                int x=(int)event.values[0];
+                int y=(int)event.values[1];
+                int z=(int)event.values[2];
+
+                testx.setText(String.valueOf(x));
+                testy.setText(String.valueOf(y));
+                testz.setText(String.valueOf(z));
+
+            }
+        }
+
+        @Override
+        protected void onStop(){
+            super.onStop();
+            if(msensorManager!=null){
+                msensorManager.unregisterListener(this);
+            }
+        }
+
+    }
