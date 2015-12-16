@@ -241,5 +241,13 @@ public class MainActivity extends Activity {
 }
 ```
 
+下面依次对四种动画的参数进行解析：
+
+alpha	表示渐变透明度动画效果：
+
+scale	表示渐变尺寸伸缩动画效果，
+translate	表示画面转换位置移动动画效果，
+rotate	表示画面转移旋转动画效果。
+
 
 
