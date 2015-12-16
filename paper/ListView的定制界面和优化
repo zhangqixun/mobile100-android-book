@@ -3,7 +3,7 @@
     
     一、ListView原理与分析
         LsitView显示的基本原理
-    List控件如果要显示数据需要具备以下元素：ListView列表控件，数据适配器，布局文件，数据。四者的关系如下图所示。其中，L i s t V i e w是基本的显示控件，以列表的形式显示数据信息，X M L布局文件定义了ListView控件中每个i t e m项包含的控件及布局格式，数据可以是数组、List集合等，存放要显示的TextView、ImageView等控件的数据信息，Adapter为适配器将数据按照xml布局文件的格式显示在List控件之中。
+    List控件如果要显示数据需要具备以下元素：ListView列表控件，数据适配器，布局文件，数据。四者的关系如下图所示。其中，L i s t V i e w是基本的显示控件，以列表的形式显示数据信息，X M L布局文件定义了ListView控件中每个i t e m项包含的控件及布局格式，数据可以是数组、List集合等，存放要显示的TextView、ImageView等控件的数据信息，Adapter为适配器将数据按照xml布局文件的格式显示在List控件之中。 v 
 
     
 
