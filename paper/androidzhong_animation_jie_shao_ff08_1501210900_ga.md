@@ -284,8 +284,42 @@ scale：	表示渐变尺寸伸缩动画效果，参数如下：
   
 
 ```
-translate	表示画面转换位置移动动画效果，
-rotate	表示画面转移旋转动画效果。
+translate:	表示画面转换位置移动动画效果，参数如下：
+
+```
+<?xml version="1.0" encoding="utf-8"?>   
+<set xmlns:android="http://schemas.android.com/apk/res/android">  
+<translate   
+    android:fromXDelta="320"
+    <!--fromXDelta起始时X坐标,屏幕右下角的座标是X:320,Y:480 -->
+    android:toXDelta="0"   
+    <!--toXDelta结束时X坐标,屏幕左上角的座标是X:0,Y:0 -->
+    android:fromYDelta="480"   
+    android:toYDelta="0"   
+    android:duration="10000" />   
+</set> 
+```
+
+rotate:	表示画面转移旋转动画效果,参数如下：
+```
+<?xml version="1.0" encoding="utf-8"?>   
+<set xmlns:android="http://schemas.android.com/apk/res/android">  
+<rotate                                        
+    android:interpolator="@android:anim/accelerate_decelerate_interpolator"   
+    android:fromDegrees="300"
+    <!--fromDegrees动画开始时的角度-->
+    android:toDegrees="-360" 
+    <!--toDegrees动画结束时物件的旋转角度,正代表顺时针-->
+    android:pivotX="10%"   
+    android:pivotY="100%"   
+    android:duration="10000" />   
+</set>   
+<!--    
+  fromDegrees   动画开始时的角度   
+  toDegrees     动画结束时物件的旋转角度,正代表顺时针     
+  pivotX    属性为动画相对于物件的X坐标的开始位置  
+  pivotY    属性为动画相对于物件的Y坐标的开始位置    -->   
+```
 
 
 
