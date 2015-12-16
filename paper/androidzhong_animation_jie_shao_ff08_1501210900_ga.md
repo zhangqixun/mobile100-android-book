@@ -431,6 +431,12 @@ setEvaluator来设置计算器等，设置更丰富的属性，例如我们需�
 ### 4.2 ObjectAnimator
 
 看过ObjectAnimator源代码，就会发现ObjectAnimator继承自ValueAnimator。
+再来一个例子：
+
+主界面还用上面ValueAnimator的主界面，下面是具体的activity的代码。
+
+*主活动：MainActivity.java*
+
 
 
 
