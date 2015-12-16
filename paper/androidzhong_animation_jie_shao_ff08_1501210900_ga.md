@@ -416,6 +416,7 @@ setEvaluator来设置计算器等，设置更丰富的属性，例如我们需�
             public PointF evaluate(float fraction, PointF startValue,  
                     PointF endValue)  
             {  
+                Log.e(TAG, fraction * 3 + "");  
                 // x方向200px/s ，则y方向0.5 * 10 * t  
                 PointF point = new PointF();  
                 point.x = 200 * fraction * 3;  
