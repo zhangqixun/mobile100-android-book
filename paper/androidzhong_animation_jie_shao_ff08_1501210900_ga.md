@@ -463,7 +463,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public void onClick(View view){
         if(view.getId()==R.id.image){
             ObjectAnimator.ofFloat(view,"alpha",0F,1F)
-                    .setDuration(500)
+                    .setDuration(3000)
                     .start();
         }
     }
