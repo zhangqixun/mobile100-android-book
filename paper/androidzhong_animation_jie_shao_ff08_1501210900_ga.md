@@ -314,11 +314,7 @@ rotate:	表示画面转移旋转动画效果,参数如下：
     android:pivotY="100%"   
     android:duration="10000" />   
 </set>   
-<!--    
-  fromDegrees   动画开始时的角度   
-  toDegrees     动画结束时物件的旋转角度,正代表顺时针     
-  pivotX    属性为动画相对于物件的X坐标的开始位置  
-  pivotY    属性为动画相对于物件的Y坐标的开始位置    -->   
+  
 ```
 
 
