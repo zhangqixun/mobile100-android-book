@@ -240,6 +240,9 @@ public class MainActivity extends Activity {
     }
 }
 ```
+执行效果：
+
+![](animation2.png)
 
 
 
@@ -318,6 +321,10 @@ rotate:	表示画面转移旋转动画效果,参数如下：
 </set>   
   
 ```
+
+
+## 四、Property Animatio
+
 
 
 
