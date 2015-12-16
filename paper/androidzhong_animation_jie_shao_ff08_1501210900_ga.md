@@ -323,7 +323,7 @@ rotate:	表示画面转移旋转动画效果,参数如下：
 ```
 
 
-## 四、Property Animatio
+## 四、Property Animation
 
 
 
