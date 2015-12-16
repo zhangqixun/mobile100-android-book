@@ -329,11 +329,17 @@ rotate:	表示画面转移旋转动画效果,参数如下：
 ## 四、Property Animation
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;
 前面讲解了两种Animation，其中View Animation的动画效果比Drawable Animation的动画效果要丰富很多，但是View Animation只能针对根节点为View的对象进行操作，而且View Animation对对象的操作只是效果上的变化，对象的实际属性并没有发生变化，这里我们介绍一种应用更加广泛并且能真正改变对象的属性的方法。即Property Animation。
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-介绍Drawable Animation和View Animation时，实现动画效果都市通过xml文件来实现的，但是对于Property Animation我们必须先介绍两个类，ValueAnimator和ObjectAnimator，通过这两个类我们可以很方便的实现一些动画的效果。
 
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+Property Animation即可以通过xml文件实现动画效果，也有现成的类（ValueAnimator和ObjectAnimator）可以实现一些简单的动画效果。
 
 ### 4.1 ValueAnimator
+
+
+### 4.2 ObjectAnimator
+
+看过ObjectAnimator源代码，就会发现ObjectAnimator继承自ValueAnimator。
+
 
 
 
