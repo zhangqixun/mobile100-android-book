@@ -964,11 +964,11 @@ android:layout_gravity = "fill"！就像这个计算机显示数字的部分!
 
 ---
 
-http://android-developers.de/
+[1] http://android-developers.de/
 
 
-http://www.cnblogs.com/zhangs1986/archive/2013/01/17/2864237.html
+[2] http://www.cnblogs.com/zhangs1986/archive/2013/01/17/2864237.html
 
-http://blog.csdn.net/lijinlin/article/details/5986622
+[3] http://blog.csdn.net/lijinlin/article/details/5986622
 
-http://stackoverflow.com/
+[4] http://stackoverflow.com/
