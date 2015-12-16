@@ -8,11 +8,13 @@
 
   摘要：相信大家对andriod界面都不陌生呢。一款漂亮的软件必然是需
   
-  要界面优雅、交互友好的UI的呢。今天主要跟大家讲一讲两个方
+  要界面优雅、交互友好的UI的呢。今天主要跟大家讲一讲UI界面布局的几
   
-  面的内容，一是UI界面布局的几种方式，二是浅谈一下Android布
+  种方式，主要有线性布局(LinearLayout)、框架布局(FrameLayout)、表格布局
   
-  局优化的信息，希望对您有所帮助。
+  (TableLayout)、相对布局(RelativeLayout)、绝对布局(AbsoluteLayout)
+  
+  、网格布局(GridLayout)、自定义布局 (custom-layout) 希望对您有所帮助。
   
 关键词：布局
 
