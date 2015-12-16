@@ -402,6 +402,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 ```
 
+结果是一个动态的图，文章中就不再贴图，读者可以自己把代码敲一遍，执行一遍代码看看效果。
+
 
 ### 4.2 ObjectAnimator
 
