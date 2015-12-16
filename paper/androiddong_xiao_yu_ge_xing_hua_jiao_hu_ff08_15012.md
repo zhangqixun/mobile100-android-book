@@ -35,13 +35,7 @@
 
 1.在drawable目录下xml中定义如下文件，节点为animation-list，oneshot代表是否执行一次，duration代表每张图对应展示时间：
 
-
-    <animation-list xmlns:android="http://schemas.android.com/apk/res/android"  
-    android:oneshot="true">  
-    <item android:drawable="@drawable/test1" android:duration="200" />  
-    <item android:drawable="@drawable/test2" android:duration="200" />  
-    <item android:drawable="@drawable/test3" android:duration="200" />  
-    </animation-list>  
+![](bhs1.png)
 2.然后将该drawable设置给对应的imageview
 
 3.在activity中
@@ -63,13 +57,7 @@ Animation框架主要包括 Animation和Transformation、Interpolator这几个�
 
 以AlphaAnimation为例：
 
-    
-  
-    @Override  
-        protected void applyTransformation(float interpolatedTime, Transformation t) {  
-        final float alpha = mFromAlpha;  
-        t.setAlpha(alpha + ((mToAlpha - alpha) * interpolatedTime));  
-    }  
+![](bhs2.png)
 interpolatedTime动态计算出对应的alpha，渐变动画只根据当前计算出的alpha， 在Transformation中进行设置。
 
 1.xml配置：
