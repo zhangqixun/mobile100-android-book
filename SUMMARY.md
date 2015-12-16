@@ -129,7 +129,7 @@
    * [DEX文件混淆原理(1501210988 汤炀)](paper/dexwen_jian_hun_yao_yuan_740628_1501210988_tang_70.md)
    * [基于Map技术的移动LBS应用](paper/1501210526.md)
    * [Android经典页面框架及优化（1501210933 李佳佳）](paper/1501210933ji_zhu_wen_dang.md)
-   * [Android中Animation介绍（1501210900 高鸿宾）](Android中Animation介绍)
+   * Android中Animation介绍（1501210900 高鸿宾）
 * [常见面试题目](question/index.md)
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
