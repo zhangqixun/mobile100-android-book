@@ -471,7 +471,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 }
 ```
 
-上面程序的运行效果，当点击图片时，图片的效果为以Y轴为中心，旋转360度。
+上面程序的运行效果，当点击图片时，3秒钟图片由不显示逐渐变为显示。
 
 
 
