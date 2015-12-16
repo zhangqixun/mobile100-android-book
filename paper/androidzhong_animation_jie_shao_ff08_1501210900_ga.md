@@ -437,6 +437,38 @@ setEvaluator来设置计算器等，设置更丰富的属性，例如我们需�
 
 *主活动：MainActivity.java*
 
+```
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.app.Activity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.animation.CycleInterpolator;
+import android.widget.ImageView;
+
+public class MainActivity extends Activity implements View.OnClickListener {
+    private ImageView image;
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        image=(ImageView)findViewById(R.id.image);
+        image.setOnClickListener(this);
+    }
+
+    public void onClick(View view){
+        if(view.getId()==R.id.image){
+            ObjectAnimator.ofFloat(view, "rotationY", 0.0F, 360.0F)
+                    .setDuration(500)
+                    .start();
+        }
+    }
+
+}
+```
+
 
 
 
