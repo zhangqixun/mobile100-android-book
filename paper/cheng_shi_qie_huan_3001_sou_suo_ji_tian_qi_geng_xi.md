@@ -368,3 +368,5 @@ Activity能进行绑定得益于Service的接口onBind()。Service和Activity的
       sendBroadcast(intent);
 MainActivity接收数据的代码就不再赘述了。
 
+
+
