@@ -128,6 +128,19 @@ Handler的作用是把消息加入特定的（Looper）消息队列中，并分�
 那么另外一个线程怎样把消息放入主线程的消息队列呢？答案是通过Handle对象，只要Handler对象以主线程的Looper创建，那么调用Handler的sendMessage等接口，将会把消息放入队列都将是放入主线程的消息队列。并且将会在Handler主线程中调用该handler的handleMessage接口来处理消息。
 
 
+
+### 小结
+1.常用的Android四大组件并不是应用程序进程的全部，他们都只是进程的部分组件。
+
+2.应用程序是通过Zygote进程fork出来，由ActivityThread创建主线程。
+
+3.可以通过配置设置组件运行的进程空间。
+
+4.应用程序的主线程是UI单线程模型，通过消息机制进行线程通信。每个Thread对应一个Looper，每个Looper对应一个MessageQueue，每个MessageQueue中有N个Message，每个Message中最多指定一个Handler来处理事件。
+
+
+
+
 以上就是android进程和线程的一些基础知识，个人认为，虽然在平时开发的适合这些基础知识可能并不能对编写应用程序带来显著性的提高，但是多了解一些android程序运行的原理和思想，对于我们日后进行程序的设计、优化和调试都是有帮助的。
 
 
