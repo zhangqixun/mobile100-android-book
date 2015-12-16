@@ -402,11 +402,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
 }
 
 ```
-
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;
 结果是一个动态的图，文章中就不再贴图，读者可以自己把代码敲一遍，执行一遍代码看看效果。
 
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+ValueAnimator还可以通过setInterpolator来设置插入器，setEvaluator来设置计算器等，设置更丰富的属性。
 
-ValueAnimator还可以通过setInterpolator来设置插入器，setEvaluator来设置计算器
 ### 4.2 ObjectAnimator
 
 看过ObjectAnimator源代码，就会发现ObjectAnimator继承自ValueAnimator。
