@@ -295,6 +295,62 @@ Activity之间数据的传输：
 
 当Activity通过调用bindService(Intent service, ServiceConnection conn,int flags),我们可以得到一个Service的一个对象实例，然后我们就可以访问Service中的方法。这种方法在我的天气预报中项目中没有具体实现，后期将会用这种方式实现更新UI。
 
+Service：
+
+    public class LocalService extends Service {  
+       private final IBinder binder = new LocalBinder();  
+
+       public class LocalBinder extends Binder {  
+          LocalService getService() {  
+            return LocalService.this;  
+         }  
+       }  
+  
+       public IBinder onBind(Intent intent) {  
+        return binder;  
+      }  
+    }  
+Activity：
+    
+    public class BindingActivity extends Activity {  
+    LocalService localService;  
+
+        private ServiceConnection mConnection = new ServiceConnection() {  
+            public void onServiceConnected(ComponentName className,IBinder localBinder) 
+            { 
+               localService = (LocalBinder) localBinder.getService(); 
+            }  
+            public void onServiceDisconnected(ComponentName arg0) 
+            {
+               localService = null;  
+            }  
+        }; 
+
+        protected void onStart() {  
+            super.onStart();  
+            Intent intent = new Intent(this, LocalService.class);  
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);  
+        }  
+  
+        protected void onStop() {  
+            super.onStop();  
+            unbindService(mConnection);  
+            }   
+
+        public void printRandomNumber{  
+          int num = localService.getRandomNumber();  
+          System.out.println(num);
+        }
+    }  
+    
+使用context.bindService()启动Service会经历：
+
+context.bindService()->onCreate()->onBind()->Service running 
+
+onUnbind() -> onDestroy() ->Service stop
+
+Activity能进行绑定得益于Service的接口onBind()。Service和Activity的连接可以用ServiceConnection来实现，需要实现一个新的ServiceConnection，重写onServiceConnected和onServiceDisconnected方法。执行绑定，调用bindService方法，传入一个选择了要绑定的Service的Intent（显式或隐式）和一个你实现了的ServiceConnection实例。一旦连接建立，你就能通Service的接口onBind()得到serviceBinder实例进而得到Service的实例引用。一旦Service对象找到，就能得到它的公共方法和属性。但这种方式，一定要在同一个进程和同一个Application里。
+
 •	通过broadcast(广播)的形式
 
 我在实现Service与Activity通信时，也就是在上面的例子中通过Service更新天气时，用的就是广播，通过sendBroadcast(intent)这种方式来发送广播。
@@ -311,3 +367,4 @@ Activity之间数据的传输：
       intent.putExtras(bundle);
       sendBroadcast(intent);
 MainActivity接收数据的代码就不再赘述了。
+
