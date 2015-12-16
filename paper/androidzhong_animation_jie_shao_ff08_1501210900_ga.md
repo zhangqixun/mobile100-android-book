@@ -432,7 +432,8 @@ setEvaluator来设置计算器等，设置更丰富的属性，例如我们需�
 
 看过ObjectAnimator源代码，就会发现ObjectAnimator继承自ValueAnimator。
 ObjectAnimator可以不用像ValueAnimator那样必需通过实现监视器来动画效果。
-再来一个例子：
+
+还是举一个例子：
 
 主界面还用上面ValueAnimator的主界面，下面是具体的activity的代码。
 
