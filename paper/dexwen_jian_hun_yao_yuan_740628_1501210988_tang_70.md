@@ -187,7 +187,7 @@ struct DexClassDef {
 3.在完成了类名、方法名和变量名的混淆后，并不能够直接的保存。因为在虚拟机载入DEX文件后会对DEX文件进行校验。首先，所有的字符串需要被按照升序排列，如果不进行排序，将会出现INSTALL_FAILED_DEXOPT错误。其次，在完成文件的重写后，要对文件的校验和进行重新计算，写回checksum字段中。再者，还需要重新对文件进行前面，写回signature字段中。
 
 ## 混淆软件
-现有的混淆软件主要是安卓源代码中自带的ProGuard，是一个SourceForge上非常知名的开源项目。该软件可以在生成DEX文件时自动进行混淆，并且有着完善的过滤器，保证混淆之后的代码不会出错。官网网址是：http://proguard.sourceforge.net/。
+现有的混淆软件主要是安卓源代码中自带的ProGuard，是一个SourceForge上非常知名的开源项目。该软件可以在生成DEX文件时自动进行混淆，并且有着完善的过滤器，保证混淆之后的代码不会出错。官网网址是：http://proguard.sourceforge.net/ 
 
 ## 附录
 
