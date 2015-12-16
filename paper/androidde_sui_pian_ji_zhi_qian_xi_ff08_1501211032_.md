@@ -3,8 +3,6 @@
 # 引言
 
 
-本文完整地介绍Fragment的生命周期,并通过详细的实例制作过程体现其灵活和便于管理的特性。来介绍Android的碎片机制。
-
 
 随着移动互联网技术的发展，智能手机越来越普及。伴随着开发成本的降低以及技术的进步，越来越多的人进入Android程序开发行业。而Android不仅应用于屏幕较小的手机也同样可以应用于屏幕稍大的平板电脑，这样便存在同样一个界面在不同屏幕上显示有较大的视觉差异，于是就有了碎片（Fragment）。Android3.0是第一版引入碎片（Fragment）的概念，其初衷是为了界面能更好的适应大屏幕的平板电脑。Fragment简化了大屏幕UI的设计，开发者可以使用Fragment对UI组件进行分组、模块化管理，以便在运行过程中动态更新Activity的用户界面。
 
@@ -29,6 +27,7 @@ Fragment是一种可以嵌入在Activity当中的UI片段,它能让程序更加�
 
 
 特别需要注意的是：
+
 如果当前Activity暂停,它拥有的所有的Fragment就都暂停了,当Activity销毁时,它拥有的所有Fragment都被销毁。然而,我们也可以单独操作（如添加或删除）每一个Fragment, 当然这个操作需要在Activity运行时，也就是在onResume()和onPause()之间进行。当在执行上述针对Fragment的事务时,可以将事务添加到一个被Activity管理的栈中,这个栈中的每一条都是一个Fragment的一次事务。通过该栈,就可以反向执行 Fragment的事务,从而完成Fragment级支持“返回”键(向后导航)。需要注意的是向Activity中添加一个Fragment时，须将其置于ViewGroup控件中,并且需为Fragment定义自己的界面。可以在layoutxml文件中声明Fragment，元素为:<fragment>;也可以在代码中创建Fragment，然后把它加入到ViewGroup控件中。然而，Fragment不一定非要放在Activity的界面中,它可以隐藏在后台为Actvitiy!工作。
 
 
@@ -47,39 +46,59 @@ Fragment是一种可以嵌入在Activity当中的UI片段,它能让程序更加�
 图3Fragment与activity的生命周期对比
 
 Fragment的生命周期及其与activity的关系如上图所示，下面分别对每个回调进行中文注释，如下所示：
-onAttach：当fragment第一次添加到activity时调用，onCreate(bundle)将在这后面执行。
+* onAttach：当fragment第一次添加到activity时调用，onCreate(bundle)将在这后面执行。
 
-onCreate：fragment初次创建时调用。这会在onAttach和onCreateView之间执行。需要注意的是这个方法能在这个fragment的activity正在被created的时候调用。也就是说，你不能指望它就像activity在这个位置一样被初始化。如果你想一旦在activity被创建完成后做某些事，参见onActivityCreated方法。
+* onCreate：fragment初次创建时调用。这会在onAttach和onCreateView之间执行。需要注意的是这个方法能在这个fragment的activity正在被created的时候调用。也就是说，你不能指望它就像activity在这个位置一样被初始化。如果你想一旦在activity被创建完成后做某些事，参见onActivityCreated方法。
 
-onCreateView：在这个fragment构造它的用户接口视图(即布局)时调用。这条是可选的，对于没有布局的fragments这项将返回null。这个方法会在onCreate与onActivityCreated之间被调用。
+* onCreateView：在这个fragment构造它的用户接口视图(即布局)时调用。这条是可选的，对于没有布局的fragments这项将返回null。这个方法会在onCreate与onActivityCreated之间被调用。
 
-onActivityCreated：当这个fragment的activity已经创建完成，并且这个fragment的视图树已经构造完成后调用。一旦这部分完成，就可以进行最终的初始化操作。这个方法对使用setRetainInstance来维护fragment的实例的来说也是有用的，因为当这个fragment完全同它的activity关联之后这个回调会通知fragment。例如获取视图或还原状态。这将在onCreateView之后和onViewStateRestored之前调用。
+* onActivityCreated：当这个fragment的activity已经创建完成，并且这个fragment的视图树已经构造完成后调用。一旦这部分完成，就可以进行最终的初始化操作。这个方法对使用setRetainInstance来维护fragment的实例的来说也是有用的，因为当这个fragment完全同它的activity关联之后这个回调会通知fragment。例如获取视图或还原状态。这将在onCreateView之后和onViewStateRestored之前调用。
 
-onStart：当这个fragment对用户可见时调用。通常它依赖于包含它的activity的Activity.onStart。
 
-onResume：当这个fragment对用户可见并且正在运行时调用。通常它依赖于包含它的activity的Activity.onResume。
+* onStart：当这个fragment对用户可见时调用。通常它依赖于包含它的activity的Activity.onStart。
 
-onPause：当这个fragment不再resumed时调用。通常它依赖于包含它的activity的Activity.onPause。
 
-onStop：当这个fragment不再started时调用。通常它依赖于包含它的activity的Activity.onStop。
+* onResume：当这个fragment对用户可见并且正在运行时调用。通常它依赖于包含它的activity的Activity.onResume。
 
-onDestroyView：当由onCreateView上一次创建的视图从这个fragment分离时调用。下次这个fragment若要显示，那么将会创建新视图。这会在onStop之后和onDestroy之前调用。这个方法的调用同onCreateView是否返回非null视图无关。它会潜在的在这个视图状态被保存之后以及它被它的父视图回收之前调用。
 
-onDestroy：当这个fragment不再使用时调用。这会在onStop之后onDetach之前调用。
+* onPause：当这个fragment不再resumed时调用。通常它依赖于包含它的activity的Activity.onPause。
 
-onDetach：当这个fragment不再attach到它的activity时调用。这将在onDestroy之后调用。
+
+* onStop：当这个fragment不再started时调用。通常它依赖于包含它的activity的Activity.onStop。
+
+
+* onDestroyView：当由onCreateView上一次创建的视图从这个fragment分离时调用。下次这个fragment若要显示，那么将会创建新视图。这会在onStop之后和onDestroy之前调用。这个方法的调用同onCreateView是否返回非null视图无关。它会潜在的在这个视图状态被保存之后以及它被它的父视图回收之前调用。
+
+
+* onDestroy：当这个fragment不再使用时调用。这会在onStop之后onDetach之前调用。
+
+
+* onDetach：当这个fragment不再attach到它的activity时调用。这将在onDestroy之后调用。
+
+
 需要特殊说明的是：方法setUserVisibleHint()会在每个Fragment显示的时候执行，该方法位于onCreate方法和onCreateView()方法之间。
 
 
-### 1.3.1管理Fragment的生命周期
+
+
+
+
+## 1.3.管理Fragment的生命周期
+
+
+
+
 
 
 管理Fragment的生命周期很像管理Activity的生命周期。像Activity一样，一个Fragment有三个状态：
-Resumed
+* Resumed
+
 Fragment在运行中的Activity中可见，也可获取焦点。
-Paused
+* Paused
+
 另外一个Activity挡在前面，但是这个Activity当前是可见的（前面的Activity可能是透明的活着没有覆盖整个屏幕）
-Stopped
+* Stopped
+
 Fragment不可见。可能是宿主Activity been stopped或者这个Fragment被移除同时被加入到back stack中了。一个stopped Fragment仍然存活着（他的状态和成员信息都被系统保存着）。但是，他即将不被用户看见，将可能随着Activity被杀掉而杀掉。
 
 
@@ -185,9 +204,10 @@ onCreateView()参数中的container是存放fragment的layout的ViewGroup对象�
 </LinearLayout>
 
 ```
-以上代码中，<fragment>中声明一个fragment。当系统创建上例中的layout时，它实例化每一个fragment，然后调用它们的onCreateView()方法，以获取每个fragment的layout。系统把fragment返回的view对象插入到<fragment>元素的位置，直接代替<fragment>元素。注：每个fragment都需要提供一个ID，系统在activity重新创建时用它来恢复fragment，也可以用它来操作fragment进行其它的事物，比如删除它。有三种方法给fragment提供ID：
-<1> 为Android:id属性赋一个数字；
-<2> 为Android:tag属性赋一个字符串。如果没有使用上述任何一种方法，系统将使用fragment的容器的ID。
+以上代码中，< fragment>中声明一个fragment。当系统创建上例中的layout时，它实例化每一个fragment，然后调用它们的onCreateView()方法，以获取每个fragment的layout。系统把fragment返回的view对象插入到< fragment>元素的位置，直接代替< fragment>元素。注：每个fragment都需要提供一个ID，系统在activity重新创建时用它来恢复fragment，也可以用它来操作fragment进行其它的事物，比如删除它。有三种方法给fragment提供ID：
+1. 为Android:id属性赋一个数字；
+2. 为Android:tag属性赋一个字符串。如果没有使用上述任何一种方法，系统将使用fragment的容器的ID。
+
 
 **方法二：**在代码中添加fragment到一个ViewGroup这种方法可以在运行时，把fragment添加到activity的layout中。只需指定一个要包含fragment的ViewGroup。为了完成fragment的事务（比如添加，删除，替换等），必须使用FragmentTransaction的方法。可以从activity获取FragmentTransaction，如下：
 容。
