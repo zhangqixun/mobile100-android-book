@@ -65,8 +65,7 @@ interpolatedTime动态计算出对应的alpha，渐变动画只根据当前计�
 ![](bhs3.png)
 使用set标签可以进行组合，在代码中使用如下：
 
-    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.app_clean_animation);
-    view.startAnimation(animation);
+ ![](bhs44.png)
 
 
 ##2 Property Animation（属性动画）
@@ -92,56 +91,8 @@ ValueAnimator 只是为我们创建了一个过程， ValueAnimator.ofXXX()可�
 上面这句话通过代码表现如下：
 比如我们使用 ValueAnimator 在2S内将view横向拉长为2倍，纵向压缩为0：
 
+![](bhs55.png)
 
-比如我们使用 ValueAnimator 在2S内将view横向拉长为2倍，纵向压缩为0：
-                
-            // 在2S内将view横向拉长为2倍，纵向压缩为0
-            // 创建0－1的一个过程,任何复杂的过程都可以采用归一化，然后在addUpdateListener回调里去做自己想要的变化
-            ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
-            // 设置过程的时间为2S
-            valueAnimator.setDuration(SCALE_ANIM_TIME);
-            // 设置这个过程是速度不断变快的
-            valueAnimator.setInterpolator(new AccelerateInterpolator());
-            // 这个过程中不断执行的回调
-            valueAnimator.addUpdateListener(new AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    // 不断回调的在0-1这个范围内，经过插值器插值之后的返回值
-                    float value = (Float) animation.getAnimatedValue();
-                    // ViewHelper可直接用于修改view属性
-                    // 将宽在2S内放大一倍
-                    ViewHelper.setScaleX(mTestImage, 1 + value);
-                    // 将高在2S内压缩为0
-                    ViewHelper.setScaleY(mTestImage, 1 - value);
-                }
-            });
-            // AnimatorListenerAdapter是AnimatorListener的空实现，根据需要覆盖的方法自行选择
-            valueAnimator.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-                    super.onAnimationStart(animation);
-                    Toast.makeText(getApplicationContext(), "onAnimationStart", Toast.LENGTH_SHORT)
-                            .show();
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    Toast.makeText(getApplicationContext(), "onAnimationEnd", Toast.LENGTH_SHORT)
-                            .show();
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-                    super.onAnimationCancel(animation);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-                    super.onAnimationRepeat(animation);
-                }
-            });
-            valueAnimator.start();
 动画的本质，其实就是让view的一些属性值在一个时间段内不断去改变，在这些属性值动态变化中不断重新绘制，也就呈现我们所看见的动态效果。因此我们知道动画其实就是属性与时间的一种对应关系式，如果整个过程属性与时间变化的程度是相等的，也就是线性的 。
 可是更多情况下我们需要的效果是非线性的，我们可以参照下面的曲线：
 
@@ -178,43 +129,7 @@ TimeInterpolator　　　　　　　　   一个接口，允许你自定义inte
 ###2.2 ObjectAnimator
 我们同样还是实现在2S内将view横向拉长为2倍，纵向压缩为0：
 
-            AnimatorSet animatorSet = new AnimatorSet();
-            // 将view在x方向上从原大小放大2倍
-            ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(mTestImage, "scaleX", 1, 2);
-            scaleXAnimator.setDuration(SCALE_ANIM_TIME);
-            // 将view在y方向上从原大小压缩为0
-            ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(mTestImage, "scaleY", 1, 0);
-            scaleYAnimator.setDuration(SCALE_ANIM_TIME);
-            // 设置加速模式
-            animatorSet.setInterpolator(new AccelerateInterpolator());
-            // 设置回调，当然也可以设置在单独的animator上，eg：scaleXAnimator
-            animatorSet.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-                    super.onAnimationStart(animation);
-                    Toast.makeText(getApplicationContext(), "onAnimationStart", Toast.LENGTH_SHORT)
-                            .show();
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    Toast.makeText(getApplicationContext(), "onAnimationEnd", Toast.LENGTH_SHORT)
-                            .show();
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-                    super.onAnimationCancel(animation);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-                    super.onAnimationRepeat(animation);
-                }
-            });
-            animatorSet.playTogether(scaleXAnimator, scaleYAnimator);
-            animatorSet.start();
+![](bhs6.png)
 ObjectAnimator 是ValueAnimator 的子类，可以直接改变Object的属性，目前可供改变的属性主要有：
 
 translationX,translationY           View相对于原始位置的偏移量
