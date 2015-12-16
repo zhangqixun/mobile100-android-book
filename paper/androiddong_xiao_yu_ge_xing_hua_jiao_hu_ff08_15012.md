@@ -7,31 +7,34 @@
 
 在天气预报项目中，当我们点击更新天气按钮后，如果网络速度较慢，在等待的过程中会有按钮旋转的动画效果，减少用户等待的焦急感。
 
-单一的静态页面容易使人感觉枯燥乏味，因此动效越来越受到产品和设计师同学的重视，如此一来，也就增大了对开发同学的考验，虽说简单的动效：如移动，旋转，缩放，渐变或普通的界面跳转相对简单，但在目前日益激烈的竞争条件下，出彩复杂的动效也越来越多
+单一的静态页面容易使人感觉枯燥乏味，因此设计师对动效越来越重视，如此也就加大了对开发同学的挑战，简单的如移动，旋转，缩放，渐变或普通的界面跳转等，可是随着技术的飞速发展，各种复杂的动态效果也越来越多。
+
 
 ## 
-在Android中开发动效有两套框架可以使用，分别为 Animation 和Property Animation；两者之间的主要区别在于：
+安卓的动效开发框架主要有两类， Animation 和 Property Animation；两者之间的主要区别在于：
 
-1.需要的Anroid API level不一样。Property Animation需要Android API level 11的支持,当然可以使用nineoldandroids.jar进行兼容，而View Animation则是最原始的版本。
+1.需要的不同的API级别。Property Animation需要Android API level 11, Animation只需要原始的版本。
 
-2.适用范围不一样Property Animation适用于所有的Object对象，而View Animation则只能应用于View对象。
+2.而且这两者适用的范围不一样。Property Animation适用于所有的Object对象而View Animation则只能应用于View对象。
 
-3.实际改变不一样。Animation改变的是view的绘制位置，而非实际属性；Property Animation改变的是view的实际属性；如：用两套框架分别对一个button做位移动画，用animation处理之后的点击响应会在原处，而用Property Animation处理后的点击响应会在最终位置处。
+3.实际效果不一样。Animation对 view的绘制位置进行改变，而不是改变view的实际属性；Property Animation则不然，它可以改变view的实际属性。例如： 对一个button做位移动画，当你用animation处理之后，button的点击响应仍会在原来的位置，可是当你用Property Animation处理后，button的点击响应会在最终位置处。
+
 
 
 ##1 Animation
-总的来说可以分为：Tween Animation（补间动画） 和Frame Animation（帧动画）
+总体上可以分为两类： Frame Animation和Tween Animation，也就是帧动画和补间动画。
+
 ###1.1帧动画（Frame Animation）：
-帧动画其实就是按照一定的时间间隔进行快速的图片切换，达到视觉上的动画效果，这种动画相对来说缺点较多，
-比如：
+所谓帧动画，其实就是让图片按照一定的时间间隔，进行快速的切换，这种切换可以带来视觉上动画的效果，这种方式简单粗暴，因此也存在了大量弊端， 比如：
 
-1.根据动画的复杂度需要切多张图，这样就不可避免的增大了包大小
+1.如果动画比较复杂，需要的图片数量也就更多，因此会造成文件过大，增加包容量。
 
-2.由于是多张图，运行时需要加载到内存，那么又会增大运行时的内存大小
+2.同样因为需要更多的图片，运行时会耗用更多的内存。
 
-所以如果在动效上有别的方案选择，不太建议使用帧动画的实现方式，当然有时候不得不用，这时我们可以尽可能的在效果连贯的基础上减少图片张数。
+因此在实际使用中我们尽量不采用帧动画的方法，如果在一些特殊情况下不得不采用，也尽量减少图片的数量和尺寸； 帧动画相对比较容易理解，下面这个例子用来让大家理解帧动画
 
 1.在drawable目录下xml中定义如下文件，节点为animation-list，oneshot代表是否执行一次，duration代表每张图对应展示时间：
+
 
     <animation-list xmlns:android="http://schemas.android.com/apk/res/android"  
     android:oneshot="true">  
@@ -50,29 +53,24 @@ animDrawable.stop();
 
 animDrawable.start();
 
-如果不这么做，那么在性能比较差的机器上很可能就会出现没有播放的情况，因为只显示出了第一帧，问题在于动画没有和view完成关联，所以不要在onCreate中去调用启动，而需要在onWindowFocusChanged中进行调用；
-
+如果不这样做性能较差的机器可能无法播放，由于只显示出第一帧，并没有和view进行实际的关联，因此，不是在onCreate（）方法中进行调用，而是在onWindowFocusChanged中；
 在极特殊的情况下如果还无法播放，则可以mHandler.postDelay 200 毫秒解决。
-###1.2补间动画（Tween Animation）
-Animation下有五个子类：AlphaAnimation(渐变),RotateAnimation(旋转),ScaleAnimation(缩放),TranslateAnimation(位移)
-在实现原理上除了AlphaAnimation是动态的去改变view的alpha值，其他三个都是去改变里面的Matrix；
 
-在Animation框架里，主要的类主要有Animation和Transformation、Interpolator(插值器，后面也会专门讲)
-Transformation里面主要对alpha和matrix进行了封装，而改变view的透明度就是改变alpha，移动、旋转、缩放甚至错切则都是改变matrix
-Animation里有一个重要的方法applyTransformation，实现自定义Animation也主要是实现这个方法。
+###1.2补间动画（Tween Animation）
+Animation下有五个子类：AlphaAnimation(渐变),RotateAnimation(旋转),ScaleAnimation(缩放),TranslateAnimation(位移) 在实现原理上除了AlphaAnimation是动态的去改变view的alpha值，RotateAnimation(旋转),ScaleAnimation(缩放),TranslateAnimation(位移)则是去改变里面的Matrix；
+
+Animation框架主要包括 Animation和Transformation、Interpolator这几个类。 alpha和matrix在Transformation里面进行封装，alpha则是改变view的透明度，改变matrix Animation里有一个重要的方法applyTransformation可以使移动、旋转、缩放、错切等效果实现。
 
 以AlphaAnimation为例：
+
     
-    /**  
-    * Changes the alpha property of the supplied {@link Transformation}  
-    */  
+  
     @Override  
         protected void applyTransformation(float interpolatedTime, Transformation t) {  
         final float alpha = mFromAlpha;  
         t.setAlpha(alpha + ((mToAlpha - alpha) * interpolatedTime));  
     }  
-    渐变动画只需要在里面根据当前的interpolatedTime(已经由插值器转换后的值)动态计算出对应的alpha，重新设置到Transformation中即可；
-Animation的使用也相对比较简单，可以通过xml配置，也可以通过代码生成。
+interpolatedTime动态计算出对应的alpha，渐变动画只根据当前计算出的alpha， 在Transformation中进行设置。
 
 1.xml配置：
 
@@ -120,32 +118,33 @@ Animation的使用也相对比较简单，可以通过xml配置，也可以通�
         android:toAlpha="1" />
 
     </set>
-当要多个效果同时使用时，则如上使用set标签进行组合，在代码中使用如下：
+使用set标签可以进行组合，在代码中使用如下：
 
     Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.app_clean_animation);
     view.startAnimation(animation);
 ##2 Property Animation（属性动画）
-属性动画，它更改的是对象的实际属性，在View Animation（Tween Animation）中，其改变的是View的绘制效果，真正的View的属性保持不变，比如无论你在对话中如何缩放Button的大小，Button的有效点击区域还是没有应用动画时的区域，其位置与大小都不变。而在Property Animation中，改变的是对象的实际属性，如Button的缩放，Button的位置与大小属性值都改变了。而且Property Animation不止可以应用于View，还可以应用于任何对象。Property Animation只是表示一个值在一段时间内的改变，当值改变时要做什么事情完全是你自己决定的。
-在Property Animation中，可以对动画应用以下属性：
+属性动画更改的是对象的实际属性，而View Animation（Tween Animation）改变的是View的绘制效果，并没有改变view的实际属性，前者无论你中如何缩放Button的大小，Button的有效点击区域还是之前的区域，也就是动画应用前的区域，不管是位置还是大小，都不受影响。而在Property Animation则大有不同，它可以对view的实际属性进行改变，比如之前的button，改变的是实际的尺寸缩放和位置变化。事实上不仅仅是view，Property Animation可以应用于任何对象。
 
-1.TimeInterpolator(插值器，和低版本的Interpolator一样)：属性值的计算方式，如先快后慢
+Property Animation可以表示一个属性值在一段时间内的改变，而这个改变可以是用户指定的， 可以在Property Animation中改变以下属性：
+
+1.TimeInterpolator：计算属性值，如先快后慢、先慢后快、匀速等
 
 2.TypeEvaluator：根据属性的开始、结束值与TimeInterpolator计算出的因子计算出当前时间的属性值
 
-3.Repeat Count and behavoir：重复次数与方式，如播放3次、5次、无限循环，可以此动画一直重复，或播放完时再反向播放
+3.Repeat Count and behavoir：重复次数与方式，如播放的次数，循环播放或是单次播放，正向播放或是反向播放。
 
-4.Animation sets：动画集合，即可以同时对一个对象应用几个动画，这些动画可以同时播放也可以对不同动画设置不同开始偏移
+4.Animation sets：动画集合，同一个对象可以应用几个动画，同时播放这些动画，也可以把不同开始偏移设置在动画上。
 
-5.Frame refreash delay：多少时间刷新一次，即每隔多少时间计算一次属性值，默认为10ms，最终刷新时间还受系统进程调度与硬件的影响
+5.Frame refreash delay： 每隔多少时间计算一次属性值，默认时间为10ms， 系统进程调度与硬件的也会对最终刷新时间造成影响。
 
-上面都是些概念，但这些东西不必刻意去记，或去理解插值器这样的比较生涩的概念，我们只需要使用他最实用的部分，并熟悉动画的实现套路。
-所以对于属性动画主要带大家熟悉两个类，ValueAnimator和ObjectAnimator,通过这两个类我们平常遇到的动效大部分都能够加以解决。
+以上的概念无需死机，只要在需要的时候理解其中的含义，可以准确地应用即可。属性动画中的 ValueAnimator和ObjectAnimator需要我们重点去了解，这两个类可以解决我们在动效制作中遇到的大多数问题。
+
 ###2.1 ValueAnimator：
-ValueAnimator包含了 Property Animation 动画的所有核心功能，如动画时间，开始、结束属性值，相应时间属性值计算方法等。
-
-使用 ValueAnimator 只是为我们创建了一个过程，我们可以用ValueAnimator.ofXXX()进行创建，然后通过各种setXXX()给其设定过程的时间，速率变化效果等，然后通过addUpdateListener()中去拿这个过程中回调回来的中间值，然后使用这些中间值改变view的属性形成动态效果；
-
+ValueAnimator基本囊括了了 Property Animation 动画中的所有核心功能，它包括动画时间，开始、结束属性值，以及相应时间属性值计算方法等。
+ValueAnimator 只是为我们创建了一个过程， ValueAnimator.ofXXX()可以用来进行创建，然后各种setXXX()可以给其设定过程的时间，速率变化效果等，最后通过addUpdateListener()，再结合回调回来的参数值，就可以生成 改变view的属性，从而形成动态效果；
 上面这句话通过代码表现如下：
+比如我们使用 ValueAnimator 在2S内将view横向拉长为2倍，纵向压缩为0：
+
 
 比如我们使用 ValueAnimator 在2S内将view横向拉长为2倍，纵向压缩为0：
                 
@@ -196,15 +195,15 @@ ValueAnimator包含了 Property Animation 动画的所有核心功能，如动�
                 }
             });
             valueAnimator.start();
-动画其实就是在一个时间段内不断去改变view的一些属性值，这些属性值动态变化，不断重绘的过程，也就形成了我们所看到的动效。
+动画的本质，其实就是让view的一些属性值在一个时间段内不断去改变，在这些属性值动态变化中不断重新绘制，也就呈现我们所看见的动态效果。因此我们知道动画其实就是属性与时间的一种对应关系式，如果整个过程属性与时间变化的程度是相等的，也就是线性的 。
+可是更多情况下我们需要的效果是非线性的，我们可以参照下面的曲线：
 
-那么基于此，我们可以知道这个过程都是通过时间来控制的，时间走过的比例肯定在 0-1 之间，如果我们直接用这个走过的时间比例去算当前属性值，那么整个过程则是匀速（线性）的。
-
-那么在这个基础上，我们想我们的过程是非线性的，我们该怎么办呢，那么只需要对这个时间比例加以加工，具体请看下图：
 ![](curve.png)
-横轴就是经过的时间比例，肯定是匀速的从0-1，纵轴则是时间比例经过加工后的插值，这个对应过程则是Interpolator（插值器）对应的过程。
-
+横轴就是经过的时间比例，它是匀速的从0-1，纵轴则是时间比例经过加工后的插值，这个对应过程则是Interpolator（插值器）对应的过程。
 减速线则对应DecelerateInterpolater,因为它的斜率越来越平，所以瞬时速度越来越小，则形成了减速效果。
+
+其他的效果类似，目前android里提供的插值器有如下一些：
+
 
 其他的效果类似，目前android里提供的插值器有如下一些：
 
