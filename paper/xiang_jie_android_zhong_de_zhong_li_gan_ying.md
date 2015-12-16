@@ -86,3 +86,24 @@ define SENSOR_TYPE_ROTATION_VECTOR                  //旋转矢量
 
 四.重力感应开发
 
+1.Sensor类
+
+Sensor类就是传感器类，包含的方法是get型的用来获取所选传感器的一些属性，Sensor类一般不需要new而是SensorManager的方法获得
+
+2.SensorManager类
+
+SensorManager类是Android感应检测管理类,再进行重力感应开发时，需要使
+用这类的实例管理Sensor，监听相应的Sensor的变化，做出相应的处理。
+
+3.重力感应开发的步骤
+
+首先，取得SensorManager，调用Context.getSystemService(SENSOR_SERVICE)来取得感应检测的服务
+
+通过感应检测管理类SensorManager类获取目标Sensor类的实例，通过调用SensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)实现，这里取得的是加速度传感器的实例，或者可以通过SensorManager.getSensorList(Sensor.TYPE_ACCELEROMETER)来获取Sensor实例的列表。
+
+注册监听器，通过调用SensorManager.regesterListener(SensorEventListener listener,Sensor sensor, int rate)实现，第一个参数是监听Sensor事件，第二个参数是Sensor目标种类的值，第三个参数是感应Sensor的延迟时间，因为感应检测Sensor的服务是否频繁和电池的消耗有关同时也会影响处理的效率，所以要兼顾到这两者，设置感应检测Sensor的延迟时间是非常重要的，要根据需求来做适当的设置。
+
+实现感应检测Sensor的监听功能，通常提供两个方法，public void onAccuracyChanged(Sensor sensor, int accuracy)和public void onSensorChanged(SensorEvent event)，前者是在感应到Sensor的精密度产生变化的时候调用，后者是在检测Sensor的值有变化的时候会调用到。
+
+取消注册，调用SensorManager.unregisterListener(SensorEventListener listener)实现。
+
