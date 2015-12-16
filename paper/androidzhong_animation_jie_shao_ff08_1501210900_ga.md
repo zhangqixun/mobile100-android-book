@@ -409,6 +409,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 ValueAnimator还可以通过setInterpolator来设置插入器。
 setEvaluator来设置计算器等，设置更丰富的属性，例如我们需要设置一个物体按照抛物线的曲线来运行时，可以在setEvaluator中设置，具体可参考如下代码。
 
+*抛物线的计算器设置*
+
 ```
     valueAnimator.setEvaluator(new TypeEvaluator<PointF>()  
         {  
