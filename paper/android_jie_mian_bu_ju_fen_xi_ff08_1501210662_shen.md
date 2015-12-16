@@ -29,7 +29,7 @@
 ##  ⑥.网格布局(GridLayout)
 ##  ⑦.自定义布局 (custom-layout) 
 
-# 2.Android布局优化
+
 
 
 ---
@@ -594,19 +594,29 @@ android:layout_weight----- 给控件分配剩余空间
 
 ![](20140314190639288.jpg)
 
-下面是常用的一些属性
+## 下面是常用的一些属性
 
 RelativeLayout用到的一些重要的属性：
 
-第一类:属性值为true或false
+*第一类:属性值为true或false
+
 android:layout_centerHrizontal 水平居中
+
 android:layout_centerVertical 垂直居中
+
 android:layout_centerInparent 相对于父元素完全居中
+
 android:layout_alignParentBottom 贴紧父元素的下边缘
+
 android:layout_alignParentLeft 贴紧父元素的左边缘
+
 android:layout_alignParentRight 贴紧父元素的右边缘
+
 android:layout_alignParentTop 贴紧父元素的上边缘
-android:layout_alignWithParentIfMissing 如果对应的兄弟元素找不到的话就以父元素做参照物
+
+android:layout_alignWithParentIfMissing 
+
+如果对应的兄弟元素找不到的话就以父元素做参照物
 
 第二类：属性值必须为id的引用名“@id/id-name”
 android:layout_below 在某元素的下方
