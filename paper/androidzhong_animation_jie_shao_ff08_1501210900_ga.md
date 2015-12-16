@@ -463,6 +463,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public void onClick(View view){
         if(view.getId()==R.id.image){
             ObjectAnimator.ofFloat(view,"alpha",0F,1F)
+            //四个参数，第一个为操作对象，第二个参数为操作的属性名，后面的为操作的属性参数。
                     .setDuration(3000)
                     .start();
         }
