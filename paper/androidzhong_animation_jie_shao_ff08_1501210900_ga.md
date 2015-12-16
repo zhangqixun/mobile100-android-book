@@ -327,7 +327,8 @@ rotate:	表示画面转移旋转动画效果,参数如下：
 
 
 ## 四、Property Animation
-
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+前面讲解了两种Animation，其中View Animation的动画效果比Drawable Animation的动画效果要丰富很多，但是View Animation只能针对根节点为View的类进行操作，对于其他的一些类
 
 
 
