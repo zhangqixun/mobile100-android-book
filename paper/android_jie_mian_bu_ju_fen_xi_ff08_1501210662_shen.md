@@ -537,6 +537,57 @@ android:layout_weight----- 给控件分配剩余空间
 
 
 ## 四、相对布局(RelativeLayout)
+相对布局 RelativeLayout 允许子元素指定它们相对于其父元素或兄弟元素的位置，它
+
+灵活性很大，这是实际布局中最常用的布局方式之一。
+
+我们先来看一个例子：
+```
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <Button
+        android:id="@+id/btn1" 
+    	android:layout_height="wrap_content"
+    	android:layout_width="wrap_content"
+    	android:text="Button"    
+    />
+    <Button
+        android:paddingLeft="100dp" 
+    	android:layout_height="wrap_content"
+    	android:layout_width="wrap_content"
+    	android:text="Button"
+    	android:layout_toRightOf="@id/btn1"    
+    />
+    
+    
+    
+    
+	<Button
+	    android:id="@+id/btn2" 
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:text="Button"
+		android:layout_alignParentBottom="true"    
+	/>
+	<Button
+	    android:layout_marginLeft="100dp" 
+    	android:layout_height="wrap_content"
+    	android:layout_width="wrap_content"
+    	android:text="Button"
+    	android:layout_toRightOf="@id/btn2" 
+    	android:layout_alignParentBottom="true"   
+    />
+    
+</RelativeLayout>
+```
 
 ---
 
