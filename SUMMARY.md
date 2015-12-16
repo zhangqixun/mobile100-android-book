@@ -107,7 +107,6 @@
    * [百度地图API在Android开发中的应用分析](paper/bai_du_di_tu_api_zai_android_kai_fa_zhong_de_ying_.md)
    * [Android framework 浅析 （潘启慧 1501210967）](paper/android_framework_qian_xi_ff08_pan_qi_hui_15012109.md)
    * [Android 文件读写与解析（1501211000 王奕超）](paper/android_wen_jian_du_xie_yu_jie_xi_ff08_1501211000_.md)
-   * [ListView的定制界面和优化](paper/ListView的定制界面和优化)
    * [Android 中Service技术简介(1501211040_赵浩新)](paper/android_zhong_service_ji_zhu_jian_Zhao-Haoxin_150121104.md)
    * [Android渲染机制以及渲染性能优化(1501210616 刘璐)](paper/androidxuan_ran_ji_zhi_yi_ji_xuan_ran_xing_neng_yo.md)
    * [ListView与RecyclerView实战详解（1501210885陈俊文）](paper/listview_yu_recyclerview_shi_zhan_xiang_jie_ff08_15.md)
