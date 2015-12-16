@@ -21,6 +21,10 @@
 
 # 1.andriod的几大布局
 
+
+---
+
+
 ##  ①.线性布局(LinearLayout)
 ##  ②.框架布局(FrameLayout)
 ##  ③.表格布局(TableLayout)
@@ -938,4 +942,33 @@ android:layout_gravity = "fill"！就像这个计算机显示数字的部分!
 ---
 
 ##      结束语
-非常
+
+
+---
+
+
+经过一学期的学习，不仅让我对基本的Android编程有了提高，而且让我对Android开发也激起
+
+了很浓厚的兴趣。
+相信不久的将来，Android会越来越好，特别感谢张老师
+
+的悉心教导，对学生的问题十分重视，教授的也非常棒！这也是我们能够提高的重要原因，
+
+现阶段我对Android开发水平还
+只是基础阶段，但是已经有了一个良好的开端，相信以后我能
+
+够真正的了解并且能够运用学到的知识。
+
+##参考文献：
+
+
+---
+
+http://android-developers.de/
+
+
+http://www.cnblogs.com/zhangs1986/archive/2013/01/17/2864237.html
+
+http://blog.csdn.net/lijinlin/article/details/5986622
+
+http://stackoverflow.com/
