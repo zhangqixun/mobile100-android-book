@@ -474,7 +474,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 上面程序的运行效果，当点击图片时，3秒钟图片由不显示逐渐变为显示。
 
-4.3 
+
+### 4.3 AnimatorSet动画组合
+这里介绍的AnimatorSet并不像上面两个类那样，AnimatorSet的作用是把多个动画效果组合在一起。
+
+
 
 
 
