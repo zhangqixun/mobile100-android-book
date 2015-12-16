@@ -176,7 +176,8 @@ rotate	表示画面转移旋转动画效果。
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;对一个图片的执行动画过程，先执行最外面的set标签里的内容，再依次执行内部嵌套set的内容，当一个set标签内有多个scale，rotate，alpha，rotate时，这几个动画效果是同时对图片起作用，而不是一次执行这四种效果。
 
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;
-android:interpolator
+android:interpolator：指定动画插入器，常见的有加速减速插入器为：accelerate_decelerate_interpolator，加速插入器为accelerate_interpolator，减速插入器为decelerate_interpolator。   
+
 主界面：activity_main.xml
 
 ```
