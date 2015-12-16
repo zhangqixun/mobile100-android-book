@@ -62,54 +62,13 @@ interpolatedTime动态计算出对应的alpha，渐变动画只根据当前计�
 
 1.xml配置：
 
-    <?xml version="1.0" encoding="utf-8"?>
-    <set xmlns:android="http://schemas.android.com/apk/res/android"
-     android:shareInterpolator="false" >
-
-    <scale>
-
-        <!-- 单次运行时间 -->
-        android:duration="500"
-        <!-- 运行完成后是否保持结束时的状态 -->
-        android:fillAfter="true"
-        <!-- 运行完成后是否回到开始时的状态 -->
-        android:fillBefore="false"
-        <!-- 初始时大小，1代表原大小，0代表无 -->
-        android:fromXScale="1"
-        android:fromYScale="1"
-        <!-- 使用的插值器，控制运行过程中的速率 -->
-        android:interpolator="@android:anim/accelerate_interpolator"
-        <!-- 相对中心点，50%代表自身中心，50%p代表相对父view的中心 -->
-        android:pivotX="50%"
-        android:pivotY="50%"
-        <!-- 重复的次数，infinite代表永久循环 -->
-        android:repeatCount="infinite"
-        <!-- 重复的模式， restart代表重新开始，reverse代表反转-->
-        android:repeatMode="restart"
-        <!-- 延迟多久后开始 -->
-        android:startOffset="100"
-        <!-- 要到达的缩放比例 -->
-        android:toXScale="0"
-        android:toYScale="0" />
-    </scale>
-    
-    <translate
-        android:duration="550"
-        <!-- 相对当前位置的像素距离 -->
-        android:fromYDelta="300"
-        android:interpolator="@android:anim/accelerate_interpolator"
-        android:toYDelta="0" />
-
-    <alpha
-        android:duration="550"
-        android:fromAlpha="0"
-        android:toAlpha="1" />
-
-    </set>
+![](bhs3.png)
 使用set标签可以进行组合，在代码中使用如下：
 
     Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.app_clean_animation);
     view.startAnimation(animation);
+
+
 ##2 Property Animation（属性动画）
 属性动画更改的是对象的实际属性，而View Animation（Tween Animation）改变的是View的绘制效果，并没有改变view的实际属性，前者无论你中如何缩放Button的大小，Button的有效点击区域还是之前的区域，也就是动画应用前的区域，不管是位置还是大小，都不受影响。而在Property Animation则大有不同，它可以对view的实际属性进行改变，比如之前的button，改变的是实际的尺寸缩放和位置变化。事实上不仅仅是view，Property Animation可以应用于任何对象。
 
