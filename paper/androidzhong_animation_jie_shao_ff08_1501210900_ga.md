@@ -334,6 +334,73 @@ rotate:	表示画面转移旋转动画效果,参数如下：
 Property Animation即可以通过xml文件实现动画效果，也有现成的类（ValueAnimator和ObjectAnimator）可以实现一些简单的动画效果。
 
 ### 4.1 ValueAnimator
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+ValueAnimator可以通过设置计算属性和根据属性执行相应的动作。
+举个例子吧，举完例子可以根据例子进行深入的学习。
+
+*主界面：activity_main.xml*
+
+```
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/id_container" >
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/android"
+        />
+
+</RelativeLayout>  
+```
+
+*主活动：MainActivity*
+
+```
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.app.Activity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.animation.CycleInterpolator;
+import android.widget.ImageView;
+
+public class MainActivity extends Activity implements View.OnClickListener {
+    private ImageView image;
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        image=(ImageView)findViewById(R.id.image);
+        image.setOnClickListener(this);
+    }
+
+
+    public void onClick(View view){
+        ValueAnimator anim = ValueAnimator.ofFloat(0f, 1f);
+        anim.setDuration(500);
+
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {//设置监听器
+            public void onAnimationUpdate(ValueAnimator animation){
+            //当值发生变化时，改变图片的透明度
+                float cVal = (Float) animation.getAnimatedValue();
+                image.setAlpha(cVal);
+               
+            }
+        });
+
+        anim.start();
+    }
+
+}
+
+```
 
 
 ### 4.2 ObjectAnimator
