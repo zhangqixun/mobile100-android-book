@@ -478,6 +478,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
 ### 4.3 AnimatorSet动画组合
 这里介绍的AnimatorSet并不像上面两个类那样，AnimatorSet的作用是把多个动画效果组合在一起。
 
+AnimatorSet.play(Animator a):表示执行a的效果。
+AnimatorSet.play(Animator a).with(Animator b):表示执行a的效果的同时执行b的效果。
+AnimatorSet.play(Animator a).with(Animator b).after(Animator c):在执行c的效果后，执行a和b的合集效果。
+
+
 
 
 
