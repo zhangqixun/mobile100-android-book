@@ -6,11 +6,12 @@
 学号：1501210908
 
 
-  在Android天气预报中，城市的切换、搜索以及天气的更新是整个App很大的一个模块，Android天气预报中城市切换
-、搜索主要在selectCity中来完成，天气更新主要在Service和主线程里面来更新。
+在Android天气预报中，城市的切换、搜索以及天气的更新是整个App很大的一个模块，Android天气预报中城市切换、搜索主要在selectCity中来完成，天气更新主要在Service和主线程里面来更新。
 
 在介绍这些部分之前，先要介绍一下Android里面数据传递方法以及Activity之间数据的传输，Android开发中，在不同模块(如Activity)间经常会有各种各样的数据需要相互传递，常用的几种方法都它们各有利弊，有各自的应用场景。
+
 Android里面数据传递方法：
+
 1、	利用Intent对象携带简单数据：利用Intent的Extra部分来存储我们想要传递的数据，可以传送int, long, char等一些基础类型,对复杂的对象就无能为力了。利用Intent对象携带如ArrayList之类复杂些的数据，利用Intent的Extras部分来传递，利用Intent来传递值对象或者List<object>时，要求这些对象的类都要实现Serializable或者Parcelable接口序列化，然后再传输的时候，还要对list强制转化为序列化以后的数据，才能够放到Intent里面，就像下面这样：
 发送方：
 Intent intent=new Intent();
@@ -23,38 +24,46 @@ Bundle bundle=intent.getExtras();
    TodayWeather todayWeather=(TodayWeather)bundle.getSerializable("todayWeather");
 List<ForecastWeather>forecastWeatherList=
 (List<ForecastWeather>)bundle.getSerializable("forecastWeather");
+
 2、	通过实现Serializable接口，利用Java语言本身的特性，通过将数据序列化后，再将其传递出去。这种发放实现简单，只需要在类中声明Serializable接口即可，但是效率可能会受到一定影响。
+
 3、	通过实现Parcelable接口：这个是通过实现Parcelable接口，把要传的数据打包在里面，然后在接收端自己分解出来。这个是Android独有的，在其本身的源码中也用得很多，效率要比Serializable相对要好。
+
 4、	通过单例模式实现参数传递：单例模式的特点就是可以保证系统中一个类有且只有一个实例。这样很容易就能实现，在A中设置参数，在B中直接访问了。这是几种方法中效率最高的。由于这种方式不大常见，所以列举代码如下：
-4.1  定义一个单实例的类
-//单例模式 
-public class XclSingleton  
-{   //单例模式实例  
-    private static XclSingleton instance = null;
-    //synchronized 用于线程安全，防止多线程同时创建实例
-    public synchronized static XclSingleton getInstance(){  
+   4.1  定义一个单实例的类
+
+    //单例模式 
+    public class XclSingleton  
+     {   //单例模式实例  
+        private static XclSingleton instance = null;
+        //synchronized 用于线程安全，防止多线程同时创建实例
+        public synchronized static XclSingleton getInstance(){  
         if(instance == null){  
             instance = new XclSingleton();  
         } 
-return instance;  
-    }
+        return instance;  
+        }
+    
     final HashMap<String, Object> mMap;  
     public XclSingleton() 
     {   mMap = new HashMap<String,Object>();  }
+    
     public void put(String key,Object value){  
         mMap.put(key,value);  
     } 
+    
     public Object get(String key) {  return mMap.get(key);  }  
-}  
+    }  
 4.2 设置参数
-//通过单例模式传参数的例子  
-XclSingleton.getInstance().put("key1", "value1");  
-XclSingleton.getInstance().put("key2", "value2");  
-Intent intentSingleton = new Intent();                
-intentSingleton.setClass(MainActivity.this,   
-                        SingletonActivity.class); 
-startActivity(intentSingleton);
+
+     //通过单例模式传参数的例子  
+     XclSingleton.getInstance().put("key1", "value1");  
+     XclSingleton.getInstance().put("key2", "value2");  
+     Intent intentSingleton = new Intent();                
+     intentSingleton.setClass(MainActivity.this,SingletonActivity.class); 
+     startActivity(intentSingleton);
 4.3 接收参数
+
        HashMap<String,Object> map = XclSingleton.getInstance().mMap;
        String sResult = "map.size() ="+map.size();       
         //遍历参数 
@@ -67,18 +76,26 @@ startActivity(intentSingleton);
            sResult +="\r\n value----> "+(String)value;
         }
 Activity之间数据的传输：
+
 1、	基于消息的传输：利用Intent传输。
+
 2、	基于外部存储的传输：在Android中，预设了一些快捷便利类和模块，更好的支持不同类别数据的存取。如果，需要存储的是一些小数据量的配置信息，可以选择Preference，它等同于传统意义上的设置文件。Preference提供了一些基于key/value的存取接口，可以放置一些简单的基本数据或者派生了Parcelable接口的对象。一个很好的应用场景是Cookie的存放。你在登录界面获得了一份Cookie，你可以把它扔进Preference，谁想要谁去拿，再也不要来来回回的折腾了。Preference适合于小数据、设置信息，如果大数据，你可以考虑使用数据库。在Android中，使用的是Sqlite，相关的类，堆放在android.database名字空间下
+
 3、	基于Service的传输：既然存在外部太慢，那么还是在内存级别解决问题好了，这时候，你可能就需要请出Android四大组件之一的Service了。Service设计的本意，就是提供一些后台的服务，数据存取，也可以归于其职责的一部分。Service是提供了直连机制，调用的Activity，可以通过bindService方法，与目标Service建立一条数据通路，拿到IBinder。这样，通过Android提供的IPC模型，就可以进行远程方法的调用和数据的传输了。 如上，通过这种模式，可以解决一定问题。 
+
 4、	利用Application传输：如果你需要在不同页面之间共有某个内存对象，很合适的一种方式是把它们扔到Application里面。Application是Context的一个子类。它的生命周期会贯穿整个应用所有组件的生命旅途，因此，放在其中的对象，不会被处理掉。在Activity中，可以通过getApplication接口，随时获得Application对象的引用，用于实现一些全局对象的存储，和处理，真是最合适不过的地方了。
+
 那么熟悉了以上概念，来看我们的天气预报程序，这些数据传输的方法会贯穿在整个天气预报项目当中。先来看城市的切换：
+
 城市切换：
-if(v.getId()==R.id.title_city_manager){
+
+    if(v.getId()==R.id.title_city_manager){
             Intent intent = new Intent(MainActivity.this, SelectCity.class);
             startActivityForResult(intent, 1);
         }
 当用户点击了切换城市按钮之后，启动SelectCity并等待返回结果。
-mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+      mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent();
@@ -90,8 +107,11 @@ mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 finish();
             }
         });
+        
 当用户点击了一个Item之后，根据Item的位置，在数据源相应位置把数据取出来，在天气预报项目中，也就是在listItems中把相应位置的城市信息取出来，放到intent中返回，由MainActivity中的onActivityResult进行处理。
-protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+      protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
             cityCode= data.getStringExtra("cityCode");
@@ -111,9 +131,12 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     }
 当Activity得到返回结果以后，取出其中的城市名称和城市代码，存入SharedPreferences中，然后用updateTodayWeather(cityCode)进行天气更新。
 将城市代码和名称存入SharedPreferences中，下次程序进入读取默认城市，就会默认本次读取的城市。这样就实现了城市的切换。
-城市搜索：
+
+城市搜索
+
 对城市编辑搜索框search_edit添加TextChange监听，当搜索框search_edit内容改变时，listview的内容重新加载有关输入内容的城市
-search_edit.addTextChangedListener(new TextWatcher() {
+
+    search_edit.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 dispalyList(s.toString()); //展示结果
