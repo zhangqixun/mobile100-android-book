@@ -105,7 +105,7 @@ webView.setWebViewClient(new WebViewClient(){
 </RelativeLayout>
 ```
 
-![](xuxin_2.png)
+![](xuxin_222.png)
 
 初始化组件：
 ```
