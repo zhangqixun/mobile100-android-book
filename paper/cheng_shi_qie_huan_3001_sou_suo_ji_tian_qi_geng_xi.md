@@ -13,17 +13,19 @@
 Android里面数据传递方法：
 
 1、	利用Intent对象携带简单数据：利用Intent的Extra部分来存储我们想要传递的数据，可以传送int, long, char等一些基础类型,对复杂的对象就无能为力了。利用Intent对象携带如ArrayList之类复杂些的数据，利用Intent的Extras部分来传递，利用Intent来传递值对象或者List<object>时，要求这些对象的类都要实现Serializable或者Parcelable接口序列化，然后再传输的时候，还要对list强制转化为序列化以后的数据，才能够放到Intent里面，就像下面这样：
-发送方：
-Intent intent=new Intent();
-Bundle bundle=new Bundle();
-bundle.putSerializable("todayWeather",todayWeather);
-bundle.putSerializable("forecastWeather",(Serializable) forecastWeatherList);
-intent.putExtras(bundle);
+
+ 发送方：
+ 
+    Intent intent=new Intent();
+    Bundle bundle=new Bundle();
+    bundle.putSerializable("todayWeather",todayWeather);
+    bundle.putSerializable("forecastWeather",(Serializable) forecastWeatherList);
+    intent.putExtras(bundle);
 接收方：
-Bundle bundle=intent.getExtras();
-   TodayWeather todayWeather=(TodayWeather)bundle.getSerializable("todayWeather");
-List<ForecastWeather>forecastWeatherList=
-(List<ForecastWeather>)bundle.getSerializable("forecastWeather");
+
+    Bundle bundle=intent.getExtras();
+    TodayWeather todayWeather=(TodayWeather)bundle.getSerializable("todayWeather");
+    List<ForecastWeather>forecastWeatherList=(List<ForecastWeather>)bundle.getSerializable("forecastWeather");
 
 2、	通过实现Serializable接口，利用Java语言本身的特性，通过将数据序列化后，再将其传递出去。这种发放实现简单，只需要在类中声明Serializable接口即可，但是效率可能会受到一定影响。
 
@@ -142,7 +144,8 @@ Activity之间数据的传输：
                 dispalyList(s.toString()); //展示结果
             }
         });
-void dispalyList(String s){
+        
+    void dispalyList(String s){
         if (s == null || s.trim().length() == 0){
             listItems=application.getCityItemsList();
             SimpleAdapter adapter = new SimpleAdapter(SelectCity.this,listItems,R.layout.city_items,new String[] {"province","city"},new int[]{R.id.list_province,R.id.list_city});
@@ -157,15 +160,19 @@ void dispalyList(String s){
             }
         }
         listItems=temp_listItems;
-SimpleAdapter adapter = new SimpleAdapter(SelectCity.this,listItems,R.layout.city_items,new String[] {"province","city"},new int[]{R.id.list_province,R.id.list_city});
+        SimpleAdapter adapter = new SimpleAdapter(SelectCity.this,listItems,R.layout.city_items,new String[] {"province","city"},new int[]{R.id.list_province,R.id.list_city});
         ListView mlistView = (ListView)findViewById(R.id.city_list);
         mlistView.setAdapter(adapter);
         mlistView.invalidateViews();
 }
+
 当search_edit的内容改变以后，首先获得改变以后的内容，然后对数据源进行逐条对比，如果数据源的某一项数据包含了改变后的内容，就把该数据加入到新的List数据源中，然后将原数据源清空，把新的数据列表赋值给原数据源，让listview进行重新加载。就实现了城市的搜索。不过要注意的是当search_edit变为空以后，要重新加载城市列表，以及每次mlistView加载的内容改变以后，要调用invalidateViews()方法来动态刷新数据。
-天气更新：
+
+天气更新
+
 当用户点击了更新按钮以后，执行updateTodayWeather(cityCode)，其中cityCode是事先从SharedPreferences中读取出来的城市代码。
-public void updateTodayWeather(final String cityCode){
+
+     public void updateTodayWeather(final String cityCode){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -191,8 +198,9 @@ public void updateTodayWeather(final String cityCode){
                 }
             }
         }).start();
-}
-private Handler handler=new Handler(){
+        }
+
+     private Handler handler=new Handler(){
         public void handleMessage(Message message){
             switch (message.what){
                 case UPDATE_TODAY_WEATHER:
@@ -206,14 +214,18 @@ private Handler handler=new Handler(){
         }
     };
 由updateTodayWeather(cityCode)查询得到的List<ForecastWeather>和TodayWeather以消息的方式把他们封装起来发送给消息处理队列handler，handler得到数据之后，执行setWeather(todayWeather,list)进行UI的更新。其中TodayWeatherDao根据cityCode进行天气预报的数据的解析，并提供了返回List<ForecastWeather>和TodayWeather的方法。
+
 天气更新的另一种方法是在Service中进行更新，在MainActivity的oncreate方法中，当在有网的状态下，启动后台更新Service，代码如下：
-if(NetUtil.getNetworkState(this)!=NetUtil.NETWORK_NONE){
+
+    if(NetUtil.getNetworkState(this)!=NetUtil.NETWORK_NONE){
             Log.d("myWeather","网络OK");
             Intent intent=new Intent(getBaseContext(),AutoUpdateService.class);
             startService(intent);//发送Intent启动Service
         }
+        
 在Service的onStartCommand中，查询默认城市代码，进行天气的更新：Service中的代码如下：
-public int onStartCommand(Intent intent, int flags, int startId) {
+
+    public int onStartCommand(Intent intent, int flags, int startId) {
         Toast.makeText(this,"正在后台更新天气......",Toast.LENGTH_SHORT).show();
         if(NetUtil.getNetworkState(this)!=NetUtil.NETWORK_NONE){
             Log.d("myWeather","网络OK");
@@ -225,8 +237,8 @@ public int onStartCommand(Intent intent, int flags, int startId) {
             Log.d("myWeather","网络挂了");
         }
         return super.onStartCommand(intent, flags, startId);
-}
-public void updateTodayWeather(final String cityCode){
+        }
+    public void updateTodayWeather(final String cityCode){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -250,9 +262,12 @@ public void updateTodayWeather(final String cityCode){
             }
         }).start();
     }
-此处的updateTodayWeather跟MainActivity中的updateTodayWeather基本类似，唯一不同的是，Service中updateTodayWeather把查询到的TodayWeather 和List<ForecastWeather>以序列化的方式封装到bundle中用intent传送，然后以sendBroadcast(intent)给MainActivity发送广播。
-然后MainActivity接收到数据后，将TodayWeather 和List<ForecastWeather>数据取出来，用setWeather(todayWeather,forecastWeatherList)进行UI的更新，MainActivity中的代码如下：
-private class DataReceiver extends BroadcastReceiver {//继承自BroadcastReceiver的子类
+    
+此处的updateTodayWeather跟MainActivity中的updateTodayWeather基本类似，唯一不同的是，Service中updateTodayWeather把查询到的TodayWeather和List<ForecastWeather>以序列化的方式封装到bundle中用intent传送，然后以sendBroadcast(intent)给MainActivity发送广播。
+
+然后MainActivity接收到数据后，将TodayWeather和List<ForecastWeather>数据取出来，用setWeather(todayWeather,forecastWeatherList)进行UI的更新，MainActivity中的代码如下：
+
+    private class DataReceiver extends BroadcastReceiver {//继承自BroadcastReceiver的子类
         @Override
         public void onReceive(Context context, Intent intent) {//重写onReceive方法
             Bundle bundle=intent.getExtras();
@@ -270,9 +285,29 @@ private class DataReceiver extends BroadcastReceiver {//继承自BroadcastReceiv
         registerReceiver(dataReceiver, filter);//注册Broadcast Receiver
         super.onStart();
     }
-以上就是这几个模块的基本实现。下面来介绍一下模块实现过程中遇到的一些问题。
-在Android中，Activity主要负责前台页面的展示，Service主要负责需要长期运行的任务，所以在我们实际开发中，就会常常遇到Activity与Service之间的通信，我们一般在Activity中启动后台Service，通过Intent来启动，Intent中我们可以传递数据给Service，而当我们Service执行某些操作之后想要更新UI线程，我们应该怎么做呢？接下来我就介绍两种方式来实现Service与Activity之间的通信问题。
-•	通过Binder对象
-当Activity通过调用bindService(Intent service, ServiceConnection conn,int flags),我们可以得到一个Service的一个对象实例，然后我们就可以访问Service中的方法，我们还是通过一个例子来理解一下吧，一个模拟下载的小例子，带大家理解一下通过Binder通信的方式
-首先我们新建一个工程Communication，然后新建一个Service类
 
+
+以上就是这几个模块的基本实现。下面来介绍一下模块实现过程中遇到的一些问题。
+
+在Android中，Activity主要负责前台页面的展示，Service主要负责需要长期运行的任务，所以在我们实际开发中，就会常常遇到Activity与Service之间的通信，我们一般在Activity中启动后台Service，通过Intent来启动，Intent中我们可以传递数据给Service，而当我们Service执行某些操作之后想要更新UI线程，我们应该怎么做呢？接下来我就介绍两种方式来实现Service与Activity之间的通信问题。
+
+•	通过Binder对象
+
+当Activity通过调用bindService(Intent service, ServiceConnection conn,int flags),我们可以得到一个Service的一个对象实例，然后我们就可以访问Service中的方法。这种方法在我的天气预报中项目中没有具体实现，后期将会用这种方式实现更新UI。
+
+•	通过broadcast(广播)的形式
+
+我在实现Service与Activity通信时，也就是在上面的例子中通过Service更新天气时，用的就是广播，通过sendBroadcast(intent)这种方式来发送广播。
+
+      Intent intent=new Intent();
+      intent.setAction("com.example.asus.weather.MainActivity");
+      TodayWeatherDao todayWeatherDao=new TodayWeatherDao();
+      TodayWeather todayWeather=todayWeatherDao.getTodayWeather(cityCode);
+      List<ForecastWeather> forecastWeatherList=todayWeatherDao.getForecastWeather();
+      Bundle bundle=new Bundle();
+      bundle.putSerializable("todayWeather",todayWeather);
+      bundle.putSerializable("forecastWeather",(Serializable) forecastWeatherList);
+      intent.setAction("com.example.asus.weather.MainActivity");
+      intent.putExtras(bundle);
+      sendBroadcast(intent);
+MainActivity接收数据的代码就不再赘述了。
