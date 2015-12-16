@@ -406,7 +406,24 @@ public class MainActivity extends Activity implements View.OnClickListener {
 结果是一个动态的图，文章中就不再贴图，读者可以自己把代码敲一遍，执行一遍代码看看效果。
 
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;
-ValueAnimator还可以通过setInterpolator来设置插入器，setEvaluator来设置计算器等，设置更丰富的属性。
+ValueAnimator还可以通过setInterpolator来设置插入器。
+setEvaluator来设置计算器等，设置更丰富的属性，例如我们需要设置一个物体按照抛物线的曲线来运行时，可以在setEvaluator中设置。
+
+```
+    valueAnimator.setEvaluator(new TypeEvaluator<PointF>()  
+        {  
+            @Override  
+            public PointF evaluate(float fraction, PointF startValue,  
+                    PointF endValue)  
+            {  
+                // x方向200px/s ，则y方向0.5 * 10 * t  
+                PointF point = new PointF();  
+                point.x = 200 * fraction * 3;  
+                point.y = 0.5f * 200 * (fraction * 3) * (fraction * 3);  
+                return point;  
+            }  
+        });  
+```
 
 ### 4.2 ObjectAnimator
 
