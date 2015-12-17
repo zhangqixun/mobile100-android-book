@@ -133,7 +133,7 @@
    * [Android  网络编程  （ 1501210913   胡玉  ）](paper/android_wang_luo_bian_cheng__1501210913_hu_yu.md)
        * Android 网络编程 （  1501210913  胡玉  ）
    * [城市切换、搜索及天气更新（1501210908）](paper/cheng_shi_qie_huan_3001_sou_suo_ji_tian_qi_geng_xi.md)
-   * Android基于监听的事件处理（1501210420 候转转）
+   * Android基于监听的事件处理
 * [常见面试题目](question/index.md)
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
