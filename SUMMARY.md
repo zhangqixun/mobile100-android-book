@@ -134,7 +134,7 @@
        * Android 网络编程 （  1501210913  胡玉  ）
    * [城市切换、搜索及天气更新（1501210908）](paper/cheng_shi_qie_huan_3001_sou_suo_ji_tian_qi_geng_xi.md)
    * [Android基于监听的事件处理（1501210420 候转转）](.paper/2015/jianting_md.md)
-   * Android系统各类图片按时刻、旅行、故事归类的研究与实现(1501210922 黄志达)
+   * 各类图片按时刻、旅行、故事归类的研究与实现(1501210922 黄志达)
 * [常见面试题目](question/index.md)
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
