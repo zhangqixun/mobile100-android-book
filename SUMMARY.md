@@ -61,7 +61,6 @@
    * [Android ART模式详细分析与测试(1501210385 刘冶)](paper/2015/1501210385.md)
    * [Android 6.0 指纹识别功能详细分析(郭元歆)](paper/2015/1501210538.md)
    * [Android中线程池的使用和分析(1501211049 邹勇杰)](paper/2015/1501211049.md)
-       * android多线程编程机制
    * [Android中的adapter(1501210527 高参)](paper/2015/ Android中的adapter.md)
    * [Android实现定位及地理位置解析(高歌 1501210899)](paper/2015/1501210899.md)
    * [Android6.0 App Links功能分析（1501211014 闫森）](.paper/2015/1501211014md.md)
