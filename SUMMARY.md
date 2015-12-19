@@ -136,6 +136,7 @@
    * [各类图片按时刻、旅行、故事归类的研究与实现(1501210922 黄志达)](paper/classify_album_1501210922_huangzhida.md)
    * [android数据持久化存储和跨程序共享数据技术](paper/androidshu_ju_chi_jiu_hua_cun_chu_he_kua_cheng_xu_.md)
    * [Android中的数据存储  邱源-1501210973](paper/androidzhong_de_shu_ju_cun_chu_qiu_6e90-_150121097.md)
+       * 引导界面的二维动画应用
 * [常见面试题目](question/index.md)
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
