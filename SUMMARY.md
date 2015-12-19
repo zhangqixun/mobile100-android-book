@@ -138,6 +138,7 @@
    * [Android中的数据存储  邱源-1501210973](paper/androidzhong_de_shu_ju_cun_chu_qiu_6e90-_150121097.md)
        * 引导界面的二维动画应用
    * [引导界面的二维动画应用(1501210425 蒋也)](.paper/2015/animationmd.md)
+   * Android应用优化技术
 * [常见面试题目](question/index.md)
    * [Question_About_Activity](question/question_about_activity.md)
    * [Question_About_Intent](question/question_about_intent.md)
