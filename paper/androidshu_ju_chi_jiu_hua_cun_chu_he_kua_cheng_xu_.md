@@ -433,8 +433,8 @@ content://com.example.app.provider/table1
 content://com.example.app.provider/table1/1
 这就表示调用方期望访问的是 com.example.app 这个应用的 table1 表中 id 为 1 的数据。
 内容 URI 的格式主要就只有以上两种，以路径结尾就表示期望访问该表中所有的数据，以id结尾就表示期望访问该表中拥有相应id的数据。我们可以使用通配符的方式来分别匹配这两种格式的内容URI，规则如下：
-1. *：表示匹配任意长度的任意字符
-2. #：表示匹配任意长度的数字
+     1. *：表示匹配任意长度的任意字符
+     2. #：表示匹配任意长度的数字
 所以，一个能够匹配任意表的内容 URI 格式就可以写成：
 content://com.example.app.provider/*
 而一个能够匹配 table1 表中任意一行数据的内容 URI 格式就可以写成：
