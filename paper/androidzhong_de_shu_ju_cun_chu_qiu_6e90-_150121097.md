@@ -52,9 +52,8 @@ Material Design 设计语言强调根据用户行为凸显核心功能，进而�
 
 ![](动画效果.png)
 
--![--
 
-## **2.Android Design Support Library**](onClick.png)
+## **2.Android Design Support Library**]
 
 Google在2015的IO大会上，给我们带来了更加详细的Material Design设计规范，同时，也给我们带来了全新的Android Design Support Library，在这个support库里面，Google给我们提供了更加规范的MD设计风格的控件。最重要的是，Android Design Support Library的兼容性更广，直接可以向下兼容到Android 2.2。
 
@@ -414,8 +413,29 @@ private void initInstances() {
 
 ![](NavigationDrawer.png)
 
+可以通过设置一个OnNavigationItemSelectedListener，使用其setNavigationItemSelectedListener()来获得元素被选中的回调事件。它为你提供被点击的 菜单元素 ，让你可以处理选择事件，改变复选框状态，加载新内容，关闭导航菜单，以及其他任何你想做的操作，代码如下：
+
+```
+private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        menuItem.setChecked(true);
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    }
+                });
+    }```
+
 ---
 
 ## **参考文献**
 
-[](http://www.google.com/design/spec/material-design/)
+[Material Design](http://www.google.com/design/spec/material-design/)
+
+[Android Design Support Library](http://android-developers.blogspot.jp/2015/05/android-design-support-library.html)
+
+[Floating Action Button](http://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html)
+
+[Snack Bar](http://developer.android.com/reference/android/support/design/widget/Snackbar.html)
