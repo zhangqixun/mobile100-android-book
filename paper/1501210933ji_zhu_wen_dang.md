@@ -23,6 +23,9 @@
 
 第二，在优化方面，将给出一些滑动的特效，以及目前成熟主流APP中使用较少的界面效果，给出UI设计的改进思路。
 
+第三，对于UI设计的自定义字体部分，给出两种具体的实现建议。
+
+
 第一部分：安卓经典页面框架的分析
 
 1.QQ和微信
@@ -94,7 +97,163 @@ Animation实现动画有两个方式：帧动画（frame-by-frame animation）�
 ![](2015113161255674.png)
 
 
-结语：
 
+第三部分：安卓UI中的自定义字体
+通过前两部分的分析，总结如下：市场上流行的软件界面大多应用特效较少，主要突出功能的简洁和易用性，而极少数的个性文艺APP则侧重UI框架的使用，突出炫酷效果。在天气预报项目中，引导页面使用viewpager,实现过程中应添加必要的引导文字，此时发现Android系统默认支持三种字体，分别为：“sans”, “serif”, “monospace ”。考虑到字体在UI设计中的重要性，这一部分我们学习Android的字体部分。
+
+自定义字体方法一：
+
+以下是一个简单的demo，体会一下android中提供的不同字体：
+
+
+
+```<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+
+<TableLayout xmlns:Android="http://schemas.android.com/apk/res/android"
+Android:layout_width="fill_parent"
+Android:layout_height="fill_parent"
+    Android:id="@+id/table">
+
+<TableRow>
+
+    <TextView
+        Android:layout_marginRight="4px"
+        Android:text="sans:"
+        Android:textSize="20sp" >
+    </TextView>
+    <!-- 使用默认的sans字体 -->
+
+    <TextView
+        Android:id="@+id/sans"
+        Android:text="Hello,World"
+        Android:textSize="20sp"
+        Android:typeface="sans" >
+    </TextView>
+</TableRow>
+
+<TableRow>
+
+    <TextView
+        Android:layout_marginRight="4px"
+        Android:text="serif:"
+        Android:textSize="20sp" >
+    </TextView>
+    <!-- 使用默认的serifs字体 -->
+
+    <TextView
+        Android:id="@+id/serif"
+        Android:text="Hello,World"
+        Android:textSize="20sp"
+        Android:typeface="serif" >
+    </TextView>
+</TableRow>
+
+<TableRow>
+
+    <TextView
+        Android:layout_marginRight="4px"
+        Android:text="monospace:"
+        Android:textSize="20sp" >
+    </TextView>
+    <!-- 使用默认的monospace字体 -->
+
+    <TextView
+        Android:id="@+id/monospace"
+        Android:text="Hello,World"
+        Android:textSize="20sp"
+        Android:typeface="monospace" >
+    </TextView>
+</TableRow>
+<!-- 这里没有设定字体，我们将在Java代码中设定 -->
+
+<TableRow>
+
+    <TextView
+        Android:layout_marginRight="4px"
+        Android:text="custom:"
+        Android:textSize="20sp" >
+    </TextView>
+
+    <TextView
+        Android:id="@+id/custom"
+        Android:text="Hello,World"
+        Android:textSize="20sp" >
+    </TextView>
+</TableRow>
+
+</TableLayout>
+</LinearLayout>```
+![](字体.PNG)
+
+如上图所示，前三种字体成功显示，第四种定制的字体没有得到有效显示，因此默认为“sans”字体。
+
+
+总结以上，使用自定义的字体方法如下：
+
+
+1）将新字体的TTF文件copy到assets/fonts/目录下面，例如我们将“*.ttf”copy了过去。
+
+2）我们需要将widget设置为该字体，比较遗憾的是，不能直接在XML文件中进行，需要编写源代码。
+
+　　TextView tv = (TextView)findViewById(R.id.c12_custom);
+　　
+　　//从assert中获取有资源，获得app的assert，采用getAserts()，通过给出在assert/下面的相对路径。在实际使用中，字体库可能存在于SD卡上，可以采用createFromFile()来替代createFromAsset。 
+　　
+　　Typeface face = Typeface.createFromAsset (getAssets() , “fonts/timesi.ttf” );
+　　
+　　tv.setTypeface (face);
+　　
+在模拟器中先后导入华文行楷的字体，大约4M，但是系统无法识别出该字体，没有显示，然后尝试使用英文字体timesi.ttf，正常。因此 Android并非和所有的TTF字体都能兼容，尤其在中文特殊字体的支持会存在问题，对于不兼容的字体，Android不出报错，只是无法正常显示。一 般而言我们都会使用系统缺省提供的体。
+　　对于华文行楷字体，我们一开始使用的文件是中文名字，出现报错，后来我们将之改为全小写的英文名称就不会出错，所以在文件命名上需要注意。
+
+自定义字体方法二：
+为每个文本组件创建一个子类，如TextView、Button等，然后在构造函数中加载自定义字体。
+
+public class BrandTextView extends TextView {  
+public BrandTextView(Context context, AttributeSet attrs, int defStyle) 
+{       
+   super(context, attrs, defStyle);     
+ }     
+public BrandTextView(Context context, AttributeSet attrs) 
+{         
+ super(context, attrs);  
+    }   
+  public BrandTextView(Context context) 
+{         
+ super(context);    
+ }    
+ public void setTypeface(Typeface tf, int style) 
+{         
+  if (style == Typeface.BOLD) {                super.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/YourCustomFont_Bold.ttf"));            } 
+else {               super.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/YourCustomFont.ttf"));            }      
+} 
+}
+
+然后只需要将标准的文本控件替换成你自定义的就可以了（例如BrandTextView替换TextView）。
+
+<com.your.package.BrandTextView         android:layout_width="wrap_content"  
+android:layout_height="wrap_content"     
+android:text="View with custom font"/>
+
+<com.your.package.BrandTextView         android:layout_width="wrap_content"         android:layout_height="wrap_content"         
+android:textStyle="bold"         
+android:text="View with custom font and bold typeface"/>
+这个方法可以方便的切换字体粗细等等，字体可以在组件xml文件的typeface属性中定义，缺点是依赖大量的模板代码，也比较麻烦。
+
+结语：
 安卓开发入门简单，但是涉及到很多细节，应该结合项目练习，在学习初期，一些小的demo设计亦是必不可少。界面设计关系到用户的使用体验，应该得到开发者的重视。
+在本文当中，提供给初学者关于自定义字体的两种建议，合适的字体是UI成功的关键。
+
+参考资料：
+1）http://ryanhoo.github.io/blog/2014/05/05/android-better-way-to-apply-custom-font/
+2）http://blog.csdn.net/woshiwxw765/article/details/38554869
+3）http://blog.csdn.net/yanzi1225627/article/details/30763555
+
+
+
+
 
