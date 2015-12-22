@@ -131,7 +131,7 @@
    * [ListView的定制使用与优化](paper/listviewde_ding_zhi_shi_yong_yu_you_hua.md)
    * [Android  网络编程  （ 1501210913   胡玉  ）](paper/android_wang_luo_bian_cheng__1501210913_hu_yu.md)
        * Android 网络编程 （  1501210913  胡玉  ）
-   * [城市切换、搜索及天气更新（1501210908）](paper/cheng_shi_qie_huan_3001_sou_suo_ji_tian_qi_geng_xi.md)
+   * [城市切换、搜索及天气更新（1501210908 郝建勇）](paper/cheng_shi_qie_huan_3001_sou_suo_ji_tian_qi_geng_xi.md)
    * [Android基于监听的事件处理（1501210420 候转转）](.paper/2015/jianting_md.md)
    * [各类图片按时刻、旅行、故事归类的研究与实现(1501210922 黄志达)](paper/classify_album_1501210922_huangzhida.md)
    * [android数据持久化存储和跨程序共享数据技术](paper/androidshu_ju_chi_jiu_hua_cun_chu_he_kua_cheng_xu_.md)
