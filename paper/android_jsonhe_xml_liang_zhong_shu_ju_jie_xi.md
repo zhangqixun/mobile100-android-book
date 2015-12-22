@@ -1,6 +1,5 @@
-# android JSON和XML两种数据解析
+# android JSON和XML两种数据解析（孔润 1501210926）
 JSON和XML两种数据解析方式
-
 
 1. JSON数据解析
  1.1 JSON的定义
