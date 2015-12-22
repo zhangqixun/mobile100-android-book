@@ -303,7 +303,55 @@ public class River implements Serializable {
 6 然后使用再获取子节点列表中的需要读取的结点。
 
 
-
+     public List<River> domXml(String fileName){
+        List<River> rivers=new ArrayList<River>();
+        DocumentBuilderFactory factory=null;
+        DocumentBuilder builder=null;
+        Document document=null;
+        InputStream inputStream=null;
+        //首先找到xml文件
+        factory= DocumentBuilderFactory.newInstance();
+        try {
+            //找到xml，并加载文档
+            builder=factory.newDocumentBuilder();
+            inputStream=getAssets().open(fileName);
+            document=builder.parse(inputStream);
+            //找到根Element
+            Element root=document.getDocumentElement();
+            NodeList nodes=root.getElementsByTagName("river");
+            //遍历根节点所有子节点,rivers 下所有river
+            River river=null;
+            for(int i=0;i<nodes.getLength();i++){
+                river=new River();
+                //获取river元素节点
+                Element riverElement=(Element)(nodes.item(i));
+                //获取river中name属性值
+                river.setName(riverElement.getAttribute("name"));
+                river.setLength(Integer.parseInt(riverElement.getAttribute("length")));
+                //获取river下introduction标签
+                Element introduction=(Element)riverElement.getElementsByTagName("introduction").item(0);
+                river.setIntroduction(introduction.getFirstChild().getNodeValue());
+                Element imageUrl=(Element)riverElement.getElementsByTagName("imageurl").item(0);
+                river.setImageurl(imageUrl.getFirstChild().getNodeValue());
+                Log.d("dom解析",river.toString());
+                rivers.add(river);
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
+        catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }finally{
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return rivers;
+    }
 
 
 采用SAX解析时具体处理步骤是：
@@ -317,6 +365,34 @@ public class River implements Serializable {
  
 代码如下：
 
+      public List<River> saxXml(String xmlPath){
+        List<River> rivers=null;
+        SAXParserFactory factory=SAXParserFactory.newInstance();
+        try {
+            SAXParser parser=factory.newSAXParser();
+            //获取事件源
+            XMLReader xmlReader=parser.getXMLReader();
+            //设置处理
+
+            //xmlReader.parse(new InputSource(new URL(xmlPath).openStream()));
+            xmlReader.parse(new InputSource(getAssets().open(xmlPath)));
+
+        } catch (ParserConfigurationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SAXException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return rivers;
+    }
+
+
+    
+
 
 采用pull解析步骤如下
 1：当导航到XmlPullParser.START_DOCUMENT，可以不做处理，当然你可以实例化集合对象等等。
@@ -325,6 +401,61 @@ public class River implements Serializable {
 4：当然啦，它一定会导航到XmlPullParser.END_TAG的，有开始就要有结束嘛。在这里我们就需要判读是否是river结束标签，如果是，则把river对象存进list集合中了，并设置river对象为null.
 代码如下：
 
+        public List<River> pullXml(String xmlPath){
+        List<River> rivers=new ArrayList<River>();
+        River river=null;
+        InputStream inputStream=null;
+        //获得XmlPullParser解析器
+        XmlPullParser xmlParser = Xml.newPullParser();
+        try {
+            //得到文件流，并设置编码方式
+            inputStream=getAssets().open(xmlPath);
+            xmlParser.setInput(inputStream, "utf-8");
+            //获得解析到的事件类别，这里有开始文档，结束文档，开始标签，结束标签，文本等等事件。
+            int evtType=xmlParser.getEventType();
+            //一直循环，直到文档结束
+            while(evtType!=XmlPullParser.END_DOCUMENT){
+                switch(evtType){
+                    case XmlPullParser.START_TAG:
+                        String tag = xmlParser.getName();
+                        //如果是river标签开始，则说明需要实例化对象了
+                        if (tag.equalsIgnoreCase("river")) {
+                            river = new River();
+                            //取出river标签中的一些属性值
+                            river.setName(xmlParser.getAttributeValue(null, "name"));
+                            river.setLength(Integer.parseInt(xmlParser.getAttributeValue(null,"length")));
+                        }else if(river!=null){
+                            //如果遇到introduction标签，则读取它内容
+                            if(tag.equalsIgnoreCase("instruction")){
+                                river.setIntroduction(xmlParser.nextText());
+                            }else if(tag.equalsIgnoreCase("imageurl")){
+                                river.setImageurl(xmlParser.nextText());
+                            }
+                        }
+                        break;
+
+                    case XmlPullParser.END_TAG:
+                        //如果遇到river标签结束，则把river对象添加进集合中
+                        if (xmlParser.getName().equalsIgnoreCase("river") && river != null) {
+                            rivers.add(river);
+                            Log.d("pull解析", river.toString());
+                            river = null;
+                        }
+                        break;
+                    default:break;
+                }
+                //如果xml没有结束，则导航到下一个river节点
+                evtType=xmlParser.next();
+            }
+        } catch (XmlPullParserException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        return rivers;
+    }
 
 
 执行结果如下：
