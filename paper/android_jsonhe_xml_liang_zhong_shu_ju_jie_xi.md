@@ -1,20 +1,10 @@
 # android JSON和XML两种数据解析（孔润 1501210926）
 
 
-
-
-
-
 ## 1. JSON数据解析
 
 
-
-
-
 ###  1.1 JSON的定义
-
-
-
 
  
  JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式。 易于人阅读和编写。同时也易于机器解析和生成。 它基于JavaScript Programming Language, Standard ECMA-262 3rd Edition - December 1999的一个子集。
