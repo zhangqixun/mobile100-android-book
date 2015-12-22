@@ -66,6 +66,31 @@ JsonObject 方法，opt* 与 get* 建议使用opt方法，因为get方法如果�
 
 可用以下代码简单介绍Json格式数据的特点，并且生成对象类型数据和数组类型数据。
 
+
+ public String createJson() {
+        String str = "";
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("intKey", 123);
+            jsonObject.put("doubleKey", 10.1);
+            jsonObject.put("longKey", 666666666);
+            jsonObject.put("stringKey", "lalala");
+            jsonObject.put("booleanKey", true);
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put(0, 111);
+            jsonArray.put("second");
+            jsonObject.put("arrayKey", jsonArray);
+            JSONObject innerJsonObject = new JSONObject();
+            innerJsonObject.put("innerStr", "inner");
+            jsonObject.put("innerObjectKey", innerJsonObject);
+
+            Log.e("Json", jsonObject.toString());
+            str = jsonObject.toString();
+        } catch (Exception e) {
+        }
+        return str;
+    }
+
 打印出的数据如下：
 
 
@@ -74,6 +99,30 @@ JsonObject 方法，opt* 与 get* 建议使用opt方法，因为get方法如果�
 
 将获取的字符串类型的数据转换成JSON格式，然后获取其中的数据。具体代码如下：
 
+private void pareJson(String jsonStr) {
+        try {
+            JSONObject jsonObject = new JSONObject(jsonStr);
+            int intValue = jsonObject.optInt("intKey");
+            double doubleValue = jsonObject.optDouble("doubleKey");
+            long longValue = jsonObject.optLong("longKey");
+            String strValue = jsonObject.optString("stringKey");
+            boolean boolValue = jsonObject.optBoolean("booleanKey");
+
+            JSONArray array = jsonObject.optJSONArray("arrayKey");
+            int arrIntValue = array.optInt(0);
+            String arrStrValue = array.optString(1);
+
+            JSONObject innerJson = jsonObject.optJSONObject("innerObjectKey");
+            String innerStr = innerJson.optString("innerStr");
+
+            Log.e("Json", "intValue = " + intValue + " , doubleValue = " + doubleValue
+                    + " , longValue = " + longValue + " , strValue = " + strValue
+                    + " , booleanValue = " + boolValue + " , arrIntValue = " + arrIntValue
+                    + " , arrStrValue = " + arrStrValue + " , innerStr = " + innerStr);
+        } catch (Exception e) {
+        }
+
+    }
 解析结果如下：
 
 1.3.5 第三方解析库
@@ -206,7 +255,38 @@ XmlPullParserException：抛出单一的XML pull解析器相关的错误。
  
 建立River类
 
+package com.example.kongrun.zuoye.node;
 
+import java.io.Serializable;
+
+/**
+ * Created by kongrun on 2015/12/20.
+ */
+
+public class River implements Serializable {
+   
+    private String name;
+    private int length;
+    private String introduction;
+    private String imageurl;
+    public String getName() {return name;
+    }
+    public void setName(String name) {this.name = name;
+    }
+    public int getLength() {return length;
+    }
+    public void setLength(int length) {this.length = length;
+    }
+    public String getIntroduction() {return introduction;
+    }
+    public void setIntroduction(String introduction) {this.introduction = introduction;
+    }
+    public String getImageurl() {return imageurl;
+    }
+    public void setImageurl(String imageurl) {this.imageurl = imageurl;
+    }
+
+}
 
 采用DOM解析时具体处理步骤是：
 
