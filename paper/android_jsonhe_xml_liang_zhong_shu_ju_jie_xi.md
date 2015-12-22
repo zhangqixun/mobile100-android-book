@@ -67,7 +67,7 @@ JsonObject 方法，opt* 与 get* 建议使用opt方法，因为get方法如果�
 可用以下代码简单介绍Json格式数据的特点，并且生成对象类型数据和数组类型数据。
 
 
- public String createJson() {
+     public String createJson() {
         String str = "";
         try {
             JSONObject jsonObject = new JSONObject();
@@ -92,7 +92,7 @@ JsonObject 方法，opt* 与 get* 建议使用opt方法，因为get方法如果�
     }
 
 打印出的数据如下：
-
+![](001.png)
 
 
 1.3.4 JSON数据的解析
@@ -124,6 +124,7 @@ private void pareJson(String jsonStr) {
 
     }
 解析结果如下：
+![](002.png)
 
 1.3.5 第三方解析库
 
@@ -460,3 +461,4 @@ public class River implements Serializable {
 
 执行结果如下：
 
+![](003.png)
