@@ -15,26 +15,26 @@
 ###1.1将数据存储到文件中
 Context类中提供了一个openFileOutput()方法，可以用于将数据存储到指定的文件中。这个方法接收两个参数，第一个参数是文件名，在文件创建的时候使用的就是这个名称，注意这里指定的文件名不可以包含路径，因为所有的文件都是默认存储到/data/data/<packagename>/files/目录下的。第二个参数是文件的操作模式，主要有两种模式可选，MODE_PRIVATE和MODE_APPEND。其中 MODE_PRIVATE是默认的操作模式，表示当指定同样文件名的时候，所写入的内容将会覆盖原文件中的内容，而MODE_APPEND则表示如果该文件已存在就往文件里面追加内容，不存在就创建新文件。其实文件的操作模式本来还有另外两种，MODE_WORLD_READABLE和MODE_WORLD_WRITEABLE，这两种模式表示允许其他的应用程序对我们程序中的文件进行读写操作，不过由于这两种模式过于危险，很容易引起应用的安全性漏洞，现已在Android 4.2版本中被废弃。
 openFileOutput()方法返回的是一个FileOutputStream对象，得到了这个对象之后就可以使用Java流的方式将数据写入到文件中了。代码如下：    
-  ``````public void save() {
-        String data = "Data to save";
-        FileOutputStream out = null;
-        BufferedWriter writer = null;
-        try {
-          out = openFileOutput("data", Context.MODE_PRIVATE);
-          writer = new BufferedWriter(new OutputStreamWriter(out));
-          writer.write(data);
-        } catch (IOException e) {
-             e.printStackTrace();
-        } finally {
-             try {
-                 if (writer != null) {
-                 writer.close();
-                 }
-             } catch (IOException e) {
-                    e.printStackTrace();
-             }
-        }
-}``````
+        ``````public void save() {
+        ``````String data = "Data to save";
+        ``````FileOutputStream out = null;
+        ``````BufferedWriter writer = null;
+        ``````try {
+          ``````out = openFileOutput("data", Context.MODE_PRIVATE);
+          ``````writer = new BufferedWriter(new OutputStreamWriter(out));
+          ``````writer.write(data);
+        ``````} catch (IOException e) {
+             ``````e.printStackTrace();
+        ``````} finally {
+             ``````try {
+                 ``````if (writer != null) {
+                 ``````writer.close();
+                 ``````}
+             ``````} catch (IOException e) {
+                    ``````e.printStackTrace();
+             ``````}
+        ``````}
+``````}
 
 ###1.2从文件中读取数据
 类似于将数据存储到文件中，Context类中还提供了一个openFileInput()方法，用于从文件中读取数据。这个方法要比openFileOutput()简单一些，它只接收一个参数，即要读取的文件名，然后系统会自动到/data/data/<package name>/files/目录下去加载这个文件，并返回一个FileInputStream对象，得到了这个对象之后再通过Java流的方式就可以将数据读取出来了。如下代码展示了如何从文件中读取文本数据：
