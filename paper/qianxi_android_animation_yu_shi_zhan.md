@@ -1,8 +1,7 @@
 # 浅析Android Animation与实战
 
-作者：巫思杏 1501211005
+作者：巫思杏 1501211005  （Demo地址见文末）
 
-Demo地址：https://github.com/MebiuW/Mobile100
 # 1 概述
 
 
@@ -604,4 +603,7 @@ AccelerateDecelerateInterpolator 在动画开始与结束的地方速率改变�
 7、android之interpolator的用法详解 http://blog.csdn.net/jason0539/article/details/16370405
 
 ```
+
+
+Demo地址：https://github.com/MebiuW/Mobile100
 
