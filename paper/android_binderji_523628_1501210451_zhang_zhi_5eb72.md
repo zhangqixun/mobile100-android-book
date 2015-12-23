@@ -467,28 +467,28 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
       在Java层，ServiceManager的函数源码为：
 	    /frameworks/base/core/java/android/os/ServiceManager.java
 	    public final class ServiceManager {
-        36        } 
-        49    public static IBinder getService(String name) {
-        50        
-        61    }
-        62
-        70    public static void addService(String name, IBinder service) {
-        71       
-        76    }
-        77
-        87    public static void addService(String name, IBinder service, boolean allowIsolated) {
-        93    }
-        94
-        99    public static IBinder checkService(String name) {
-        111    }
-        112
-        116    public static String[] listServices() throws RemoteException {
-        117        
-        123    }
-        124
-        133    public static void initServiceCache(Map<String, IBinder> cache) {
-        134        
-        138    }
+                } 
+            public static IBinder getService(String name) {
+                
+            }
+        
+            public static void addService(String name, IBinder service) {
+               
+            }
+        
+            public static void addService(String name, IBinder service, boolean allowIsolated) {
+            }
+        
+            public static IBinder checkService(String name) {
+            }
+        
+            public static String[] listServices() throws RemoteException {
+                
+            }
+        
+            public static void initServiceCache(Map<String, IBinder> cache) {
+                
+            }
 由源码可知，ServiceManager没有继承其他类，下边我们来分析ServiceManager管理binder通信的流程。
 
 
@@ -498,22 +498,22 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
 
 	    具体源码如下：
 	    public static void addService(String name, IBinder service) {
-        71        try {
-        72            getIServiceManager().addService(name, service, false);
-        73        } catch (RemoteException e) {
-        74            Log.e(TAG, "error in addService", e);
-        75        }
-        76    }
+                try {
+                    getIServiceManager().addService(name, service, false);
+                } catch (RemoteException e) {
+                    Log.e(TAG, "error in addService", e);
+                }
+            }
         
   getIServiceManager().addService表明将此操作请求转发给了getIServiceManager()，返回一个IServiceManger类型的sServiceManager对象，源码如下：
 
     	private static IServiceManager getIServiceManager() {
-        34        if (sServiceManager != null) {
-        35            return sServiceManager;
-        36        }
-        39        sServiceManager = ServiceManagerNative.asInterface(BinderInternal.getContextObject());
-        40        return sServiceManager;
-        41    }
+                if (sServiceManager != null) {
+                    return sServiceManager;
+                }
+                sServiceManager = ServiceManagerNative.asInterface(BinderInternal.getContextObject());
+                return sServiceManager;
+            }
         
   BinderInternal.getContextObject在native层得到BpBinder对象。
 
@@ -523,18 +523,18 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
   下面来通过源码具体分析BpBinder封装为ServiceManagerProxy的过程：
 
 	static public IServiceManager asInterface(IBinder obj)
-        34    {
-        35        if (obj == null) {
-        36            return null;
-        37        }
-        38        IServiceManager in =
-        39            (IServiceManager)obj.queryLocalInterface(descriptor);
-        40        if (in != null) {
-        41            return in;
-        42        }
-        43
-        44        return new ServiceManagerProxy(obj);
-        45    }
+            {
+                if (obj == null) {
+                    return null;
+                }
+                IServiceManager in =
+                    (IServiceManager)obj.queryLocalInterface(descriptor);
+                if (in != null) {
+                    return in;
+                }
+        
+                return new ServiceManagerProxy(obj);
+            }
     
   由源码可知，通过asInterface的转换，BpBinder对象生成了ServiceManagerProxy对象。也就是说getIServiceManager()得到的是一个ServiceManagerProxy对象，那么ServiceManagerProxy又是什么，下边来具体分析一下。
 
