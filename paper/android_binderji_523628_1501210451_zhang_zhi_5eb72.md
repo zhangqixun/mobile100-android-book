@@ -287,16 +287,16 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
  
 	
         同样位于/frameworks/native/include/binder/IInterface.h 
-        49template<typename INTERFACE>
-        50class BnInterface : public INTERFACE, public BBinder
-        51{
-        52public:
-        53    virtual sp<IInterface>      queryLocalInterface(const String16& _descriptor);
-        54    virtual const String16&     getInterfaceDescriptor() const;
-        55
-        56protected:
-        57    virtual IBinder*            onAsBinder();
-        58}; 
+        template<typename INTERFACE>
+        class BnInterface : public INTERFACE, public BBinder
+        {
+        public:
+            virtual sp<IInterface>      queryLocalInterface(const String16& _descriptor);
+            virtual const String16&     getInterfaceDescriptor() const;
+        
+        protected:
+            virtual IBinder*            onAsBinder();
+        }; 
 
 
   由代码可知，BnInterface继承自INTERFACE、BBinder。
@@ -314,41 +314,41 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
 
 	/frameworks/native/libs/binder/BpBinder.cpp
     status_t BpBinder::transact(
-    160    uint32_t code, const Parcel& data, Parcel* reply, uint32_t flags)
-    161{
-    163    if (mAlive) {
-    164        status_t status = IPCThreadState::self()->transact(
-    165            mHandle, code, data, reply, flags);
-    166        if (status == DEAD_OBJECT) mAlive = 0;
-    167        return status;
-    168    }
-    170    return DEAD_OBJECT;
-    207        }
-    209        default:
-    210            return UNKNOWN_TRANSACTION;
-    211    }
-    212}
+        uint32_t code, const Parcel& data, Parcel* reply, uint32_t flags)
+    {
+        if (mAlive) {
+            status_t status = IPCThreadState::self()->transact(
+                mHandle, code, data, reply, flags);
+            if (status == DEAD_OBJECT) mAlive = 0;
+            return status;
+        }
+        return DEAD_OBJECT;
+            }
+            default:
+                return UNKNOWN_TRANSACTION;
+        }
+    }
   由BBinder的源码可知，其作用是当IPCThreadState收到BD消息时，通过transact方法将其传递给它的子类BnSERVICE的onTransact函数执行server端的操作。部分源码如下：
 
         /frameworks/native/libs/binder/Binder.cpp
     	status_t BBinder::transact(
-        98    uint32_t code, const Parcel& data, Parcel* reply, uint32_t flags)
-        99{
-        100    data.setDataPosition(0); 
-        102    status_t err = NO_ERROR;
-        103    switch (code) {
-        104        case PING_TRANSACTION:
-        105            reply->writeInt32(pingBinder());
-        106            break;
-        107        default:
-        108            err = onTransact(code, data, reply, flags);
-        109            break;
-        110    }
-        112    if (reply != NULL) {
-        113        reply->setDataPosition(0);
-        114    }
-        116    return err;
-        117}
+            uint32_t code, const Parcel& data, Parcel* reply, uint32_t flags)
+        {
+            data.setDataPosition(0); 
+            status_t err = NO_ERROR;
+            switch (code) {
+                case PING_TRANSACTION:
+                    reply->writeInt32(pingBinder());
+                    break;
+                default:
+                    err = onTransact(code, data, reply, flags);
+                    break;
+            }
+            if (reply != NULL) {
+                reply->setDataPosition(0);
+            }
+            return err;
+        }
         
   由上述可知，BpINTERFACE，BnINTERFACE均来自同一接口类IINTERFACE，由此保证了service方法在C/S两端的一致性。
 
@@ -360,9 +360,9 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
 
         具体源码如下：
     	status_t Parcel::writeStrongBinder(const     sp<IBinder>& val)
-    	681{
-    	682    return flatten_binder(ProcessState::self(), val, this);
-    	683}
+    	{
+    	    return flatten_binder(ProcessState::self(), val, this);
+    	}
     	flatten_binder为：
         status_t flatten_binder(const sp<ProcessState>& proc,
         const sp<IBinder>& binder, Parcel* out)
@@ -396,16 +396,16 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
   下边举例说明，addService源码为：
     	/frameworks/native/libs/binder/IServiceManager.cpp
     	virtual status_t addService(const String16& name,     const sp<IBinder>& service,
-        155            bool allowIsolated)
-        156    {
-        157        Parcel data, reply;
-        158        data.writeInterfaceToken(IServiceManager::getInterfaceDescriptor());
-        159        data.writeString16(name);
-        160        data.writeStrongBinder(service);
-        161        data.writeInt32(allowIsolated ? 1 : 0);
-        162        status_t err =         remote()->transact(ADD_SERVICE_TRANSACTION, data, &reply);
-        163        return err == NO_ERROR ? reply.readExceptionCode() : err;
-        164    }
+                    bool allowIsolated)
+            {
+                Parcel data, reply;
+                data.writeInterfaceToken(IServiceManager::getInterfaceDescriptor());
+                data.writeString16(name);
+                data.writeStrongBinder(service);
+                data.writeInt32(allowIsolated ? 1 : 0);
+                status_t err =         remote()->transact(ADD_SERVICE_TRANSACTION, data, &reply);
+                return err == NO_ERROR ? reply.readExceptionCode() : err;
+            }
   由上述代码块可知，写入到parcel的binder类型为BINDER_TYPE_BINDER，然而SM收到的Service的binder类型必须为BINDER_TYPE_HANDLE才会将其添加到svclist中，因此说，addService开始传递的binder类型为BINDER_TYPE_BINDER然而SM收到的binder类型为BINDER_TYPE_HANDLE，中间经历了一个改变，代码如下：
         	drivers/staging/android/Binder.c
     	static void binder_transaction(struct binder_proc *proc,
@@ -427,31 +427,31 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
         源码为：
         /frameworks/native/libs/binder/Parcel.cpp
         sp<IBinder> Parcel::readStrongBinder() const
-        1041{
-        1042    sp<IBinder> val;
-        1043    unflatten_binder(ProcessState::self(), *this,      &val);
-        1044    return val;
-        1045}
+        {
+            sp<IBinder> val;
+            unflatten_binder(ProcessState::self(), *this,      &val);
+            return val;
+        }
 
         unflatten_binder为：
         status_t unflatten_binder(const sp<ProcessState>& proc,
-        237    const Parcel& in, sp<IBinder>* out)
-        238{
-        239    const flat_binder_object* flat = in.readObject(false);
-        240
-        241    if (flat) {
-        242        switch (flat->type) {
-        243            case BINDER_TYPE_BINDER:
-        244                *out = static_cast<IBinder*>(flat->cookie);
-        245                return finish_unflatten_binder(NULL, *flat, in);
-        246            case BINDER_TYPE_HANDLE:
-        247                *out = proc->getStrongProxyForHandle(flat->handle);
-        248                return finish_unflatten_binder(
-        249                    static_cast<BpBinder*>(out->get()),         *flat, in);
-        250        }
-        251    }
-        252    return BAD_TYPE;
-        253}
+            const Parcel& in, sp<IBinder>* out)
+        {
+            const flat_binder_object* flat = in.readObject(false);
+        
+            if (flat) {
+                switch (flat->type) {
+                    case BINDER_TYPE_BINDER:
+                        *out = static_cast<IBinder*>(flat->cookie);
+                        return finish_unflatten_binder(NULL, *flat, in);
+                    case BINDER_TYPE_HANDLE:
+                        *out = proc->getStrongProxyForHandle(flat->handle);
+                        return finish_unflatten_binder(
+                            static_cast<BpBinder*>(out->get()),         *flat, in);
+                }
+            }
+            return BAD_TYPE;
+        }
         
   由如上源码可知：发现如果server返回的binder类型为BINDER_TYPE_BINDER的话，直接获取这个binder；如果server返回的binder类型为BINDER_TYPE_HANDLE时，那么需要重新创建一个BpBinder返回给client。Client通过获得SMhandle来重新构建代理binder与server进行通信。
 
