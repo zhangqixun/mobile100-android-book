@@ -214,46 +214,46 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
             status_t result;
             do {
                 int32_t cmd;
-        436        if (mIn.dataPosition() >= mIn.dataSize()) {
-        437            size_t numPending = mPendingWeakDerefs.size();
-        438            if (numPending > 0) {
-        439                for (size_t i = 0; i < numPending; i++) {
-        440                    RefBase::weakref_type* refs = mPendingWeakDerefs[i];
-        441                    refs->decWeak(mProcess.get());
-        442                }
-        443                mPendingWeakDerefs.clear();
-        444            }
-        446            numPending = mPendingStrongDerefs.size();
-        447            if (numPending > 0) {
-        448                for (size_t i = 0; i < numPending; i++) {
-        449                    BBinder* obj = mPendingStrongDerefs[i];
-        450                    obj->decStrong(mProcess.get());
-        451                }
-        452                mPendingStrongDerefs.clear();
-        453            }
-        454        }
-        457        result = talkWithDriver();
-        458        if (result >= NO_ERROR) {
-        459            size_t IN = mIn.dataAvail();
-        460            if (IN < sizeof(int32_t)) continue;
-        461            cmd = mIn.readInt32();
-        462            IF_LOG_COMMANDS() {
-        463                alog << "Processing top-level Command: "
-        464                    << getReturnString(cmd) << endl;
-        465            }
-        468            result = executeCommand(cmd);
-        469        }
-        482        if(result == TIMED_OUT && !isMain)         {
-        483            break;
-        484        }
-        485    } while (result != -ECONNREFUSED && result != -EBADF);
-        486
-        487    LOG_THREADPOOL("**** THREAD %p (PID %d)         IS LEAVING THE THREAD POOL err=%p\n",
-        488        (void*)pthread_self(), getpid(), (void*)result);
-        489
-        490    mOut.writeInt32(BC_EXIT_LOOPER);
-        491    talkWithDriver(false);
-        492}
+                if (mIn.dataPosition() >= mIn.dataSize()) {
+                    size_t numPending = mPendingWeakDerefs.size();
+                    if (numPending > 0) {
+                        for (size_t i = 0; i < numPending; i++) {
+                            RefBase::weakref_type* refs = mPendingWeakDerefs[i];
+                            refs->decWeak(mProcess.get());
+                        }
+                        mPendingWeakDerefs.clear();
+                    }
+                    numPending = mPendingStrongDerefs.size();
+                    if (numPending > 0) {
+                        for (size_t i = 0; i < numPending; i++) {
+                            BBinder* obj = mPendingStrongDerefs[i];
+                            obj->decStrong(mProcess.get());
+                        }
+                        mPendingStrongDerefs.clear();
+                }
+                }
+                result = talkWithDriver();
+                if (result >= NO_ERROR) {
+                    size_t IN = mIn.dataAvail();
+                    if (IN < sizeof(int32_t)) continue;
+                    cmd = mIn.readInt32();
+                    IF_LOG_COMMANDS() {
+                        alog << "Processing top-level Command: "
+                            << getReturnString(cmd) << endl;
+                    }
+                    result = executeCommand(cmd);
+                }
+                if(result == TIMED_OUT && !isMain)         {
+                    break;
+                }
+            } while (result != -ECONNREFUSED && result != -EBADF);
+        
+            LOG_THREADPOOL("**** THREAD %p (PID %d)         IS LEAVING THE THREAD POOL err=%p\n",
+                (void*)pthread_self(), getpid(), (void*)result);
+        
+            mOut.writeInt32(BC_EXIT_LOOPER);
+            talkWithDriver(false);
+        }
     ProcessState中有2个Parcel成员（mIn和mOut），由以上代码可见，Pool Thread会不断查询BD中是否有数据可读，若有，则保存在mIn；不停检查mOut是否有数据需要向BD发送，若有，则写入BD。
     
     根据第三节提到的：BpBinder通过调用transact向BD发送调用请求的数据，也就是说ProcessState中生成的BpBinder实例通过调用IPCThreadState的transact函数来向mOut中写入数据，这样的话这个binder IPC过程的client端的调用请求的发送过程就讲述完毕。
@@ -269,15 +269,15 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
 	 
 	    BpINTERFACE原型如下：
         /frameworks/native/include/binder/IInterface.h 
-        62template<typename INTERFACE>
-        63class BpInterface : public INTERFACE, public BpRefBase
-        64{
-        65public:
-        66                                BpInterface(const sp<IBinder>& remote);
-        67
-        68protected:
-        69    virtual IBinder*            onAsBinder();
-        70};
+        template<typename INTERFACE>
+        class BpInterface : public INTERFACE, public BpRefBase
+        {
+        public:
+                                        BpInterface(const sp<IBinder>& remote);
+        
+        protected:
+            virtual IBinder*            onAsBinder();
+        };
         
     可见，BpINTERFACE继承自INTERFACE、BpRefBase。
     
