@@ -50,40 +50,40 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
 	    ServiceManger入口函数为：service_manager.c
         位于：/frameworks/base/cmds/servicemanager/
 
-        270int main(int argc, char **argv)
-        271{
-        272    struct binder_state *bs;
-        273    void *svcmgr = BINDER_SERVICE_MANAGER;
-        274
-        275    bs = binder_open(128*1024);
-        276	
-        277    if (binder_become_context_manager(bs)) {
-        278        ALOGE("cannot become context manager (%s)\n", strerror(errno));
-        279        return -1;
-        280    }
-        281
-        282    svcmgr_handle = svcmgr;
-        283    binder_loop(bs, svcmgr_handler);
-        284    return 0;
-        285}
+        int main(int argc, char **argv)
+        {
+            struct binder_state *bs;
+            void *svcmgr = BINDER_SERVICE_MANAGER;
+        
+            bs = binder_open(128*1024);
+        	
+            if (binder_become_context_manager(bs)) {
+                ALOGE("cannot become context manager (%s)\n", strerror(errno));
+                return -1;
+            }
+        
+            svcmgr_handle = svcmgr;
+            binder_loop(bs, svcmgr_handler);
+            return 0;
+        }
         主要工作：
             1. 初始化binder，打开/dev/binder设备，在内存中为binder映射128Kb空间。
         bs = binder_open(128*1024);
         其中binder_open位于binder.c中，源代码为：
-        94struct binder_state *binder_open(unsigned mapsize)
-        95{
-        96    struct binder_state *bs;
-        97
-        98    bs = malloc(sizeof(*bs));
-        99    if (!bs) {
-        100        errno = ENOMEM;
-        101        return 0;
-        102    }
-        103
-        104    bs->fd = open("/dev/binder", O_RDWR);
-        105    ……
-        127    return 0;
-        128}
+        struct binder_state *binder_open(unsigned mapsize)
+        {
+            struct binder_state *bs;
+        
+            bs = malloc(sizeof(*bs));
+            if (!bs) {
+                errno = ENOMEM;
+                return 0;
+            }
+        
+            bs->fd = open("/dev/binder", O_RDWR);
+            ……
+            return 0;
+        }
             2. 指定SM对于代理binder的handle为0，即client尝试同SM通信时创建一个handle为0的代理binder。
         void *svcmgr = BINDER_SERVICE_MANAGER;
         svcmgr_handle = svcmgr;
@@ -96,30 +96,30 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
         }
         binder_become_context_manager(bs)源码位于binder.c中：
         	int binder_become_context_manager(struct binder_state *bs)
-        138{
-        139    return ioctl(bs->fd, BINDER_SET_CONTEXT_MGR, 0);
-        140}
+        {
+            return ioctl(bs->fd, BINDER_SET_CONTEXT_MGR, 0);
+        }
             4.进入一个死循环，不断读取内核的binder    driver，查看是否有对service的操作请求，如果有调用svcmgr_handler来处理请求操作：
         binder_loop(bs, svcmgr_handler);
         binder_loop(,)源码位于binder.c中：
         void binder_loop(struct binder_state *bs, binder_handler func)
-        358{
-        359    int res;
-        360    struct binder_write_read bwr;
-        361    unsigned readbuf[32];
-        362	……
-        391    }
-        392}
+        {
+            int res;
+            struct binder_write_read bwr;
+            unsigned readbuf[32];
+        	……
+            }
+        }
             5.维护一个svclist列表来存储service的信息。
         	源码位于service_manager.c：
         int svcmgr_handler(struct binder_state *bs,
-        202                   struct binder_txn *txn,
-        203                   struct binder_io *msg,
-        204                   struct binder_io *reply)
-        205{
-        206    struct svcinfo *si;
-        207    ……
-        268}
+                           struct binder_txn *txn,
+                           struct binder_io *msg,
+                           struct binder_io *reply)
+        {
+            struct svcinfo *si;
+            ……
+        }
 ![](zzk_2.png)
 * **ProcessState**
 
@@ -134,13 +134,13 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
 	        Poolthread启动方式：ProcessState::self()->startThreadPool();
         /frameworks/native/libs/binder/ProcessState.cpp
         136void ProcessState::startThreadPool()
-        137{
-        138    AutoMutex _l(mLock);
-        139    if (!mThreadPoolStarted) {
-        140        mThreadPoolStarted = true;
-        141        spawnPooledThread(true);
-        142    }
-        143}
+        {
+            AutoMutex _l(mLock);
+        `   if (!mThreadPoolStarted) {
+                mThreadPoolStarted = true;
+                spawnPooledThread(true);
+            }
+        }
 
 	2.为知道的handle创建一个BpBinder对象，并管理进程中所有的BpBinder对象。
 	
@@ -150,33 +150,33 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
 	
 	        /frameworks/native/libs/binder/ProcessState.cpp
         	sp<IBinder> ProcessState::getContextObject(const sp<IBinder>& caller)
-        90{
-        91    return getStrongProxyForHandle(0);
-        92}
+        {
+            return getStrongProxyForHandle(0);
+        }
 
         sp<IBinder> ProcessState::getStrongProxyForHandle(int32_t handle)
-        184{
-        185    sp<IBinder> result;
-        186
-        187    AutoMutex _l(mLock);
-        188
-        189    handle_entry* e = lookupHandleLocked(handle);
+        {
+            sp<IBinder> result;
+        
+            AutoMutex _l(mLock);
+        
+            handle_entry* e = lookupHandleLocked(handle);
 		……
-        210    return result;
-        211}
+            return result;
+        }
 
         ProcessState::handle_entry* ProcessState::lookupHandleLocked(int32_t handle)
-        171{
-        172    const size_t N=mHandleToObject.size();
-        173    if (N <= (size_t)handle) {
-        174        handle_entry e;
-        175        e.binder = NULL;
-        176        e.refs = NULL;
-        177        status_t err = mHandleToObject.insertAt(e, N, handle+1-N);
-        178        if (err < NO_ERROR) return NULL;
-        179    }
-            180    return &mHandleToObject.editItemAt(handle);
-        181}
+        {
+            const size_t N=mHandleToObject.size();
+            if (N <= (size_t)handle) {
+                handle_entry e;
+                e.binder = NULL;
+                e.refs = NULL;
+                status_t err = mHandleToObject.insertAt(e, N, handle+1-N);
+                if (err < NO_ERROR) return NULL;
+            }
+            return &mHandleToObject.editItemAt(handle);
+        }
 
     在获取BpBinder对象的过程中，ProcessState会维护一个BpBinder的vecto：mHandleToObject(具体调用过程见上述源代码)。
     
@@ -185,16 +185,16 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
     BpBinder构造函数位于/frameworks/native/libs/binder/BpBinder.cpp：
     
         	BpBinder::BpBinder(int32_t handle)
-        90    : mHandle(handle)
-        91    , mAlive(1)
-        92    , mObitsSent(0)
-        93    , mObituaries(NULL)
-        94{
-        95    ALOGV("Creating BpBinder %p handle %d\n", this, mHandle);
-        96
-        97    extendObjectLifetime(OBJECT_LIFETIME_WEAK);
-        98    IPCThreadState::self()->incWeakHandle(handle);
-        99}
+            : mHandle(handle)
+            , mAlive(1)
+            , mObitsSent(0)
+            , mObituaries(NULL)
+        {
+            ALOGV("Creating BpBinder %p handle %d\n", this, mHandle);
+        
+            extendObjectLifetime(OBJECT_LIFETIME_WEAK);
+            IPCThreadState::self()->incWeakHandle(handle);
+        }
         
     通过此构造函数我们可以发现：BpBinder会将通信中server的handle记录下来。当有数据发送时，会把数据的发送目标通知BD。
     
@@ -206,14 +206,14 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
     IPCThreadState实际内容为：
 
         void IPCThreadState::joinThreadPool(bool isMain)
-        421{
-        422    LOG_THREADPOOL("**** THREAD %p (PID %d) IS JOINING THE THREAD POOL\n", (void*)pthread_self(), getpid());
-        423
-        424    mOut.writeInt32(isMain ? BC_ENTER_LOOPER : BC_REGISTER_LOOPER);        
-        429    set_sched_policy(mMyThreadId, SP_FOREGROUND); 
-        431    status_t result;
-        432    do {
-        433        int32_t cmd;
+        {
+            LOG_THREADPOOL("**** THREAD %p (PID %d) IS JOINING THE THREAD POOL\n", (void*)pthread_self(), getpid());
+        
+            mOut.writeInt32(isMain ? BC_ENTER_LOOPER : BC_REGISTER_LOOPER);        
+            set_sched_policy(mMyThreadId, SP_FOREGROUND); 
+            status_t result;
+            do {
+                int32_t cmd;
         436        if (mIn.dataPosition() >= mIn.dataSize()) {
         437            size_t numPending = mPendingWeakDerefs.size();
         438            if (numPending > 0) {
