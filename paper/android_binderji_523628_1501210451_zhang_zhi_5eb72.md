@@ -611,24 +611,24 @@ binder是Android最为常见的进程通信机制之一，其驱动和通信库�
         
                 // Find the service manager
                 sServiceManager = ServiceManagerNative.asInterface(BinderInternal.getContextObject());
-        40        return sServiceManager;
-        41    }
+                return sServiceManager;
+            }
         
         
   可知通过IServiceManager得到的是一个ServiceManager在Java层的代理对象，下边来分析此代理对象的getService(     )方法。
 
         /frameworks/base/core/java/android/os/ServiceManagerNative.java
         public IBinder getService(String name) throws RemoteException {
-        119        Parcel data = Parcel.obtain();
-        120        Parcel reply = Parcel.obtain();
-        121        data.writeInterfaceToken(IServiceManager.descriptor);
-        122        data.writeString(name);
-        123        mRemote.transact(GET_SERVICE_TRANSACTION, data, reply, 0);
-        124        IBinder binder = reply.readStrongBinder();
-        125        reply.recycle();
-        126        data.recycle();
-        127        return binder;
-        128    }
+                Parcel data = Parcel.obtain();
+                Parcel reply = Parcel.obtain();
+                data.writeInterfaceToken(IServiceManager.descriptor);
+                data.writeString(name);
+                mRemote.transact(GET_SERVICE_TRANSACTION, data, reply, 0);
+                IBinder binder = reply.readStrongBinder();
+                reply.recycle();
+                data.recycle();
+                return binder;
+            }
         
   可见，getService请求被转交给native层，由上一章分析可知，native层得到请求后会将目标Service的BpBinder返回给客户端，得到BpBinder对象后，通过asInterface()得到一个Proxy对象，客户端便通过这个代理类调用服务端定义的各种方法。具体客户端得到Service的流程图如下：
 ![](zzk_5.jpg)
