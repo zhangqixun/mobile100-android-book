@@ -57,7 +57,28 @@ pic_album_ref 相片属于哪个相册的关系表
 ###  2.获取安卓系统的所有图片
 
     android系统有自带的多媒体数据库MediaStore.
-    MediaStore包括了多媒体数据库的所有信息，包括音频，视频和图像，android对所有的多媒体数据库接口进行了封装；
+    MediaStore包括了多媒体数据库的所有信息，
+    包括音频，视频和图像，android对所有的多媒体数据库接口进行了封装；下面关于这些接口的用法：
+    要想得到一个ContentResolver实例， 利用Activity或者Service的Context.
+    
+    ContentResolver mResolver = ctx.getContentResolver();
+    
+    ctx就是一个context, Activity.this就是那个Context，
+    利用它就可以调用getContentResolver接口获取ContentResolver实例
+    
+    之后通过调用如下代码进行查询：
+    
+    Cursor cursor = mresolver.query(uri, prjs, selections, selectArgs, order);
+    
+    ContentResolver的query方法接受几个参数：
+    
+    uri: 代表要查询的数据库名称加上表的名称；如获取图片MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+    prjs: 要从表中选择的列，用一个String数组来表示
+    selections: 查询条件，相当于sql的where语句
+    selectArgs: 
+    Order: 说明查询结果按什么来排序
+    
+    
     
 
 ###  3.Android调用C++库
