@@ -6,6 +6,7 @@
 #### 研究背景：由于系统自带的相册除了按时间归集之外，就没有其它类型的归集；但用户也想看到其他类型的归集，如旅行相册或故事相册等，或者是使用机器学习来识别图片是属于什么类型的相片。
 
 ###  1.sqlite数据库设计
+主要四个表设计：
 album_info 相册信息表
 
 | 名称 | 类型 | 描述
@@ -22,8 +23,9 @@ album_info 相册信息表
 
 photo_info 相片信息表
 
-| photo_id | string | primary key |
+| 名称 | 类型 | 描述
 | -- | -- | -- |
+| photo_id | string | primary key |
 | photo_url | string | 相片存储路径 |
 | create_time | long | 相片拍摄时间 |
 | photo_desc | string | 相片描述 |
@@ -36,7 +38,12 @@ photo_info 相片信息表
 | street | string | 街道 |
 | spot | string | 附近景点 |
 
+album_pic_ref 相册与相片的信息表
 
+| 名称 | 类型 |
+| -- | -- |
+| album_id | string |
+| photo_id | string |
 
 
 
