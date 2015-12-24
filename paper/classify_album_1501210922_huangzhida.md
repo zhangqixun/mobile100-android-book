@@ -6,16 +6,39 @@
 #### 研究背景：由于系统自带的相册除了按时间归集之外，就没有其它类型的归集；但用户也想看到其他类型的归集，如旅行相册或故事相册等，或者是使用机器学习来识别图片是属于什么类型的相片。
 
 ###  1.sqlite数据库设计
-| 名称 | 类型 |
+album_info 相册信息表
+
+| 名称 | 类型 | 描述
 | -- | -- |
-| album_id | string  (pimary key)|
-| album_name | string |
-| album_status | int |
-| album_type | int |
-| album_address | string |
-| album_time_str | string |
-| start_time | string |
-| end_time | string |
+| album_id | string    | pimary key |
+| album_name | string  | 相册名称|
+| album_status | int    | 相册状态 |
+| album_type | int |  相册类型
+| album_address | string | 相册地址描述
+| album_time_str | string | 相册时间描述
+| start_time | string |  相册开始时间
+| end_time | string |    相册结束时间
+| album_desc | string |  相册描述
+
+photo_info 照片信息表
+
+| 0:0 | 1:0 | 2:0 |
+| -- | -- | -- |
+| 0:2 | 1:2 | 2:2 |
+| 0:3 | 1:3 | 2:3 |
+| 0:4 | 1:4 | 2:4 |
+| 0:5 | 1:5 | 2:5 |
+| 0:6 | 1:6 | 2:6 |
+| 0:7 | 1:7 | 2:7 |
+| 0:8 | 1:8 | 2:8 |
+| 0:9 | 1:9 | 2:9 |
+| 0:10 | 1:10 | 2:10 |
+| 0:11 | 1:11 | 2:11 |
+| 0:12 | 1:12 | 2:12 |
+| 0:13 | 1:13 | 2:13 |
+| 0:14 | 1:14 | 2:14 |
+| 0:15 | 1:15 | 2:15 |
+
 
 ###  2.获取安装系统的所有图片
 
