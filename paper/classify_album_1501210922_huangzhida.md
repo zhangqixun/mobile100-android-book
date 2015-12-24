@@ -20,12 +20,12 @@ album_info 相册信息表
 | end_time | string |    相册结束时间
 | album_desc | string |  相册描述
 
-photo_info 照片信息表
+photo_info 相片信息表
 
-| 0:0 | 1:0 | 2:0 |
+| photo_id | string | primary key |
 | -- | -- | -- |
-| 0:2 | 1:2 | 2:2 |
-| 0:3 | 1:3 | 2:3 |
+| photo_url | string | 相片存储路径 |
+| create_time | long | 相片拍摄时间 |
 | 0:4 | 1:4 | 2:4 |
 | 0:5 | 1:5 | 2:5 |
 | 0:6 | 1:6 | 2:6 |
