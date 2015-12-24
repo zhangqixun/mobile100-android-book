@@ -38,12 +38,19 @@ photo_info 相片信息表
 | street | string | 街道 |
 | spot | string | 附近景点 |
 
-album_pic_ref 相册与相片的信息表
+album_pic_ref 相册与相片的关系表
 
 | 名称 | 类型 |
 | -- | -- |
 | album_id | string |
 | photo_id | string |
+
+pic_album_ref 相片属于哪个相册的关系表
+
+| 名称 | 类型 |
+| -- | -- |
+| photo_id | string |
+| album_id | string |
 
 
 
