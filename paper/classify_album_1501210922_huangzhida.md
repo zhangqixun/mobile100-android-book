@@ -78,7 +78,8 @@ pic_album_ref 相片属于哪个相册的关系表
     selectArgs: 
     Order: 说明查询结果按什么来排序
     
-    ![](scan_image.png)
+
+![](scan_image.png)
     
 
 ###  3.Android调用C++库
