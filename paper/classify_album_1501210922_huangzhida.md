@@ -55,7 +55,10 @@ pic_album_ref 相片属于哪个相册的关系表
 
 
 ###  2.获取安卓系统的所有图片
-    android系统有自带的多媒体数据库MediaStore. MediaStore包括了多媒体数据库的所有信息，包括音频，视频和图像，android对所有的多媒体数据库接口进行了封装；
+
+    android系统有自带的多媒体数据库MediaStore.
+    MediaStore包括了多媒体数据库的所有信息，包括音频，视频和图像，android对所有的多媒体数据库接口进行了封装；
+    
 
 ###  3.Android调用C++库
 
