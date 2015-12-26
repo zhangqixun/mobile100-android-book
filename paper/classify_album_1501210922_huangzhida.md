@@ -85,12 +85,30 @@ pic_album_ref 相片属于哪个相册的关系表
     
 
 ###  3.调用网络模块获取图片地址
-
+    
+    地址服务器：首先客户端发送请求到服务器，如果服务器已经缓存了gps坐标的相应的地理信息，
+    直接返回给客户端，如果没有缓存，国内的gps坐标调用高德的API,　国外的地址则通过国外的
+    服务器访问google地图的API来获取地址，服务器都会缓存已经获取过的地址，存储在mysql, 
+    缓存在redis数据库；
+    
+    客户端调用批量的提交post gps坐标到服务器API，服务端返回使用JSON的图片地址；
+    
+    构建批量的GPS坐标信息
+    JSONArray jarr = new JSONArray();
+	for (PicInfoDto pic : picList) {
+		JSONObject jobj = new JSONObject();
+		jobj.put("id", pic.getImage_id());
+		jobj.put("lng", pic.getLon());
+		jobj.put("lat", pic.getLat());
+		jarr.add(jobj);
+	}
+    
 
 ###  4.Android调用C++库
 
 
 ###  5.底层C++归集算法
+
 ####  a. 时刻相册归集
     
     上层把扫描好的相片逐步传入底层，底层使用日期作为key，album_info作为value的map结构
