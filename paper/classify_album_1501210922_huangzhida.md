@@ -102,6 +102,54 @@ pic_album_ref 相片属于哪个相册的关系表
 		jobj.put("lat", pic.getLat());
 		jarr.add(jobj);
 	}
+    final String data = "data="+jarr.toJSONString();
+    
+    
+    构建请求，并放在网络请求队列：
+    StringRequest strReq = new StringRequest(Method.POST, url, resOkL ,resErrL)
+    	@Override
+    	public byte[] getBody() throws AuthFailureError {
+    		byte[] rsB = null;
+    		try {
+    			LogUtil.i(TAG, "param="+data);
+    			rsB = data.getBytes("utf-8");
+    		} catch (Exception e) {
+    			LogUtil.e(TAG, e);
+    		}
+    		return rsB;
+    	}
+    };
+    netActionsHandler.addToRequestQueue(strReq, "");
+    
+    注册返回地址信息的监听处理：
+    Response.Listener<String> resOkL = new Response.Listener<String>() {
+		@Override
+		public void onResponse(String response) {
+			LogUtil.d(TAG, "[onResponse]..."+response.toString());
+			JSONObject jobj = JSON.parseObject(response);
+			int rs_code = jobj.getInteger("code");
+			if(rs_code == 200){
+				List<lation> rs = JSON.parseArray(jobj.getString("data"),lation.class);
+				HashMap<String, lation> tmpMap = new HashMap<String, GetLocationAct.lation>();
+				for (lation la : rs) {
+					tmpMap.put(la.id, la);
+				}
+				getLocation_cnt += picList.size();
+				for (PicInfoDto pic : picList) {
+					lation targetLa = tmpMap.get(String.valueOf(pic.getImage_id()));
+					pic.setIfGetLoc(1);
+					pic.setCountry(targetLa.country);
+					pic.setProvince(targetLa.province);
+					pic.setCity(targetLa.city);
+					pic.setStreet(targetLa.street);
+					pic.setDistrict(targetLa.district);
+				}
+				dbActionHandler.updatePicInfo(picList);
+			}
+			Utils.printCost("getLocationBat picList="+picList.size(), start);
+			checkBat();
+		}
+	};
     
     
 
