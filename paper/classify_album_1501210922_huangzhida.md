@@ -80,8 +80,77 @@ pic_album_ref 相片属于哪个相册的关系表
     selectArgs: 
     Order: 说明查询结果按什么来排序
     
+代码实现：
+    
+   　//扫描图片的部分代码实现
+	private List<PicInfoDto> getScanRs(long lastScanTime,int max_cnt)
+	{
+		LogUtil.i(TAG, "getScanRs... begin.");
+		long start = System.currentTimeMillis();
+		ContentResolver mContentResolver = ctx.getContentResolver();
+		// image search
+		Uri mImageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+		String[] projection = {
+				MediaStore.Images.Media.DATA,
+				MediaStore.Images.Thumbnails.DATA,
+				MediaStore.Images.Media._ID,
+				MediaStore.Images.Media.DATE_MODIFIED,
+				MediaStore.Images.Media.LONGITUDE,
+				MediaStore.Images.Media.LATITUDE,
+				MediaStore.Images.Media.WIDTH,
+				MediaStore.Images.Media.HEIGHT
+		};
+		String selection ="("+MediaStore.Images.Media.MIME_TYPE + "=? or "
+				+ MediaStore.Images.Media.MIME_TYPE + "=? ) and "+
+				MediaStore.Images.Media.DATE_MODIFIED +"> ? and "+ MediaStore.Images.Media.SIZE +" > "+FileSize_min;; 
+		String[] args = new String[] { "image/jpeg", "image/png" , lastScanTime+"" };
 
-![](scan_image.png)
+		Cursor mCursor = mContentResolver.query(mImageUri, projection,selection,
+				args, MediaStore.Images.Media.DATE_MODIFIED +" asc ");
+
+
+		List<PicInfoDto> rs = new ArrayList<PicInfoDto>();
+
+		while (mCursor.moveToNext()) {
+			String path = mCursor.getString(mCursor.getColumnIndex(MediaStore.Images.Media.DATA));
+
+			long image_id = mCursor.getLong(mCursor.getColumnIndex(MediaStore.Images.Media._ID));
+			long addTimeS = mCursor.getLong(mCursor.getColumnIndex(MediaStore.Images.Media.DATE_MODIFIED)); // second
+			long addTimeMs = addTimeS * 1000;
+
+			float lon = mCursor.getFloat(mCursor.getColumnIndex(MediaStore.Images.Media.LONGITUDE));
+			float lat = mCursor.getFloat(mCursor.getColumnIndex(MediaStore.Images.Media.LATITUDE));
+
+			int width = mCursor.getInt(mCursor.getColumnIndex(MediaStore.Images.Media.WIDTH));
+			int height = mCursor.getInt(mCursor.getColumnIndex(MediaStore.Images.Media.HEIGHT));
+
+			PicInfoDto tmpPic = new PicInfoDto();
+			tmpPic.setPath(path);
+			tmpPic.setImage_id(image_id);
+			tmpPic.setFileCreateTime(addTimeMs);
+			tmpPic.setLon(lon);
+			tmpPic.setLat(lat);
+			tmpPic.setWidth(width);
+			tmpPic.setHeight(height);
+
+			rs.add(tmpPic);
+			if(rs.size() >= max_cnt){
+				break;
+			}
+		}
+		mCursor.close();
+		LogUtil.i(TAG, "getScanRs... end.rs.size ="+rs.size()+", rs="+rs);
+		start =	Utils.printCost("query_image ", start);
+		
+		for (PicInfoDto pic : rs) {
+			long tmp = getImageDateMs(pic.getPath(),pic.getFileCreateTime());
+			pic.setImageTime(tmp);
+		}
+		Utils.printCost("get_create_time", start);
+		return rs;
+	}
+    
+    
     
 
 ###  3.调用网络模块获取图片地址
