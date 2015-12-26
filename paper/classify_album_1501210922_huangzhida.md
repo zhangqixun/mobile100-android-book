@@ -82,7 +82,8 @@ pic_album_ref 相片属于哪个相册的关系表
     
 代码实现：
     
-   　//扫描图片的部分代码实现
+   　扫描图片的部分代码实现
+	
 	private List<PicInfoDto> getScanRs(long lastScanTime,int max_cnt)
 	{
 		LogUtil.i(TAG, "getScanRs... begin.");
@@ -100,6 +101,7 @@ pic_album_ref 相片属于哪个相册的关系表
 				MediaStore.Images.Media.WIDTH,
 				MediaStore.Images.Media.HEIGHT
 		};
+		
 		String selection ="("+MediaStore.Images.Media.MIME_TYPE + "=? or "
 				+ MediaStore.Images.Media.MIME_TYPE + "=? ) and "+
 				MediaStore.Images.Media.DATE_MODIFIED +"> ? and "+ MediaStore.Images.Media.SIZE +" > "+FileSize_min;; 
@@ -152,6 +154,7 @@ pic_album_ref 相片属于哪个相册的关系表
     
 
 ###  3.调用网络模块获取图片地址
+
     
     地址服务器：首先客户端发送请求到服务器，如果服务器已经缓存了gps坐标的相应的地理信息，
     直接返回给客户端，如果没有缓存，国内的gps坐标调用高德的API,　国外的地址则通过国外的
