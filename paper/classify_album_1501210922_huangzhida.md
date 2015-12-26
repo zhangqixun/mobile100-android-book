@@ -109,7 +109,7 @@ pic_album_ref 相片属于哪个相册的关系表
 
 	}```
 
-#### 分页拉取相册里所有的相片
+分页拉取相册里所有的相片
 
 ```@Override
 	public List<PicInfoDto> getAlbumPics(String albumId ,int index ,int pageCnt) {
