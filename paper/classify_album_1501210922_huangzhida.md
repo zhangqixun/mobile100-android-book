@@ -93,7 +93,7 @@ pic_album_ref 相片属于哪个相册的关系表
     
     客户端调用批量的提交post gps坐标到服务器API，服务端返回使用JSON的图片地址；
     
-    构建批量的GPS坐标信息
+    首先生成一个JSONArray对象，构建批量的GPS坐标信息
     JSONArray jarr = new JSONArray();
 	for (PicInfoDto pic : picList) {
 		JSONObject jobj = new JSONObject();
@@ -102,6 +102,7 @@ pic_album_ref 相片属于哪个相册的关系表
 		jobj.put("lat", pic.getLat());
 		jarr.add(jobj);
 	}
+    
     
 
 ###  4.Android调用C++库
