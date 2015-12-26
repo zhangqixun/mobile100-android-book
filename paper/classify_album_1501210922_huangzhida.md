@@ -83,7 +83,7 @@ pic_album_ref 相片属于哪个相册的关系表
 代码实现：
     
    　扫描图片的部分代码实现
-	
+ 
 	private List<PicInfoDto> getScanRs(long lastScanTime,int max_cnt)
 	{
 		LogUtil.i(TAG, "getScanRs... begin.");
@@ -151,7 +151,7 @@ pic_album_ref 相片属于哪个相册的关系表
 		Utils.printCost("get_create_time", start);
 		return rs;
 	}
-    
+
 
 ###  3.调用网络模块获取图片地址
 
