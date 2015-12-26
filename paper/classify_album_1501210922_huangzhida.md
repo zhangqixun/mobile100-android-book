@@ -542,7 +542,147 @@ pic_album_ref 相片属于哪个相册的关系表
     主要是找出一些聚会，或者会议，或者在公园玩的一些故事相册；简单来说，就是找出相片时间比较集中的时间点形成一个故事相册；这可以使用一维的k-means算法实现，找出比较聚集的相片
     然后形成一个相册；也可以使用时间滑动窗口的方式找出拍摄频度比较高的时间段形成相册，
     同时为了提高故事的准确性，加上获取到的地点和图片GPS坐标算出图片距离进行综合考虑；
+    代码初步实现：
     
+    
+    void classify_photo_to_album::classify_photo_into_story() {
+	uint32_t  v_len = 0;
+	uint32_t  q_len = 0;
+	//uint32_t  days = 0;
+	//uint32_t  all_photo_num = 0;
+	string 	  city = "";
+	bool	  same_event_album = false;
+	string 	  first_home_city = "";
+	string 	  second_home_city = "";
+
+
+	album_info				a_info;
+	queue<photo_info>		story_photo_queue;
+	map<string, album_info>::iterator it, it_next;
+	map<string, album_info>  *p_write_album_map = NULL;
+	map<string, album_info>   total_album_map;
+	c_photo_config *c_conf = singleton_base<c_photo_config>::get_instance();
+
+	if (c_conf->vec_album_unfinish.size() > 0) {
+		combine_new_and_unfinish_album(total_album_map, ENUM_ALBUM_TYPE_STORY);
+	}
+
+	if (total_album_map.size() > 0) {
+		p_write_album_map = &total_album_map;
+		sort_album_map_photo(p_write_album_map);
+	} else {
+		p_write_album_map = &c_conf->write_album_map;
+	}
+
+	//动态调整阀值
+	/*days = p_write_album_map->size();
+	for (it = p_write_album_map->begin(); it != p_write_album_map->end(); it++) {
+		all_photo_num +=  it->second.vec_photo_all.size();
+	}
+	MIN_STORY_ALBUM_NUM = all_photo_num / days;*/
+	
+	uint32_t MIN_STORY_ALBUM_NUM = 15;
+	
+	pre_proc_classify_story(p_write_album_map, MIN_STORY_ALBUM_NUM);
+
+	if (c_conf->vec_home_city.size() > 0) {
+
+		first_home_city = c_conf->vec_home_city[0];
+		if (c_conf->vec_home_city.size() > 1) {
+			second_home_city = c_conf->vec_home_city[1];
+		}
+
+		//循环获取初步按天数分类的相册
+		for (it = p_write_album_map->begin(); it != p_write_album_map->end(); it++) {
+
+			v_len = it->second.vec_photo_all.size();
+
+			//循环获取每个album里的vector相片信息
+			for(uint32_t i = 0; i < v_len; i++) {
+				//只计算本地的故事
+				city = it->second.vec_photo_all[i].photo_address.city;
+				if (city.compare(first_home_city) == 0 || (!second_home_city.empty() && city.compare(second_home_city) == 0))
+				{
+					uint64_t cur_create_time = it->second.vec_photo_all[i].create_time;
+					story_photo_queue.push(it->second.vec_photo_all[i]);
+					if (story_photo_queue.size() >= MIN_STORY_ALBUM_NUM) {
+						for(; ;) {
+							if (cur_create_time - story_photo_queue.front().create_time > STORY_ALBUM_WINDOW_SIZE) {
+								if (same_event_album) {
+									a_info.vec_photo_all.push_back(story_photo_queue.front());
+								}
+								story_photo_queue.pop();
+							} else {
+								break;
+							}
+						}
+						//判断是否超出了滑动窗口的相片阀值
+						if (story_photo_queue.size() >= MIN_STORY_ALBUM_NUM) {
+							same_event_album = true;
+						}
+					} else {
+						if (same_event_album) {
+							q_len = story_photo_queue.size() - 2;
+							for (uint32_t j = 0; j < q_len; j++) {
+								a_info.vec_photo_all.push_back(story_photo_queue.front());
+								story_photo_queue.pop();
+							}
+							same_event_album = false;
+
+							set_album_address(a_info);
+							set_album_other_info(a_info, ENUM_ALBUM_TYPE_STORY, ENUM_ALBUM_STATUS_FINISHED);
+							dump_album_info(a_info);
+
+							//构建单个故事相册完成，回调函数返回上层
+							single_album_callback(a_info);
+							a_info.album_id = "";
+							a_info.vec_photo_all.clear();
+						}
+					}
+				}
+			}
+		}
+
+		if (story_photo_queue.size() > 0) {
+			q_len = story_photo_queue.size();
+			for (uint32_t j = 0; j < q_len; j++) {
+				a_info.vec_photo_all.push_back(story_photo_queue.front());
+				story_photo_queue.pop();
+			}
+			set_album_other_info(a_info, ENUM_ALBUM_TYPE_STORY, ENUM_ALBUM_STATUS_NO_FINISH);
+			dump_album_info(a_info);
+
+			//构建单个故事相册完成，回调函数返回上层
+			single_album_callback(a_info);
+		}
+	} else {
+		//还没有常用居住地，形成未完成的故事集合
+
+		//循环获取初步按天数分类的相册
+		for (it = p_write_album_map->begin(); it != p_write_album_map->end(); it++) {
+			v_len = it->second.vec_photo_all.size();
+			//循环获取每个album里的vector相片信息
+			for(uint32_t i = 0; i < v_len; i++) {
+				//只计算本地的故事
+				city = it->second.vec_photo_all[i].photo_address.city;
+				if (!city.empty()) {
+					a_info.vec_photo_all.push_back(it->second.vec_photo_all[i]);
+				}
+			}
+		}
+		set_album_other_info(a_info, ENUM_ALBUM_TYPE_STORY, ENUM_ALBUM_STATUS_NO_FINISH);
+		dump_album_info(a_info);
+
+		//构建单个故事相册完成，回调函数返回上层
+		single_album_callback(a_info);
+	}
+
+	//删除上次未finish的相册
+	if (c_conf->vec_album_unfinish.size() > 0) {
+		del_prior_unfinish_album(ENUM_ALBUM_TYPE_STORY);
+	}
+
+}
     
     
     
