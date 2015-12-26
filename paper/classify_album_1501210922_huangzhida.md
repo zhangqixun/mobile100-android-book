@@ -412,7 +412,129 @@ pic_album_ref 相片属于哪个相册的关系表
     每张图片的地址分布和天数分布，从而根据地址的分布和天数初步算出常用居住地(家乡地址), 
     之后根据家乡地址算出旅行的回路，形成一个相册，如果不能形成回路，即根据超出了最大的
     旅行时间限制则形成一个相册
+    代码实现：
     
+    void classify_photo_to_album::classify_photo_into_travel() {
+	uint32_t  rd_idx = 0;
+	uint32_t  v_len = 0;
+	bool	  same_travel_album = false;
+	string    city = "";
+	string 	  first_home_city = "";
+	string 	  second_home_city = "";
+
+	album_info a_info;
+	map<string, album_info>::iterator it;
+	map<string, album_info>  *p_write_album_map = NULL;
+	map<string, album_info>   total_album_map;
+	c_photo_config *c_conf = singleton_base<c_photo_config>::get_instance();
+
+	find_home_city(&c_conf->write_album_map);
+
+	if (c_conf->vec_album_unfinish.size() > 0) {
+		combine_new_and_unfinish_album(total_album_map, ENUM_ALBUM_TYPE_TRAVEL);
+	}
+
+	if (total_album_map.size() > 0) {
+		//还没有确定家乡地址的接口
+		p_write_album_map = &total_album_map;
+		sort_album_map_photo(p_write_album_map);
+	} else {
+		p_write_album_map = &c_conf->write_album_map;
+	}
+
+	if (c_conf->vec_home_city.size() > 0) {
+
+		first_home_city = c_conf->vec_home_city[0];
+		if (c_conf->vec_home_city.size() > 1) {
+			second_home_city = c_conf->vec_home_city[1];
+		}
+
+		WRITE_TRACE("first_home_city: %s  second_home_city: %s", first_home_city.c_str(), second_home_city.c_str());
+
+		//循环获取初步按天数分类的相册
+		for (it = p_write_album_map->begin(); it != p_write_album_map->end(); it++) {
+
+			v_len = it->second.vec_photo_all.size();
+			uint32_t i = rd_idx;
+
+			//循环获取每个album里的vector相片信息
+			for(; i < v_len; i++) {
+				city = it->second.vec_photo_all[i].photo_address.city;
+				if (!city.empty())
+				{
+					//判断是否能够形成旅行回路
+					if (city.compare(first_home_city) == 0 || (!second_home_city.empty() && city.compare(second_home_city) == 0)) {
+						if (a_info.vec_photo_all.size() > MIN_TRAVEL_ALBUM_NUM) {
+							rd_idx = i + 1;
+							if (rd_idx != v_len) {
+								it--;
+							}
+							//WRITE_TRACE("city %d : %s", i, it->second.vec_photo_all[i].photo_address.city.c_str());
+							same_travel_album = true;
+							break;
+						} else {
+							if (a_info.vec_photo_all.size() > 0) {
+								a_info.vec_photo_all.clear();
+							}
+						}
+					} else {
+						if (i == 0) {
+							//检查是否超过最大的旅行时间来分辨和由当前构建相册的个数来决定
+							if (a_info.vec_photo_all.size() > 0) {
+								uint32_t intvl_days = (it->second.vec_photo_all[i].create_time -
+														a_info.vec_photo_all.back().create_time)/3600000/24;
+								if (intvl_days > MAX_TRAVEL_DAY_LONG) {
+									//超出最大的旅行时间
+									if (a_info.vec_photo_all.size() > MIN_TRAVEL_ALBUM_NUM) {
+										it--;
+										rd_idx = i;
+										//WRITE_TRACE("intvl_days: %d", intvl_days);
+										same_travel_album = true;
+										break;
+									} else {
+										a_info.vec_photo_all.clear();
+									}
+								}
+							}
+						}
+						a_info.vec_photo_all.push_back(it->second.vec_photo_all[i]);
+					}
+				}
+			}
+			//当前的album相册信息已经获取完成
+			if (i == v_len) {
+				rd_idx =  0;
+			}
+
+			it++;
+			if (same_travel_album || it == p_write_album_map->end()) {
+				if (a_info.vec_photo_all.size() > 0) {
+
+					if (same_travel_album) {
+						set_album_other_info(a_info, ENUM_ALBUM_TYPE_TRAVEL, ENUM_ALBUM_STATUS_FINISHED);
+					} else {
+						set_album_other_info(a_info, ENUM_ALBUM_TYPE_TRAVEL, ENUM_ALBUM_STATUS_NO_FINISH);
+					}
+					set_album_address(a_info);
+					dump_album_info(a_info);
+
+					//构建单个旅行相册完成，回调函数返回上层
+					single_album_callback(a_info);
+					same_travel_album = false;
+				}
+				//tmp_city = "";
+				a_info.album_id = "";
+				a_info.vec_photo_all.clear();
+			}
+			it--;
+		}
+
+		//删除上次未finish的相册
+		if (c_conf->vec_album_unfinish.size() > 0) {
+			del_prior_unfinish_album(ENUM_ALBUM_TYPE_TRAVEL);
+		}
+	}
+}
     
     
 ####  c. 故事相册归集
