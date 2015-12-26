@@ -325,6 +325,86 @@ pic_album_ref 相片属于哪个相册的关系表
     上层把扫描好的相片逐步传入底层，底层使用日期作为key，album_info作为value的map结构
     把相片按照日期进行归集，同时把一些连续天数零碎的相片合并成一个相册；然后通过回调的
     方式返回到上层
+    代码实现：
+    
+    void classify_photo_to_album::classify_photo_into_no_addr_moment() {
+	uint32_t  v_len = 0;
+	bool	  same_moment_album = false;
+
+	map<string, album_info>::iterator it;
+	map<string, album_info>  *p_write_album_map = NULL;
+	map<string, album_info>   total_album_map;
+	c_photo_config *c_conf = singleton_base<c_photo_config>::get_instance();
+
+	//合并之前未完成的相册
+	if (c_conf->vec_album_unfinish.size() > 0) {
+		combine_new_and_unfinish_album(total_album_map, ENUM_ALBUM_TYPE_MOMENT);
+	}
+
+	if (total_album_map.size() > 0) {
+		p_write_album_map = &total_album_map;
+	} else {
+		p_write_album_map = &c_conf->write_album_map;
+	}
+
+	//对每天的相册的照片进行排序
+	sort_album_map_photo(p_write_album_map);
+
+	album_info a_info;
+
+	//循环获取初步按天数分类的相册
+	for (it = p_write_album_map->begin(); it != p_write_album_map->end(); it++) {
+
+		//判断当天相册是否少于要求的最少相片个数
+		if (it->second.vec_photo_all.size() > MIN_MOMENT_ALBUM_NUM) {
+			//可能需要进一步根据地点或具体的时间进一步细化
+			if (a_info.vec_photo_all.size() > 0) {
+				it--;
+			} else {
+				a_info = it->second;
+			}
+			same_moment_album = true;
+		} else {
+			//合并少于要求最少相片个数的相册
+			if (a_info.vec_photo_all.size() > 0) {
+				v_len = it->second.vec_photo_all.size();
+				for (uint32_t i = 0; i < v_len; i++) {
+					a_info.vec_photo_all.push_back(it->second.vec_photo_all[i]);
+				}
+			} else {
+				a_info = it->second;
+			}
+		}
+
+		it++;
+		if (same_moment_album || it == p_write_album_map->end())  {
+
+			if (a_info.vec_photo_all.size() > 0) {
+
+				if (same_moment_album) {
+					set_album_other_info(a_info, ENUM_ALBUM_TYPE_MOMENT, ENUM_ALBUM_STATUS_NO_FINISH);
+				} else {
+					set_album_other_info(a_info, ENUM_ALBUM_TYPE_MOMENT, ENUM_ALBUM_STATUS_NO_FINISH);
+				}
+
+				dump_album_info(a_info);
+
+			   //单个相册已经构建完成， 调用回调函数返回到上层
+				single_album_callback(a_info);
+
+				a_info.vec_photo_all.clear();
+				a_info.album_id = "";
+			}
+			same_moment_album = false;
+		}
+		it--;
+	}
+
+	//删除上次未finish的相册
+	if (c_conf->vec_album_unfinish.size() > 0) {
+		del_prior_unfinish_album(ENUM_ALBUM_TYPE_MOMENT);
+	}
+}
     
 ####  b. 旅行相册归集
     
