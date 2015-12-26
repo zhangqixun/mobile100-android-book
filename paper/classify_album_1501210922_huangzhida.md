@@ -54,6 +54,97 @@ pic_album_ref 相片属于哪个相册的关系表
 | album_id | string |
 
 
+####  sqlite数据库操作：
+创建数据库：
+
+```@Override
+	public void onCreate(SQLiteDatabase sqlitedatabase) {
+
+
+		String albumTable = " create table album_info ( " +
+				"ID INTEGER PRIMARY KEY  AUTOINCREMENT," +
+				"unique_id text, " +
+				"name text," +
+				"type int," +
+				"status int," +
+				"collect_status int," +
+				"template_id int," +
+				"start_time BIGINT," +
+				"end_time BIGINT," +
+				"pic_cnt int," +
+				"time_str text ," +
+				"address text," +
+				"create_time BIGINT," +
+				"modify_time BIGINT" +
+				" )";
+		
+		String picInfoTable = " create table pic_info ( " +
+				"ID INTEGER PRIMARY KEY  AUTOINCREMENT," +
+				"path text ," +
+				"thumb_path text ," +
+				"image_id bigint ," +
+				"image_time bigint ,"+
+				"file_create_time bigint ,"+
+				"width int ," +
+				"height int ," +
+				"lat double , " +
+				"lon double , " +
+				"ifGetLoc int , " +
+				"country text," +
+				"province text," +
+				"city text," +
+				"district text," +
+				"street text " +
+				" )";
+
+		String picAlbumRefTable = " create table pic_album_ref ( " +
+				"ID INTEGER PRIMARY KEY  AUTOINCREMENT," +
+				"image_id bigint ," +
+				"album_id text " +
+				" )";
+
+		sqlitedatabase.execSQL(albumTable);
+		sqlitedatabase.execSQL(picInfoTable);
+		sqlitedatabase.execSQL(picAlbumRefTable);
+
+	}```
+
+#### 分页拉取相册里所有的相片
+
+```@Override
+	public List<PicInfoDto> getAlbumPics(String albumId ,int index ,int pageCnt) {
+		long start = System.currentTimeMillis();
+
+		String[] args = {albumId};
+
+		String sql = "select " +
+				" DISTINCT pic.image_id image_id ," +
+				" pic.path path," +
+				" image_time ,"+
+				" file_create_time ,"+
+				" thumb_path ," +
+				" width ," +
+				" height ," +
+				" ifGetLoc , " +
+				" lat ,  lon , " +
+				" country , province , city ,  district , street " +
+				" from pic_album_ref ref join pic_info pic on ref.image_id = pic.image_id " +
+				" where ref.album_id = ? ";
+
+		if( pageCnt != 0){
+			sql = sql + " limit "+index+", "+pageCnt;
+		}else {
+			sql = sql + "limit 10 ";
+		}
+
+		Cursor cur = db.rawQuery(sql,args);
+		
+		List<PicInfoDto> rs = DbUtil.genObjList(cur, new PicInfoDto());
+		cur.close();
+		Utils.printCost("getAlbumPics ", start);
+		LogUtil.i(TAG, "getAlbumPics...albumId="+albumId+", rs="+rs);
+		return rs;
+	}```
 
 
 ###  2.获取安卓系统的所有图片
