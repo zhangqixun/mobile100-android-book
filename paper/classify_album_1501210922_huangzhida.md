@@ -105,7 +105,7 @@ pic_album_ref 相片属于哪个相册的关系表
     final String data = "data="+jarr.toJSONString();
     
     
-    构建请求，并放在网络请求队列：
+    构建请求，并放在网络请求队列，然后线程不断地从队列里获取数据发送请求
     StringRequest strReq = new StringRequest(Method.POST, url, resOkL ,resErrL)
     	@Override
     	public byte[] getBody() throws AuthFailureError {
@@ -150,6 +150,7 @@ pic_album_ref 相片属于哪个相册的关系表
 			checkBat();
 		}
 	};
+    
     
     
 
