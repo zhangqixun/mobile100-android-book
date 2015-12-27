@@ -316,7 +316,7 @@ pic_album_ref 相片属于哪个相册的关系表
     
 ###  4.Android调用C++库
 
-    Java Native Interface j
+    Java Native Interface java本地接口支持将Java 代码与使用其他编程语言编写的代码相集成。
     
     
 ###  5.底层C++归集算法
