@@ -335,7 +335,75 @@ pic_album_ref 相片属于哪个相册的关系表
     jEnv->CallVoidMethod(jObject, jMethID, level);```
     
     
-    
+具体实现是JNI_Adapter:
+回调函数的实现：
+
+    ```static int msg_cb_func( msg_photo_to_ui* res_msg ){
+
+		WRITE_TRACE("jni_adapter::msg_cb_func() msg_type=%d ", res_msg->msg_type);
+		// init JNIEnv
+		JNIEnv* m_env = NULL;
+		if(g_jvm->AttachCurrentThread( &m_env, NULL) == JNI_OK){
+			WRITE_TRACE("jni_adapter::msg_cb_func() attach ok..");
+		}
+		if(m_env == NULL){
+			WRITE_TRACE("jni_adapter::msg_cb_func() start..env null");
+		}
+
+		jstring className = stringToJstring(m_env ,FULL_CLASS_NAME );
+		WRITE_TRACE("jni_adapter::msg_cb_func() start..001");
+		jclass j_base_cls = static_cast<jclass>(m_env->CallObjectMethod(gClassLoader,
+				gFindClassMethod, className));
+
+		WRITE_TRACE("jni_adapter::msg_cb_func() start..1");
+
+		// j_object
+		string s_m = "getInstance";
+		string s_g_str = "()Lcom/leyu/gallery/service/ndk/ServiceMsgHandler;";
+		WRITE_TRACE("jni_adapter::msg_cb_func() start..1-2");
+		jmethodID s_m_id = m_env->GetStaticMethodID(j_base_cls, s_m.c_str(), s_g_str.c_str() );
+		jobject m_h = m_env->CallStaticObjectMethod(j_base_cls, s_m_id);
+		WRITE_TRACE("jni_adapter::msg_cb_func() start..2");
+
+		//j_method
+		string m_str = "noticeMsg";
+		string sg_str = "(I[B)V";
+		jmethodID send_msg_m = m_env->GetMethodID( j_base_cls, m_str.c_str(), sg_str.c_str() );
+		WRITE_TRACE("jni_adapter::msg_cb_func() start..3");
+
+		jbyteArray jbytes = string_to_jbytes(m_env,"");
+
+		switch(res_msg->msg_type){
+		case ENUM_C_PHOTO_TO_UI_ALBUM_INFO:{
+
+			WRITE_TRACE("...ENUM_C_PHOTO_TO_UI_ALBUM_INFO ....");
+			msg_c_photo_to_ui_album_info *tmp_msg = dynamic_cast<msg_c_photo_to_ui_album_info*>(res_msg);
+			msgpack::sbuffer buffer;
+			msgpack::pack(buffer, *tmp_msg);
+			jbytes = bytes_to_jbytes(m_env, buffer.data(),buffer.size());
+			break;
+		}
+		case ENUM_C_PHOTO_TO_UI_FINISHED:{
+			break;
+		}
+		}
+
+		// invoke method
+		WRITE_TRACE("jni_adapter::msg_cb_func() start..4");
+		m_env->CallVoidMethod(m_h , send_msg_m , res_msg->msg_type , jbytes);
+
+		jbyte* ba = m_env->GetByteArrayElements(jbytes, JNI_FALSE);
+		m_env->ReleaseByteArrayElements(jbytes, ba, 0);
+
+		m_env->DeleteLocalRef(className);
+		m_env->DeleteLocalRef(m_h);
+		m_env->DeleteLocalRef(j_base_cls);
+		m_env->DeleteLocalRef(jbytes);
+
+		WRITE_TRACE("jni_adapter::msg_cb_func() end..");
+		return 1;
+	}
+```
 
     
     
