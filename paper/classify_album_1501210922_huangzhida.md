@@ -318,6 +318,26 @@ pic_album_ref 相片属于哪个相册的关系表
 
     Java Native Interface java本地接口支持将Java 代码与使用其他编程语言编写的代码相集成。
     
+    链接Java对象到C++对象
+
+　　链接C++对象到Java对象
+　　
+　　```(JNIEnv * jEnv, jobject jObj)```
+　　　
+　　JEnv 指向的是JNI的运行环境，jobj是本地任务对象的引用
+
+    ```
+    jclass jClass;
+    jmethodID jMethID;
+   
+    jClass = jEnv->GetObjectClass(jObj);
+    jMethID = jEnv->GetMethodID(jClass, "levelChanged", "(I)V");
+    jEnv->CallVoidMethod(jObject, jMethID, level);```
+    
+    
+    
+
+    
     
 ###  5.底层C++归集算法
 
