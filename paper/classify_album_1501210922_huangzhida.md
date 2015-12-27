@@ -316,7 +316,7 @@ pic_album_ref 相片属于哪个相册的关系表
     
 ###  4.Android调用C++库
 
-
+    Java Native Interface j
     
     
 ###  5.底层C++归集算法
