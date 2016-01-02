@@ -45,6 +45,26 @@ Event Listener(事件监听器)：负责事件监听源所发生的事件，并�
 布局文件：
 
 ![](jianting_02.png)
+```<?xml version="1.0" encoding="utf-8"?>```
+``` <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"```
+``` android:layout_width="match_parent" ```
+``` android:layout_height="match_parent "```
+``` android:layout_gravity="center_horizontal" ```
+``` > ```
+``` <EditText ```
+``` android:id="@+id/txt" ``` 
+``` android:layout_width="match_parent" ```
+``` android:layout_height="wrap_content" ```
+``` android:editable="false" ```
+``` android:cursorVisible="false" ```
+``` android:textSize="12pt"/> ```
+``` <Button ```
+``` android:id="@+id/bn "```
+``` android:layout_width="wrap_content ```
+``` android:layout_height="wrap_content"```
+``` android:text="单击我" ```
+``` android:onClick="clickHandler"/> ```
+```</LinearLayout>```
 
 Activity文件：
 
