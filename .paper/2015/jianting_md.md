@@ -44,31 +44,64 @@ Event Listener(事件监听器)：负责事件监听源所发生的事件，并�
 
 布局文件：
 
-![](jianting_02.png)
-```<?xml version="1.0" encoding="utf-8"?>```
-``` <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"```
-``` android:layout_width="match_parent" ```
-``` android:layout_height="match_parent "```
-``` android:layout_gravity="center_horizontal" ```
-``` > ```
-``` <EditText ```
-``` android:id="@+id/txt" ``` 
-``` android:layout_width="match_parent" ```
-``` android:layout_height="wrap_content" ```
-``` android:editable="false" ```
-``` android:cursorVisible="false" ```
-``` android:textSize="12pt"/> ```
-``` <Button ```
-``` android:id="@+id/bn "```
-``` android:layout_width="wrap_content ```
-``` android:layout_height="wrap_content"```
-``` android:text="单击我" ```
-``` android:onClick="clickHandler"/> ```
-```</LinearLayout>```
+```
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical"
+    >
+    <EditText
+        android:id="@+id/txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:editable="false"
+        android:cursorVisible="false"
+        android:textSize="12pt"/>
+    <Button
+        android:id="@+id/bn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="单击我"/>
+</LinearLayout>
+```
 
 Activity文件：
 
-![](jianting_03.png)
+```
+package com.example.hzz.myjishuwendang;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import java.security.PublicKey;
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        Button bn=(Button)findViewById(R.id.bn);
+        bn.setOnClickListener(new MyClickListener());
+    }
+    class  MyClickListener implements View.OnClickListener
+    {
+        @Override
+          public void  onClick(View v)
+       {
+          EditText txt=(EditText)findViewById(R.id.txt);
+          txt.setText("按钮被点击了");
+       }
+    }
+}
+
+```
 
 运行结果：
 
@@ -84,11 +117,58 @@ Activity文件：
 
 Activity文件
 
-![](jianting_05.png)
+```
+package com.example.hzz.myjishuwendang;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
+import android.widget.EditText;
+
+/**
+ * Created by hzz on 2015/12/14.
+ */
+public class MainActivity1 extends AppCompatActivity{
+    @Override
+    protected void onCreate(Bundle saveInstanceState) {
+        super.onCreate(saveInstanceState);
+        setContentView(R.layout.main);
+        Button bnt=(Button)findViewById(R.id.bn);
+        EditText edt=(EditText)findViewById(R.id.txt);
+        bnt.setOnClickListener(new external(edt));
+    }
+
+}
+```
 
 外部内类作为监测器：
 
-![](jianting_06.png)
+```
+package com.example.hzz.myjishuwendang;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+
+/**
+ * Created by hzz on 2015/12/14.
+ */
+public class external implements View.OnClickListener{
+    private EditText editable;
+    public  external(EditText edit)
+    {
+        this.editable=edit;
+    }
+    @Override
+    public void onClick(View v) {
+        editable.setText("按钮被单击了");
+    }
+}
+
+
+```
 
 运行结果和4.1的结果一样，使用这个方法的优点是：如果某个事件监听器确实需要被多个gui界面所共享，而且主要是完成某种业务逻辑的实现，则可以考虑使用外部类的形式来定义事件监听器类。缺点是事件监听器通常属于特定的gui界面，定义成外部类不利于提高程序的内聚性。
 
@@ -96,7 +176,40 @@ Activity文件
 
 4.3 Activity本身作为事件监听器类
 
-![](jianting_07.png)
+```
+package com.example.hzz.myjishuwendang;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+/**
+ * Created by hzz on 2016/1/2.
+ */
+public class MainActivity4 extends AppCompatActivity implements View.OnClickListener {
+   EditText show;
+    @Override
+    protected void onCreate(Bundle saveInstanceState) {
+        super.onCreate(saveInstanceState);
+        setContentView(R.layout.main);
+        Button bnt=(Button)findViewById(R.id.bn);
+        show=(EditText)findViewById(R.id.txt);
+        bnt.setOnClickListener( this);
+    }
+    @Override
+    public void onClick(View view)
+    {
+       show.setText("按钮被单击了");
+    }
+
+}
+
+```
+
+
+
 
 程序运行结果和4.1的结果一样，使用这种方法的优点是
 可以直接在activity中定义事件的处理方法。
@@ -107,7 +220,35 @@ Activity文件
 
 4.4 匿名内部类形式
 
-![](jianting_08.png)
+```
+package com.example.hzz.myjishuwendang;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+/**
+ * Created by hzz on 2016/1/2.
+ */
+public class MainActivity2 extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle saveInstanceState) {
+        super.onCreate(saveInstanceState);
+        setContentView(R.layout.main);
+        Button bnt=(Button)findViewById(R.id.bn);
+        final EditText editText=(EditText)findViewById(R.id.txt);
+        bnt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editText.setText("按钮被点击了");
+            }
+        });
+    }
+}
+
+```
 
 程序运行结果个4.1一样。使用这种方法的优点是：大部分时候，事件处理器都没有什么利用价值（可复用代码通常都被抽象成了业务逻辑方法），因此大部分事件监听器只是临时使用一次，所以匿名内部类形式的事件监听器更合适这种形式是目前使用最广泛的事件监听器形式。
 缺点：匿名内部类的语法有点不易掌握。
@@ -116,7 +257,36 @@ Activity文件
 
 4.5标签绑定形式
 
-![](jianting_09.png)
+```
+package com.example.hzz.myjishuwendang;
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+/**
+ * Created by hzz on 2015/12/14.
+ */
+public class MainActivity3 extends Activity{
+    @Override
+    protected void onCreate(Bundle saveInstanceState) {
+        super.onCreate(saveInstanceState);
+        setContentView(R.layout.main);
+    }
+    public void clickHandler(View source)
+        {
+            EditText  show=(EditText)findViewById(R.id.txt);
+            show.setText("按钮被单击了");
+        }
+}
+
+```
+
+### 
+
+注明：在xml文件中的Button中要加一句android:onClick="clickHandler"
 
 程序运行结果和4.1的结果一样。
 
@@ -228,5 +398,7 @@ void setOnCreateContextMenuListener(View.OnCreateContextMenuListener l)
 7 总结
 
 我们开发APP更多的时候是需要与用户的交互，即对用户的操作进行响应，这就涉及到了Android的事件处理机制。Android的事件处理机制是一种委托派事件处理方式：普通组件（事件源）将整个事件处理委托给特定的对象（事件监听器）；当该事件源发生指定的事件时，就通知所委托的事件监听器，由事件监听器来处理这个事件。本文中提到的五种监听形式各有自己的优缺点，我们编程的时候可以按照自己的需求采用最合适的方法。
+
+
 
 
