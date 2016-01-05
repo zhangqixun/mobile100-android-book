@@ -37,7 +37,11 @@
       这里就给我们提供了一个思路，如果有耗时的操作与其在Service里面开启新线程还不如使用IntentService来处理耗时操作。
       而在一般的继承Service里面如果要进行耗时操作就必须另开线程，但是使用IntentService就可以直接在里面进行耗时操作，因为默认实现了一个worker thread。对于异步的startService请求，IntentService会处理完成一个之后再处理第二个。
 
+* 提高service的优先级
 
+        Android 系统对于内存管理有自己的一套方法，为了保障系统有序稳定的运信，系统内部会自动分配，控制程序的内存使用。当系统觉得当前的资源非常有限的时候，为了保 证一些优先级高的程序能运行，就会杀掉一些他认为不重要的程序或者服务来释放内存。这样就能保证真正对用户有用的程序仍然再运行。如果你的 Service 碰上了这种情况，多半会先被杀掉。但如果你增加 Service 的优先级就能让他多留一会，我们可以用 setForeground(true) 来设置 Service 的优先级。
+
+        为什么是 foreground ? 默认启动的 Service 是被标记为 background，当前运行的 Activity 一般被标记为 foreground，也就是说你给 Service 设置了 foreground 那么他就和正在运行的 Activity 类似优先级得到了一定的提高。当让这并不能保证你得 Service 永远不被杀掉，只是提高了他的优先级。
    
 
 **三、实验内容及步骤**
