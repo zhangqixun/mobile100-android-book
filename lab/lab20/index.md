@@ -16,7 +16,7 @@
    
 * 知识点1：
 
-      在Android里使用TextWatcher接口可以很方便的对EditText进行监听；
+      在Android里使用TextWatcher接口可以很方便的对EditText进行监听；在EditText发生变化的时候，调用对应的处理事件进行处理。
       
 注册监听：
 
