@@ -1,6 +1,6 @@
 Android基础实验
 
-   * [环境搭建](../lab/lab01/index.html)
+   * [环境搭建](lab01/index.html)
    * [Hello World应用程序](lab/lab02/index.md)
    * [Activity生命周期](lab/lab03/index.md)
    * [Android应用程序调试](lab/lab04/index.md)
